@@ -44,7 +44,7 @@ public class BuildDataUtil {
         return getValue(field.getType());
     }
 
-    public static Object getValue(Class field) {
+    public static Object getValue(Class<?> field) {
 
         if (field == int.class || field == Integer.class) {
             return getRandomInt();

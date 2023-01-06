@@ -5,24 +5,22 @@ public class BinUtil {
      * 将byte转为16进制 @param bytes @return
      */
     public static String byte2Hex(byte[] bytes) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuilder = new StringBuilder();
         String temp;
-        for (int i = 0; i < bytes.length; i++) {
-            temp = Integer.toHexString(bytes[i] & 0xFF);
+        for (byte aByte : bytes) {
+            temp = Integer.toHexString(aByte & 0xFF);
             if (temp.length() == 1) {
                 // 1得到一位的进行补0操作
-                stringBuffer.append("0");
+                stringBuilder.append("0");
             }
-            stringBuffer.append(temp);
+            stringBuilder.append(temp);
         }
-        return stringBuffer.toString();
+        return stringBuilder.toString();
     }
 
     /**
      * 将16进制转换为二进制
      *
-     * @param hexStr
-     * @return
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1) {
@@ -39,14 +37,11 @@ public class BinUtil {
 
     /**
      * 将二进制转换成16进制
-     *
-     * @param buf
-     * @return
      */
-    public static String parseByte2HexStr(byte buf[]) {
+    public static String parseByte2HexStr(byte[] buf) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < buf.length; i++) {
-            String hex = Integer.toHexString(buf[i] & 0xFF);
+        for (byte b : buf) {
+            String hex = Integer.toHexString(b & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
             }
