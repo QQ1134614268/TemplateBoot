@@ -1,7 +1,9 @@
 package com.it.sim.test;
 
+import lombok.Data;
+
 // 静态代码块 - 动态代码块 构造方法
-@SuppressWarnings("ClassInitializerMayBeStatic")
+@Data
 public class TestInitClass2 {
     String name = "mo";
     int age = 21;
@@ -26,12 +28,7 @@ public class TestInitClass2 {
 
     }
 
-    public String toString() {
-        return "name=" + name + ",  age=" + age;
-    }
-
     public static void main(String[] args) throws Exception {
-        System.out.println(1);
         String classFullName = TestInitClass2.class.getName();
         System.out.println(classFullName);
         Class.forName(classFullName).newInstance(); // 静态代码块

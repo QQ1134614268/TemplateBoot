@@ -15,9 +15,10 @@ public class TestInputStream {
 
     @Test
     public void test_0() {
-        Scanner s = new Scanner(inputStream).useDelimiter("\\A");
-        String result = s.hasNext() ? s.next() : "";
-        InputStream inputStream = new ByteArrayInputStream("abc".getBytes(StandardCharsets.UTF_8));
+        try (Scanner s = new Scanner(inputStream).useDelimiter("\\A")) {
+            String result = s.hasNext() ? s.next() : "";
+            InputStream inputStream = new ByteArrayInputStream("abc".getBytes(StandardCharsets.UTF_8));
+        }
     }
 
     @Test
@@ -47,18 +48,19 @@ public class TestInputStream {
 
    @Test
    public void test_5() throws IOException {
-        final int bufferSize = 1024;
-        final char[] buffer = new char[bufferSize];
-        final StringBuilder out = new StringBuilder();
-        Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        for (; ; ) {
-            int rsz = in.read(buffer, 0, buffer.length);
-            if (rsz < 0)
-                break;
-            out.append(buffer, 0, rsz);
-        }
-       System.out.println(out);
-    }
+       final int bufferSize = 1024;
+       final char[] buffer = new char[bufferSize];
+       final StringBuilder out = new StringBuilder();
+       try (Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+           for (; ; ) {
+               int rsz = in.read(buffer, 0, buffer.length);
+               if (rsz < 0) break;
+               out.append(buffer, 0, rsz);
+           }
+           System.out.println(out);
+       }
+
+   }
 
     @Test
     public void test_6() {
@@ -95,14 +97,15 @@ public class TestInputStream {
 
     @Test
     public void test_9() throws IOException {
-        BufferedInputStream bis = new BufferedInputStream(inputStream);
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        int result = bis.read();
-        while (result != -1) {
-            buf.write((byte) result);
-            result = bis.read();
+        try (BufferedInputStream bis = new BufferedInputStream(inputStream)) {
+            ByteArrayOutputStream buf = new ByteArrayOutputStream();
+            int result = bis.read();
+            while (result != -1) {
+                buf.write((byte) result);
+                result = bis.read();
+            }
+            System.out.println(buf);
         }
-        buf.toString();
     }
 
     @Test

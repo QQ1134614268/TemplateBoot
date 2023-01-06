@@ -1,5 +1,7 @@
 package com.it.sim.datastructure;
 
+import lombok.Data;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -14,7 +16,7 @@ public class AVLTree2<E extends Comparable<E>> {
     /**
      * 根节点
      */
-    private Entry<E> root = null;
+    private AvlNode2<E> root = null;
 
     /**
      * 树中元素个数
@@ -34,10 +36,10 @@ public class AVLTree2<E extends Comparable<E>> {
      *          B(1) \ 左旋转 / \ B(0) ----> A(0) \ / \ \ \ BL(0) BR(0) BL(0) BR(0)
      *          旋转之后树的深度之差不超过1
      */
-    private void rotateLeft(Entry<E> p) {
+    private void rotateLeft(AvlNode2<E> p) {
         if (p != null) {
             System.out.println("绕" + p.element + "左旋");
-            Entry<E> r = p.right;
+            AvlNode2<E> r = p.right;
             p.right = r.left; // 把p右子树的左节点嫁接到p的右节点，如上图，把BL作为A的右子节点
             if (r.left != null) // 如果B的左节点BL不为空，把BL的父节点设为A
                 r.left.parent = p;
@@ -58,10 +60,10 @@ public class AVLTree2<E extends Comparable<E>> {
      *          A(2) B(-1) / 右旋转 / \ B(0) ------> / A(0) / \ / / BL(0) BR(0) BL(0)
      *          BR(0)
      */
-    private void rotateRight(Entry<E> p) {
+    private void rotateRight(AvlNode2<E> p) {
         if (p != null) {
             System.out.println("绕" + p.element + "左旋");
-            Entry<E> l = p.left;
+            AvlNode2<E> l = p.left;
             p.left = l.right; // 把B的右节点BR作为A的左节点
             if (l.right != null) // 如果BR不为null，设置BR的父节点为A
                 l.right.parent = p;
@@ -87,14 +89,14 @@ public class AVLTree2<E extends Comparable<E>> {
      * 因为这表明此节点中高度小的子树增加了新节点，高度不变，那么祖先节点的BF自然不变。
      */
     public boolean add(E element) {
-        Entry<E> t = root;
+        AvlNode2<E> t = root;
         if (t == null) {
-            root = new Entry<>(element, null);
+            root = new AvlNode2<>(element, null);
             size = 1;
             return true;
         }
         int cmp;
-        Entry<E> parent; // 保存t的父节点
+        AvlNode2<E> parent; // 保存t的父节点
         // 从根节点向下搜索，找到插入位置
         do {
             parent = t;
@@ -108,7 +110,7 @@ public class AVLTree2<E extends Comparable<E>> {
             }
         } while (t != null);
 
-        Entry<E> child = new Entry<>(element, parent);
+        AvlNode2<E> child = new AvlNode2<>(element, parent);
         if (cmp < 0) {
             parent.left = child;
 
@@ -144,7 +146,7 @@ public class AVLTree2<E extends Comparable<E>> {
      * <p>
      * 至于调整之后，各节点的BF变化见代码
      */
-    private void fixAfterInsertion(Entry<E> p) {
+    private void fixAfterInsertion(AvlNode2<E> p) {
         if (p.balance == 2) {
             leftBalance(p);
         }
@@ -172,16 +174,16 @@ public class AVLTree2<E extends Comparable<E>> {
      * <p>
      * t l / 右旋处理 / \ l ------> ll t / \ / ll rd rd 情况4(L等高)
      */
-    private boolean leftBalance(Entry<E> t) {
+    private boolean leftBalance(AvlNode2<E> t) {
         boolean b = true;
-        Entry<E> l = t.left;
+        AvlNode2<E> l = t.left;
         switch (l.balance) {
             case LH: // 左高，右旋调整,旋转后树的高度减小
                 t.balance = l.balance = EH;
                 rotateRight(t);
                 break;
             case RH: // 右高，分情况调整
-                Entry<E> rd = l.right;
+                AvlNode2<E> rd = l.right;
                 switch (rd.balance) { // 调整各个节点的BF
                     case LH: // 情况1
                         t.balance = RH;
@@ -221,12 +223,12 @@ public class AVLTree2<E extends Comparable<E>> {
      * <p>
      * t r \ 左旋 / \ r -------> t rr / \ \ ld rr ld 情况4(r的BF为0)
      */
-    private boolean rightBalance(Entry<E> t) {
+    private boolean rightBalance(AvlNode2<E> t) {
         boolean b = true;
-        Entry<E> r = t.right;
+        AvlNode2<E> r = t.right;
         switch (r.balance) {
             case LH: // 左高，分情况调整
-                Entry<E> ld = r.left;
+                AvlNode2<E> ld = r.left;
                 switch (ld.balance) { // 调整各个节点的BF
                     case LH: // 情况1
                         t.balance = EH;
@@ -261,8 +263,8 @@ public class AVLTree2<E extends Comparable<E>> {
     /**
      * 查找指定元素，如果找到返回其Entry对象，否则返回null
      */
-    private Entry<E> getEntry(Comparable<? super E> element) {
-        Entry<E> tmp = root;
+    private AvlNode2<E> getEntry(Comparable<? super E> element) {
+        AvlNode2<E> tmp = root;
         int c;
         while (tmp != null) {
             c = element.compareTo(tmp.element);
@@ -281,7 +283,7 @@ public class AVLTree2<E extends Comparable<E>> {
      * 平衡二叉树的移除元素操作
      */
     public boolean remove(E o) {
-        Entry<E> e = getEntry(o);
+        AvlNode2<E> e = getEntry(o);
         if (e != null) {
             deleteEntry(e);
             return true;
@@ -289,16 +291,16 @@ public class AVLTree2<E extends Comparable<E>> {
         return false;
     }
 
-    private void deleteEntry(Entry<E> p) {
+    private void deleteEntry(AvlNode2<E> p) {
         size--;
         // 如果p左右子树都不为空，找到其直接后继，替换p，之后p指向s，删除p其实是删除s
         // 所有的删除左右子树不为空的节点都可以调整为删除左右子树有其一不为空，或都为空的情况。
         if (p.left != null && p.right != null) {
-            Entry<E> s = successor(p);
+            AvlNode2<E> s = successor(p);
             p.element = s.element;
             p = s;
         }
-        Entry<E> replacement = (p.left != null ? p.left : p.right);
+        AvlNode2<E> replacement = (p.left != null ? p.left : p.right);
 
         if (replacement != null) { // 如果其左右子树有其一不为空
             replacement.parent = p.parent;
@@ -331,17 +333,17 @@ public class AVLTree2<E extends Comparable<E>> {
     /**
      * 返回以中序遍历方式遍历树时，t的直接后继
      */
-    static <E> Entry<E> successor(Entry<E> t) {
+    static <E> AvlNode2<E> successor(AvlNode2<E> t) {
         if (t == null)
             return null;
         else if (t.right != null) { // 往右，然后向左直到尽头
-            Entry<E> p = t.right;
+            AvlNode2<E> p = t.right;
             while (p.left != null)
                 p = p.left;
             return p;
         } else { // right为空，如果t是p的左子树，则p为t的直接后继
-            Entry<E> p = t.parent;
-            Entry<E> ch = t;
+            AvlNode2<E> p = t.parent;
+            AvlNode2<E> ch = t;
             while (p != null && ch == p.right) { // 如果t是p的右子树，则继续向上搜索其直接后继
                 ch = p;
                 p = p.parent;
@@ -359,9 +361,9 @@ public class AVLTree2<E extends Comparable<E>> {
      * 如果调整之后这个最小子树的高度降低了，那么必须继续从这个最小子树的根节点(假设为B)继续
      * 向上回溯，这里和插入不一样，因为B的父节点的平衡性因为其子树B的高度的改变而发生了改变， 那么就可能需要调整，所以删除可能进行多次的调整。
      */
-    private void fixAfterDeletion(Entry<E> p) {
+    private void fixAfterDeletion(AvlNode2<E> p) {
         boolean heightLower = true; // 看最小子树调整后，它的高度是否发生变化，如果减小，继续回溯
-        Entry<E> t = p.parent;
+        AvlNode2<E> t = p.parent;
         Comparable<? super E> e = p.element;
         int cmp;
         // 自下向上回溯，查找不平衡的节点进行调整
@@ -379,7 +381,7 @@ public class AVLTree2<E extends Comparable<E>> {
             if (Math.abs(t.balance) == 1) { // 父节点经过调整平衡因子后，如果为1或-1，说明调整之前是0，停止回溯。
                 break;
             }
-            Entry<E> r = t;
+            AvlNode2<E> r = t;
             // 这里的调整跟插入一样
             if (t.balance == 2) {
                 heightLower = leftBalance(r);
@@ -397,19 +399,20 @@ public class AVLTree2<E extends Comparable<E>> {
     /**
      * 树节点，为方便起见不写get，Set方法
      */
-    static class Entry<E> {
+    @Data
+    static class AvlNode2<E> {
         E element;
-        Entry<E> parent;
-        Entry<E> left;
-        Entry<E> right;
+        AvlNode2<E> parent;
+        AvlNode2<E> left;
+        AvlNode2<E> right;
         int balance = EH; // 平衡因子，只能为1或0或-1
 
-        public Entry(E element, Entry<E> parent) {
+        public AvlNode2(E element, AvlNode2<E> parent) {
             this.element = element;
             this.parent = parent;
         }
 
-        public Entry() {
+        public AvlNode2() {
         }
 
         @Override
@@ -421,11 +424,11 @@ public class AVLTree2<E extends Comparable<E>> {
 
     // 返回中序遍历此树的迭代器,返回的是一个有序列表
     private class BinarySortIterator implements Iterator<E> {
-        Entry<E> next;
-        Entry<E> lastReturned;
+        AvlNode2<E> next;
+        AvlNode2<E> lastReturned;
 
         public BinarySortIterator() {
-            Entry<E> s = root;
+            AvlNode2<E> s = root;
             if (s != null) {
                 while (s.left != null) { // 找到中序遍历的第一个元素
                     s = s.left;
@@ -441,7 +444,7 @@ public class AVLTree2<E extends Comparable<E>> {
 
         @Override
         public E next() {
-            Entry<E> e = next;
+            AvlNode2<E> e = next;
             if (e == null)
                 throw new NoSuchElementException();
             next = successor(e);
@@ -465,7 +468,7 @@ public class AVLTree2<E extends Comparable<E>> {
         return new BinarySortIterator();
     }
 
-    public int treeHeight(Entry<E> p) {
+    public int treeHeight(AvlNode2<E> p) {
         if (p == null) {
             return -1;
         }

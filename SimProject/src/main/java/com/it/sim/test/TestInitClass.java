@@ -45,7 +45,7 @@ public class TestInitClass {
         // 会触发类初始化
         System.out.println(InitAble2.staticNonFinal);
         // forName方法获取Class对象
-        Class.forName("反射.InitAble3");
+        Class.forName(InitAble3.class.getName());
         System.out.println("After creating InitAble3 ref");
         System.out.println(InitAble3.staticNonFinal);
     }

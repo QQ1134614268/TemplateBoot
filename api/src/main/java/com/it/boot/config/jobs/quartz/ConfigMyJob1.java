@@ -26,7 +26,7 @@ public class ConfigMyJob1 {
         SimpleTriggerFactoryBean bean = new SimpleTriggerFactoryBean();
         bean.setStartTime(new Date());
         // bean.setRepeatCount(10);
-        bean.setRepeatInterval(30000);
+        bean.setRepeatInterval(600000);
         bean.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
         return bean;
     }

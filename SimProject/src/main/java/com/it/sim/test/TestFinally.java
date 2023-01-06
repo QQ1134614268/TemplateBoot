@@ -3,9 +3,9 @@ package com.it.sim.test;
 import org.junit.Test;
 
 public class TestFinally {
-    public static int fun(int i) throws InterruptedException {
+    public static int fun(boolean i) throws InterruptedException {
         try {
-            if (i % 2 == 0) {
+            if (i) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -19,7 +19,7 @@ public class TestFinally {
 
     @Test
     public void t() throws InterruptedException {
-        System.out.println(fun(1));
-        System.out.println(fun(2));
+        System.out.println(fun(true));
+        System.out.println(fun(false));
     }
 }

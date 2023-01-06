@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class HuffManCode {
     public static void main(String[] args) {
-        String s = "BABACACADADABBCBABEBEDDABEEEBB";
+        String s = "BAB AC AC ADA DAB BCB ABE BED DA BEE EBB";
         System.out.println("各字符出现的次数为：");
         System.out.println(count(s));
 

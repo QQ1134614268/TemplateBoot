@@ -14,6 +14,7 @@ import java.util.Random;
 public class MyJob2 extends QuartzJobBean {
     //    @Autowired  这里注入方式是不行的，报NPE
     private JobUserService jobUserService;
+
     @Autowired
     public void setUserService(JobUserService jobUserService) {
         this.jobUserService = jobUserService;

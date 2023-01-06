@@ -1,25 +1,15 @@
-**************com.it.test.数据结构***************
 逻辑结构 集合(一切数据都可存)
 线性----数组,链表,栈,堆... 非线性--树(二叉树,红黑),图(有向图,无向图)... 算法--增改查删,排序(统计,简单计算)...
 
 物理结构(了解)
 顺序,链式,索引(哈希),散列
-https://blogVO.csdn.net/heyuchang666/article/details/49891635
-
-**************com.it.test.数据结构***************
-com.it.test.数据结构--有各种属性,副本属性,,本体,
-
-链表-数组 -- 类 栈,队列,堆 --类
-**************排序***************
-参考 网址   https://www.cnblogs.com/onepixel/articles/7674659.html
-
-http://www.cnblogs.com/0201zcr/p/4764427.html
+https://blog.csdn.net/heyuchang666/article/details/49891635
 
 **************树***************
 
 二叉树(满二叉树,完全二叉树,二叉排序树,平衡二叉树),B树,红黑树,键树(字典树)
 
-https://blogVO.csdn.net/hero_myself/article/details/52080969
+https://blog.csdn.net/hero_myself/article/details/52080969
 
 一个节点也是树
 

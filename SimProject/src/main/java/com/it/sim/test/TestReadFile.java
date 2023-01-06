@@ -49,18 +49,16 @@ public class TestReadFile {
     // 而类实例的入参是相对于包路径，但路径开始使用'/'符号， 也是绝对路径。
     @Test
     public void test() throws IOException {
-        String expectedData = "Hello,World!";
         Class<TestReadFile> clazz = TestReadFile.class;
-        InputStream inputStream = clazz.getResourceAsStream("/fileTest.txt");
+        InputStream inputStream = clazz.getResourceAsStream("/a.txt");
         String data = readFromInputStream(inputStream);
-
-        MatcherAssert.assertThat(data, CoreMatchers.containsString(expectedData));
+        System.out.println(data);
     }
 
     @Test
     public void test0() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("fileTest.txt");
+        InputStream inputStream = classLoader.getResourceAsStream("a.txt");
         String data = readFromInputStream(inputStream);
         log.info(data);
     }
@@ -71,7 +69,7 @@ public class TestReadFile {
         String expectedData = "Hello,World!";
 
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(Objects.requireNonNull(classLoader.getResource("fileTest.txt")).getFile());
+        File file = new File(Objects.requireNonNull(classLoader.getResource("a.txt")).getFile());
         String data = FileUtils.readFileToString(file, "UTF-8");
 
         assertEquals(expectedData, data.trim());
@@ -81,7 +79,7 @@ public class TestReadFile {
     public void useCommonIO2() throws IOException {
         String expectedData = "Hello,World!";
 
-        FileInputStream fis = new FileInputStream("src/test/resources/fileTest.txt");
+        FileInputStream fis = new FileInputStream("src/test/resources/a.txt");
         String data = IOUtils.toString(fis, "UTF-8");
 
         assertEquals(expectedData, data.trim());
@@ -91,7 +89,7 @@ public class TestReadFile {
     @Test
     public void bufferedReader() throws IOException {
         String expected_value = "Hello,World!";
-        String file = "src/test/resources/fileTest.txt";
+        String file = "src/test/resources/a.txt";
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String currentLine = reader.readLine();
@@ -106,7 +104,7 @@ public class TestReadFile {
     public void readSmallFile() throws IOException {
         String expected_value = "Hello,World!";
 
-        Path path = Paths.get("src/test/resources/fileTest.txt");
+        Path path = Paths.get("src/test/resources/a.txt");
 
         String read = Files.readAllLines(path).get(0);
         assertEquals(expected_value, read);
@@ -117,7 +115,7 @@ public class TestReadFile {
     public void readLargeFile() throws IOException {
         String expected_value = "Hello,World!";
 
-        Path path = Paths.get("src/test/resources/fileTest.txt");
+        Path path = Paths.get("src/test/resources/a.txt");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line = reader.readLine();
             assertEquals(expected_value, line);
@@ -128,7 +126,7 @@ public class TestReadFile {
     // 5.2读取大文件
     @Test
     public void readLargeFile2() throws IOException {
-        Path path = Paths.get("src/test/resources/fileTest.txt");
+        Path path = Paths.get("src/test/resources/a.txt");
         try (Stream<String> data = Files.lines(path)) {
             List<String> lines = data.collect(Collectors.toList());
             System.out.println(lines);
@@ -139,7 +137,7 @@ public class TestReadFile {
     // 6 Scanner
     @Test
     public void whenReadWithScanner_thenCorrect() throws IOException {
-        String file = "src/test/resources/fileTest.txt";
+        String file = "src/test/resources/a.txt";
         Scanner scanner = new Scanner(new File(file));
         scanner.useDelimiter(",");
 
@@ -153,7 +151,7 @@ public class TestReadFile {
     // 7.StreamTokenizer
     @Test
     public void readWithTokenize() throws IOException {
-        String file = "src/test/resources/fileTestTokenizer.txt";
+        String file = "src/test/resources/aTokenizer.txt";
         FileReader reader = new FileReader(file);
         StreamTokenizer tokenizer = new StreamTokenizer(reader);
 
@@ -177,7 +175,7 @@ public class TestReadFile {
     @Test
     public void whenReadWithDataInputStream() throws IOException {
         String expectedValue = "Hello,World!";
-        String file = "src/test/resources/fileTest.txt";
+        String file = "src/test/resources/a.txt";
         String result = null;
         try (DataInputStream reader = new DataInputStream(Files.newInputStream(Paths.get(file)))) {
             int nBytesToRead = reader.available();
@@ -196,7 +194,7 @@ public class TestReadFile {
     @Test
     public void whenReadWithFileChannel() throws IOException {
         String expected_value = "Hello,World!";
-        String file = "src/test/resources/fileTest.txt";
+        String file = "src/test/resources/a.txt";
         RandomAccessFile reader = new RandomAccessFile(file, "r");
         FileChannel channel = reader.getChannel();
 

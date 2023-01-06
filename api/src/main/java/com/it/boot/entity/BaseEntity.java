@@ -19,15 +19,19 @@ public class BaseEntity implements Serializable {
     @Column(columnDefinition = "int(11) COMMENT '主键'")
     @ApiModelProperty(value = "对象id", example = "1")
     private Long id;
+
     @Column(unique = false, nullable = true, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
     @ApiModelProperty(value = "创建时间", example = "2022-02-02 10:10:10", required = false, hidden = true)
     private Date createTime;
+
     @Column(unique = false, nullable = true, columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'")
     @ApiModelProperty(value = "修改时间", example = "1", required = false, hidden = true)
     private Date updateTime;
+
     @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '创建者id'")
     @ApiModelProperty(value = "创建者id", example = "1", required = false, hidden = true)
     private Long createBy;
+
     @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '修改者id'")
     @ApiModelProperty(value = "修改者id", example = "1", required = false, hidden = true)
     private Long updateBy;

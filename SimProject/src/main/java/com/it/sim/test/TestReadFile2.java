@@ -7,10 +7,8 @@ import org.springframework.core.io.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -18,31 +16,20 @@ import java.util.List;
 /**
  * @date 2022-09-30 11:46
  */
-public class TestJarResource {
+public class TestReadFile2 {
     @Test
     public void readResourceDirFile() throws IOException, URISyntaxException {
         String path = "a.txt";
+        // String path = "/a.txt";
         URI uri = this.getClass().getClassLoader().getResource(path).toURI();
         List<String> lines = Files.readAllLines(Paths.get(uri));
         lines.forEach(System.out::println);
-    }
-    @Test
-    public void test_1() throws UnsupportedEncodingException {
-        String path = this.getClass().getClassLoader().getResource("").getPath().concat("files/a.txt");
-        path = URLDecoder.decode(path,"UTF-8");
-        File file = new File(path);
-    }
-
-    @Test
-    public void test_2() throws IOException {
-        ClassPathResource classPathResource = new ClassPathResource("files/a.txt");
-        File file = classPathResource.getFile(); // 获取文件对象
     }
 
     @Test
     public void test_3() throws IOException {
         // 获取 resources 文件流
-        Resource classPathResource = new ClassPathResource("/static/test.txt");
+        Resource classPathResource = new ClassPathResource("a.txt");
         InputStream inputStream = classPathResource.getInputStream();
 
         String outFilePath = (new File(".")).getCanonicalPath().concat(String.format("/tmp-file-%s", System.currentTimeMillis()));
@@ -57,10 +44,10 @@ public class TestJarResource {
 
     @Test
     public void test6() {
-        System.out.println(TestJarResource.class);
-        System.out.println(TestJarResource.class.getPackage());
-        System.out.println(TestJarResource.class.getName());
-        System.out.println(TestJarResource.class.getSimpleName());
+        System.out.println(TestReadFile2.class);
+        System.out.println(TestReadFile2.class.getPackage().getName());
+        System.out.println(TestReadFile2.class.getName());
+        System.out.println(TestReadFile2.class.getSimpleName());
         System.out.println(System.getProperty("user.dir")); // 项目目录
 
         // Class.getResource() : 如果以 "/" 开头，就在classpath根目录下找;
@@ -70,17 +57,17 @@ public class TestJarResource {
         // URL.getPath
         // this.getClass() 与 TestFilePath.class 相同
         // Thread.currentThread().getContextClassLoader()
-        String className = TestJarResource.class.getSimpleName();
-        System.out.println(TestJarResource.class.getResource(""));
-        System.out.println(TestJarResource.class.getResource("."));
-        System.out.println(TestJarResource.class.getResource("/"));
-        System.out.println(TestJarResource.class.getResource(className));
-        System.out.println(TestJarResource.class.getResource("/" + className)); // null
+        String className = TestReadFile2.class.getSimpleName();
+        System.out.println(TestReadFile2.class.getResource(""));
+        System.out.println(TestReadFile2.class.getResource("."));
+        System.out.println(TestReadFile2.class.getResource("/"));
+        System.out.println(TestReadFile2.class.getResource(className));
+        System.out.println(TestReadFile2.class.getResource("/" + className)); // null
 
-        System.out.println(TestJarResource.class.getClassLoader());
-        System.out.println(TestJarResource.class.getClassLoader().getResource(""));
-        System.out.println(TestJarResource.class.getClassLoader().getResource(className));
-        System.out.println(TestJarResource.class.getClassLoader().getResource("/")); // null
+        System.out.println(TestReadFile2.class.getClassLoader());
+        System.out.println(TestReadFile2.class.getClassLoader().getResource(""));
+        System.out.println(TestReadFile2.class.getClassLoader().getResource(className));
+        System.out.println(TestReadFile2.class.getClassLoader().getResource("/")); // null
 
         System.out.println(Thread.currentThread().getContextClassLoader().getResource(""));
 

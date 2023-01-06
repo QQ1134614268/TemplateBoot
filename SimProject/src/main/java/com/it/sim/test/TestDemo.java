@@ -71,42 +71,6 @@ public class TestDemo {
         System.out.println(sum);
     }
 
-    @Test
-    public void test6() {
-        // 参看 jdk 中自带的 java.math.BigInteger 类的源码
-        class BigInteger {
-            int sign;
-            byte[] val;
-
-            public void Biginteger(String val) {
-                if (val.contains("-")) {
-                    sign = -1;
-                } else {
-                    sign = 1;
-                }
-                this.val = val.getBytes(StandardCharsets.UTF_8);
-            }
-
-            public BigInteger add(BigInteger other) {
-                return other;
-            }
-
-            public BigInteger subtract(BigInteger other) {
-                return other;
-
-            }
-
-            public BigInteger multiply(BigInteger other) {
-                return other;
-
-            }
-
-            public BigInteger divide(BigInteger other) {
-                return other;
-            }
-        }
-    }
-
     @SuppressWarnings("StringBufferReplaceableByString")
     @Test
     public void test7() {
@@ -140,26 +104,11 @@ public class TestDemo {
 
     }
 
-
     @Test
     public void test10() {
         int x = 50, y;
         y = ++x + x++ + --x;
         System.out.println(y);
-    }
-    @Test
-    public void test11() {
-        @SuppressWarnings("unused")
-        class Something {
-            int i;
-
-            public void doSomething() {
-                // 默认值 隐式转换
-                String s = "i = " + i;
-                System.out.println(s);
-            }
-        }
-        new Something().doSomething();
     }
 
     @Test

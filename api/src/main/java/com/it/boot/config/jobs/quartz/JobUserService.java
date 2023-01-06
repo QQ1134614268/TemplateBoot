@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 public class JobUserService {
 
     public String getUserById(Long id) {
-        log.info("get--test");
         return "UserService get data:" + id;
     }
 }

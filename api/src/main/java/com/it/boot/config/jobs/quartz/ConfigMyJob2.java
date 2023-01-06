@@ -2,16 +2,17 @@ package com.it.boot.config.jobs.quartz;
 
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobDataMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 
+import javax.annotation.Resource;
+
 @Slf4j
 @Configuration
 public class ConfigMyJob2 {
-    @Autowired
+    @Resource
     private JobUserService jobUserService;
     // MyJob2任务配置
     // 传参
@@ -29,7 +30,7 @@ public class ConfigMyJob2 {
     @Bean
     CronTriggerFactoryBean cronTriggerFactoryBean() {
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
-        bean.setCronExpression("0/15 * * * * ?");
+        bean.setCronExpression("0 */5 * * * ?");
         bean.setJobDetail(jobDetailFactoryBean().getObject());
         return bean;
     }

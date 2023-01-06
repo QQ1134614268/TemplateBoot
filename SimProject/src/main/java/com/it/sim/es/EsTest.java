@@ -1,7 +1,6 @@
 package com.it.sim.es;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.it.sim.config.IndexConf;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkItemResponse;
@@ -43,6 +42,7 @@ import java.util.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class EsTest {
     public static final String ID_WU_KONG = "p4AtG3kBRz-Sn-2fMFjj";
+    public static final String ES_USER_INDEX = "es_user";
     static ObjectMapper mapper = new ObjectMapper();
 
     private RestHighLevelClient es;
@@ -57,7 +57,7 @@ public class EsTest {
      */
     @Test
     public void test_1_Add() throws IOException {
-        IndexRequest indexRequest = new IndexRequest(IndexConf.ES_USER_INDEX);
+        IndexRequest indexRequest = new IndexRequest(ES_USER_INDEX);
         EsUser u = new EsUser(ID_WU_KONG, "齐天大圣孙悟空", Date.valueOf(LocalDate.of(1685, 1, 1)), "花果山水帘洞美猴王齐天大圣孙悟空是也", "花果山水帘洞", 180f);
         String json = mapper.writeValueAsString(u);
         indexRequest.source(json, XContentType.JSON);
@@ -68,7 +68,7 @@ public class EsTest {
     @Test
     public void test_2_updateDoc() throws IOException {
         String id = getId();
-        UpdateRequest updateRequest = new UpdateRequest(IndexConf.ES_USER_INDEX, id);
+        UpdateRequest updateRequest = new UpdateRequest(ES_USER_INDEX, id);
         Map<String, Object> map = new HashMap<>();
         map.put("name", "调皮捣蛋的hardy");
         updateRequest.doc(map, XContentType.JSON);
@@ -79,13 +79,13 @@ public class EsTest {
     @Test
     public void test_3_deleteDoc() throws IOException {
         String id = getId();
-        DeleteRequest deleteRequest = new DeleteRequest(IndexConf.ES_USER_INDEX,id);
+        DeleteRequest deleteRequest = new DeleteRequest(ES_USER_INDEX,id);
         DeleteResponse deleteResponse = es.delete(deleteRequest, RequestOptions.DEFAULT);
         System.out.println(deleteResponse.status());
     }
     @Test
     public void test_4_deleteIndex() throws IOException {
-        AcknowledgedResponse deleteResponse = es.indices().delete(new DeleteIndexRequest(IndexConf.ES_USER_INDEX), RequestOptions.DEFAULT);
+        AcknowledgedResponse deleteResponse = es.indices().delete(new DeleteIndexRequest(ES_USER_INDEX), RequestOptions.DEFAULT);
         System.out.println(deleteResponse.isAcknowledged());
     }
     @Test
@@ -93,23 +93,23 @@ public class EsTest {
         // bulk 一次操作, 包含增加,删除修改
         BulkRequest bulkRequest = new BulkRequest();
         // 添加
-        IndexRequest indexRequest = new IndexRequest(IndexConf.ES_USER_INDEX);
+        IndexRequest indexRequest = new IndexRequest(ES_USER_INDEX);
         EsUser u = new EsUser(ID_WU_KONG, "天蓬元帅猪八戒", Date.valueOf(LocalDate.of(1685, 1, 1)), "天蓬元帅猪八戒因调戏嫦娥被贬下凡", "高老庄", 180f);
         String json = mapper.writeValueAsString(u);
         indexRequest.source(json, XContentType.JSON);
         bulkRequest.add(indexRequest);
 
         // 删除
-        DeleteRequest deleteRequest01 = new DeleteRequest(IndexConf.ES_USER_INDEX, "pYAtG3kBRz-Sn-2fMFjj");
-        DeleteRequest deleteRequest02 = new DeleteRequest(IndexConf.ES_USER_INDEX, "uhTyGHkBExaVQsl4F9Lj");
-        DeleteRequest deleteRequest03 = new DeleteRequest(IndexConf.ES_USER_INDEX, "C8zCGHkB5KgTrUTeLyE_");
+        DeleteRequest deleteRequest01 = new DeleteRequest(ES_USER_INDEX, "pYAtG3kBRz-Sn-2fMFjj");
+        DeleteRequest deleteRequest02 = new DeleteRequest(ES_USER_INDEX, "uhTyGHkBExaVQsl4F9Lj");
+        DeleteRequest deleteRequest03 = new DeleteRequest(ES_USER_INDEX, "C8zCGHkB5KgTrUTeLyE_");
         bulkRequest.add(deleteRequest01);
         bulkRequest.add(deleteRequest02);
         bulkRequest.add(deleteRequest03);
 
         // 修改
         String id = "10";
-        UpdateRequest updateRequest = new UpdateRequest(IndexConf.ES_USER_INDEX, id);
+        UpdateRequest updateRequest = new UpdateRequest(ES_USER_INDEX, id);
         updateRequest.doc("{\"name\":\"炼石补天的女娲\"}", XContentType.JSON);
         bulkRequest.add(updateRequest);
 
@@ -123,7 +123,7 @@ public class EsTest {
     @Test
     public void testSearch() throws IOException {
         //创建搜索对象
-        SearchRequest searchRequest = new SearchRequest(IndexConf.ES_USER_INDEX);
+        SearchRequest searchRequest = new SearchRequest(ES_USER_INDEX);
         //搜索构建对象
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
@@ -150,7 +150,7 @@ public class EsTest {
     @Test
     public void testHighLightQuery() throws IOException, ParseException {
         // 创建搜索请求
-        SearchRequest searchRequest = new SearchRequest(IndexConf.ES_USER_INDEX);
+        SearchRequest searchRequest = new SearchRequest(ES_USER_INDEX);
         // 创建搜索对象
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.termQuery("name.keyword", "齐天大圣孙悟空"))    // 设置查询条件
@@ -202,7 +202,7 @@ public class EsTest {
 
     private String getId() throws IOException {
         test_1_Add();
-        SearchRequest searchRequest = new SearchRequest(IndexConf.ES_USER_INDEX);
+        SearchRequest searchRequest = new SearchRequest(ES_USER_INDEX);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.termQuery("name.keyword", "齐天大圣孙悟空"))
                 .size(1);

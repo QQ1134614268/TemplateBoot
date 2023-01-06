@@ -16,7 +16,6 @@ public class Wang implements MyCallBack {
     public Wang(Li li) {
         this.li = li;
     }
-
     /**
      * 小王通过这个方法去问小李的问题
      *

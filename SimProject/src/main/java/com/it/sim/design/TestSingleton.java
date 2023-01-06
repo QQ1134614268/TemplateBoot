@@ -1,8 +1,19 @@
 package com.it.sim.design;
 
 public class TestSingleton {
-
     // 饿汉模式
+    static class Singleton1 {
+        private static Singleton1 instance = new Singleton1();
+
+        private Singleton1() {
+        }
+
+        public static Singleton1 getInstance() {
+            return instance;
+        }
+    }
+
+    // 懒汉 线程不安全
     static class Singleton {
 
         private static Singleton instance;// 创建一个实例化，有没有类中类？？
@@ -19,7 +30,7 @@ public class TestSingleton {
 
     }
 
-    // 饿汉加个synchronized成懒汉
+    // 懒汉加个synchronized
     static class Singleton2 {
         private static Singleton2 instance;
 
@@ -35,47 +46,6 @@ public class TestSingleton {
 
     }
 
-    static class Singleton3 {
-        private static Singleton3 instance = new Singleton3();
-
-        private Singleton3() {
-        }
-
-        public static Singleton3 getInstance() {
-            return instance;
-        }
-
-    }
-
-    static class Singleton4 {
-        private static Singleton4 instance;
-
-        static {
-            instance = new Singleton4();
-        }
-
-        private Singleton4() {
-        }
-
-        public static Singleton4 getInstance() {
-            return instance;// return this.instance;???????
-        }
-
-    }
-
-    static class Singleton5 {
-        private static class SingletonHolder {
-            private static final Singleton5 INSTANCE = new Singleton5();
-        }
-
-        private Singleton5() {
-        }
-
-        public static Singleton5 getInstance() {
-            return SingletonHolder.INSTANCE;
-        }
-
-    }
 
     enum Singleton6 {
         INSTANCE;
@@ -85,6 +55,10 @@ public class TestSingleton {
     }
 
     static class Singleton7 {
+        // 1.加锁 【保证线程安全】
+        // 2.双重if 【保证效率】
+        // 3.volatile【避免内存可见性引来的问题】
+
         private volatile static Singleton7 singleton7;
 
         private Singleton7() {
