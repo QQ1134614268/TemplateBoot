@@ -47,9 +47,9 @@ public class EnumEntity extends BaseEntity implements TreeNode {
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '状态'")
     private String status;
 
-    @ApiModelProperty(value = "父级id", example = "test_1", required = false)
+    @ApiModelProperty(value = "父级id", example = "1", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '父级id'")
-    private Long parentId;
+    private Integer parentId;
 
     @Transient
     @TableField(exist = false)
