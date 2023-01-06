@@ -1,0 +1,62 @@
+{
+  "modelId": 517,
+  "ttl": 120,
+  "modelName": "超速怠速并集",
+  "eventParams": [
+    {
+      "eventId": "1600074008858324993",
+      "riskLevel": "3",
+      "preEvents": [
+        "1600074008862519297",
+        "1600074008866713602"
+      ],
+      "eventType": "15",
+      "attributeJson": {
+        "riskLevel": "3",
+        "isWarn": 1
+      },
+      "eventName": "并集运算",
+      "eventStep": 1,
+      "isWarn": 1
+    },
+    {
+      "eventId": "1600074008862519297",
+      "preEvents": [],
+      "eventType": "02",
+      "nextEvents": {
+        "eventId": "1600074008858324993",
+        "eventType": "15",
+        "eventName": "并集运算"
+      },
+      "attributeJson": {
+        "minMinute": 2,
+        "endHour": "",
+        "startHour": "",
+        "isWarn": 0,
+        "minSpeed": "40"
+      },
+      "eventName": "超速",
+      "eventStep": 0,
+      "isWarn": 0
+    },
+    {
+      "eventId": "1600074008866713602",
+      "preEvents": [],
+      "eventType": "03",
+      "nextEvents": {
+        "eventId": "1600074008858324993",
+        "eventType": "15",
+        "eventName": "并集运算"
+      },
+      "attributeJson": {
+        "minMinute": 1,
+        "isWarn": 0,
+        "minSpeed": "5"
+      },
+      "eventName": "怠速",
+      "eventStep": 0,
+      "isWarn": 0
+    }
+  ],
+  "status": "1"
+}

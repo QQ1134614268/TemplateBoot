@@ -1,0 +1,14 @@
+package ${packageName}.service;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import ${packageName}.entity.${tableUpperCamel}Entity;
+import ${packageName}.mapper.${tableUpperCamel}Mapper;
+import org.springframework.stereotype.Service;
+
+/**
+ * (${tableUpperCamel})表服务接口
+ */
+@Service
+public class ${tableUpperCamel}Service extends ServiceImpl<${tableUpperCamel}Mapper, ${tableUpperCamel}Entity> {
+
+}

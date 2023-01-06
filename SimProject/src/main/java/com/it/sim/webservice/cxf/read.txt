@@ -1,0 +1,8 @@
+asm 冲突 升级jar版本
+
+(2)CXF_HOME
+变量名：CXF_HOME
+变量值：D:\dev\apache-cxf-3.5.4
+
+(3)Path
+;%CXF_HOME%\bin

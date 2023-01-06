@@ -1,0 +1,56 @@
+[
+  {
+    "eventId": "1600074008858324993",
+    "riskLevel": "3",
+    "preEvents": [
+      "1600074008862519297",
+      "1600074008866713602"
+    ],
+    "attributeJson": {
+      "riskLevel": "3",
+      "isWarn": 1
+    },
+    "eventName": "并集运算",
+    "eventStep": 1,
+    "isWarn": 1,
+    "eventType": "15"
+  },
+  {
+    "eventId": "1600074008862519297",
+    "preEvents": [],
+    "nextEvents": {
+      "eventId": "1600074008858324993",
+      "eventName": "并集运算",
+      "eventType": "15"
+    },
+    "attributeJson": {
+      "endHour": "",
+      "startHour": "",
+      "minMinute": 2,
+      "isWarn": 0,
+      "minSpeed": "40"
+    },
+    "eventName": "超速",
+    "eventStep": 0,
+    "isWarn": 0,
+    "eventType": "02"
+  },
+  {
+    "eventId": "1600074008866713602",
+    "preEvents": [],
+    "nextEvents": {
+      "eventId": "1600074008858324993",
+      "eventName": "并集运算",
+      "eventType": "15"
+    },
+    "attributeJson": {
+      "minMinute": 1,
+      "isWarn": 0,
+      "minSpeed": "5"
+    },
+    "eventName": "怠速",
+    "eventStep": 0,
+    "isWarn": 0,
+    "eventType": "03"
+  }
+]
