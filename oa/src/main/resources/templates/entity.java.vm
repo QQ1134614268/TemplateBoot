@@ -1,0 +1,30 @@
+package ${packageName}.entity;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Table;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import java.math.BigDecimal;
+import java.util.Date;
+
+@ApiModel(value = "${tableComment}")
+@Data
+@EqualsAndHashCode(callSuper = true)
+@TableName(value = "${tableName}")
+@Entity(name = "${tableName}")
+@Table(appliesTo = "${tableName}", comment = "${tableComment}")
+public class ${tableUpperCamel}Entity extends BaseEntity {
+    #set($list=["id","createBy","createTime", "updateBy", "updateTime", "deleteFlag"])
+    #foreach ($column in $tableFields)
+        #if($list.contains($column.javaColumnName)) #else
+            @ApiModelProperty(value = "${column.column_comment}", example = "${column.javaColumnExample}", required = ${column.required})
+            @Column(unique = ${column.unique}, nullable = ${column.nullable}, columnDefinition = "${column.column_type} COMMENT '${column.column_comment}'")
+            private ${column.javaType} ${column.javaColumnName};
+        #end
+    #end
+}

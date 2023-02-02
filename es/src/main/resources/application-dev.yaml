@@ -1,0 +1,14 @@
+server:
+  port: 39099
+  tomcat:
+    uri-encoding: utf-8
+spring:
+  jackson:
+    time-zone: GMT+8
+  elasticsearch:
+    uris: 127.0.0.1:9200
+logging:
+  file:
+    path: data/log
+  level:
+    org.springframework.data.elasticsearch.client.WIRE: TRACE

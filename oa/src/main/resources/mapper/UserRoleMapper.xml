@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.oa.mapper.UserRoleMapper">
+    <select id="getOrgUser" resultType="java.lang.Integer">
+        WITH RECURSIVE cte AS (
+        SELECT d.id, d.parent_id
+        FROM organization d
+        WHERE id = #{ordId}
+        UNION ALL
+        SELECT c.id, c.parent_id
+        FROM organization c, cte
+        WHERE c.parent_id = cte.id
+        )
+        SELECT user.id FROM cte LEFT JOIN user on cte.id = oa.user.org_id
+    </select>
+
+</mapper>
+

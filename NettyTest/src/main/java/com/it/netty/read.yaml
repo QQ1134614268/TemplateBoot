@@ -1,0 +1,30 @@
+tcp: 长连接 vs websocket
+
+channel: 一个连接?
+
+关键设置:
+  心跳
+  重连
+
+短链接:
+  response返回,长连接需要标识?
+  无需 心跳,重连, 
+  设置超时
+  粘包,拆包-- ??
+  ChannelOption.TCP_NODELAY, true
+
+长连接:
+  保存连接, 定时任务推送
+  连接后,循环
+  
+  ctx.fireChannelActive();  fire -- 阻止传播?
+  
+解码器:
+  HttpServerCodec
+  socketChannel.pipeline().addLast("decoder", new StringDecoder()); // read msg 就是string类型
+  socketChannel.pipeline().addLast("encoder", new StringEncoder());
+实现:
+    有返回:
+      短链接: 加减逻辑(类似http, 硬件(tcp),tcp服务-- 获取设备信息)
+      长链接: 标识id ??
+    无返回(长链接): 持续推送,持续接收(springboot 聊天室,群聊等, radar模拟, 时间钟)

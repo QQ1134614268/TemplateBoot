@@ -1,0 +1,26 @@
+server:
+  port: 39001
+spring:
+  jackson:
+    time-zone: GMT+8
+  elasticsearch:
+    uris: 159.75.92.195:9200
+  kafka:
+    bootstrap-servers: 159.75.92.195:9092
+    consumer:
+      group-id: test-group-id
+      enable-auto-commit: true
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      client-id: 10001
+
+logging:
+  file:
+    path: data/log/kafka
+#  pattern:
+#    console: %d{yyyy-MM-dd hh:mm:ss} [%thread] %-5level %logger{50} - %msg%n
+#    file: %d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} === - %msg%n

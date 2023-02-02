@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.it.oa.mapper.FinanceRecordMapper">
+    <select id="businessTrends" resultType="com.it.oa.controller.dto.BusinessTrendsDTO">
+        SELECT t1.date,
+        t3.income,
+        t4.expenses
+        from calendar t1
+        LEFT JOIN (SELECT SUM(t2.finance_money) AS income,
+        DATE(t2.pay_time) AS income_expenses_date
+        FROM finance_record t2
+        left join finance_type fi on t2.finance_type_id = fi.id
+        WHERE fi.category = #{income}
+        and DATE(t2.pay_time) BETWEEN #{startTime} and #{endTime}
+        GROUP BY DATE(t2.pay_time), fi.category) t3 ON t1.date = t3.income_expenses_date
+        LEFT JOIN (SELECT SUM(t2.finance_money) AS expenses,
+        DATE(t2.pay_time) AS income_expenses_date
+        FROM finance_record t2
+        left join finance_type fi on t2.finance_type_id = fi.id
+        WHERE fi.category = #{pay}
+        and DATE(t2.pay_time) BETWEEN #{startTime} and #{endTime}
+        GROUP BY DATE(t2.pay_time), fi.category) t4 ON t1.date = t4.income_expenses_date
+        WHERE date BETWEEN #{startTime} and #{endTime}
+        order by t1.date
+    </select>
+</mapper>
+
