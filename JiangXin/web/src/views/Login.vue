@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px"  >
+  <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
     <el-form-item label="用户名" prop="username">
       <el-input v-model="form.username" autocomplete="on"></el-input>
     </el-form-item>
@@ -15,7 +15,13 @@
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      form: {},
+
+    }
+  }
 }
 </script>
 

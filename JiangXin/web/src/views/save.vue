@@ -1,19 +1,20 @@
+
 <template>
   <div>
     <el-button type="primary" @click="dialogVisible=true">添加分类</el-button>
     <el-dialog :title="form.id?'编辑':'新增'" v-model="dialogVisible">
-<!--      <el-form ref="form" :model="form" style="padding: 1rem">-->
-<!--        <el-form-item label="取值">-->
-<!--          <el-input v-model="form.value"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="分组">-->
-<!--          <el-input v-model="form.group_code"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button type="primary" @click="onSubmit">确定</el-button>-->
-<!--          <el-button type="primary" @click="onCancel">取消</el-button>-->
-<!--        </el-form-item>-->
-<!--      </el-form>-->
+      <!--      <el-form ref="form" :model="form" style="padding: 1rem">-->
+      <!--        <el-form-item label="取值">-->
+      <!--          <el-input v-model="form.value"></el-input>-->
+      <!--        </el-form-item>-->
+      <!--        <el-form-item label="分组">-->
+      <!--          <el-input v-model="form.group_code"></el-input>-->
+      <!--        </el-form-item>-->
+      <!--        <el-form-item>-->
+      <!--          <el-button type="primary" @click="onSubmit">确定</el-button>-->
+      <!--          <el-button type="primary" @click="onCancel">取消</el-button>-->
+      <!--        </el-form-item>-->
+      <!--      </el-form>-->
     </el-dialog>
   </div>
   <el-form ref="form" :model="form">
@@ -22,6 +23,14 @@
     </el-form-item>
     <el-form-item label="分类">
       <el-input v-model="form.typeId"></el-input>
+      <el-select v-model="form.typeId" placeholder="请选择">
+        <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+        </el-option>
+      </el-select>
     </el-form-item>
     <el-form-item label="首页">
       <el-upload
@@ -80,6 +89,10 @@ export default {
       user: {},
       close: true,
       dialogVisible: false,
+      options:[{
+        value:1,
+        label:"中式"
+      }],
       ruleForm: {
         username: '',
         checkPass: '',

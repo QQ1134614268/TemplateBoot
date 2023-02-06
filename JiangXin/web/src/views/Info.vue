@@ -1,23 +1,28 @@
 <template>
-  <h1> form.name</h1>
-  <h1> form.type</h1>
-  <h1> form.img</h1>
-  <h1> form.desc</h1>
+  <img :src="form.img">
+  <div> {{form.description}}</div>
   <div :key="index" v-for="(type, index) in form.content">
-    <WrdImgUpload v-model="type.img"></WrdImgUpload>
-    <el-input v-model="type.desc"></el-input>
+    <img :src="type.img">
+    <div> {{type.description}}</div>
   </div>
 </template>
 
 <script>
+import {getAllTree2} from "@/views/api";
+
 export default {
   name: "Info",
-  data(){
-    return {
-      form:{}
+    data() {
+      return {
+        form: {}
+      }
+    },
+    methods: {
+      async init(){
+        this. form =await getAllTree2()
+      }
     }
   }
-}
 </script>
 
 <style scoped>

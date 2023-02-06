@@ -10,13 +10,13 @@ module.exports = defineConfig({
         historyApiFallback: true,
         allowedHosts: "all",
         proxy: {
-            // "^/api/": {
-            //     target: process.env.VUE_APP_BASE_URL,
-            //     changeOrigin: true,
-            //     pathRewrite: { // 路径重写
-            //         '^/api/': '/api/'
-            //     }
-            // },
+            "^/api/": {
+                target: process.env.VUE_APP_BASE_URL,
+                changeOrigin: true,
+                pathRewrite: { // 路径重写
+                    '^/api/': '/api/'
+                }
+            },
             // "/upload_file/": {
             //     target: process.env.NGINX_FILE_SERVER_URL,
             //     changeOrigin: true,

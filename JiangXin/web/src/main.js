@@ -2,9 +2,12 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import router from './index'
 
+
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import './assets/global.css'
+import '@/assets/g2.css'
+import '@/assets/g3.css'
 
 const app = createApp(App);
 app.config.errorHandler = (err) => {

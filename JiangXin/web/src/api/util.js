@@ -2,6 +2,10 @@ import CryptoJS from "crypto-js";
 import {SALT_WORK_FACTOR, TOKEN} from "./config";
 import jwt_decode from "jwt-decode";
 
+export function beforeImgUpload() {
+}
+
+
 export function get_salt_pwd(pwd) {
     // todo 密码明文
     let keyHex = CryptoJS.enc.Utf8.parse(SALT_WORK_FACTOR);

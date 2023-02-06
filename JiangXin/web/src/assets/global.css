@@ -1,6 +1,9 @@
 .p_c_test_border {
     border: red solid 1px;
 }
+.p_c_box_grow {
+    flex-grow: 1;
+}
 
 .p_c_word-break {
     white-space: normal;
@@ -11,7 +14,18 @@
 .p_c_line-height {
     line-height: 1.5;
 }
-
+.p_c_box_margin {
+    margin: 1rem;
+}
+.p_c_color_blue {
+    background-color: blue;
+}
+.p_c_color_blue2 {
+    background-color: #cacaef;
+}
+.p_c_border_black {
+    border: black 1px solid;
+}
 .p_c_box-shadow {
     border-radius: 1rem;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)

@@ -3,6 +3,14 @@
     <div>
       <div>欢迎{{}}</div>
       树形结构 -- 增加分类 ;
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+        </el-option>
+      </el-select>
       <div :key="index" v-for="(type, index) in tree" @click="get" style="width: 20rem">
         {{type.type}}
         <div :key="index" v-for="(name, index) in type.content" @click="open(name.id)">

@@ -1,6 +1,40 @@
 import {createRouter, createWebHistory} from "vue-router";
+import {Admin, DecorationPlan, Home, Info, MessageBoard, root, save} from "@/views";
+import {ImgType} from "@/views/api";
 
-const routes = [
+export const routes = [
+    {
+        path: root,
+        component: () => import('./views/save'),
+    },
+    {
+        path: Home,
+        component: () => import('./views/Home'),
+    },
+    {
+        path: MessageBoard,
+        component: () => import('./views/MessageBoard'),
+    },
+    {
+        path: Info,
+        component: () => import('./views/Info'),
+    },
+    {
+        path: DecorationPlan,
+        component: () => import('./views/DecorationPlan'),
+    },
+    {
+        path: Admin,
+        component: () => import('./views/admin/Admin'),
+    },
+    {
+        path: ImgType,
+        component: () => import('./views/admin/domin/ImgType'),
+    },
+    {
+        path: save,
+        component: () => import('./views/save'),
+    },
 ];
 
 const router = createRouter({
