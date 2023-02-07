@@ -1,9 +1,10 @@
-package com.it.boot.controller.test;
+package com.it.boot.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,8 @@ import java.util.List;
 // 如果您尝试使用，resource.getFile()您将收到错误，因为Spring尝试访问文件系统路径，但它无法访问JAR中的路径。
 @Api(tags = "测试/GetFileController")
 @RestController
-@RequestMapping("/api/GetFileController")
-public class GetFileController {
+@RequestMapping("/api/TestGetFileController")
+public class TestGetFileController {
     //	何为classpath
     //	在Maven项目中，所有的resources文件都将被复制到classes目录下。classpath在tomcat项目中就是/classes，/lib和tomcat下的其他路径。
     //	对于开发者来说，一般就是classes所在目录就是classpath路径的起点和base path.

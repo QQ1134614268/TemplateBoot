@@ -86,7 +86,7 @@ public class TestGson {
             if (src == null) {
                 return null;
             }
-            SimpleDateFormat format = new SimpleDateFormat(TimeConf.DATE_TIME_FORMAT);
+            SimpleDateFormat format = new SimpleDateFormat(TimeConf.YYYY_MM_DD_HH_MM_SS);
             // JsonElement是一个抽象类，实现类分别是JsonObject和JsonPrimitive
             JsonObject ob = new JsonObject();
             ob.addProperty("date", format.format(src.getTime()));

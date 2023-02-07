@@ -1,7 +1,7 @@
 package com.it.boot;
 
 import com.google.gson.Gson;
-import com.it.boot.controller.test.HelloController;
+import com.it.boot.controller.TestHelloController;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class HttpClientTest {
     @Autowired
-    HelloController api;
+    TestHelloController api;
     Gson gson = new Gson();
 
     @Test

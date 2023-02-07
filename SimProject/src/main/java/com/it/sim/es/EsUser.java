@@ -16,7 +16,7 @@ public class EsUser {
 
     private String name;
 
-    @JsonFormat(pattern = TimeConf.DATE_FORMAT)
+    @JsonFormat(pattern = TimeConf.YYYY_MM_DD)
     private Date birthday;
 
     private String desc;

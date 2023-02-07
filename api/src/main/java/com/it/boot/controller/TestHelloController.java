@@ -1,4 +1,4 @@
-package com.it.boot.controller.test;
+package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enumeration.ResCodeEnum;
@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,8 +29,8 @@ import java.util.*;
 @Slf4j
 @Api(tags = "测试/hello")
 @RestController
-@RequestMapping("/api/HelloController")
-public class HelloController {
+@RequestMapping("/api/TestHelloController")
+public class TestHelloController {
     //	由于spring的RequestParam注解接收的参数是来自于requestHeader中，即请求头，也就是在url中，格式为xxx?username=123&password=456，
     //	而RequestBody注解接收的参数则是来自于requestBody中，即请求体中。
 
@@ -68,8 +69,8 @@ public class HelloController {
     // http://127.0.0.1:9091/hello/name?name= -------输出--"" 空串
     // http://127.0.0.1:9091/hello/name? -------输出--null 没有
     // http://127.0.0.1:9091/hello/name?name=tom&name=kate  // name=tom,kate
-    @ApiOperation(value = "name")
-    @GetMapping("/name")
+    @ApiOperation(value = "name", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/name", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ApiResult<String> name(String name) throws IOException {//
         return ApiResult.success(name);
     }
@@ -171,14 +172,14 @@ public class HelloController {
     }
 
     @GetMapping("/getNativeQuery")
-    @ApiOperation("/getNativeQuery")
+    @ApiOperation("getNativeQuery")
     public ApiResult<TestDateEntity> getNativeQuery() {
         TestDateEntity vo = userJpaRepository.getNativeQuery(1);
         return ApiResult.success(vo);
     }
 
     @GetMapping("/getNativeQuery2")
-    @ApiOperation("/getNativeQuery2")
+    @ApiOperation("getNativeQuery2")
     public ApiResult<TestDateDto> getNativeQuery2() {
         // TestDateDto 需要 @entity标记
         TestDateDto vo = userJpaRepository.getNativeQuery2(1);

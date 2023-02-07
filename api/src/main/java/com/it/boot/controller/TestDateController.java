@@ -1,4 +1,4 @@
-package com.it.boot.controller.test;
+package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
 import com.it.boot.dao.repository.TestDateRepository;
@@ -47,22 +47,22 @@ public class TestDateController {
     @Resource
     private TestDateRepository testDateRepository;
 
+    @ApiOperation("getPage")
     @GetMapping("/getPage")
-    @ApiOperation("/getPage")
     public ApiResult<Page<TestDateEntity>> getPage(Pageable page) {
         Page<TestDateEntity> ret = testDateRepository.findAll(page);
         return ApiResult.success(ret);
     }
 
+    @ApiOperation("create")
     @PostMapping("/create")
-    @ApiOperation("/create")
     public ApiResult<Boolean> create(@RequestBody TestDateEntity entity) {
         testDateRepository.save(entity);
         return ApiResult.success();
     }
 
-    @ApiOperation("/create2")
     @GetMapping("/create2")
+    @ApiOperation("create2")
     public ApiResult<Boolean> create2(Date utilDate, java.sql.Date sqlDate, Time sqlTime, Timestamp sqlTimestamp,
                                       String dateTimeStr, LocalDate localDate, LocalDateTime localDateTime) {
         TestDateEntity entity = new TestDateEntity();
@@ -78,8 +78,8 @@ public class TestDateController {
         return ApiResult.success();
     }
 
+    @ApiOperation("initDate")
     @GetMapping("/initDate")
-    @ApiOperation("/initDate")
     public ApiResult<TestDateEntity> initDate() throws ParseException {
         // jackson 本地时区 utc+7, 影响datetime字段,datetime format 少1小时(utc+7),
         // 但是返回给web,持续减少8小时(8 数据库时间,数据从数据库取值)

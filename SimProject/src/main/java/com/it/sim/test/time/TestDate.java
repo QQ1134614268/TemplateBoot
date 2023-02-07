@@ -85,11 +85,11 @@ public class TestDate {
         @Data
         @AllArgsConstructor
         class User {
-            @JsonFormat(pattern = TimeConf.DATE_TIME_FORMAT)
+            @JsonFormat(pattern = TimeConf.YYYY_MM_DD_HH_MM_SS)
             private Date date;
         }
         String date_time_str = "2000-01-01 00:00:00";
-        SimpleDateFormat sdf = new SimpleDateFormat(TimeConf.DATE_TIME_FORMAT);// 格式化时间
+        SimpleDateFormat sdf = new SimpleDateFormat(TimeConf.YYYY_MM_DD_HH_MM_SS);// 格式化时间
         Date date = sdf.parse(date_time_str);
 
         ObjectMapper objectMapper = new ObjectMapper();
