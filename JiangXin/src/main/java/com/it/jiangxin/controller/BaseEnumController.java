@@ -1,17 +1,18 @@
 package com.it.jiangxin.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.vo.IdPara;
+import com.it.jiangxin.controller.vo.IdsPara;
 import com.it.jiangxin.entity.EnumEntity;
 import com.it.jiangxin.service.EnumService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -57,7 +58,7 @@ public class BaseEnumController {
 
     @ApiOperation(value = "根据id批量删除")
     @PostMapping("/deleteByIds")
-    public ApiResult deleteByIds(@RequestBody IdPara para) {
+    public ApiResult deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(enumService.removeByIds(para.getIds()));
     }
 }

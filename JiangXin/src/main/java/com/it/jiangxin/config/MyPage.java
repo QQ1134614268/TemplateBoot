@@ -20,15 +20,13 @@ public class MyPage<T> implements IPage<T> {
         this.total = 0L;
         this.size = 10L;
         this.current = 1L;
-        this.orders = new ArrayList();
+        this.orders = new ArrayList<>();
     }
 
     public MyPage(long current, long size, long total) {
         this.records = Collections.emptyList();
-        this.total = 0L;
-        this.size = 10L;
         this.current = 1L;
-        this.orders = new ArrayList();
+        this.orders = new ArrayList<>();
         if (current > 1L) {
             this.current = current;
         }
@@ -91,6 +89,6 @@ public class MyPage<T> implements IPage<T> {
     }
 
     public static <T> MyPage<T> of(long current, long size, long total) {
-        return new MyPage(current, size, total);
+        return new MyPage<>(current, size, total);
     }
 }

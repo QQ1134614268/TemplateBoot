@@ -1,10 +1,10 @@
 package com.it.jiangxin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.vo.IdPara;
+import com.it.jiangxin.controller.vo.IdsPara;
 import com.it.jiangxin.entity.EnumEntity;
 import com.it.jiangxin.service.EnumService;
 import io.swagger.annotations.Api;
@@ -56,7 +56,7 @@ public class ImgTypeController extends BaseEnumController {
 
     @ApiOperation(value = "根据id批量删除")
     @PostMapping("/deleteByIds")
-    public ApiResult deleteByIds(@RequestBody IdPara para) {
+    public ApiResult deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(enumService.removeByIds(para.getIds()));
     }
 

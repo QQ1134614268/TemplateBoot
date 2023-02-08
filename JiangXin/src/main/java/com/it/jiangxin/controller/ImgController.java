@@ -4,6 +4,7 @@ package com.it.jiangxin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.vo.IdPara;
+import com.it.jiangxin.controller.vo.IdsPara;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.ImgService;
 import io.swagger.annotations.Api;
@@ -70,7 +71,7 @@ public class ImgController {
 
     @ApiOperation(value = "根据id批量删除")
     @PostMapping("/deleteByIds")
-    public ApiResult<Boolean> deleteByIds(@RequestBody IdPara para) {
+    public ApiResult<Boolean> deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(imgService.removeByIds(para.getIds()));
     }
 
