@@ -7,6 +7,7 @@ import com.it.jiangxin.controller.vo.IdPara;
 import com.it.jiangxin.controller.vo.IdsPara;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.ImgService;
+import com.it.jiangxin.util.BoolUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +49,8 @@ public class ImgController {
     @GetMapping("/getPage")
     public ApiResult<Page<ImgEntity>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
         Page<ImgEntity> list = imgService.lambdaQuery()
-                .eq(ImgEntity::getParentId, imgEntity.getParentId())
-                .eq(imgEntity.getTypeId() != null, ImgEntity::getTypeId, imgEntity.getTypeId())
+                .eq(imgEntity.getParentId()!=null, ImgEntity::getParentId, imgEntity.getParentId())
+                .eq(BoolUtils.toBool(imgEntity.getTypeId()), ImgEntity::getTypeId, imgEntity.getTypeId())
                 .page(page);
         return ApiResult.success(list);
     }

@@ -16,7 +16,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "user")
 @Entity(name = "user")
-@Table(appliesTo = "user", comment = "人事管理/员工档案")
+@Table(appliesTo = "user", comment = "系统用户")
 public class UserEntity extends BaseEntity {
     @ApiModelProperty(value = "用户名", example = "test_1", required = true)
     @Column(unique = true, nullable = false, columnDefinition = "varchar(255) COMMENT '用户名'")
@@ -30,12 +30,12 @@ public class UserEntity extends BaseEntity {
     @ApiModelProperty(value = "手机号码", example = "test_1", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '手机号码'")
     private String phone;
-    @ApiModelProperty(value = "身份证号", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '身份证号'")
-    private String idCard;
-    @ApiModelProperty(value = "性别", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '性别'")
-    private String sex;
+    @ApiModelProperty(value = "昵称", example = "test_1", required = true)
+    @Column(unique = true, nullable = true, columnDefinition = "varchar(255) COMMENT '昵称'")
+    private String nickName;
+    @ApiModelProperty(value = "邮箱", example = "test_1", required = false)
+    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '邮箱'")
+    private String email;
     @ApiModelProperty(value = "出生日期", example = "2020-10-10 00:00:00", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "datetime COMMENT '出生日期'")
     private Date birthDay;

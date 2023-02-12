@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-@Api(tags = "系统/图片类型")
+@Api(tags = "图片类型")
 @RestController
 @RequestMapping("/api/ImgTypeController")
 @Slf4j

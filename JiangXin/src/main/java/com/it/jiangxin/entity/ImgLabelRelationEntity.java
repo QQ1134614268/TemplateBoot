@@ -17,11 +17,11 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "enum")
-@Entity(name = "enum")
-@Table(appliesTo = "enum", comment = "系统枚举")
-@ApiModel(value = "系统枚举表")
-public class EnumEntity extends BaseEntity implements TreeNode {
+@TableName(value = "img_label_relation")
+@Entity(name = "img_label_relation")
+@Table(appliesTo = "img_label_relation", comment = "图片标签关联表")
+@ApiModel(value = "图片标签关联表")
+public class ImgLabelRelationEntity extends BaseEntity implements TreeNode {
 
     @ApiModelProperty(value = "分组code", example = "test_1")
     @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
@@ -58,6 +58,6 @@ public class EnumEntity extends BaseEntity implements TreeNode {
     @Transient
     @TableField(exist = false)
     @ApiModelProperty(value = "子节点")
-    private List<EnumEntity> children = new ArrayList<>();
+    private List<ImgLabelRelationEntity> children = new ArrayList<>();
 
 }

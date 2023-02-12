@@ -1,20 +1,30 @@
 <template>
-  {{ imgs }}
-  <div class="p_c_flexbox">
-    <div :key="o" v-for="o in imgs" class="img_box col-3">
-      <div class="img_box2">
-        <div @click="go(Info)" class="imgContainer p_c_test_border">
-          <img :src="'http://127.0.0.1:29090/api/file/download/'+o.imgUrl" class="img imgCover">
+  <!--  <div>滚动图</div>-->
+
+  <!--  风格 tag标签-->
+  <div class="tagBox">
+    <el-button :key="o" v-for="o  in tagList" @click="initSearch(o.id)">{{ o.value }}</el-button>
+  </div>
+
+  <div class="p_c_flexbox content">
+    <div :key="o" v-for="o in imgs" class="col-3">
+      <div class="img_box">
+        <div class="parent">
+          <a href="https://www.baidu.com">
+            <div class="child">
+              <img :src="'http://127.0.0.1:29090/api/file/download/'+o.imgUrl" class="img">
+            </div>
+          </a>
         </div>
-        <div class="imgDesc">
+        <div class="desc">
           <div class="title">
-            {{ o.description }}
+            中式风格
           </div>
           <div class="star">
-            {{ o.description }}
+            点赞
           </div>
           <div class="avatar">
-            {{ o.description }}
+            头像logo
           </div>
         </div>
       </div>
@@ -23,7 +33,8 @@
 </template>
 <script>
 import {getJson3} from "@/api/http";
-import {getPage} from "@/views/api";
+import {img_getPage} from "@/views/api";
+import {ImgType_getPage} from "@/api/api";
 
 export default {
   name: "Home",
@@ -31,58 +42,68 @@ export default {
     return {
       imgs: [],
       Info: 123,
+      tagList: []
     }
   },
   methods: {
     go(url) {
       this.$router.push(url)
     },
-    async getAllTree() {
+    async initSearch(typeId) {
       let data = {
-        parentId: 0
+        parentId: 0,
+        typeId: typeId
       }
-      let ret = await getJson3(getPage, data)
-      this.imgs =ret.data.records;
+      let ret = await getJson3(img_getPage, data)
+      this.imgs = ret.data.records;
     },
+    async init() {
+      let ret = await getJson3(ImgType_getPage)
+      this.tagList = ret.data.records;
+    }
   },
   created() {
-    this.getAllTree()
+    this.init()
+    this.initSearch()
   }
 }
 </script>
 
 <style scoped lang="less">
-.imgContainer {
-  width: 100%;
-  border: #0b9ef2 solid 1px;
-  height: 300px;
+.tagBox {
   display: flex;
-  flex-direction: column;
-  justify-content:center;
-  //align-content: center;
-  //align-items:center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.content {
+  background-color: #d8dbde;
+}
+
+.parent {
+  position: relative;
+  width: 100%;
   padding-bottom: 75%;
-
-
 }
 
-.img_box{
-  padding: 1rem;
-  border: #b3165f solid 1px;
+.child {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-}
-.img_box2{
-  border: #b098a1 solid 1px;
-  margin: 1rem;
-}
 .img {
   width: 100%;
-  height: 75%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.imgCover {
-  object-fit: cover; //fill contain none scale-down
-
+.img_box {
+  margin: 1rem;
+  background-color: #c6c8c5;
 }
-
 </style>

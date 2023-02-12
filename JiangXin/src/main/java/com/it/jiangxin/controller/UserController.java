@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 
-@Api(tags = "系统/用户")
+@Api(tags = "系统用户")
 @RestController
 @RequestMapping("/api/UserController")
 @Slf4j
