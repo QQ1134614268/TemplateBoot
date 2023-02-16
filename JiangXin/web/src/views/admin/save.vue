@@ -22,7 +22,6 @@
       <el-input v-model="form.name"></el-input>
     </el-form-item>
     <el-form-item label="分类">
-      <el-input v-model="form.typeId"></el-input>
       <el-select v-model="form.typeId" placeholder="请选择">
         <el-option
             v-for="item in options"
@@ -116,6 +115,8 @@ export default {
       }
       // 判断登陆
       // 弹出
+    },
+    async initImgType() {
     },
     async add() {
       this.form.content.push({});

@@ -59,7 +59,7 @@ public class ImgController {
     @GetMapping("/getInfo")
     public ApiResult<ImgEntity> getInfo(IdPara para) {
         ImgEntity e = imgService.getById(para.getId());
-        List<ImgEntity> c = imgService.lambdaQuery().eq(ImgEntity::getParentId, para.getId()).list();
+        List<ImgEntity> c = imgService.lambdaQuery().eq(ImgEntity::getParentId, e.getId()).list();
         e.setChildren(c);
         return ApiResult.success(e);
     }

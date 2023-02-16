@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
-import {Admin, DecorationPlan, Home, Info, MessageBoard, root, save} from "@/views";
-import {ImgType} from "@/views/api";
+import {DecorationPlan, Home, ImgAdmin, Info, MessageBoard, root, save} from "@/views";
+import {admin, AdminHome, adminLogin, AdminMessageBoard, ImgType} from "@/views/api";
 
 export const routes = [
     {
@@ -24,16 +24,38 @@ export const routes = [
         component: () => import('./views/DecorationPlan'),
     },
     {
-        path: Admin,
-        component: () => import('./views/admin/Admin'),
+        path: admin,
+        component: () => import('./views/admin/Home'),
+        children: [
+            {
+                path: AdminHome,
+                component: () => import('./views/admin/Home'),
+                children: []
+            },
+            {
+                path: ImgAdmin,
+                component: () => import('./views/admin/ImgAdmin'),
+            },
+            {
+                path: ImgType,
+                component: () => import('./views/admin/ImgType'),
+            },
+            {
+                path: AdminMessageBoard,
+                component: () => import('./views/admin/MessageBoard'),
+            },
+            {
+                path: save,
+                component: () => import('./views/admin/save'),
+            },
+        ]
+        // redirect: workTimeInfo,
+        // redirect: "/worker/home",
     },
+
     {
-        path: ImgType,
-        component: () => import('./views/admin/domin/ImgType'),
-    },
-    {
-        path: save,
-        component: () => import('./views/save'),
+        path: adminLogin,
+        component: () => import('./views/admin/Login'),
     },
 ];
 

@@ -7,7 +7,6 @@
   </div>
   <div @click="go(Home)"> 首页</div>
   <div @click="go(DecorationPlan)"> 我要装修</div>
-  <div @click="go(MessageBoard)"> 留言板</div>
 </div>
 <div id="body">
   <router-view/>
