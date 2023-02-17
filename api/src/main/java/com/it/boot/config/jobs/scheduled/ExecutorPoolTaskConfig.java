@@ -1,5 +1,5 @@
-package com.it.boot.config.jobs.scheduled;// package com.it.kafka.jobs.scheduled;
-//
+package com.it.boot.config.jobs.scheduled;
+
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
 // import org.springframework.scheduling.annotation.EnableAsync;

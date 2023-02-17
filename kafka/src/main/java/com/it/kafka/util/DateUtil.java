@@ -36,14 +36,14 @@ public class DateUtil {
      * 生成当前年月日字符串
      */
     public static String getCurrentDateStr() {
-        return formatDate(new Date(), ConstConf.DATE_FORMAT);
+        return formatDate(new Date(), ConstConf.YYYY_MM_DD);
     }
 
     /**
      * 生成当前年月日 时分秒字符串
      */
     public static String getCurrentDateTimeStr() {
-        return formatDate(new Date(), ConstConf.DATE_TIME_FORMAT);
+        return formatDate(new Date(), ConstConf.YYYY_MM_DD_HH_MM_SS);
     }
 
 }

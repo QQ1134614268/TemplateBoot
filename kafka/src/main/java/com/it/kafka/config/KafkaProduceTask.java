@@ -26,11 +26,11 @@ public class KafkaProduceTask {
 
         KafkaUser kafkaUser = new KafkaUser();
         kafkaUser.setId(new Random().nextLong());
-        kafkaUser.setName("name-"+ DateUtil.getCurrentDateStr());
+        kafkaUser.setName("name-" + DateUtil.getCurrentDateStr());
         kafkaUser.setAge(1);
-        kafkaUser.setBir(new Date());
-        kafkaUser.setAddress("address"+new Random().nextInt(100));
-        kafkaUser.setIntroduce("introduce"+new Random().nextInt(100));
+        kafkaUser.setBirthTime(new Date());
+        kafkaUser.setAddress("address" + new Random().nextInt(100));
+        kafkaUser.setIntroduce("introduce" + new Random().nextInt(100));
 
         ObjectMapper mapper = new ObjectMapper();
         String msg = mapper.writeValueAsString(kafkaUser);

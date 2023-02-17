@@ -11,10 +11,14 @@ spring:
       group-id: test-group-id
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      # 反序列化value的类 todo 源码  StringSerializer JsonDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     admin:
       client-id: 10001
 

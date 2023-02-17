@@ -20,6 +20,10 @@ public enum AccountEnum implements IEnumDb<AccountEnum> {
         this.value = value;
     }
 
+    public AccountEnum[] values2() {
+        return values();
+    }
+
     @Override
     public String getUniCode() {
         return uniCode;

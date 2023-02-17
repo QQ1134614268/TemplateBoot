@@ -3,7 +3,7 @@ package com.it.jiangxin.config.enum1;
 /**
  * @date 2023-02-01 09:34
  */
-public enum SexEnum implements IEnumDb<AccountEnum> {
+public enum SexEnum implements IEnumDb<SexEnum> {
 
 
     male("male", "男"),
@@ -12,6 +12,10 @@ public enum SexEnum implements IEnumDb<AccountEnum> {
 
     final String uniCode;
     final String value;
+
+    public SexEnum[] values2() {
+        return values();
+    }
 
     SexEnum(String uniCode, String value) {
         this.uniCode = uniCode;

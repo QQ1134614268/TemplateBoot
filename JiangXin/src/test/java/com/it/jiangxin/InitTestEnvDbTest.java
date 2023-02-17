@@ -88,6 +88,13 @@ public class InitTestEnvDbTest {
     }
     @Test
     void test_3_group2_code() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        Class<SexEnum> sexEnumClass = SexEnum.class;
+
+        Class<IEnumDb> iEnumDbClass = IEnumDb.class;
+
+        // ss = SexEnum.values3();
+
         // todo
         // 获取静态方法类型：返回值与参数均为 String
         MethodType methodType = MethodType.methodType(String.class, String.class);

@@ -5,8 +5,9 @@ import org.junit.Test;
 public class TestThreadLocal {
 
     public static ThreadLocal<String> threadLocal = ThreadLocal.withInitial(() -> "-1");
+
     @Test
-    public  void main( ) throws InterruptedException {
+    public void main() throws InterruptedException {
         int i = 1;
         TestThreadLocal.threadLocal.set("789");
         Thread t1 = new Thread(() -> {

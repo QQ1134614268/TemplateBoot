@@ -1,6 +1,7 @@
 package com.it.kafka.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.it.kafka.config.ConstConf;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,8 +14,9 @@ public class KafkaUser {
 
     private Integer age;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date bir;
+    // @DateTimeFormat
+    @JsonFormat(pattern = ConstConf.YYYY_MM_DD_HH_MM_SS) //, timezone = "GMT+8"
+    private Date birthTime;
 
     private String Introduce;
 
