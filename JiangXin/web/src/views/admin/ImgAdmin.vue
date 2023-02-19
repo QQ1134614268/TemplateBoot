@@ -40,7 +40,7 @@
 
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
-import {getAllTree, getContent} from "@/views/api";
+import {getContent} from "@/views/api";
 
 export default {
   name: 'App',
@@ -77,17 +77,13 @@ export default {
       // 判断登陆
       // 弹出
     },
-    async getAllTree() {
-      let ret = await getJson3(getAllTree)
-      return this.tree = ret.data.data;
-    },
     async getContent(id) {
       let para = {
         id: id
       };
       let ret = await getJson3(getContent, para);
       console.log(ret)
-      return this.form = ret.data.data;
+      return this.form = ret.data;
     },
     async updateContent() {
       return this.tree = await getJson3("/api/updateContent");

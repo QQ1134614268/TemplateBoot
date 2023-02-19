@@ -7,11 +7,11 @@ export const imgAdd = "/api/img/create";
 export const ImgType_getPage = "/api/ImgTypeController/getPage"
 
 
+export const HomeDoor = '/HomeDoor';
 export const Home = '/Home';
 export const MessageBoard = '/MessageBoard';
 export const Info = '/Info';
 export const DecorationPlan = '/DecorationPlan';
-export const save = '/save';
 export const root = '/';
 
 export const admin = '/admin';
@@ -19,6 +19,7 @@ export const ImgAdmin = '/admin/img';
 export const AdminHome = '/admin/home';
 export const AdminMessageBoard = '/admin/MessageBoard';
 export const adminLogin = '/admin/login';
+export const adminSave = '/admin/save';
 
 
 export const ImgType = '/Admin/ImgType';

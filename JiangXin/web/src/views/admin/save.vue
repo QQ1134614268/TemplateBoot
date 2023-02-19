@@ -134,7 +134,7 @@ export default {
         id: id
       };
       let ret = await getJson3(getContent, para);
-      this.form = ret.data.data;
+      this.form = ret.data;
     },
     async onSubmit() {
       let data = this.form

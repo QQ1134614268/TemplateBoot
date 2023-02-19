@@ -1,7 +1,10 @@
 <template>
+  <div class="header">
+    <h1>匠心后台管理系统</h1>
+  </div>
   <div class="homeContainer">
     <div class="col-2">
-      <el-menu router active-text-color="#409EFF">
+      <el-menu :default-active="fullPath" router active-text-color="#409EFF">
         <el-menu-item :index="item.menuPath" v-for="(item, index) in menuList" :key="index">
           <i :class="item.menuIcon"></i>
           <span>
@@ -17,14 +20,14 @@
 </template>
 
 <script>
-import {ImgAdmin} from "@/views";
+import {adminSave, ImgAdmin} from "@/views";
 import {adminLogin, AdminMessageBoard, ImgType} from "@/views/api";
-import save from "@/views/admin/save";
 
 export default {
   name: "Home",
   data() {
     return {
+      fullPath: this.$route.fullPath,
       menuList: [
         {
           menuName: "类型",
@@ -38,7 +41,7 @@ export default {
         },
         {
           menuName: "图片2",
-          menuPath: save,
+          menuPath: adminSave,
           menuIcon: "el-icon-connection",
         },
         {
@@ -58,6 +61,11 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: center;
+}
+
 .homeContainer {
   display: flex;
 }

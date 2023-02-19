@@ -1,31 +1,35 @@
 import {createRouter, createWebHistory} from "vue-router";
-import {DecorationPlan, Home, ImgAdmin, Info, MessageBoard, root, save} from "@/views";
-import {admin, AdminHome, adminLogin, AdminMessageBoard, ImgType} from "@/views/api";
+import {adminSave, DecorationPlan, HomeDoor, ImgAdmin, Info, root} from "@/views";
+import {admin, AdminHome, adminLogin, AdminMessageBoard, Home, ImgType} from "@/views/api";
 
 export const routes = [
     {
         path: root,
-        component: () => import('./views/save'),
+        redirect: HomeDoor,
     },
     {
-        path: Home,
-        component: () => import('./views/Home'),
-    },
-    {
-        path: MessageBoard,
-        component: () => import('./views/MessageBoard'),
-    },
-    {
-        path: Info,
-        component: () => import('./views/Info'),
-    },
-    {
-        path: DecorationPlan,
-        component: () => import('./views/DecorationPlan'),
+        path: HomeDoor,
+        component: () => import('./views/HomeDoor'),
+        redirect: Home,
+        children: [
+            {
+                path: Home,
+                component: () => import('./views/Home'),
+            },
+            {
+                path: Info,
+                component: () => import('./views/Info'),
+            },
+            {
+                path: DecorationPlan,
+                component: () => import('./views/DecorationPlan'),
+            },
+        ]
     },
     {
         path: admin,
         component: () => import('./views/admin/Home'),
+        redirect: ImgType,
         children: [
             {
                 path: AdminHome,
@@ -45,14 +49,11 @@ export const routes = [
                 component: () => import('./views/admin/MessageBoard'),
             },
             {
-                path: save,
+                path: adminSave,
                 component: () => import('./views/admin/save'),
             },
         ]
-        // redirect: workTimeInfo,
-        // redirect: "/worker/home",
     },
-
     {
         path: adminLogin,
         component: () => import('./views/admin/Login'),

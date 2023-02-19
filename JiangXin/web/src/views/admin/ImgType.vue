@@ -4,16 +4,21 @@
       新增
     </el-button>
   </div>
-  <div class="p_c_flexbox p_c_border_black p_c_box_grow">
-    <div :key="index" v-for="(type, index) in typeList"
-         class="p_c_color_blue2 p_c_border_black p_c_box_margin p">
-      {{ type.uniqueCode }}
-    </div>
-  </div>
+  <el-table :data="typeList">
+    <el-table-column prop="uniCode" label="uniCode"></el-table-column>
+    <el-table-column prop="value" label="value"></el-table-column>
+    <el-table-column prop="label" label="label"></el-table-column>
+    <el-table-column prop="createTime" label="createTime"></el-table-column>
+    <el-table-column prop="createBy" label="createBy"></el-table-column>
+    <el-table-column prop="status" label="status"></el-table-column>
+    <el-table-column prop="groupCode" label="groupCode"></el-table-column>
+    <el-table-column prop="sort" label="sort"></el-table-column>
+    <el-table-column prop="note" label="note"></el-table-column>
+  </el-table>
   <el-dialog :model-value="flag">
     <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
       <el-form-item label="用户名" prop="username">
-        <el-input v-model="form.uniqueCode" autocomplete="on"></el-input>
+        <el-input v-model="form.uniCode" autocomplete="on"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">提交</el-button>

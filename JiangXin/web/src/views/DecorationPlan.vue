@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       form: {},
-      url: "api/Add",
+      url: "/api/CustomerController/create",
       tagList: []
     }
   },
