@@ -1,13 +1,12 @@
 <template>
   <div style="display: flex">
     <div>
-      <div>欢迎{{}}</div>
       树形结构 -- 增加分类 ;
       {{ typeList }}
-      <el-tree ref="treeRef" :props="defaultProps" lazy     :data="typeList" node-key="id" draggable>
+      <el-tree ref="treeRef" :props="defaultProps" lazy      :data="typeList" node-key="id" draggable>
         <template #default="{ node, data }">
-          {{ node }}
-          {{ data }}
+          <span>{{ node.level }}</span>
+          <span>{{ data }}</span>
         </template>
       </el-tree>
       <div :key="index" v-for="(type, index) in tree" @click="get" style="width: 20rem">

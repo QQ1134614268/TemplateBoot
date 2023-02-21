@@ -1,14 +1,19 @@
 <template>
   <div style="display: flex">
     <div>
-      <div>欢迎{{}}</div>
-      树形结构 -- 增加分类 ;
-      {{ typeList }}
-      <el-tree ref="treeRef" :props="defaultProps" lazy     :data="typeList" node-key="id" draggable>
-        <template #default="{ node, data }">
-          {{ node }}
-          {{ data }}
-        </template>
+      分类
+      <el-tree :data="typeList" node-key="id" :expand-on-click-node="false">
+        <span class="custom-tree-node" slot-scope="{ node, data }">
+          <span>{{ data.uniCode }}</span>
+          <span>
+            <el-button
+                type="text"
+                size="mini"
+                @click="() => alert(data)">
+              Append
+            </el-button>
+          </span>
+      </span>
       </el-tree>
       <div :key="index" v-for="(type, index) in tree" @click="get" style="width: 20rem">
         {{ type.type }}

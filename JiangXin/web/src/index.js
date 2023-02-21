@@ -9,54 +9,54 @@ export const routes = [
     },
     {
         path: HomeDoor,
-        component: () => import('../views/HomeDoor'),
+        component: () => import('@/views/HomeDoor'),
         redirect: Home,
         children: [
             {
                 path: Home,
-                component: () => import('../views/Home'),
+                component: () => import('@/views/Home'),
             },
             {
                 path: Info,
-                component: () => import('../views/Info'),
+                component: () => import('@/views/Info'),
             },
             {
                 path: DecorationPlan,
-                component: () => import('../views/DecorationPlan'),
+                component: () => import('@/views/DecorationPlan'),
             },
         ]
     },
     {
         path: admin,
-        component: () => import('../views/admin/Home'),
+        component: () => import('@/views/admin/Home'),
         redirect: ImgType,
         children: [
             {
                 path: AdminHome,
-                component: () => import('../views/admin/Home'),
+                component: () => import('@/views/admin/Home'),
                 children: []
             },
             {
                 path: ImgAdmin,
-                component: () => import('../views/admin/ImgAdmin'),
+                component: () => import('@/views/admin/ImgAdmin'),
             },
             {
                 path: ImgType,
-                component: () => import('../views/admin/ImgType'),
+                component: () => import('@/views/admin/ImgType'),
             },
             {
                 path: AdminMessageBoard,
-                component: () => import('../views/admin/MessageBoard'),
+                component: () => import('@/views/admin/MessageBoard'),
             },
             {
                 path: adminSave,
-                component: () => import('../views/admin/save'),
+                component: () => import('@/views/admin/save'),
             },
         ]
     },
     {
         path: adminLogin,
-        component: () => import('../views/admin/Login'),
+        component: () => import('@/views/admin/Login'),
     },
 ];
 
