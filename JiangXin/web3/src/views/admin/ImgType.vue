@@ -1,0 +1,75 @@
+<template>
+  <div>
+    <div class="container">
+      <el-button @click="flag=!flag">
+        新增
+      </el-button>
+    </div>
+    <el-table :data="typeList">
+      <el-table-column prop="uniCode" label="uniCode"></el-table-column>
+      <el-table-column prop="value" label="value"></el-table-column>
+      <el-table-column prop="label" label="label"></el-table-column>
+      <el-table-column prop="createTime" label="createTime"></el-table-column>
+      <el-table-column prop="createBy" label="createBy"></el-table-column>
+      <el-table-column prop="status" label="status"></el-table-column>
+      <el-table-column prop="groupCode" label="groupCode"></el-table-column>
+      <el-table-column prop="sort" label="sort"></el-table-column>
+      <el-table-column prop="note" label="note"></el-table-column>
+    </el-table>
+    <el-dialog :model-value="flag">
+      <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="form.uniCode" autocomplete="on"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submit">提交</el-button>
+          <el-button @click="cancel">取消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import {getJson3, postJson3} from "@/api/http";
+import {ImgType_getPage} from "@/api/api";
+
+export default {
+  name: "ImgType",
+  data() {
+    return {
+      typeList: [],
+      flag: false,
+      form: {}
+    }
+  },
+  methods: {
+    async init() {
+      let data = {
+        current: 1,
+        size: 10
+      }
+      let res = await getJson3(ImgType_getPage, data);
+      this.typeList = res.data.records
+    },
+    async submit() {
+      let url = "/api/ImgTypeController/create"
+      let res = await postJson3(url, this.form)
+      this.$message.info("成功")
+      this.flag = !this.flag;
+      await this.init();
+    },
+    async cancel() {
+      this.flag = !this.flag;
+    }
+  },
+  created() {
+    this.init()
+  }
+
+}
+</script>
+
+<style scoped>
+
+</style>
