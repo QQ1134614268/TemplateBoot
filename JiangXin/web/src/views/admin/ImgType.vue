@@ -30,12 +30,12 @@
 
 <script>
 import {getJson3, postJson3} from "@/api/http";
+import {ImgType_getPage} from "@/api/api";
 
 export default {
   name: "ImgType",
   data() {
     return {
-      url: "/api/ImgTypeController/getPage",
       typeList: [],
       flag: false,
       form: {}
@@ -47,7 +47,7 @@ export default {
         current: 1,
         size: 10
       }
-      let res = await getJson3(this.url, data);
+      let res = await getJson3(ImgType_getPage, data);
       this.typeList = res.data.records
     },
     async submit() {
