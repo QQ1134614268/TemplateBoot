@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import './assets/global.css'
+import '@/assets/global.css'
 import '@/assets/g2.css'
 import '@/assets/g3.css'
 import ElementUI from 'element-ui'; //全局引入element
