@@ -6,10 +6,13 @@
       </el-form-item>
       <el-form-item label="风格">
         <el-radio-group v-model="form.styleId" class="styleContent">
-          <div class="typeBox" :key="o" v-for=" o in tagList">
-            <img src="@/assets/logo.jpg">
-            <el-radio :value="o.value" :label="o.uniCode"></el-radio>
-          </div>
+          <el-radio :key="o.id" v-for="o in tagList" :label="o.id">
+            {{ o.label }}
+<!--            <div>-->
+<!--              <img src="@/assets/logo.jpg">-->
+<!--              {{ o.label }}-->
+<!--            </div>-->
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="您的称呼">
@@ -35,7 +38,15 @@ export default {
     return {
       form: {},
       url: "/api/CustomerController/create",
-      tagList: []
+      tagList: [],
+      rules: {
+        username: [
+          {required: true, message: '用户名不能为空', trigger: 'blur'}
+        ],
+        checkPass: [
+          {required: true, message: '密码不能为空', trigger: 'blur'}
+        ],
+      }
     }
   },
   methods: {
@@ -45,11 +56,11 @@ export default {
     },
     async save() {
       this.form.Date = this.getDate()
-      let result = postJson3(this.url, this.form)
-      if (result.data.code == 200) {
-        this.$message(result.data.data);
+      let result = await postJson3(this.url, this.form)
+      if (result.code === 1) {
+        this.$message("操作成功");
       } else {
-        this.$message('保存失败');
+        this.$message('操作失敗');
       }
     },
     getDate() {

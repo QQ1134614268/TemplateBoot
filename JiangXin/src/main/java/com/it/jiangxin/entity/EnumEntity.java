@@ -28,8 +28,8 @@ public class EnumEntity extends BaseEntity implements TreeNode {
     private String groupCode;
 
     @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
-    @Column(unique = true, nullable = true, columnDefinition = "varchar(64) COMMENT '唯一编码'")
-    private String uniCode;
+    @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '唯一编码'")
+    private String uniCode; // todo
 
     @ApiModelProperty(value = "值", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '值'")
@@ -37,7 +37,7 @@ public class EnumEntity extends BaseEntity implements TreeNode {
 
     @ApiModelProperty(value = "值", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '翻译标签'")
-    private String label; // todo
+    private String label;
 
     @ApiModelProperty(value = "相同groupCode下排序", example = "1")
     @Column(columnDefinition = "int(11) COMMENT '相同groupCode下排序'")

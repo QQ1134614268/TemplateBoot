@@ -1,21 +1,11 @@
 <template>
   <div style="display: flex">
-    <div>
-      树形结构 -- 增加分类 ;
-      {{ typeList }}
-      <el-tree ref="treeRef" :props="defaultProps" lazy      :data="typeList" node-key="id" draggable>
-        <template #default="{ node, data }">
-          <span>{{ node.level }}</span>
-          <span>{{ data }}</span>
-        </template>
-      </el-tree>
-      <div :key="index" v-for="(type, index) in tree" @click="get" style="width: 20rem">
-        {{ type.type }}
-        <div :key="index" v-for="(name, index) in type.content" @click="open(name.id)">
-          {{ name.name }}
-        </div>
-      </div>
-    </div>
+    <el-tree ref="treeRef" :props="defaultProps" lazy :data="typeList" node-key="id" draggable>
+      <template #default="{ node, data }">
+        <span>{{ node.level }}</span>
+        <span>{{ data.uniCode }}</span>
+      </template>
+    </el-tree>
     <div style="width: 100%">
       <div>
         <div>首页</div>
@@ -36,9 +26,8 @@
 
 <script>
 
-import {getUserInfoByToken} from "@/api/util";
-import {getJson3, postJson3} from "@/api/http";
-import {getContent} from "@/views/api";
+import {getJson3} from "@/api/http";
+import {api_getContent} from "@/views/api";
 import {ImgType_getPage} from "@/api/api";
 
 export default {
@@ -90,27 +79,9 @@ export default {
       let para = {
         id: id
       };
-      let ret = await getJson3(getContent, para);
+      let ret = await getJson3(api_getContent, para);
       console.log(ret)
       return this.form = ret.data;
-    },
-    async updateContent() {
-      return this.tree = await getJson3("/api/updateContent");
-    },
-    async login() {
-      let res = await postJson3("/api/user/login", this.ruleForm);
-      let token = res.data.data;
-      console.log(res.data);
-      if (res.data.code === 1) {
-        localStorage.setItem("token", token);
-        this.user = getUserInfoByToken();
-        this.dialogVisible = false;
-      } else {
-        this.$message.error('服务器异常');
-      }
-    },
-    async open(id) {
-      await this.getContent(id);
     },
     logout() {
       localStorage.removeItem("token");

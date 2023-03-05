@@ -1,6 +1,6 @@
 import {getJson3} from "@/api/http";
 
-export const getContent = "/api/img/getInfo";
+export const api_getContent = "/api/img/getInfo";
 export const updateTree = "/api/img/updateTree";
 export const img_getPage = "/api/img/getPage";
 export const imgAdd = "/api/img/create";
@@ -25,6 +25,6 @@ export const adminSave = '/admin/save';
 export const ImgType = '/Admin/ImgType';
 
 export async function getAllTree2(data) {
-    let ret = await getJson3(getContent, data)
+    let ret = await getJson3(api_getContent, data)
     return ret.data;
 }

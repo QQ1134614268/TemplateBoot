@@ -3,10 +3,10 @@
 
     <!--  风格 tag标签-->
     <div class="tagBox">
-      <el-button :key="o" v-for="o  in tagList" @click="initSearch(o.id)">{{ o.value }}</el-button>
+      <el-button :key="o.id" v-for="o in tagList" @click="initSearch(o.id)">{{ o.label }}</el-button>
     </div>
     <div class="p_c_flexbox content">
-      <div :key="o" v-for="o in imgs" class="col-3">
+      <div :key="o.id" v-for="o in imgs" class="col-3">
         <div class="img_box">
           <div class="parent">
             <a :href="'/Info?id='+o.id">

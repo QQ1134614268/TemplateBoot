@@ -29,7 +29,7 @@ public interface IEnumDb<T extends IEnumDb<T>> {
         // 数据库引用,所以只能新增?? todo
         for (T accountEnum : values2()) {
             EnumEntity entity = new EnumEntity();
-            entity.setUniCode(accountEnum.getUniCode());
+            // entity.setUniCode(accountEnum.getUniCode());
             entity.setValue(accountEnum.getValue());
             list.add(entity);
         }

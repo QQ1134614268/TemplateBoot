@@ -23,11 +23,9 @@
       </el-form-item>
       <el-form-item label="分类">
         <el-select v-model="form.typeId" placeholder="请选择">
-          <el-option
-              v-for="item in options"
-              :key="item.value"
+          <el-option   v-for="item in options"  :key="item.id"
               :label="item.label"
-              :value="item.value">
+              :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -71,8 +69,8 @@
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
 import WrdImgUpload from "@/components/WrdImgUpload";
-import {getContent, updateTree} from "@/views/api";
-import {FileApi} from "@/api/api";
+import {updateTree} from "@/views/api";
+import {FileApi, ImgType_getPage} from "@/api/api";
 
 export default {
   name: 'App',
@@ -89,10 +87,7 @@ export default {
       user: {},
       close: true,
       dialogVisible: false,
-      options: [{
-        value: 1,
-        label: "中式"
-      }],
+      options: [],
       ruleForm: {
         username: '',
         checkPass: '',
@@ -109,11 +104,16 @@ export default {
   },
   methods: {
     async init() {
-      if (localStorage.getItem("token") !== undefined) {
-        this.user = getUserInfoByToken();
+      let userVO = getUserInfoByToken()
+      debugger
+      if (userVO) {
+        this.user = userVO;
       } else {
         this.dialogVisible = true;
       }
+
+      let ret = await getJson3(ImgType_getPage)
+      this.options = ret.data.records;
       // 判断登陆
       // 弹出
     },
@@ -130,13 +130,6 @@ export default {
       this.$message.success("上传成功");
       type.img = res.data
     },
-    async getContent(id) {
-      let para = {
-        id: id
-      };
-      let ret = await getJson3(getContent, para);
-      this.form = ret.data;
-    },
     async onSubmit() {
       let data = this.form
       this.tree = await postJson3(updateTree, data);
@@ -150,7 +143,7 @@ export default {
   },
   created() {
     this.init();
-    this.getContent(1);
   }
 }
 </script>
+

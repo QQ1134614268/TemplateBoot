@@ -4,7 +4,7 @@
       分类
       <el-tree :data="typeList" node-key="id" :expand-on-click-node="false">
         <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>{{ data.uniCode }}</span>
+          <span>{{ data.label }}</span>
           <span>
             <el-button
                 type="text"

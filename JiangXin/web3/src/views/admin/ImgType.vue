@@ -6,6 +6,7 @@
       </el-button>
     </div>
     <el-table :data="typeList">
+      <el-table-column prop="id" label="id"></el-table-column>
       <el-table-column prop="uniCode" label="uniCode"></el-table-column>
       <el-table-column prop="value" label="value"></el-table-column>
       <el-table-column prop="label" label="label"></el-table-column>
@@ -19,7 +20,7 @@
     <el-dialog :model-value="flag">
       <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.uniCode" autocomplete="on"></el-input>
+          <el-input v-model="form.label" autocomplete="on"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">提交</el-button>
@@ -40,7 +41,26 @@ export default {
     return {
       typeList: [],
       flag: false,
-      form: {}
+      form: {},
+      rules: {
+        parentId: [
+          {required: true, message: "上级部门不能为空", trigger: "blur"}
+        ],
+        email: [
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: ["blur", "change"]
+          }
+        ],
+        phone: [
+          {
+            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+            message: "请输入正确的手机号码",
+            trigger: "blur"
+          }
+        ]
+      }
     }
   },
   methods: {

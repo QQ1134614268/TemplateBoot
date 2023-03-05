@@ -7,7 +7,7 @@
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
 import WrdImgUpload from "@/components/WrdImgUpload";
-import {getContent, updateTree} from "@/views/api";
+import {api_getContent, updateTree} from "@/views/api";
 import {FileApi} from "@/api/api";
 
 export default {
@@ -65,7 +65,7 @@ export default {
       let para = {
         id: id
       };
-      let ret = await getJson3(getContent, para);
+      let ret = await getJson3(api_getContent, para);
       this.form = ret.data.data;
     },
     async onSubmit() {
