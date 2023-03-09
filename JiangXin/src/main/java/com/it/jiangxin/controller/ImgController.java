@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.vo.IdPara;
 import com.it.jiangxin.controller.vo.IdsPara;
+import com.it.jiangxin.entity.EnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
+import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.util.BoolUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,8 @@ import java.util.List;
 public class ImgController {
     @Resource
     private ImgService imgService;
+    @Resource
+    private EnumService enumService;
 
     @ApiOperation(value = "admin/图片管理/新增")
     @PostMapping("/create")
@@ -49,7 +54,7 @@ public class ImgController {
     @GetMapping("/getPage")
     public ApiResult<Page<ImgEntity>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
         Page<ImgEntity> list = imgService.lambdaQuery()
-                .eq(imgEntity.getParentId()!=null, ImgEntity::getParentId, imgEntity.getParentId())
+                .eq(imgEntity.getParentId() != null, ImgEntity::getParentId, imgEntity.getParentId())
                 .eq(BoolUtils.toBool(imgEntity.getTypeId()), ImgEntity::getTypeId, imgEntity.getTypeId())
                 .page(page);
         return ApiResult.success(list);
@@ -59,7 +64,7 @@ public class ImgController {
     @GetMapping("/getInfo")
     public ApiResult<ImgEntity> getInfo(IdPara para) {
         ImgEntity e = imgService.getById(para.getId());
-        if(e==null){
+        if (e == null) {
             return ApiResult.fail("不存在");
         }
         List<ImgEntity> c = imgService.lambdaQuery().eq(ImgEntity::getParentId, e.getId()).list();
@@ -77,6 +82,23 @@ public class ImgController {
     @PostMapping("/deleteByIds")
     public ApiResult<Boolean> deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(imgService.removeByIds(para.getIds()));
+    }
+
+    @ApiOperation(value = "获取图片树形结构")
+    @PostMapping("/getImgTree")
+    public ApiResult<Boolean> getImgTree(@RequestBody IdsPara para) {
+        List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
+        List<ImgEntity> imgs = imgService.list();
+
+        @Data
+        class ImgTreeDto {
+           String id;
+           String label;
+           List<ImgTreeDto> children;
+        }
+        // 构造树  ??
+        // for()
+        return ApiResult.success();
     }
 
 }

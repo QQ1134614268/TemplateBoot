@@ -1,26 +1,29 @@
 <template>
   <div style="display: flex">
+    <el-dialog :title="form.id?'编辑':'新增'" :visible.sync="dialogVisible">
+      <!--            <el-form ref="form" :model="form" style="padding: 1rem">-->
+      <!--              <el-form-item label="取值">-->
+      <!--                <el-input v-model="form.value"></el-input>-->
+      <!--              </el-form-item>-->
+      <!--              <el-form-item label="分组">-->
+      <!--                <el-input v-model="form.group_code"></el-input>-->
+      <!--              </el-form-item>-->
+      <!--              <el-form-item>-->
+      <!--                <el-button type="primary" @click="onSubmit">确定</el-button>-->
+      <!--                <el-button type="primary" @click="onCancel">取消</el-button>-->
+      <!--              </el-form-item>-->
+      <!--            </el-form>-->
+    </el-dialog>
     <div>
       分类
-      <el-tree :data="typeList" node-key="id" :expand-on-click-node="false">
+      <el-tree :data="typeList" :expand-on-click-node="false">
         <span class="custom-tree-node" slot-scope="{ node, data }">
           <span>{{ data.label }}</span>
           <span>
-            <el-button
-                type="text"
-                size="mini"
-                @click="() => alert(data)">
-              Append
-            </el-button>
+            <el-button type="text" size="mini" @click="() => alert('data')">Append</el-button>
           </span>
-      </span>
+        </span>
       </el-tree>
-      <div :key="index" v-for="(type, index) in tree" @click="get" style="width: 20rem">
-        {{ type.type }}
-        <div :key="index" v-for="(name, index) in type.content" @click="open(name.id)">
-          {{ name.name }}
-        </div>
-      </div>
     </div>
     <div style="width: 100%">
       <div>
@@ -42,8 +45,7 @@
 
 <script>
 
-import {getUserInfoByToken} from "@/api/util";
-import {getJson3, postJson3} from "@/api/http";
+import {getJson3} from "@/api/http";
 import {getContent} from "@/views/api";
 import {ImgType_getPage} from "@/api/api";
 
@@ -55,7 +57,6 @@ export default {
       form: {},
       data: [],
       user: {},
-      tree: [],
       close: true,
       dialogVisible: false,
       ruleForm: {
@@ -100,21 +101,6 @@ export default {
       console.log(ret)
       return this.form = ret.data;
     },
-    async updateContent() {
-      return this.tree = await getJson3("/api/updateContent");
-    },
-    async login() {
-      let res = await postJson3("/api/user/login", this.ruleForm);
-      let token = res.data.data;
-      console.log(res.data);
-      if (res.data.code === 1) {
-        localStorage.setItem("token", token);
-        this.user = getUserInfoByToken();
-        this.dialogVisible = false;
-      } else {
-        this.$message.error('服务器异常');
-      }
-    },
     async open(id) {
       await this.getContent(id);
     },
@@ -124,7 +110,6 @@ export default {
   },
   created() {
     this.init();
-    // this.getContent(1);
   }
 }
 </script>

@@ -11,15 +11,20 @@
       <el-table-column prop="value" label="value"></el-table-column>
       <el-table-column prop="label" label="label"></el-table-column>
       <el-table-column prop="createTime" label="createTime"></el-table-column>
-      <el-table-column prop="createBy" label="createBy"></el-table-column>
       <el-table-column prop="status" label="status"></el-table-column>
       <el-table-column prop="groupCode" label="groupCode"></el-table-column>
       <el-table-column prop="sort" label="sort"></el-table-column>
       <el-table-column prop="note" label="note"></el-table-column>
+      <el-table-column label="操作" width="160">
+        <template slot-scope="scope">
+          <el-button size="mini" type="danger" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
-    <el-dialog :model-value="flag">
+    <el-dialog :visible.sync="flag">
       <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
-        <el-form-item label="用户名" prop="username">
+        <el-form-item label="标签" prop="username">
           <el-input v-model="form.label" autocomplete="on"></el-input>
         </el-form-item>
         <el-form-item>
@@ -78,6 +83,12 @@ export default {
       this.$message.info("成功")
       this.flag = !this.flag;
       await this.init();
+    },
+    handleEdit(row) {
+      this.form = row
+      this.dialogVisible = true
+    },
+    async handleDelete() {
     },
     async cancel() {
       this.flag = !this.flag;

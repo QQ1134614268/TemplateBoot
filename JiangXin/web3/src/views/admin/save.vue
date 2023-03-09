@@ -23,9 +23,7 @@
       </el-form-item>
       <el-form-item label="分类">
         <el-select v-model="form.typeId" placeholder="请选择">
-          <el-option   v-for="item in options"  :key="item.id"
-              :label="item.label"
-              :value="item.id">
+          <el-option :key="item.id" v-for="item in options" :label="item.label" :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -105,7 +103,6 @@ export default {
   methods: {
     async init() {
       let userVO = getUserInfoByToken()
-      debugger
       if (userVO) {
         this.user = userVO;
       } else {
