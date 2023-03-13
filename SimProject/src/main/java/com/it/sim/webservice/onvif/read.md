@@ -1,5 +1,5 @@
 # 经常超时,异常, 命名冲突
-wsimport -encoding utf-8 -s ../../../../../ -p com.it.sim.webservice.onvif.client -extension -Xnocompile  E:\workspace\JavaSpace\TemplateBoot\SimProject\src\main\java\com\it\sim\webservice\onvif\devicemgmt.wsdl
+wsimport -encoding utf-8 -s ../../../../../ -p com.it.sim.webservice.onvif.client2 -extension -Xnocompile  E:\workspace\JavaSpace\TemplateBoot\SimProject\src\main\java\com\it\sim\webservice\onvif\devicemgmt.wsdl
 
 # 偶尔成功
 wsimport -encoding utf-8 -s ../../../../../ -extension -Xnocompile  E:\workspace\JavaSpace\TemplateBoot\SimProject\src\main\java\com\it\sim\webservice\onvif\devicemgmt.wsdl
