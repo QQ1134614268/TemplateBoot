@@ -2,8 +2,10 @@ package com.it.sim.json;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.it.sim.json.dto.Book;
 import com.it.sim.config.TimeConf;
+import com.it.sim.json.dto.Book;
+import com.it.sim.json.dto.Country;
+import com.it.sim.json.dto.Result;
 import com.it.sim.util.BuildDataUtil;
 import lombok.Data;
 import org.junit.Test;
@@ -33,7 +35,7 @@ public class TestGson {
     }
 
     @Test
-    public void a() {
+    public void test2() {
         Book book = BuildDataUtil.createData(Book.class);
 
         // GsonBuilder builder = new GsonBuilder();
@@ -64,7 +66,29 @@ public class TestGson {
     }
 
     @Test
-    public void test() {
+    public void test3() {
+        Gson gson = new Gson();
+
+        Result<Country> result = new Result<>();
+        Country country = BuildDataUtil.createData(Country.class);
+        result.setData(country);
+        System.out.println(result);
+
+        String json = gson.toJson(result);
+
+        // 通过泛型函数, 返回的内嵌泛型是hashmap, 取出相当于强制转换, 导致异常报错
+        // return  JSON.parseObject(json, new TypeReference<Result<T>>() {
+        // }.getType());
+        Gson gson1 = new Gson();
+        Result<Country> rr = gson1.fromJson(json, new TypeToken<Result<Country>>() {
+        }.getType());
+        System.out.println(rr);
+        Country country2 = rr.getData();
+        System.out.println(country2);
+    }
+
+    @Test
+    public void testGsonSerializer() {
         @Data
         class TestDemo {
             Date date;

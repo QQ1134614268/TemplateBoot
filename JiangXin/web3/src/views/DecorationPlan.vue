@@ -60,7 +60,7 @@ export default {
       if (result.code === 1) {
         this.$message("操作成功");
       } else {
-        this.$message('操作失敗');
+        this.$message('操作失败');
       }
     },
     getDate() {
@@ -70,9 +70,9 @@ export default {
         month: nowDate.getMonth() + 1,
         date: nowDate.getDate(),
       }
-      const newmonth = date.month > 10 ? date.month : '0' + date.month
+      const newMonth = date.month > 10 ? date.month : '0' + date.month
       const day = date.date > 10 ? date.date : '0' + date.date
-      return date.year + '-' + newmonth + '-' + day
+      return date.year + '-' + newMonth + '-' + day
     },
 
   },

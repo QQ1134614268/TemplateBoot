@@ -2,7 +2,6 @@ package com.it.sim.json;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +12,7 @@ import com.it.sim.json.dto.Result;
 import com.it.sim.util.BuildDataUtil;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +52,7 @@ public class TestJson {
     }
 
     @Test
-    public void testJackson() throws JsonProcessingException {
+    public void testJackson() throws IOException {
 
         Result<List<Country>> country = getData();
 
@@ -91,33 +91,6 @@ public class TestJson {
             }
         }
         return result;
-    }
-
-
-    public static <T> Result<T> test(String json) {
-        // return  JSON.parseObject(json, new TypeReference<Result<T>>() {
-        // }.getType());
-        Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<Result<T>>() {
-        }.getType());
-    }
-
-    @Test
-    public void test2() {
-        Gson gson = new Gson();
-
-        Result<Country> result = new Result<>();
-        Country country = BuildDataUtil.createData(Country.class);
-        result.setData(country);
-        System.out.println(result);
-
-        String json = gson.toJson(result);
-
-        // 通过泛型函数, 返回的内嵌泛型是hashmap, 取出相当于强制转换, 导致异常报错
-        Result<Country> rr = test(json);
-        System.out.println(rr);
-        Country country2 = rr.getData();
-        System.out.println(country2);
     }
 }
 
