@@ -119,18 +119,16 @@ export function toTree(arr) {
 }
 
 export function getUserInfoByToken() {
-    if (localStorage.getItem(TOKEN) !== undefined && localStorage.getItem(TOKEN) !== '') {
+    let token = localStorage.getItem(TOKEN);
+    console.log(token);
+    if (token) {
         try {
-            return jwt_decode(localStorage.getItem(TOKEN));
+            return jwt_decode(token);
         } catch (ex) {
             console.log('捕获到异常：', ex);
         }
     }
-    return undefined;
-}
-
-export function getToken() {
-    return localStorage.getItem(TOKEN);
+    return null;
 }
 
 export function getUserIdByToken() {

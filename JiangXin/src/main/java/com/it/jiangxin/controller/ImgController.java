@@ -2,9 +2,11 @@ package com.it.jiangxin.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.vo.IdPara;
 import com.it.jiangxin.controller.vo.IdsPara;
+import com.it.jiangxin.controller.vo.ImgTreeDto;
 import com.it.jiangxin.entity.EnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.EnumService;
@@ -12,13 +14,14 @@ import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.util.BoolUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Api(tags = "匠心/图片")
@@ -86,19 +89,29 @@ public class ImgController {
 
     @ApiOperation(value = "获取图片树形结构")
     @PostMapping("/getImgTree")
-    public ApiResult<Boolean> getImgTree(@RequestBody IdsPara para) {
-        List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
-        List<ImgEntity> imgs = imgService.list();
+    public ApiResult<List<ImgTreeDto>> getImgTree(@RequestBody IdsPara para) {
+        // List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
+        // List<ImgEntity> imgs = imgService.list();
 
-        @Data
-        class ImgTreeDto {
-           String id;
-           String label;
-           List<ImgTreeDto> children;
+        // MPJLambdaWrapper<ConsumeGoodsRecordEntity> wrapper = new MPJLambdaWrapper<>();
+        // wrapper.leftJoin(ConsumeGoodsEntity.class, ConsumeGoodsEntity::getId, ConsumeGoodsRecordEntity::getConsumeGoodsId);
+        // wrapper.leftJoin(EnumEntity.class, EnumEntity::getId, ConsumeGoodsEntity::getTypeId);
+        // wrapper.between(toBool(qo.getStartTime()), ConsumeGoodsRecordEntity::getLendTime, qo.getStartTime(), qo.getEndTime());
+        // wrapper.like(toBool(qo.getSearch()), ConsumeGoodsEntity::getGoodsName, qo.getSearch());
+        // wrapper.eq(toBool(qo.getTypeId()), ConsumeGoodsEntity::getTypeId, qo.getTypeId());
+        // wrapper.select(ConsumeGoodsEntity::getGoodsName, ConsumeGoodsEntity::getModel, ConsumeGoodsEntity::getUnit);
+        // wrapper.selectAs(EnumEntity::getValue, ConsumeGoodsRecordDto::getTypeName);
+        // wrapper.select(ConsumeGoodsRecordEntity::getLendName, ConsumeGoodsRecordEntity::getChangeNum, ConsumeGoodsRecordEntity::getLendTime);
+        // return ApiResult.success(consumeGoodsRecordMapper.selectJoinPage(page, ConsumeGoodsRecordDto.class, wrapper));
+
+        MPJLambdaWrapper<EnumEntity> wrapper = new MPJLambdaWrapper<>();
+        List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
+        List<ImgEntity> imgs = imgService.list();
+        for (ImgTreeDto re : res) {
+            List<ImgEntity> imgs1 = imgs.stream().filter(vo -> Objects.equals(vo.getTypeId(), re.getId())).collect(Collectors.toList());
+            re.setImgEntityList(imgs1);
         }
-        // 构造树  ??
-        // for()
-        return ApiResult.success();
+        return ApiResult.success(res);
     }
 
 }
