@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @date 2022-10-11 11:54
@@ -24,7 +25,7 @@ public class TestThreadDaemon {
         // 单元测试:多线程方法不执行深度解析
         // 核心问题在于：在子线程结束执行前并未将主线程阻塞，主线程结束后，jvm直接退出
 
-        // @Test执行:  test方法运行在主线程中，外层函数执行完test等操作后执行System.exit来退出虚拟机，这个时候thread可能还没执行完，就被销毁了。
+        // @Test执行: test方法运行在主线程中，外层函数执行完test等操作后执行System.exit来退出虚拟机，这个时候thread可能还没执行完，就被销毁了。
         // Main方法: 启动完thread后，主线程结束，但是只有还有普通线程（非守护线程），虚拟机就不会主动退出，
         //   而我们也没有写代码让虚拟机退出，因此虚拟机需等待thread运行完毕才退出。因此打印出了子线程结束。
         new Thread(() -> {
@@ -44,12 +45,12 @@ public class TestThreadDaemon {
     }
 
     @Test
-    public void thread() {
-
-        System.out.println("主");
+    public void thread() throws ExecutionException, InterruptedException {
+        log.info("主线程");
         CompletableFuture<Void> f = CompletableFuture.runAsync(() -> {
-            System.out.println("子");
-            System.out.println("" + Thread.currentThread().isDaemon());
-        }).whenComplete((r, e) -> System.out.println("b"));
+            log.info("子线程,isDaemon: {}", Thread.currentThread().isDaemon());
+        }).whenComplete((r, e) -> log.info("whenComplete"));
+        f.get();
+        log.info("真正结束");
     }
 }

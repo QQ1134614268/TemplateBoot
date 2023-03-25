@@ -1,12 +1,14 @@
 package com.it.sim.thread;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TestThreadGroup {
 
     public static void main(String[] args) {
         String currentName = Thread.currentThread().getName();
         String groupName = Thread.currentThread().getThreadGroup().getName();
-        System.out.println("线程名称: " + currentName + ", 所在线程组: " + groupName);
-        System.out.println();
+        log.info("线程名称: " + currentName + ", 所在线程组: " + groupName);
         // Thread.getAllStackTraces();
         // Thread.activeCount(); // 等于 currentThread().getThreadGroup().activeCount();
         // Thread.currentThread().getName(); .getStackTrace(); .getThreadGroup();
@@ -25,7 +27,7 @@ public class TestThreadGroup {
         public void run() {
             String currentName = Thread.currentThread().getName();
             String groupName = Thread.currentThread().getThreadGroup().getName();
-            System.out.println("线程名称: " + currentName + ", 所在线程组: " + groupName);
+            log.info("线程名称: " + currentName + ", 所在线程组: " + groupName);
         }
     }
 }

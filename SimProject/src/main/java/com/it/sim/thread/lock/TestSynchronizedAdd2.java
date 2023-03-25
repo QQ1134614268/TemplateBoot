@@ -3,11 +3,11 @@ package com.it.sim.thread.lock;
 /**
  * @date 2022-10-11 16:25
  */
-class TestSynchronized322 {
+public class TestSynchronizedAdd2 {
     JManager j = new JManager();
 
     public static void main(String[] args) {
-        new TestSynchronized322().call();
+        new TestSynchronizedAdd2().call();
 
     }
 

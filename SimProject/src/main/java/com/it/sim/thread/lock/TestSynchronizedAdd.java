@@ -1,12 +1,15 @@
 package com.it.sim.thread.lock;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TestSynchronizedAdd {
     private int j;
 
     public static void main(String[] args) {
-        TestSynchronizedAdd tt = new TestSynchronizedAdd();
-        Inc inc = tt.new Inc();
-        Dec dec = tt.new Dec();
+        TestSynchronizedAdd temp = new TestSynchronizedAdd();
+        Inc inc = temp.new Inc();
+        Dec dec = temp.new Dec();
         for (int i = 0; i < 2; i++) {
             Thread t = new Thread(inc);
             t.start();
@@ -17,12 +20,12 @@ public class TestSynchronizedAdd {
 
     private synchronized void inc() {
         j++;
-        System.out.println(Thread.currentThread().getName() + "-inc:" + j);
+        log.info(Thread.currentThread().getName() + "-inc:" + j);
     }
 
     private synchronized void dec() {
         j--;
-        System.out.println(Thread.currentThread().getName() + "-dec:" + j);
+        log.info(Thread.currentThread().getName() + "-dec:" + j);
     }
 
     class Inc implements Runnable {
