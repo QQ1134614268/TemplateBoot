@@ -61,6 +61,11 @@
             <version>3.5.1</version>
         </dependency>
         <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
@@ -84,13 +89,8 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.3</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-            <version>3.5.1</version>
         </dependency>
         <!-- 配置gson -->
         <dependency>
@@ -105,7 +105,7 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-        <!--糊涂工具包-->
+        <!--糊涂工具包 todo 替代-->
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -123,11 +123,6 @@
             <artifactId>java-jwt</artifactId>
             <version>3.12.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yulichang</groupId>
-            <artifactId>mybatis-plus-join</artifactId>
-            <version>1.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

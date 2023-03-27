@@ -3,7 +3,10 @@ package com.it.boot.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
+import com.it.boot.dao.UserDto;
+import com.it.boot.dto.IdPara;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.service.UserBatisService;
 import io.swagger.annotations.Api;
@@ -58,6 +61,19 @@ public class UserBatisController {
     @GetMapping("/join")
     public ApiResult<IPage<UserEntity>> join(Page<UserEntity> page, List<Integer> ids) {
         return userBatisService.join(page, ids);
+    }
+
+    @ApiOperation(value = "mybatis查询返回dto")
+    @GetMapping("/projection")
+    public ApiResult<List<UserDto>> projection(IdPara page) {
+        MPJLambdaWrapper<UserEntity> wrapper = new MPJLambdaWrapper<>();
+        wrapper.eq(UserEntity::getId, page.getId());
+        // wrapper.selectAs();
+        // wrapper.leftJoin();
+        // wrapper.selectFunc()
+        // wrapper.selectAll()
+        List<UserDto> res = userBatisService.getBaseMapper().selectJoinList(UserDto.class, wrapper);
+        return ApiResult.success(res);
     }
 
     @ApiOperation(value = "测试mybatis 注解查询")
