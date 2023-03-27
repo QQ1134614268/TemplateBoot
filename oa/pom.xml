@@ -105,14 +105,7 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-        <!--糊涂工具包 todo 替代-->
-        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
-            <version>5.7.20</version>
-            <scope>test</scope>
-        </dependency>
+        <!-- 类 生成表-->
         <dependency>
             <groupId>com.gitee.sunchenbin.mybatis.actable</groupId>
             <artifactId>mybatis-enhance-actable</artifactId>

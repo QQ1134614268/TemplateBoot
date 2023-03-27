@@ -6,6 +6,7 @@ import java.util.Random;
 public class StringUtil {
 
     public final static String codes = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static char UNDERLINE = '_';
 
     /**
      * 判断字符串是否为空白
@@ -48,5 +49,38 @@ public class StringUtil {
             sb.append(codes.charAt(random.nextInt(codes.length())));
         }
         return sb.toString();
+    }
+
+    public static String toCamelCase(String name) {
+        if (null == name) {
+            return null;
+        }
+        if (name.contains(String.valueOf(UNDERLINE))) {
+            final int length = name.length();
+            final StringBuilder sb = new StringBuilder(length);
+            boolean upperCase = false;
+            for (int i = 0; i < length; i++) {
+                char c = name.charAt(i);
+
+                if (c == UNDERLINE) {
+                    upperCase = true;
+                } else if (upperCase) {
+                    sb.append(Character.toUpperCase(c));
+                    upperCase = false;
+                } else {
+                    sb.append(Character.toLowerCase(c));
+                }
+            }
+            return sb.toString();
+        } else {
+            return name;
+        }
+    }
+
+    public static String upperFirst(String str) {
+        if (null == str || str.length() == 0) {
+            return str;
+        }
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
 }

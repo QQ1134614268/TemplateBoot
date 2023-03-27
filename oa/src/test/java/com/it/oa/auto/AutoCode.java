@@ -1,9 +1,10 @@
 package com.it.oa.auto;
 
-import cn.hutool.core.util.StrUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.it.oa.util.BuildDataUtil;
 import com.it.oa.util.DateUtil;
+import com.it.oa.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,8 @@ public class AutoCode {
         //
         Gson gson = new Gson();
         String json = gson.toJson(a);
-        Map<String, Object> map = gson.fromJson(json, Map.class);
+        Map<String, Object> map = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
+        }.getType());
         VelocityContext context = new VelocityContext(map);
 
         Properties p = new Properties();
@@ -52,8 +54,8 @@ public class AutoCode {
         TableInfo tableInfo = jdbcTemplate.queryForObject(tableSql, args, new BeanPropertyRowMapper<>(TableInfo.class));
         Assertions.assertNotNull(tableInfo);
         tableInfo.tableName = tableName;
-        tableInfo.tableLowerCamel = StrUtil.toCamelCase(tableName);
-        tableInfo.tableUpperCamel = StrUtil.upperFirst(tableInfo.tableLowerCamel);
+        tableInfo.tableLowerCamel = StringUtil.toCamelCase(tableName);
+        tableInfo.tableUpperCamel = StringUtil.upperFirst(tableInfo.tableLowerCamel);
 
         tableInfo.classFullName = String.format(fmt, tableInfo.tableUpperCamel);
         String tmp = tableInfo.classFullName.substring(0, tableInfo.classFullName.lastIndexOf("."));
@@ -74,7 +76,7 @@ public class AutoCode {
 
             field.javaType = TypeConvert.columnTypeToJavaType(field.data_type);
             field.javaColumnComment = field.column_comment;
-            field.javaColumnName = StrUtil.toCamelCase(field.column_name);
+            field.javaColumnName = StringUtil.toCamelCase(field.column_name);
             field.javaColumnExample = String.valueOf(BuildDataUtil.getValue(TypeConvert.toJavaType(field.data_type)));
             field.unique = "UNI".equals(field.column_key);
             field.nullable = "YES".equals(field.is_nullable);
