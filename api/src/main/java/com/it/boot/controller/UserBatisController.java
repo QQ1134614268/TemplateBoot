@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
 import com.it.boot.dao.UserDto;
-import com.it.boot.dto.IdPara;
+import com.it.boot.dto.IdVo;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.service.UserBatisService;
 import io.swagger.annotations.Api;
@@ -65,9 +65,9 @@ public class UserBatisController {
 
     @ApiOperation(value = "mybatis查询返回dto")
     @GetMapping("/projection")
-    public ApiResult<List<UserDto>> projection(IdPara page) {
+    public ApiResult<List<UserDto>> projection(IdVo idVo) {
         MPJLambdaWrapper<UserEntity> wrapper = new MPJLambdaWrapper<>();
-        wrapper.eq(UserEntity::getId, page.getId());
+        wrapper.eq(UserEntity::getId, idVo.getId());
         // wrapper.selectAs();
         // wrapper.leftJoin();
         // wrapper.selectFunc()

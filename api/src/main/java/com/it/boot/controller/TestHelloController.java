@@ -8,6 +8,7 @@ import com.it.boot.dao.projection.UserProjection;
 import com.it.boot.dao.repository.UserJpaRepository;
 import com.it.boot.dto.MessageDto;
 import com.it.boot.dto.TestDateDto;
+import com.it.boot.dto.TimeRangeQo;
 import com.it.boot.dto.UserOnly;
 import com.it.boot.entity.TestDateEntity;
 import com.it.boot.entity.UserEntity;
@@ -17,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -214,5 +216,11 @@ public class TestHelloController {
         dto.setTitle(title);
         dto.setContent(content);
         redisUtils.convertAndSend(topic, dto);
+    }
+
+    @ApiOperation(value = "发布redis消息")
+    @GetMapping("/testValidated")
+    public ApiResult<TimeRangeQo> testValidated(@Validated TimeRangeQo qo) {
+        return ApiResult.success(qo);
     }
 }
