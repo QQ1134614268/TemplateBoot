@@ -37,4 +37,19 @@ public class KafkaProduceTask {
         String msg = mapper.writeValueAsString(kafkaUser);
         kafkaTemplate.send(Topics.USER_TOPIC, msg);
     }
+
+    @Scheduled(cron = "0/20 * * * * ?")
+    public void cron2() {
+        log.info("生产者- 对象数据存入kafka");
+
+        KafkaUser kafkaUser = new KafkaUser();
+        kafkaUser.setId(new Random().nextLong());
+        kafkaUser.setName("name-" + DateUtil.getCurrentDateStr());
+        kafkaUser.setBirthTime(new Date());
+        kafkaUser.setAge(1);
+        kafkaUser.setAddress("address" + new Random().nextInt(100));
+        kafkaUser.setIntroduce("introduce" + new Random().nextInt(100));
+
+        kafkaTemplate.send(Topics.USER_TOPIC_OBJECT, kafkaUser);
+    }
 }

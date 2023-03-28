@@ -15,6 +15,6 @@ public class KafkaInitialConfiguration {
     // 修改分区数并不会导致数据的丢失，但是分区数只能增大不能减小
     @Bean
     public NewTopic initialTopic2() {
-        return new NewTopic(Topics.USER_TOPIC_2, 2, (short) 2);
+        return new NewTopic(Topics.USER_TOPIC_OBJECT, 2, (short) 2);
     }
 }

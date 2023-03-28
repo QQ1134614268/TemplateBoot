@@ -7,6 +7,7 @@ import com.it.kafka.entity.KafkaUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.PartitionInfo;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -78,5 +79,26 @@ public class KafkaController {
         return retList;
     }
 
+    public void manHandelDemo() {
+        // 手动配置 获取数据 demo
+        Properties properties = new Properties();
+        try (KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(properties);) {
+
+            kafkaConsumer.subscribe(Collections.singletonList(Topics.USER_TOPIC));
+            // kafkaConsumer.listTopics();
+            // kafkaConsumer.beginningOffsets();
+            // kafkaConsumer.endOffsets();
+            // kafkaConsumer.assign();
+            // kafkaConsumer.position();
+            // kafkaConsumer.seek();
+            // kafkaConsumer.paused();
+            // kafkaConsumer.unsubscribe();
+            // kafkaConsumer.commitSync();
+
+            for (ConsumerRecord<String, String> consumerRecord : kafkaConsumer.poll(Duration.of(10, ChronoUnit.SECONDS))) {
+                log.info("{}", consumerRecord);
+            }
+        }
+    }
 }
 
