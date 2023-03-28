@@ -3,22 +3,16 @@ server:
 spring:
   jackson:
     time-zone: GMT+8
-  elasticsearch:
-    uris: 159.75.92.195:9200
   kafka:
-    bootstrap-servers: 159.75.92.195:9092
+    bootstrap-servers: 127.0.0.1:9092
     consumer:
       group-id: test-group-id
       enable-auto-commit: true
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      # key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer # 默认: org.apache.kafka.common.serialization.StringSerializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      # 反序列化value的类 todo 源码  StringSerializer JsonDeserializer
-#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # 默认(String 需要自己转对象): org.apache.kafka.common.serialization.StringSerializer
     admin:
       client-id: 10001
 

@@ -1,7 +1,8 @@
-package com.it.kafka.config;
+package com.it.kafka.task;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.it.kafka.config.Topics;
 import com.it.kafka.entity.KafkaUser;
 import com.it.kafka.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
