@@ -1,7 +1,8 @@
-package com.it.boot.config.gen;
+package com.it.boot.gencode;
 
 import com.it.boot.entity.UserEntity;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,6 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SpringBootTest
 public class ScriptTest {
     String systemPath = System.getProperty("user.dir");
 

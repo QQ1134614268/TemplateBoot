@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpClientTest {
-    @Autowired
-    TestHelloController api;
     Gson gson = new Gson();
 
     @Test

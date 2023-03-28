@@ -33,18 +33,6 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class TestReadFile {
 
-
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        StringBuilder resultStringBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                resultStringBuilder.append(line).append("\n");
-            }
-        }
-        return resultStringBuilder.toString();
-    }
-
     // 当前类的ClassLoader的getResourceAsStream方法，入参路径是从classpath开始。
     // 而类实例的入参是相对于包路径，但路径开始使用'/'符号， 也是绝对路径。
     @Test
@@ -242,5 +230,16 @@ public class TestReadFile {
         InputStream inputStream = clazz.getResourceAsStream("/LICENSE-junit.txt");
         String data = readFromInputStream(inputStream);
         MatcherAssert.assertThat(data, CoreMatchers.containsString(expectedData));
+    }
+
+    private String readFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder resultStringBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                resultStringBuilder.append(line).append("\n");
+            }
+        }
+        return resultStringBuilder.toString();
     }
 }
