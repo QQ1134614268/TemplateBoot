@@ -1,4 +1,4 @@
-package com.it.boot.gencode;
+package com.it.boot.config.gen;
 
 import com.google.gson.Gson;
 import com.it.boot.TemplateBootApplication;

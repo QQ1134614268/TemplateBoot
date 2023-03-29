@@ -1,4 +1,4 @@
-package com.it.boot.gencode;
+package com.it.boot.config.gen;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;

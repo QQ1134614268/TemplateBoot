@@ -1,36 +1,23 @@
 package com.it.boot.config.exception;
 
+import com.it.boot.config.enumeration.ResCodeEnum;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ExcelException extends Exception {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+
     private String message;
     private Integer code;
-    private Object data;
 
-    public String getMessage() {
-        return message;
+    public ExcelException(String msg) {
+        this(ResCodeEnum.RES_EXCEPTION.getCode(), msg);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
+    public ExcelException(Integer code, String msg) {
         this.code = code;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
+        this.message = msg;
     }
 
 }

@@ -3,16 +3,18 @@ package com.it.sim.algorithm;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author zero DateTime 2018年6月25日 下午8:41:10
- * @ : <a href="https://www.cnblogs.com/onepixel/articles/7674659.html">...</a>
+ * <p>
+ * <a href="https://www.cnblogs.com/onepixel/articles/7674659.html">...</a>
  */
-@SuppressWarnings("ALL")
-public class SortsMethod {
+
+public class SortsMethodTest {
 
     /* 冒泡 */
-    public static void maopao(int[] array) {
+    public static void bubble(int[] array) {
         int len = array.length;
         int temp;
         for (int i = 0; i < len - 1; i++) {
@@ -27,7 +29,7 @@ public class SortsMethod {
     }
 
     /* 直接选择排序 */
-    public static void zhijiexuanze(int[] array) {
+    public static void straightSelectSort(int[] array) {
         int len = array.length;
         int temp, n;
         for (int i = 0; i < len - 1; i++) {
@@ -63,8 +65,12 @@ public class SortsMethod {
         }
     }
 
-    /* 快速排序 */// 挖坑填数,递归 --分治法
-    public static void kuaisupaixu(int[] array, int start, int end) {
+    /**
+     * 快速排序
+     * <p>
+     * 挖坑填数,递归 --分治法
+     */
+    public static void quickSort(int[] array, int start, int end) {
         if (start >= end)
             return;
         int left = start, right = end;
@@ -83,17 +89,17 @@ public class SortsMethod {
             }
         }
         array[left] = std;
-        kuaisupaixu(array, start, left - 1);
-        kuaisupaixu(array, right + 1, end);
+        quickSort(array, start, left - 1);
+        quickSort(array, right + 1, end);
     }
 
     /* 快速排序 */
-    public static void kuaisupaixu2(int[] array, int start, int end) {
+    public static void quickSort2(int[] array, int start, int end) {
         // 交换排序---快速排序
 
 //        快速排序是交互排序的一种，实质上是对冒泡排序的一种改进，快速排序的基本思想是，在n个记录中取某一个记录的键值为标准，
 //		通常取第一个记录键值为基准，通过一趟排序将待排的记录分为小于或等于这个键值的两个独立的部分，这是一部分的记录键值均比另一部分记录的键值小，
-//		然后，对这两部分记录继续分别进行快速排序，以达到整个序列有序，我们来看下面的一张图：
+//		然后，对这两部分记录继续分别进行快速排序，以达到整个序列有序
     }
 
     /* 希尔排序 */// 找一个数列 插入排序,数列最终为1,插入排序...
@@ -113,7 +119,7 @@ public class SortsMethod {
 
     /* 计数排序 */
     public static void countSort(int[] array) {
-        int min = array[0], max = array[0], len = array.length;
+        int min = array[0], max = array[0];
         for (int j : array) {
             min = Math.min(j, min);
             max = Math.max(j, max);
@@ -168,7 +174,7 @@ public class SortsMethod {
         // 先把A[]数组构建成一个大顶堆。
         // 从完全二叉树的最下层最右边的非终端结点开始构建。
         for (i = len / 2 - 1; i >= 0; i--) {
-            HeapAdjust(array, i, len);
+            heapAdjust(array, i, len);
         }
 
         // 开始遍历
@@ -177,12 +183,12 @@ public class SortsMethod {
             array[0] = array[i];
             array[i] = temp;
             // 每交换一次得到一个最大值然后丢弃
-            HeapAdjust(array, 0, i);
+            heapAdjust(array, 0, i);
         }
     }
 
     // A[i]代表的是下标为i的根结点
-    private static void HeapAdjust(int[] A, int i, int n) {
+    private static void heapAdjust(int[] A, int i, int n) {
         // 【注意】这里下标从0开始
         int temp;
         // 存储根结点
@@ -242,24 +248,6 @@ public class SortsMethod {
             }
         }
     }
-    // // /* 参数 */ 每次返回一套参数
-    // public static Object canshu(String str, int n)
-    // {
-    // int[] array = null;
-    // int[] array1 = new int[] { 0 };
-    // int[] array2 = new int[] { 9, 6 };
-    // int[] array3 = new int[] { 9, 6, 3, 8, 5, 2, 0, 7, 4, 1 };
-    // int[] array4 = new int[] { 9, 6, 1, 0, 5, 6, 0, 6, 1, 6 };
-    // for (int i = 0; i < n; i++)
-    // {
-    // if (i == 0)
-    // {
-    // return array;
-    // }
-    // }
-    // return array3;
-    //
-    // }
 
     public static void main(String[] args) {
         Random random = new Random(20);
@@ -270,7 +258,7 @@ public class SortsMethod {
         for (int j = 0; j < 100; j++) {
             arr = shuffle(arr);
             int[] a = arr.clone();
-            bucketSort(arr); // TODO 传入方法 参数
+            bucketSort(arr);
             for (int i = 0; i < arr.length - 1; i++) {
                 if (arr[i] > arr[i + 1]) {
                     System.err.println(
@@ -288,14 +276,9 @@ public class SortsMethod {
     }
 
     private static int[] shuffle(int[] arr) { // 传入一个数组,如果数组没有重新赋值,修改就会返回,重新赋值需要return
-        Integer[] integers = new Integer[arr.length];
-        for (int j = 0; j < integers.length; j++) {
-            integers[j] = arr[j];
-        }
-        List<Integer> list = Arrays.asList(integers);
+        List<Integer> list = Arrays.stream(arr).boxed().collect(Collectors.toList());
         Collections.shuffle(list);
-        integers = list.toArray(new Integer[arr.length]);
-        return Arrays.stream(integers).mapToInt(Integer::valueOf).toArray();
+        return list.stream().mapToInt(Integer::valueOf).toArray();
     }
 
     @Test
@@ -400,7 +383,7 @@ public class SortsMethod {
         Arrays.parallelSort(arrayPS1);
         arrayPrint(arrayPS1);
         // 对指定下标范围内的元素进行指定排序方法的排序，含头不含尾
-        Arrays.parallelSort(arrayPS1, 0, 5, (x, y) -> y.compareTo(x));
+        Arrays.parallelSort(arrayPS1, 0, 5, Comparator.reverseOrder());
         arrayPrint(arrayPS1);
 
         //12.

@@ -9,8 +9,6 @@ import java.util.Date;
 @Data
 public class UserExportVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @ExcelExport(position = 0, columnName = "用户id")
     private Integer id;
 

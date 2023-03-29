@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class MyPage<T> implements IPage<T> {
-    private static final long serialVersionUID = 8545996863226528798L;
     protected List<T> records;
     protected long total;
     protected long size;

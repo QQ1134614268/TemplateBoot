@@ -1,9 +1,7 @@
 package com.it.jiangxin;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.FixMethodOrder;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;

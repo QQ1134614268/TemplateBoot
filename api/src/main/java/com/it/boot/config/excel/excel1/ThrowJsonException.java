@@ -1,16 +1,16 @@
 package com.it.boot.config.excel.excel1;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ThrowJsonException extends RuntimeException {
 
-    private static final long serialVersionUID = 2074723225554638558L;
-
     public ThrowJsonException(Integer code, String msg) {
+        super(msg);
         this.code = code;
         this.msg = msg;
-
     }
 
     private Integer code;

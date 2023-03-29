@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
@@ -21,9 +22,6 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * todo
@@ -60,7 +58,7 @@ public class TestReadFile {
         File file = new File(Objects.requireNonNull(classLoader.getResource("a.txt")).getFile());
         String data = FileUtils.readFileToString(file, "UTF-8");
 
-        assertEquals(expectedData, data.trim());
+        Assert.assertEquals(expectedData, data.trim());
     }
 
     @Test
@@ -70,7 +68,7 @@ public class TestReadFile {
         FileInputStream fis = new FileInputStream("src/test/resources/a.txt");
         String data = IOUtils.toString(fis, "UTF-8");
 
-        assertEquals(expectedData, data.trim());
+        Assert.assertEquals(expectedData, data.trim());
     }
 
     // 4.BufferedReader
@@ -83,7 +81,7 @@ public class TestReadFile {
         String currentLine = reader.readLine();
         reader.close();
 
-        assertEquals(expected_value, currentLine);
+        Assert.assertEquals(expected_value, currentLine);
     }
 
     // 5.Java NIO
@@ -95,7 +93,7 @@ public class TestReadFile {
         Path path = Paths.get("src/test/resources/a.txt");
 
         String read = Files.readAllLines(path).get(0);
-        assertEquals(expected_value, read);
+        Assert.assertEquals(expected_value, read);
     }
 
     // 5.2读取大文件
@@ -106,7 +104,7 @@ public class TestReadFile {
         Path path = Paths.get("src/test/resources/a.txt");
         try (BufferedReader reader = Files.newBufferedReader(path)) {
             String line = reader.readLine();
-            assertEquals(expected_value, line);
+            Assert.assertEquals(expected_value, line);
         }
 
     }
@@ -129,9 +127,9 @@ public class TestReadFile {
         Scanner scanner = new Scanner(new File(file));
         scanner.useDelimiter(",");
 
-        assertTrue(scanner.hasNext());
-        assertEquals("Hello", scanner.next());
-        assertEquals("World!", scanner.next());
+        Assert.assertTrue(scanner.hasNext());
+        Assert.assertEquals("Hello", scanner.next());
+        Assert.assertEquals("World!", scanner.next());
 
         scanner.close();
     }
@@ -145,17 +143,17 @@ public class TestReadFile {
 
         //  1
         tokenizer.nextToken();
-        assertEquals(StreamTokenizer.TT_WORD, tokenizer.ttype);
-        assertEquals("Hello", tokenizer.sval);
+        Assert.assertEquals(StreamTokenizer.TT_WORD, tokenizer.ttype);
+        Assert.assertEquals("Hello", tokenizer.sval);
 
         //  2
         tokenizer.nextToken();
-        assertEquals(StreamTokenizer.TT_NUMBER, tokenizer.ttype);
-        assertEquals(1, tokenizer.nval, 0.0000001);
+        Assert.assertEquals(StreamTokenizer.TT_NUMBER, tokenizer.ttype);
+        Assert.assertEquals(1, tokenizer.nval, 0.0000001);
 
         //  3
         tokenizer.nextToken();
-        assertEquals(StreamTokenizer.TT_EOF, tokenizer.ttype);
+        Assert.assertEquals(StreamTokenizer.TT_EOF, tokenizer.ttype);
         reader.close();
     }
 
@@ -173,7 +171,7 @@ public class TestReadFile {
                 result = new String(bytes);
             }
 
-            assertEquals(expectedValue, result);
+            Assert.assertEquals(expectedValue, result);
         }
 
     }
@@ -194,7 +192,7 @@ public class TestReadFile {
         channel.read(buff);
         buff.flip();
 
-        assertEquals(expected_value, new String(buff.array()));
+        Assert.assertEquals(expected_value, new String(buff.array()));
         channel.close();
         reader.close();
     }
@@ -208,7 +206,7 @@ public class TestReadFile {
         String currentLine = reader.readLine();
         reader.close();
 
-        assertEquals(expected_value, currentLine);
+        Assert.assertEquals(expected_value, currentLine);
     }
 
     // 11.从URL读取数据

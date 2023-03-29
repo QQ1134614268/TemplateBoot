@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2023-02-24 18:04
  */
 @Slf4j
-public class Env {
+public class EnvTest {
     // todo 管理(线程异常, 手动启动, 重启) , 线程池进行定时任务
     CopyOnWriteArrayList<DeviceState> deviceTable = new CopyOnWriteArrayList<>();
 

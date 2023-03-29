@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class OaGlobalException extends RuntimeException {
 
-    private static final long serialVersionUID = 2074723225554638558L;
     private Integer code;
     private String msg;
 

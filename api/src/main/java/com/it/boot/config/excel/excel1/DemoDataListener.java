@@ -16,15 +16,12 @@ import java.util.List;
 @Slf4j
 public class DemoDataListener extends AnalysisEventListener<DemoImportVO> {
     // service的名称
-    private IService service;
-    // 方法名 阿落是只要涉及导入操作，都会在业务层接口和实现类定义方法为`saveBatch`
-    // 这样可以在方法中扩展比如不存在则插入
-    private Integer READ_BATCH_COUNT_10 = 10000;
+    private IService<DemoImportVO> iService;
     List<DemoImportVO> list = new ArrayList<>();
 
     // 构造函数，也是控制层进来的时候需要传入两个参数
-    public DemoDataListener(IService service) {
-        this.service = service;
+    public DemoDataListener(IService<DemoImportVO> iService) {
+        this.iService = iService;
     }
 
     /**
@@ -37,6 +34,9 @@ public class DemoDataListener extends AnalysisEventListener<DemoImportVO> {
         // 将解析完的数据加入到list中
         list.add(data);
         // 达到BATCH_COUNT了，需要去存储一次数据库，防止数据几万条数据在内存，容易OOM
+        // 方法名 阿落是只要涉及导入操作，都会在业务层接口和实现类定义方法为`saveBatch`
+        // 这样可以在方法中扩展比如不存在则插入
+        int READ_BATCH_COUNT_10 = 10000;
         if (list.size() >= READ_BATCH_COUNT_10) {
             this.execute();
         }
@@ -70,7 +70,7 @@ public class DemoDataListener extends AnalysisEventListener<DemoImportVO> {
 
     // 执行数据保存的操作
     public void execute() {
-        service.saveBatch(list);
+        iService.saveBatch(list);
         // 存储完成清理 list
         list.clear();
     }

@@ -1,4 +1,4 @@
-package com.it.boot.gencode;
+package com.it.boot.config.gen;
 
 import com.it.boot.entity.UserEntity;
 import org.junit.jupiter.api.Test;
