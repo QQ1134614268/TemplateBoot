@@ -15,11 +15,34 @@ spring:
         spring:
           json:
             trusted:
-              packages: com.it.kafka.entity
+              packages: '*'
+#            use:
+#              type:
+#                headers: false
+#            remove:
+#              type:
+#                headers: true
+#            key:
+#              type:
+#                method: xx
+#              default:
+#                type: xx
+#            value:
+#              type:
+#                method: xx
+#              default:
+#                type: xx
+
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 #      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      properties:
+#        spring:
+#          json:
+#            add:
+#              type:
+#                headers: false
     admin:
       client-id: 10001
 
