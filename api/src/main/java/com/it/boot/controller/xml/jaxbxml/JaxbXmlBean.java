@@ -1,5 +1,7 @@
-package com.it.boot.controller.xml2;
+package com.it.boot.controller.xml.jaxbxml;
  
+import lombok.Data;
+
 import java.io.ByteArrayOutputStream;
  
 import javax.xml.bind.JAXBContext;
@@ -11,6 +13,7 @@ import java.util.List;
 /**
  * Created by wl on 2021/6/18.
  */
+@Data
 @XmlRootElement(name = "JaxbXmlBean")
 public class JaxbXmlBean {
     private Integer id;
@@ -22,80 +25,7 @@ public class JaxbXmlBean {
     private XmlSubBean xmlSubBean;
  
     private List<XmlSubBean> subBeanList;
- 
-    public Integer getId() {
-        return id;
-    }
- 
-    public void setId(Integer id) {
-        this.id = id;
-    }
- 
-    public String getName() {
-        return name;
-    }
- 
-    public void setName(String name) {
-        this.name = name;
-    }
- 
-    public String getNickName() {
-        return nickName;
-    }
- 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
- 
-    public XmlSubBean getXmlSubBean() {
-        return xmlSubBean;
-    }
- 
-    public void setXmlSubBean(XmlSubBean xmlSubBean) {
-        this.xmlSubBean = xmlSubBean;
-    }
- 
-    public List<XmlSubBean> getSubBeanList() {
-        return subBeanList;
-    }
- 
-    public void setSubBeanList(List<XmlSubBean> subBeanList) {
-        this.subBeanList = subBeanList;
-    }
- 
-    public static class XmlSubBean{
- 
-        private Integer subId;
- 
-        private String subName;
- 
-        private String subNickName;
- 
-        public Integer getSubId() {
-            return subId;
-        }
- 
-        public void setSubId(Integer subId) {
-            this.subId = subId;
-        }
- 
-        public String getSubName() {
-            return subName;
-        }
- 
-        public void setSubName(String subName) {
-            this.subName = subName;
-        }
- 
-        public String getSubNickName() {
-            return subNickName;
-        }
- 
-        public void setSubNickName(String subNickName) {
-            this.subNickName = subNickName;
-        }
-    }
- 
+
     public static void main(String[] args) throws Exception{
         JaxbXmlBean xmlBean = new JaxbXmlBean();
         xmlBean.setId(1);

@@ -5,12 +5,12 @@
     </div>
     <div class="homeContainer">
       <div class="col-2">
-        <el-menu :default-active="fullPath" router active-text-color="#409EFF">
-          <el-menu-item :index="item.menuPath" v-for="(item, index) in menuList" :key="index">
+        <el-menu :default-active="fullPath" active-text-color="#409EFF" router>
+          <el-menu-item v-for="(item, index) in menuList" :key="index" :index="item.menuPath">
             <i :class="item.menuIcon"></i>
             <span>
-          {{ item.menuName }}
-        </span>
+               {{ item.menuName }}
+            </span>
           </el-menu-item>
         </el-menu>
       </div>
@@ -52,7 +52,7 @@ export default {
           menuIcon: "el-icon-connection",
         },
         {
-          menuName: "类型",
+          menuName: "登录",
           menuPath: adminLogin,
           menuIcon: "el-icon-connection",
         },

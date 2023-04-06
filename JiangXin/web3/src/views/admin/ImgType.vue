@@ -1,29 +1,31 @@
 <template>
   <div>
     <div class="container">
-      <el-button @click="flag=!flag">
+      <el-button type="primary" @click="flag=!flag">
         新增
       </el-button>
     </div>
     <el-table :data="typeList">
-      <el-table-column prop="id" label="id"></el-table-column>
-      <el-table-column prop="uniCode" label="uniCode"></el-table-column>
-      <el-table-column prop="value" label="value"></el-table-column>
-      <el-table-column prop="label" label="label"></el-table-column>
-      <el-table-column prop="createTime" label="createTime"></el-table-column>
-      <el-table-column prop="status" label="status"></el-table-column>
-      <el-table-column prop="groupCode" label="groupCode"></el-table-column>
-      <el-table-column prop="sort" label="sort"></el-table-column>
-      <el-table-column prop="note" label="note"></el-table-column>
+      <el-table-column label="id" prop="id"></el-table-column>
+      <el-table-column label="uniCode" prop="uniCode"></el-table-column>
+      <el-table-column label="value" prop="value"></el-table-column>
+      <el-table-column label="label" prop="label"></el-table-column>
+      <el-table-column label="createTime" prop="createTime"></el-table-column>
+      <el-table-column label="status" prop="status"></el-table-column>
+      <el-table-column label="groupCode" prop="groupCode"></el-table-column>
+      <el-table-column label="sort" prop="sort"></el-table-column>
+      <el-table-column label="note" prop="note"></el-table-column>
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" type="danger" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button circle icon="el-icon-edit" type="danger" @click="handleEdit(scope.row)"></el-button>
+          <el-button circle icon="el-icon-delete" type="danger" @click="handleDelete(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination :total="total" layout="total,prev, pager, next" @current-change="init">
+    </el-pagination>
     <el-dialog :visible.sync="flag">
-      <el-form :model="form" status-icon :rules="rules" ref="form" label-width="100px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px" status-icon>
         <el-form-item label="标签" prop="username">
           <el-input v-model="form.label" autocomplete="on"></el-input>
         </el-form-item>
@@ -38,7 +40,7 @@
 
 <script>
 import {getJson3, postJson3} from "@/api/http";
-import {ImgType_getPage} from "@/api/api";
+import {ImgType_create, ImgType_getPage} from "@/api/api";
 
 export default {
   name: "ImgType",
@@ -46,6 +48,9 @@ export default {
     return {
       typeList: [],
       flag: false,
+      current: 1,
+      total: 0,
+      size: 10,
       form: {},
       rules: {
         parentId: [
@@ -71,24 +76,33 @@ export default {
   methods: {
     async init() {
       let data = {
-        current: 1,
-        size: 10
+        current: this.current,
+        size: this.size
       }
       let res = await getJson3(ImgType_getPage, data);
-      this.typeList = res.data.records
+      this.typeList = res.data.records;
+      this.current = res.data.current;
+      this.size = res.data.size;
+      this.total = res.data.total;
     },
     async submit() {
-      let url = "/api/ImgTypeController/create"
-      let res = await postJson3(url, this.form)
-      this.$message.info("成功")
+      let res = await postJson3(ImgType_create, this.form);
+      this.$message.info("成功");
       this.flag = !this.flag;
       await this.init();
     },
     handleEdit(row) {
       this.form = row
-      this.dialogVisible = true
+      this.flag = true
     },
-    async handleDelete() {
+    async handleDelete(row) {
+      let url = "/api/ImgTypeController/deleteById"
+      let data = {
+        id: row.id
+      }
+      let res = await postJson3(url, data);
+      this.$message.info("成功");
+      await this.init();
     },
     async cancel() {
       this.flag = !this.flag;

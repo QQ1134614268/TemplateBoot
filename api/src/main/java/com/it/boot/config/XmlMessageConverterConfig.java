@@ -1,4 +1,4 @@
-package com.it.boot.controller.xml;
+package com.it.boot.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import java.util.List;
 
 @Configuration
-public class MessageConverterConfig extends WebMvcConfigurationSupport {
+public class XmlMessageConverterConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {

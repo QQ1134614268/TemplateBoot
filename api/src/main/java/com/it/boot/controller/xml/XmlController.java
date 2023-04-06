@@ -1,5 +1,7 @@
-package com.it.boot.controller.xml2;
+package com.it.boot.controller.xml;
 
+import com.it.boot.controller.xml.jacksonxml.JacksonXmlBean;
+import com.it.boot.controller.xml.jaxbxml.JaxbXmlBean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
