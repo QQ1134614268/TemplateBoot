@@ -1,8 +1,7 @@
 <!-- 父组件 -->
 <template>
   <div class="test">
-    123
-    <Child v-model:value="message"></Child>
+    <Child v-model:message="message"></Child>
     <br/>
     子组件传来的值 : {{ message }}
   </div>

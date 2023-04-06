@@ -105,7 +105,7 @@ export const get2 = (url, id, params) => {
     })
 };
 export const postJson2 = (url, id, data = {}) => {
-    if (id == undefined) {
+    if (id === undefined) {
         id = 0
     }
     return Axios({
@@ -115,7 +115,7 @@ export const postJson2 = (url, id, data = {}) => {
     })
 };
 export const putJson2 = (url, id, data = {}) => {
-    if (id == undefined) {
+    if (id === undefined) {
         id = 0
     }
     return Axios({

@@ -48,7 +48,7 @@ const routes = [
     },
     {
         path: '/test/test',
-        component: () => import('@/views/test')
+        component: () => import('@/views/test_v_model')
     },
     {
         path: '/test/test_component',
@@ -75,10 +75,6 @@ const routes = [
         component: () => import('@/views/test_search_page')
     },
     {
-        path: '/test/test',
-        component: () => import('@/views/test')
-    },
-    {
         path: '/test/test_upload',
         component: () => import('@/views/test_upload')
     },
@@ -89,6 +85,10 @@ const routes = [
     {
         path: '/test/parent_child/v_model/Parent',
         component: () => import('@/views/parent_child/v_model/Parent')
+    },
+    {
+        path: '/test/parent_child/v_model2/Parent',
+        component: () => import('@/views/parent_child/v_model2/Parent')
     },
     {
         path: '/test/test_img_highlight',
