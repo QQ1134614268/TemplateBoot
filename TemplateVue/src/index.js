@@ -79,16 +79,16 @@ const routes = [
         component: () => import('@/views/test_upload')
     },
     {
-        path: '/test/parent_child/Parent',
-        component: () => import('@/views/parent_child/Parent')
+        path: '/test/parent_child/testSync',
+        component: () => import('@/views/parent_child/testSync/Parent')
     },
     {
-        path: '/test/parent_child/v_model/Parent',
-        component: () => import('@/views/parent_child/v_model/Parent')
+        path: '/test/parent_child/testProp',
+        component: () => import('@/views/parent_child/testProp/Parent')
     },
     {
-        path: '/test/parent_child/v_model2/Parent',
-        component: () => import('@/views/parent_child/v_model2/Parent')
+        path: '/test/parent_child/v_model2/testVModel',
+        component: () => import('@/views/parent_child/testVModel/Parent')
     },
     {
         path: '/test/test_img_highlight',
