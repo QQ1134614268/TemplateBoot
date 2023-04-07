@@ -1,22 +1,34 @@
 <!-- 子组件 -->
 <template>
-  <div class="testCom">
-    <input type="text" v-model="message"/>
-    <button @click="click">Send</button>
+  <div class="p_c_test_border">
+    父组件传值: num1:{{ num1 }}, num2: {{ num2 }}
+    <div>
+      <button @click="click">计算</button>
+    </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    num1: {
+      type: Number,
+    },
+    num2: {
+      type: Number,
+    },
+    type: {
+      type: Number,
+    },
+  },
   // ...
   data() {
     return {
-      // 默认
-      message: '我是来自子组件的消息'
+      res: ""
     }
   },
   methods: {
     click() {
-      this.$emit('childFn', this.message);
+      this.$emit('childFn', this.num1 + this.num2);
     }
   }
 }

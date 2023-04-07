@@ -1,9 +1,19 @@
 <!-- 父组件 -->
 <template>
   <div class="test">
-    <Child @childFn="parentFn"></Child>
+    <div>
+      <input v-model="num1"></input>
+    </div>
+    <div>
+      <input v-model="num2"></input>
+    </div>
+    <div>
+      子组件传来的值 : {{ res }}
+    </div>
     <br/>
-    子组件传来的值 : {{ message }}
+    <div>
+      <Child :num1="num1" :num2="num2" @childFn="parentFn"></Child>
+    </div>
   </div>
 </template>
 
@@ -14,12 +24,14 @@ export default {
   components: {Child},
   data() {
     return {
-      message: ''
+      num1: '',
+      num2: "",
+      res: ""
     }
   },
   methods: {
     parentFn(payload) {
-      this.message = payload;
+      this.res = payload;
     }
   }
 }
