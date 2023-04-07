@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Child from "@/views/parent_child/Child";
+import Child from "@/views/parent_child/testProp/Child";
 
 export default {
   components: {Child},
