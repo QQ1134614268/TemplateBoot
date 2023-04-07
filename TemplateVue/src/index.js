@@ -87,7 +87,7 @@ const routes = [
         component: () => import('@/views/parent_child/testProp/Parent')
     },
     {
-        path: '/test/parent_child/v_model2/testVModel',
+        path: '/test/parent_child/testVModel',
         component: () => import('@/views/parent_child/testVModel/Parent')
     },
     {

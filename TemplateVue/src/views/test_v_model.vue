@@ -1,18 +1,20 @@
 <template>
   <div>
     test
-    <div>
+    <div class="p_c_test_border">
       {{ num }}
       单向: <input :value="num"></input>
       <el-button @click="num=num+1">加</el-button>
     </div>
 
-    <div>
+    <div class="p_c_test_border">
       {{ num2 }}
       双向: <input v-model="num2"></input>
+
       双向: <input :value="num2"></input>
       双向: <input v-model:value="num2"></input>
       双向: <input v-model:value2="num2"></input>
+      双向: <input v-model:value2="num2" v-model:value1="num"></input>
 
       等价与: <input :value="num2" @input="num2=$event.target.value"></input>
       <el-button @click="num2=num2+1">加</el-button>
