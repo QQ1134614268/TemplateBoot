@@ -28,14 +28,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="首页">
-        <el-upload
-            class="avatar-uploader"
-            action="http://localhost:29090/api/file/upload"
-            :show-file-list="false"
-            :on-success="(response, file, fileList) => {handleAvatarSuccess(form,response,file,fileList)}">
-          <img v-if="form.img" :src="'http://127.0.0.1:29090/api/file/download/'+form.img" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <WrdImgUploadModel v-model="form.img"></WrdImgUploadModel>
       </el-form-item>
       <el-form-item label="描述">
         <el-input v-model="form.desc"></el-input>
@@ -44,14 +37,7 @@
         <el-button type="primary" @click="add">增加</el-button>
       </el-form-item>
       <el-form-item :key="index" v-for="(type, index) in form.children">
-        <el-upload
-            class="avatar-uploader"
-            action="http://127.0.0.1:29090/api/file/upload"
-            :show-file-list="false"
-            :on-success="(response, file, fileList) => {handleAvatarSuccess(type,response,file,fileList)}">
-          <img v-if="type.img" :src="'http://127.0.0.1:29090/api/file/download/'+type.img" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <WrdImgUploadModel v-model="tmp"></WrdImgUploadModel>
         <el-input v-model="type.description"></el-input>
         <el-button type="primary" @click="add">增加</el-button>
       </el-form-item>
@@ -66,13 +52,13 @@
 
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
-import WrdImgUpload from "@/components/WrdImgUpload";
+import WrdImgUploadModel from "@/components/WrdImgUploadModel";
 import {updateTree} from "@/views/api";
 import {FileApi, ImgType_getPage} from "@/api/api";
 
 export default {
   name: 'App',
-  components: {WrdImgUpload},
+  components: {WrdImgUploadModel},
   data() {
     return {
       FileApi,

@@ -1,9 +1,9 @@
 <!-- 父组件 -->
 <template>
   <div class="test">
-    <Child v-model="num"></Child>
+    <Child v-model="form.num"></Child>
     <div>
-      结果:{{ num }}
+      结果:{{ form.num }}
     </div>
   </div>
 </template>
@@ -16,6 +16,9 @@ export default {
   data() {
     return {
       num: '',
+      form:{
+        num:""
+      }
     }
   },
 }
