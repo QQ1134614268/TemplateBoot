@@ -1,9 +1,16 @@
 package com.it.sim.xml.jacksonxml;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.it.sim.util.BuildDataUtil;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -23,5 +30,22 @@ public class TestXml {
         String xml = XmlUtils.toXml(userXml);
         System.out.println(xml);
         System.out.println(XmlUtils.fromXml(xml, UserXml.class));
+    }
+
+    @Test
+    public void testXml2() throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get("C:\\Users\\Administrator\\Desktop\\out.xml.log"));
+        XmlMapper xmlMapper = new XmlMapper();
+
+        List<String> lines2 =    lines.stream().map(line -> {
+            Envelope data = null;
+            try {
+                data = xmlMapper.readValue(line.getBytes(), Envelope.class);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return  JSON.toJSONString(data);
+        }).collect(Collectors.toList());
+        Files.write(Paths.get("C:\\Users\\Administrator\\Desktop\\out.json.log"),lines2, StandardOpenOption.CREATE);
     }
 }
