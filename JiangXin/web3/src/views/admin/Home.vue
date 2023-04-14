@@ -6,7 +6,7 @@
     <div class="homeContainer">
       <div class="col-2">
         <el-menu :default-active="fullPath" active-text-color="#409EFF" router>
-          <el-menu-item v-for="(item, index) in menuList" :key="index" :index="item.menuPath">
+          <el-menu-item v-for="item in menuList" :key="item.menuName" :index="item.menuPath">
             <i :class="item.menuIcon"></i>
             <span>
                {{ item.menuName }}

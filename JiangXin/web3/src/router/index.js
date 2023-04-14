@@ -45,11 +45,11 @@ export const routes = [
             },
             {
                 path: ImgAdmin,
-                component: () => import('@/views/admin/ImgAdmin'),
+                component: () => import('@/views/admin/Img/ImgTree'),
             },
             {
                 path: ImgType,
-                component: () => import('@/views/admin/ImgType'),
+                component: () => import('@/views/admin/ImgType/ImageTypePage'),
             },
             {
                 path: AdminMessageBoard,
@@ -57,7 +57,7 @@ export const routes = [
             },
             {
                 path: adminSave,
-                component: () => import('@/views/admin/save'),
+                component: () => import('@/views/admin/Img/ImgAdd'),
             },
         ]
     },

@@ -4,6 +4,9 @@
       <el-button type="primary" @click="flag=!flag">
         新增
       </el-button>
+      <el-dialog :visible.sync="flag">
+        <ImgTypeAdd ></ImgTypeAdd>
+      </el-dialog>
     </div>
     <el-table :data="typeList">
       <el-table-column label="id" prop="id"></el-table-column>
@@ -24,26 +27,19 @@
     </el-table>
     <el-pagination :total="total" layout="total,prev, pager, next" @current-change="init">
     </el-pagination>
-    <el-dialog :visible.sync="flag">
-      <el-form ref="form" :model="form" :rules="rules" label-width="100px" status-icon>
-        <el-form-item label="标签" prop="username">
-          <el-input v-model="form.label" autocomplete="on"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submit">提交</el-button>
-          <el-button @click="cancel">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import {getJson3, postJson3} from "@/api/http";
 import {ImgType_create, ImgType_getPage} from "@/api/api";
+import ImgTypeAdd from "@/views/admin/ImgType/ImgTypeAdd";
 
 export default {
   name: "ImgType",
+  components:{
+    ImgTypeAdd
+  },
   data() {
     return {
       typeList: [],
