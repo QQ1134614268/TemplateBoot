@@ -32,6 +32,6 @@
     <!--  配置日志记录器  -->
     <root level="All">
         <!--  引入appender  -->
-        <appender-ref ref="consoleAppender"></appender-ref>
+        <appender-ref ref="consoleAppender"/>
     </root>
 </configuration>

@@ -7,6 +7,7 @@ import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 @Configuration
@@ -27,7 +28,7 @@ public class ConfigMyJob1 {
         bean.setStartTime(new Date());
         // bean.setRepeatCount(10);
         bean.setRepeatInterval(600000);
-        bean.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
+        bean.setJobDetail(Objects.requireNonNull(methodInvokingJobDetailFactoryBean().getObject()));
         return bean;
     }
 }

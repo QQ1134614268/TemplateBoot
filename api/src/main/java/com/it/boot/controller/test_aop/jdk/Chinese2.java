@@ -10,8 +10,6 @@ public class Chinese2 implements Person {
         System.out.println("-- sayHello()--");
     }
 
-    ;
-
     public void eat(String food) {
         System.out.println("我正在吃：" + food);
     }

@@ -2,17 +2,18 @@ package com.it.boot.controller.test_aop.jdk;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 @Api(tags = "测试/JdkProxyController")
 @RestController
 @RequestMapping("/api/JdkProxyController")
 public class JdkProxyController {
     // 这里必须使用Person接口做注入
-    @Autowired
+    @Resource
     private Person chinese2;
 
     // http://127.0.0.1:9091/test

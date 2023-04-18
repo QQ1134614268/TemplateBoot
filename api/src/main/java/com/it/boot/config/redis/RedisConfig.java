@@ -61,35 +61,33 @@ public class RedisConfig {
      */
     @Bean
     public RedisMessageListenerContainer container(RedisConnectionFactory redisConnectionFactory,
-                                                   RedisMessageListener listener,
-                                                   MessageListenerAdapter listenerAdapter,
+                                                   MessageListenerAdapter listenerAdapter1,
                                                    MessageListenerAdapter listenerAdapter2,
+                                                   RedisMessageListener1 redisMessageListener1,
                                                    RedisMessageListener2 redisMessageListener2) {
-
-
 
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         // 监听所有库的key过期事件
         container.setConnectionFactory(redisConnectionFactory);
         // 所有的订阅消息，都需要在这里进行注册绑定,new PatternTopic(TOPIC_NAME1)表示发布的主题信息
         // 可以添加多个 messageListener，配置不同的通道
-        container.addMessageListener(listener, new PatternTopic(TOPIC_NAME1));
-        container.addMessageListener(listenerAdapter, new PatternTopic(TOPIC_NAME2));
-
+        container.addMessageListener(redisMessageListener1, new PatternTopic(TOPIC_NAME1));
         container.addMessageListener(redisMessageListener2, new PatternTopic(TOPIC_NAME1));
+
+        container.addMessageListener(listenerAdapter1, new PatternTopic(TOPIC_NAME2));
         container.addMessageListener(listenerAdapter2, new PatternTopic(TOPIC_NAME3));
 
-        /**
+        /*
          * 设置序列化对象
          * 特别注意：1. 发布的时候需要设置序列化；订阅方也需要设置序列化
          *         2. 设置序列化对象必须放在[加入消息监听器]这一步后面，否则会导致接收器接收不到消息
          */
-        Jackson2JsonRedisSerializer<String> seria = new Jackson2JsonRedisSerializer<>(String.class);
+        Jackson2JsonRedisSerializer<String> serializer = new Jackson2JsonRedisSerializer<>(String.class);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        seria.setObjectMapper(objectMapper);
-        container.setTopicSerializer(seria);
+        serializer.setObjectMapper(objectMapper);
+        container.setTopicSerializer(serializer);
 
         return container;
     }
@@ -97,13 +95,10 @@ public class RedisConfig {
     /**
      * 这个地方是给 messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“receiveMessage”
      * 也有好几个重载方法，这边默认调用处理器的方法 叫OnMessage
-     *
-     * @param printMessageReceiver
-     * @return
      */
     @Bean
-    public MessageListenerAdapter listenerAdapter(PrintMessageReceiver printMessageReceiver) {
-        MessageListenerAdapter receiveMessage = new MessageListenerAdapter(printMessageReceiver, "receiveMessage");
+    public MessageListenerAdapter listenerAdapter1(PrintMessageReceiver1 printMessageReceiver1) {
+        MessageListenerAdapter receiveMessage = new MessageListenerAdapter(printMessageReceiver1, "receiveMessage");
 
         Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -126,4 +121,3 @@ public class RedisConfig {
         return receiveMessage;
     }
 }
-
