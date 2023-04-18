@@ -3,8 +3,9 @@ package com.it.boot.service;
 import com.it.boot.dao.repository.UserJpaRepository;
 import com.it.boot.entity.DeptEntity;
 import com.it.boot.entity.UserEntity;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,9 +26,8 @@ public class UserJpaService {
         return userEntity.getId();
     }
 
-    public Page<UserEntity> getPage(Page<UserEntity> page, UserEntity userEntity) {
-        Page<UserEntity> all = userJpaRepository.findAll(PageRequest.of(0, 4));
-        return all;
+    public Page<UserEntity> getPage(Pageable page, UserEntity userEntity) {
+        return userJpaRepository.findAll(Example.of(userEntity), page);
     }
 
 

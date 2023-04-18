@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,7 +30,7 @@ public class UserJpaController {
 
     @ApiOperation(value = "分页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
+    public ApiResult<Page<UserEntity>> getPage(Pageable page, UserEntity userEntity) {
         return ApiResult.success(userJpaService.getPage(page, userEntity));
     }
 
