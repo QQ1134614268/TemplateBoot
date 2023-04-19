@@ -6,7 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestRe {
-
+    // @ApiImplicitParam\((?!.*dataType) 匹配@ApiImplicitParam( 不包含dataType
+    // @ApiImplicitParam\((?!.*dataType).*value
+    // ^@ApiImplicitParam\((?!.*dataType).*value
     @Test
     public void test1() {
         String txt = "大家好,我叫张三,英文名称:tom cat,我来自CHINA,今年12岁,手机号是:18812341234";

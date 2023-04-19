@@ -9,11 +9,11 @@ import org.junit.Test;
 import java.io.StringWriter;
 import java.util.Properties;
 
-public class VelocityTemplateTest {
+public class TestVelocityTemplate {
     @Test
     public void test0() {
         String basePath = "header";
-        String sysRoot = VelocityTemplateTest.class.getResource("").getPath();
+        String sysRoot = TestVelocityTemplate.class.getResource("").getPath();
         Properties properties = new Properties();
         // 设置velocity资源加载方式为file
         properties.setProperty("resource.loader", "file");
