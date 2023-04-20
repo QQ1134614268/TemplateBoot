@@ -20,7 +20,7 @@ public class SysLogAspect {
     @Resource
     private OperationLogService operationLogService;
 
-    @Around("@annotation(Log)")
+    @Around("@annotation(com.it.boot.config.log.SysLog)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         // 执行方法
         Object result = joinPoint.proceed();
@@ -28,11 +28,11 @@ public class SysLogAspect {
         OperationLogEntity vo = new OperationLogEntity();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        Log logAnnotation = method.getAnnotation(Log.class);
+        SysLog sysLogAnnotation = method.getAnnotation(SysLog.class);
 
-        if (logAnnotation != null) {
+        if (sysLogAnnotation != null) {
             // 注解上的描述
-            vo.setAction(logAnnotation.value());
+            vo.setAction(sysLogAnnotation.value());
         }
         vo.setUrlLink(httpServletRequest.getRequestURI());
         vo.setIp(httpServletRequest.getRemoteHost());
