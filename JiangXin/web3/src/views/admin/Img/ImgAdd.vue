@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form ref="form" :model="form">
+    <el-form v-if="form" :model="form">
       <el-form-item label="名称">
         <el-input v-model="form.name" class="formItem"></el-input>
       </el-form-item>
@@ -12,8 +12,8 @@
       </el-form-item>
       <el-form-item label="内容">
         <div class="p_c_flexbox p_c_test_border" style="width: 100%">
-          <WrdImgUploadModel v-for="(item, index) in form.children" :key="index" v-model="item.url"
-                             class="col-3"></WrdImgUploadModel>
+          <WrdImgUploadModel v-for="(item, index) in form.children" :key="index" v-model="item.url" class="col-3">
+          </WrdImgUploadModel>
           <WrdImgUploadModel v-model="tmpUrl" class="col-3"></WrdImgUploadModel>
         </div>
       </el-form-item>
@@ -28,38 +28,31 @@
 <script>
 
 import WrdImgUploadModel from "@/components/WrdImgUploadModel";
+import {getJson3} from "@/api/http";
+import {ImgType_getPage} from "@/api/api";
 
 export default {
   name: 'App',
   components: {WrdImgUploadModel},
+  props: {
+    form: {
+      type: Object,
+    },
+  },
   data() {
     return {
-      form: {
-        name: "现代简约风",
-        typeId: "1",
-        children: [
-          {
-            url: ""
-          },
-          {
-            url: ""
-          },
-          {
-            url: ""
-          },
-          {
-            url: ""
-          },
-          {
-            url: ""
-          }
-        ],
-      },
+      options: [],
       tmpUrl: ""
     }
   },
   methods: {
     async initImgType() {
+      let data = {
+        current: 1,
+        size: -1
+      }
+      let res = await getJson3(ImgType_getPage, data);
+      this.options = res.data.records;
     },
     async onSubmit() {
     },
@@ -72,7 +65,7 @@ export default {
       handler(newValue, oldValue) {
         if (newValue) {
           this.form.children.push({url: newValue});
-          this.newValue = ""
+          this.tmpUrl = ""
         }
       },
       deep: true

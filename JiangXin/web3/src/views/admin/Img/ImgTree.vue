@@ -1,18 +1,6 @@
 <template>
   <div style="display: flex">
     <el-dialog :title="form.id?'编辑':'新增'" :visible.sync="dialogVisible">
-      <!--            <el-form ref="form" :model="form" style="padding: 1rem">-->
-      <!--              <el-form-item label="取值">-->
-      <!--                <el-input v-model="form.value"></el-input>-->
-      <!--              </el-form-item>-->
-      <!--              <el-form-item label="分组">-->
-      <!--                <el-input v-model="form.group_code"></el-input>-->
-      <!--              </el-form-item>-->
-      <!--              <el-form-item>-->
-      <!--                <el-button type="primary" @click="onSubmit">确定</el-button>-->
-      <!--                <el-button type="primary" @click="onCancel">取消</el-button>-->
-      <!--              </el-form-item>-->
-      <!--            </el-form>-->
     </el-dialog>
     <div>
       分类
@@ -59,33 +47,15 @@ export default {
       user: {},
       close: true,
       dialogVisible: false,
-      ruleForm: {
-        username: '',
-        checkPass: '',
-      }, defaultProps: {
+      defaultProps: {
         children: "children",
         label: "name",
       },
       typeList: [],
-      rules: {
-        username: [
-          {required: true, message: '用户名不能为空', trigger: 'blur'}
-        ],
-        checkPass: [
-          {required: true, message: '密码不能为空', trigger: 'blur'}
-        ],
-      }
     }
   },
   methods: {
     async init() {
-      // 判断登陆
-      // 弹出
-      // if (localStorage.getItem("token") !== undefined) {
-      //   this.user = getUserInfoByToken();
-      // } else {
-      //   this.dialogVisible = true;
-      // }
       let data = {
         current: 1,
         size: 10

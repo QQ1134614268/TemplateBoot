@@ -6,7 +6,7 @@
       :on-success="(response, file, fileList) => {handleAvatarSuccess(response,file,fileList)}">
     <img v-if="value" :src="'http://127.0.0.1:29090/api/file/download/'+value" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-    <div slot="tip" class="el-upload__tip">请上传图片，且不超过5MB{{value}}</div>
+<!--    <div slot="tip" class="el-upload__tip">请上传图片，且不超过5MB</div>-->
   </el-upload>
 </template>
 <script>
@@ -31,8 +31,8 @@ export default {
         this.$message.error(res.data)
         return
       }
-      this.$message.success("上传成功")
-      this.value=res.data
+      this.$message.success("上传成功");
+      this.value=res.data;
       this.returnRes()
     },
     beforeAvatarUpload(file) {

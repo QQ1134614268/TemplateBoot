@@ -7,13 +7,11 @@
 
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
-import WrdImgUpload from "@/components/WrdImgUpload";
 import {getContent, updateTree} from "@/views/api";
 import {FileApi} from "@/api/api";
 
 export default {
   name: 'App',
-  components: {WrdImgUpload},
   data() {
     return {
       FileApi,
