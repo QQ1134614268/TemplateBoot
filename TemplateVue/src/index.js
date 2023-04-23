@@ -15,6 +15,10 @@ const routes = [
         component: () => import('@/views/test_box')
     },
     {
+        path: "/test/TestTree",
+        component: () => import('@/views/TestTree')
+    },
+    {
         path: BgColor,
         component: () => import('@/views/BgColor')
     },
