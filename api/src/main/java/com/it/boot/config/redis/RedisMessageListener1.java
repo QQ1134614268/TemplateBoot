@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 @Component
 public class RedisMessageListener1 implements MessageListener {
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {

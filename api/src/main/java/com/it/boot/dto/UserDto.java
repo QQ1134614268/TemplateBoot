@@ -1,4 +1,4 @@
-package com.it.boot.dao;
+package com.it.boot.dto;
 
 import com.it.boot.entity.UserEntity;
 

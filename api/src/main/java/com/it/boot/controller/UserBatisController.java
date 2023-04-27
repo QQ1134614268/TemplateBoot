@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
-import com.it.boot.dao.UserDto;
+import com.it.boot.dto.UserDto;
 import com.it.boot.dto.IdVo;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.service.UserBatisService;
