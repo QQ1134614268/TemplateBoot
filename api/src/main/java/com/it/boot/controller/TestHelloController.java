@@ -4,10 +4,8 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.config.enumeration.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
 import com.it.boot.config.redis.RedisUtils;
-import com.it.boot.dao.projection.UserProjection;
-import com.it.boot.dao.repository.UserJpaRepository;
-import com.it.boot.dto.*;
-import com.it.boot.entity.UserEntity;
+import com.it.boot.dto.MessageDto;
+import com.it.boot.dto.TimeRangeQo;
 import com.it.boot.vo.StudentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Enumeration;
 
 @Slf4j
 @Api(tags = "测试/hello")
@@ -37,8 +37,6 @@ public class TestHelloController {
     @Resource
     private HttpServletRequest req;
 
-    @Resource
-    private UserJpaRepository userJpaRepository;
     @Resource
     private RedisUtils redisUtils;
 
@@ -138,49 +136,6 @@ public class TestHelloController {
         return ApiResult.success();
     }
 
-    /*
-     *测试jpa 投影
-     */
-    @GetMapping("/projections")
-    @ApiOperation(value = "测试jpa 投影")
-    public Map<String, Object> projection() {
-        Map<String, Object> map = new HashMap<>();
-        Collection<UserProjection> projections = userJpaRepository.findAllNameAndEmail();
-        System.out.println(projections);
-        System.out.println(projections.size());
-        for (UserProjection u : projections) {
-            map.put("userName:", u.getUserName());
-            map.put("email:", u.getEmail());
-            map.put("information:", u.getInformation());
-        }
-        return map;
-    }
-
-    /*
-     *测试jpa dto
-     */
-    @GetMapping("/testJpaDto")
-    @ApiOperation(value = "testJpaDto")
-    public List<UserOnly> testJpaDto() {
-        UserEntity userEntity = userJpaRepository.findByUserNameAndEmail("tom", "test@test.com", UserEntity.class);
-        System.out.println(userEntity);
-        List<UserOnly> userOnlyList = userJpaRepository.findByUserName("tom", UserOnly.class);
-        System.out.println(userOnlyList);
-        return userOnlyList;
-    }
-
-    @GetMapping("/getNativeQuery")
-    @ApiOperation("getNativeQuery")
-    public ApiResult<UserEntity> getNativeQuery() {
-        return ApiResult.success(userJpaRepository.getNativeQuery(1));
-    }
-
-    @GetMapping("/getNativeQuery2")
-    @ApiOperation("getNativeQuery2")
-    public ApiResult<UserDto> getNativeQuery2() {
-        // bug: org.hibernate.MappingException: Unknown entity
-        return ApiResult.success(userJpaRepository.getNativeQuery2(1));
-    }
     @GetMapping("/asyncReq")
     @ApiOperation(value = "asyncReq")
     public boolean asyncReq() {
