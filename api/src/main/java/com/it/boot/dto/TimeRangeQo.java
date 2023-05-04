@@ -1,9 +1,12 @@
 package com.it.boot.dto;
 
+import com.it.boot.config.Conf;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * @date 2023-03-27 16:57
@@ -11,11 +14,13 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class TimeRangeQo {
 
-    @NotBlank(message = "起始时间不能为空")
+    @NotNull
     @ApiModelProperty(value = "起始时间", example = "2022-11-29 00:00:00", required = false)
-    private String startTime;
+    @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
+    private Date startTime;
 
-    @NotBlank(message = "结束时间不能为空")
+    @NotNull
     @ApiModelProperty(value = "结束时间", example = "2022-11-30 00:00:00", required = false)
-    private String endTime;
+    @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
+    private Date endTime;
 }

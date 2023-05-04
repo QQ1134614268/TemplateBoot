@@ -30,7 +30,7 @@ public class XmlUtils {
 
     public static <T> T fromXml(String string, Class<T> clz) {
         XmlMapper xmlMapper = new XmlMapper();
-        // xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
         try {
             return xmlMapper.readValue(string.getBytes(), clz);
         } catch (IOException e) {

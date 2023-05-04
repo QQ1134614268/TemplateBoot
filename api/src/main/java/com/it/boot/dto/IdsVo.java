@@ -13,5 +13,5 @@ import java.util.List;
 @Data
 public class IdsVo {
     @ApiModelProperty(value = "对象id集合", example = "[1,2]")
-    private List<Integer> ids;
+    private List<Long> ids;
 }

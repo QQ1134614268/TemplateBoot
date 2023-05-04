@@ -6,11 +6,7 @@ import com.it.boot.config.exception.BizException;
 import com.it.boot.config.redis.RedisUtils;
 import com.it.boot.dao.projection.UserProjection;
 import com.it.boot.dao.repository.UserJpaRepository;
-import com.it.boot.dto.MessageDto;
-import com.it.boot.dto.TestDateDto;
-import com.it.boot.dto.TimeRangeQo;
-import com.it.boot.dto.UserOnly;
-import com.it.boot.entity.TestDateEntity;
+import com.it.boot.dto.*;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.vo.StudentVO;
 import io.swagger.annotations.Api;
@@ -175,17 +171,15 @@ public class TestHelloController {
 
     @GetMapping("/getNativeQuery")
     @ApiOperation("getNativeQuery")
-    public ApiResult<TestDateEntity> getNativeQuery() {
-        TestDateEntity vo = userJpaRepository.getNativeQuery(1);
-        return ApiResult.success(vo);
+    public ApiResult<UserEntity> getNativeQuery() {
+        return ApiResult.success(userJpaRepository.getNativeQuery(1));
     }
 
     @GetMapping("/getNativeQuery2")
     @ApiOperation("getNativeQuery2")
-    public ApiResult<TestDateDto> getNativeQuery2() {
-        // TestDateDto 需要 @entity标记
-        TestDateDto vo = userJpaRepository.getNativeQuery2(1);
-        return ApiResult.success(vo);
+    public ApiResult<UserDto> getNativeQuery2() {
+        // bug: org.hibernate.MappingException: Unknown entity
+        return ApiResult.success(userJpaRepository.getNativeQuery2(1));
     }
     @GetMapping("/asyncReq")
     @ApiOperation(value = "asyncReq")
@@ -218,7 +212,7 @@ public class TestHelloController {
         redisUtils.convertAndSend(topic, dto);
     }
 
-    @ApiOperation(value = "发布redis消息")
+    @ApiOperation(value = "testValidated")
     @GetMapping("/testValidated")
     public ApiResult<TimeRangeQo> testValidated(@Validated TimeRangeQo qo) {
         return ApiResult.success(qo);

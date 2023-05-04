@@ -1,14 +1,15 @@
 package com.it.boot.entity;
 
+import com.it.boot.config.Conf;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,22 +21,29 @@ public class TestDateEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(value = "用户名", example = "1")
+    @ApiModelProperty(example = "1")
     private Integer id;
 
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
-    private Date utilDate;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
+    private Date date;
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
     private java.sql.Date sqlDate;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
-    private Time sqlTime;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
+    private java.sql.Time sqlTime;
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
     private Timestamp sqlTimestamp;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
     private String dateTimeStr;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
     private LocalDate localDate;
-    @ApiModelProperty(value = "用户名", example = "2022-10-10 10:10:10")
+
+    @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
     private LocalDateTime localDateTime;
 
 }

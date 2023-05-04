@@ -1,8 +1,7 @@
 package com.it.boot.dao.repository;
 
 import com.it.boot.dao.projection.UserProjection;
-import com.it.boot.dto.TestDateDto;
-import com.it.boot.entity.TestDateEntity;
+import com.it.boot.dto.UserDto;
 import com.it.boot.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,9 +19,9 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Integer>, J
     <T> T findByUserNameAndEmail(String name, String Email, Class<T> type);
 
     @Query(value = "select * from user u where u.id=?1", nativeQuery = true)
-    TestDateEntity getNativeQuery(Integer integer);
+    UserEntity getNativeQuery(Integer integer);
 
     @Query(value = "select * from user u where u.id=?1", nativeQuery = true)
-    TestDateDto getNativeQuery2(Integer integer);
+    UserDto getNativeQuery2(Integer integer);
 
 }
