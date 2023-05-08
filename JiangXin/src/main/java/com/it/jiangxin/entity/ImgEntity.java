@@ -28,7 +28,7 @@ public class ImgEntity extends BaseEntity implements TreeNode {
     private String name;
 
     @ApiModelProperty(value = "图片地址", example = "test_1", required = true)
-    @Column(unique = false, nullable = false, columnDefinition = "varchar(64) COMMENT '图片地址'")
+    @Column(unique = false, nullable = false, columnDefinition = "varchar(128) COMMENT '图片地址'")
     private String imgUrl;
 
     @ApiModelProperty(value = "描述", example = "test_1", required = true)

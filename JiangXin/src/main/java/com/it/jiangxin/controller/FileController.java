@@ -50,7 +50,7 @@ public class FileController {
         Path path = Paths.get(upload_path, newName);
 
         Files.write(path, file.getBytes());
-        return ApiResult.success(newName);
+        return ApiResult.success("http://localhost:29090/api/file/download/"+newName);
     }
 
     @ApiOperation("下载")

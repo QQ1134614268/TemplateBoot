@@ -88,8 +88,8 @@ public class ImgController {
     }
 
     @ApiOperation(value = "获取图片树形结构")
-    @PostMapping("/getImgTree")
-    public ApiResult<List<ImgTreeDto>> getImgTree(@RequestBody IdsPara para) {
+    @GetMapping("/getImgTree")
+    public ApiResult<List<ImgTreeDto>> getImgTree() {
         // List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
         // List<ImgEntity> imgs = imgService.list();
 
@@ -105,8 +105,9 @@ public class ImgController {
         // return ApiResult.success(consumeGoodsRecordMapper.selectJoinPage(page, ConsumeGoodsRecordDto.class, wrapper));
 
         MPJLambdaWrapper<EnumEntity> wrapper = new MPJLambdaWrapper<>();
+        wrapper.selectAll(EnumEntity.class);
         List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
-        List<ImgEntity> imgs = imgService.list();
+        List<ImgEntity> imgs = imgService.lambdaQuery().eq(ImgEntity::getParentId, 0).list();
         for (ImgTreeDto re : res) {
             List<ImgEntity> imgs1 = imgs.stream().filter(vo -> Objects.equals(vo.getTypeId(), re.getId())).collect(Collectors.toList());
             re.setImgEntityList(imgs1);
