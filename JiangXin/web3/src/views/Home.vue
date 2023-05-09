@@ -11,7 +11,7 @@
           <div class="parent">
             <a :href="'/Info?id='+o.id">
               <div class="child">
-                <img :src="'http://127.0.0.1:29090/api/file/download/'+o.imgUrl" class="img">
+                <img :src="o.imgUrl" class="img">
               </div>
             </a>
           </div>
@@ -32,8 +32,7 @@
 </template>
 <script>
 import {getJson3} from "@/api/http";
-import {img_getPage} from "@/views/api";
-import {ImgType_getPage} from "@/api/api";
+import {img_getPage, ImgType_getPage} from "@/api/api";
 import Avtar from "@/components/avtar";
 
 export default {
@@ -80,21 +79,6 @@ export default {
 
 .content {
   background-color: #d8dbde;
-}
-
-.parent {
-  position: relative;
-  width: 100%;
-  padding-bottom: 75%;
-}
-
-.child {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .img {

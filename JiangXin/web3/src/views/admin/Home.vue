@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import {adminSave, ImgAdmin} from "@/views";
-import {adminLogin, AdminMessageBoard, ImgType} from "@/views/api";
+import {adminLogin, AdminMessageBoard, adminSave, ImgAdmin, ImgType} from "@/api/url";
 
 export default {
   name: "Home",

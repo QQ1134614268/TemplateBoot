@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ form }}
     <el-form v-if="form" :model="form">
       <el-form-item label="名称">
         <el-input v-model="form.name" class="formItem"></el-input>
@@ -19,7 +20,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">保存</el-button>
-        <el-button>取消</el-button>
+        <!--        <el-button>取消</el-button>-->
       </el-form-item>
     </el-form>
   </div>
@@ -28,21 +29,29 @@
 <script>
 
 import WrdImgUploadModel from "@/components/WrdImgUploadModel";
-import {getJson3} from "@/api/http";
-import {ImgType_getPage} from "@/api/api";
+import {getJson3, postJson3} from "@/api/http";
+import {Img_save, ImgType_getPage} from "@/api/api";
 
 export default {
   name: 'App',
   components: {WrdImgUploadModel},
   props: {
-    form: {
+    vaule: {
       type: Object,
     },
   },
   data() {
     return {
       options: [],
-      tmpUrl: ""
+      tmpUrl: "",
+      form: {
+        name: "zhong ",
+        typeId: 1,
+        children: [
+          {url: ""},
+          {url: ""},
+        ]
+      }
     }
   },
   methods: {
@@ -53,8 +62,15 @@ export default {
       }
       let res = await getJson3(ImgType_getPage, data);
       this.options = res.data.records;
+      this.form = this.vaule
     },
     async onSubmit() {
+      let res = await postJson3(Img_save, this.form);
+      if (res.data.code == 1) {
+        this.$message.success("保存成功")
+      } else {
+        this.$message.error(res.data)
+      }
     },
   },
   created() {

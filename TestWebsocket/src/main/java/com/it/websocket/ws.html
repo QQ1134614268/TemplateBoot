@@ -1,0 +1,78 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>广播式WebSocket</title>
+    <script th:src="@{static/js/sockjs.min.js}"></script>
+    <script th:src="@{static/js/stomp.js}"></script>
+    <script th:src="@{static/js/jquery-3.3.1.min.js}"></script>
+</head>
+<body onload="disconnect()">
+<noscript><h2 style="color: #e80b0a;">Sorry，浏览器不支持WebSocket</h2></noscript>
+<div>
+    <div>
+        <button id="connect" onclick="connect();">连接</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>
+    </div>
+    <div id="conversationDiv">
+        <label>名字</label><input type="text" id="name"/>
+        <label>内容</label><input type="text" id="content"/>
+        <button id="sendName" onclick="sendName();">发送</button>
+        <p id="response"></p>
+    </div>
+</div>
+<script type="text/javascript">
+    var stompClient = null;
+    /**
+     * 设置组件样式
+     * @param {Object} connected
+     */
+    function setConnected(connected) {
+        document.getElementById("connect").disabled = connected;
+        document.getElementById("disconnect").disabled = !connected;
+        document.getElementById("conversationDiv").style.visibility = connected ? 'visible' : 'hidden';
+        $("#response").html();
+    }
+    /**
+     * 创建socket连接
+     */
+    function connect() {
+        //链接SockJS 的endpoint 名称为endpointSang
+        var socket = new SockJS('/endpointYC');
+        //使用stomp子协议的WebSocket 客户端
+        stompClient = Stomp.over(socket);
+        //链接Web Socket的服务端。
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            //订阅/topic/message频道，并对收到信息进行处理
+            stompClient.subscribe('/topic/message', function (response) {
+                showResponse(JSON.parse(response.body).responseMessage);
+            })
+        });
+    }
+    /**
+     * 断开连接
+     */
+    function disconnect() {
+        if (stompClient != null) {
+            stompClient.disconnect();
+        }
+        setConnected(false);
+    }
+    /**
+     * 向服务器发送消息
+     */
+    function sendName() {
+        var name = $('#name').val();
+        var content = $('#content').val();
+        stompClient.send("/ws", {}, JSON.stringify({'name': name,'content':content,'date':new Date()}));
+    }
+    /**
+     * 替换文本
+     * @param {Object} message 服务器返回数据
+     */
+    function showResponse(message) {
+        $("#response").html(message);
+    }
+</script>
+</body>
+</html>

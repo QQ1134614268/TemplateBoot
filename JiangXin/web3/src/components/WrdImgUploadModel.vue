@@ -4,7 +4,7 @@
       action="http://localhost:29090/api/file/upload"
       :show-file-list="false"
       :on-success="(response, file, fileList) => {handleAvatarSuccess(response,file,fileList)}">
-    <img v-if="value" :src="'http://127.0.0.1:29090/api/file/download/'+value" class="avatar">
+    <img v-if="value" :src="value" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 <!--    <div slot="tip" class="el-upload__tip">请上传图片，且不超过5MB</div>-->
   </el-upload>

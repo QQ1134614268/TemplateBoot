@@ -1,7 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import {adminSave, DecorationPlan, HomeDoor, ImgAdmin, Info, root} from "@/views";
-import {admin, AdminHome, adminLogin, AdminMessageBoard, Home, ImgType} from "@/views/api";
+import {
+    admin,
+    AdminHome,
+    adminLogin,
+    AdminMessageBoard,
+    adminSave,
+    DecorationPlan,
+    Home,
+    HomeDoor,
+    ImgAdmin,
+    ImgType,
+    Info,
+    root
+} from "@/api/url";
 
 Vue.use(VueRouter)
 

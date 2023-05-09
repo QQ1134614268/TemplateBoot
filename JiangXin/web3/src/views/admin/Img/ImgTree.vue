@@ -1,32 +1,18 @@
 <template>
   <div style="display: flex">
-    <el-dialog :title="form.id?'编辑':'新增'" :visible.sync="dialogVisible">
-    </el-dialog>
     <div>
       分类
-      <el-tree :data="typeList" :expand-on-click-node="false">
-        <span class="custom-tree-node" slot-scope="{ node, data }">
-          <span>{{ data.label }}</span>
-          <span>
-            <el-button type="text" size="mini" @click="() => alert('data')">Append</el-button>
-          </span>
-        </span>
-      </el-tree>
-    </div>
-    <div style="width: 100%">
-      <div>
-        <div>首页</div>
-        <div><img alt=".." :src="form.name"></div>
-        <div>{{ form.name }}</div>
-        <div>{{ form.desc }}</div>
-      </div>
-      <div style="margin-top: 4rem">
-        <div :key="index" v-for="(type, index) in form.content">
-          <div><img alt=".." :src="type.name"></div>
-          <div>{{ type.name }}</div>
-          <div>{{ type.desc }}</div>
+      <div v-for="item in data" :key="item.id">
+        {{ item.label }}
+        <div v-for="item1 in item.imgEntityList" :key="item1.id" class="p_c_test_border" @click="getContent(item1.id)">
+          {{ item1.name }}
         </div>
       </div>
+    </div>
+    <div style="width: 100%">
+      <el-button @click="dialogVisible=!dialogVisible">编辑</el-button>
+      <ImgSingle v-if="!dialogVisible" :form="form"></ImgSingle>
+      <ImgAdd v-if="!dialogVisible" :value="form"></ImgAdd>
     </div>
   </div>
 </template>
@@ -34,12 +20,16 @@
 <script>
 
 import {getJson3} from "@/api/http";
-import {getContent} from "@/views/api";
-import {ImgType_getPage} from "@/api/api";
+import {getContent, Img_getImgTree} from "@/api/api";
+import ImgSingle from "@/views/admin/Img/ImgSingle";
+import ImgAdd from "@/views/admin/Img/ImgAdd";
 
 export default {
   name: 'App',
-  components: {},
+  components: {
+    ImgAdd,
+    ImgSingle
+  },
   data() {
     return {
       form: {},
@@ -51,7 +41,7 @@ export default {
         children: "children",
         label: "name",
       },
-      typeList: [],
+      data: [],
     }
   },
   methods: {
@@ -60,22 +50,19 @@ export default {
         current: 1,
         size: 10
       }
-      let res = await getJson3(ImgType_getPage, data);
-      this.typeList = res.data.records
+      let res = await getJson3(Img_getImgTree, data);
+      this.data = res.data
     },
     async getContent(id) {
       let para = {
         id: id
       };
       let ret = await getJson3(getContent, para);
-      console.log(ret)
+      this.dialogVisible = false
       return this.form = ret.data;
     },
-    async open(id) {
-      await this.getContent(id);
-    },
-    logout() {
-      localStorage.removeItem("token");
+    async open(data) {
+      this.form = data
     },
   },
   created() {

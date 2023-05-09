@@ -4,7 +4,7 @@
       <div class="img_box p_c_test_border">
         <div class="parent">
           <div class="child">
-            <img :src="'http://127.0.0.1:29090/api/file/download/'+form.imgUrl" class="img">
+            <img :src="form.imgUrl" class="img">
           </div>
         </div>
         <div class="desc p_c_test_border">
@@ -17,7 +17,7 @@
         <div class="img_box">
           <div class="parent">
             <div class="child">
-              <img :src="'http://127.0.0.1:29090/api/file/download/'+type.imgUrl" class="img">
+              <img :src="type.imgUrl" class="img">
             </div>
           </div>
           <div class="desc">
@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import {getAllTree2} from "@/views/api";
+
+import {getAllTree2} from "@/api/img";
 
 export default {
   name: "Info",

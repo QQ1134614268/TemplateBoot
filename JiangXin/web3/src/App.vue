@@ -1,11 +1,11 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="container p_c_test_border">
     <router-view/>
   </div>
 </template>
 <script>
 
-import {HomeDoor} from "@/views";
+import {HomeDoor} from "@/api/url";
 
 export default {
   name: "App",
@@ -37,18 +37,4 @@ body {
   /*background-image: linear-gradient(0deg, rgba(255, 255, 255, .2) 10%, transparent 50%, transparent);*/
 }
 
-#header {
-  display: flex;
-  justify-content: space-around;
-  height: 10%;
-}
-
-#body {
-  min-height: 80%
-}
-
-#footer {
-  text-align: center;
-  height: 10%;
-}
 </style>

@@ -7,8 +7,7 @@
 
 import {getUserInfoByToken} from "@/api/util";
 import {getJson3, postJson3} from "@/api/http";
-import {getContent, updateTree} from "@/views/api";
-import {FileApi} from "@/api/api";
+import {FileApi, getContent, updateTree} from "@/api/api";
 
 export default {
   name: 'App',

@@ -24,11 +24,11 @@ import java.util.List;
 public class ImgEntity extends BaseEntity implements TreeNode {
 
     @ApiModelProperty(value = "首页名", example = "test_1", required = true)
-    @Column(unique = false, nullable = false, columnDefinition = "varchar(64) COMMENT '首页名'")
+    @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '首页名'")
     private String name;
 
     @ApiModelProperty(value = "图片地址", example = "test_1", required = true)
-    @Column(unique = false, nullable = false, columnDefinition = "varchar(128) COMMENT '图片地址'")
+    @Column(unique = false, nullable = true, columnDefinition = "varchar(128) COMMENT '图片地址'")
     private String imgUrl;
 
     @ApiModelProperty(value = "描述", example = "test_1", required = true)
@@ -36,7 +36,7 @@ public class ImgEntity extends BaseEntity implements TreeNode {
     private String description;
 
     @ApiModelProperty(value = "父级id", example = "0", required = true)
-    @Column(unique = false, nullable = false, columnDefinition = "int(11) COMMENT '父级id'")//DEFAULT 0
+    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '父级id'")//DEFAULT 0
     private Integer parentId;
 
     @ApiModelProperty(value = "分类id", example = "1", required = true)

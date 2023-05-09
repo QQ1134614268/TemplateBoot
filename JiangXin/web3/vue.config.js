@@ -17,13 +17,6 @@ module.exports = defineConfig({
                     '^/api/': '/api/'
                 }
             },
-            // "/upload_file/": {
-            //     target: process.env.NGINX_FILE_SERVER_URL,
-            //     changeOrigin: true,
-            //     pathRewrite: {
-            //         '^/upload_file/': process.env.NGINX_FILE_SERVER_API
-            //     }
-            // }
         }
     },
 })

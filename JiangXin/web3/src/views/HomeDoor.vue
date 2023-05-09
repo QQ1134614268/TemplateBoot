@@ -18,7 +18,7 @@
 </template>
 <script>
 
-import {HomeDoor} from "@/views";
+import {HomeDoor} from "@/api/url";
 
 export default {
   name: "App",
