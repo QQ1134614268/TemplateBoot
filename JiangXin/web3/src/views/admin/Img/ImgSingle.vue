@@ -38,7 +38,6 @@ export default {
       type: Object
     }
   },
-  components: {},
   data() {
     return {
       options: [],

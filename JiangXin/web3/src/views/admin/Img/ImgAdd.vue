@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ form }}
+    {{form}}
     <el-form v-if="form" :model="form">
       <el-form-item label="名称">
         <el-input v-model="form.name" class="formItem"></el-input>
@@ -13,7 +13,7 @@
       </el-form-item>
       <el-form-item label="内容">
         <div class="p_c_flexbox p_c_test_border" style="width: 100%">
-          <WrdImgUploadModel v-for="(item, index) in form.children" :key="index" v-model="item.url" class="col-3">
+          <WrdImgUploadModel v-for="(item, index) in form.children" :key="index" v-model="item.imgUrl" class="col-3">
           </WrdImgUploadModel>
           <WrdImgUploadModel v-model="tmpUrl" class="col-3"></WrdImgUploadModel>
         </div>
@@ -36,7 +36,7 @@ export default {
   name: 'App',
   components: {WrdImgUploadModel},
   props: {
-    vaule: {
+    form2: {
       type: Object,
     },
   },
@@ -44,14 +44,7 @@ export default {
     return {
       options: [],
       tmpUrl: "",
-      form: {
-        name: "zhong ",
-        typeId: 1,
-        children: [
-          {url: ""},
-          {url: ""},
-        ]
-      }
+      form:this.form2
     }
   },
   methods: {
@@ -62,7 +55,6 @@ export default {
       }
       let res = await getJson3(ImgType_getPage, data);
       this.options = res.data.records;
-      this.form = this.vaule
     },
     async onSubmit() {
       let res = await postJson3(Img_save, this.form);

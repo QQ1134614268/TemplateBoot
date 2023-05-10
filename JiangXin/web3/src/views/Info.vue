@@ -69,18 +69,6 @@ export default {
   background-color: #c6c8c5;
 }
 
-.parent {
-  position: relative;
-  width: 100%;
-  padding-bottom: 75%;
-}
-
-.child {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
 .img {
   width: 100%;
   height: 100%;

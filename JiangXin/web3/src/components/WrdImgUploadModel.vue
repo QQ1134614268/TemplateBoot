@@ -4,7 +4,7 @@
       action="http://localhost:29090/api/file/upload"
       :show-file-list="false"
       :on-success="(response, file, fileList) => {handleAvatarSuccess(response,file,fileList)}">
-    <img v-if="value" :src="value" class="avatar">
+    <img v-if="form" :src="form" class="avatar">
     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
 <!--    <div slot="tip" class="el-upload__tip">请上传图片，且不超过5MB</div>-->
   </el-upload>
@@ -23,6 +23,7 @@ export default {
   data() {
     return {
       FileApi,
+      form:this.value
     };
   },
   methods: {
@@ -32,7 +33,7 @@ export default {
         return
       }
       this.$message.success("上传成功");
-      this.value=res.data;
+      this.form=res.data;
       this.returnRes()
     },
     beforeAvatarUpload(file) {
@@ -52,7 +53,7 @@ export default {
       return isJPG && isLt2M;
     },
     returnRes() {
-      this.$emit("input", this.value)
+      this.$emit("input", this.form)
     }
   }
 }

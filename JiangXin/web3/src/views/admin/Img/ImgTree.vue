@@ -4,7 +4,7 @@
       分类
       <div v-for="item in data" :key="item.id">
         {{ item.label }}
-        <div v-for="item1 in item.imgEntityList" :key="item1.id" class="p_c_test_border" @click="getContent(item1.id)">
+        <div v-for="item1 in item.imgEntityList" :key="item1.id" @click="getContent(item1.id)">
           {{ item1.name }}
         </div>
       </div>
@@ -12,7 +12,7 @@
     <div style="width: 100%">
       <el-button @click="dialogVisible=!dialogVisible">编辑</el-button>
       <ImgSingle v-if="!dialogVisible" :form="form"></ImgSingle>
-      <ImgAdd v-if="!dialogVisible" :value="form"></ImgAdd>
+      <ImgAdd v-if="dialogVisible" :form2="form"></ImgAdd>
     </div>
   </div>
 </template>
