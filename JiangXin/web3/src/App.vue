@@ -28,7 +28,7 @@ export default {
 <style>
 #app {
   margin: auto;
-  height: 100%;
+  min-height: 100%;
 
 }
 

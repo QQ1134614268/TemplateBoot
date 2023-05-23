@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{form}}
     <el-form v-if="form" :model="form">
       <el-form-item label="名称">
         <el-input v-model="form.name" class="formItem"></el-input>
@@ -58,7 +57,7 @@ export default {
     },
     async onSubmit() {
       let res = await postJson3(Img_save, this.form);
-      if (res.data.code == 1) {
+      if (res.code === 1) {
         this.$message.success("保存成功")
       } else {
         this.$message.error(res.data)

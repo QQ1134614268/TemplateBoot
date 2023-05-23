@@ -1,4 +1,4 @@
-package com.it.boot.config.websocket.websocket2;
+package com.it.websocket.controller.websocket2;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Slf4j
 @Component
-public class WsLoginHandler extends TextWebSocketHandler {
+public class WsTestHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -28,22 +28,11 @@ public class WsLoginHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        log.info("handleTextMessage");
         // 获得客户端传来的消息
         String payload = message.getPayload();
         Object token = session.getAttributes().get("token");
         log.info("server 接收到 " + token + " 发送的 " + payload);
-        session.sendMessage(new TextMessage("server 发送给 " + token + " 消息 " + payload + " " + LocalDateTime.now()
-                .toString()));
+        session.sendMessage(new TextMessage("server 发送给 " + token + " 消息 " + payload + " " + LocalDateTime.now()));
     }
-
-
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        Object token = session.getAttributes().get("token");
-        if (token != null) {
-            // 用户退出，移除缓存
-            WsSessionManager.remove(token.toString());
-        }
-    }
-
 }

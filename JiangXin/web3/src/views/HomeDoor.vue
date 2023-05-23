@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div class="container">
     <div id="header" class="p_c_box-flex_center ">
       <div style="" class="p_c_box-flex_center ">
         <img src="@/assets/logo.jpg" style="width: 4rem; border-radius: 45rem" @click="go(root)">
@@ -39,17 +39,6 @@ export default {
 }
 </script>
 <style>
-#app {
-  margin: auto;
-  height: 100%;
-
-}
-
-body {
-  /*background-color: #f90;*/
-  /*background-image: linear-gradient(0deg, rgba(255, 255, 255, .2) 10%, transparent 50%, transparent);*/
-}
-
 #header {
   display: flex;
   justify-content: space-around;
