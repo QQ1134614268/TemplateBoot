@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.it.boot.config.mybatis.TestDtoJsonListTypeHandler;
-import com.it.boot.dto.AddressDtoJson;
+import com.it.boot.entity.dto.AddressDtoJson;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

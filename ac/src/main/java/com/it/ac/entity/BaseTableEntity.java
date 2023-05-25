@@ -12,11 +12,6 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Entity基类
- *
- * @author xc
- */
 @Data
 public class BaseTableEntity implements Serializable {
     @Id

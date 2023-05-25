@@ -1,7 +1,6 @@
 package com.it.sim.test.json;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -11,62 +10,120 @@ import com.it.sim.test.json.dto.Country;
 import com.it.sim.test.json.dto.Province;
 import com.it.sim.test.json.dto.Result;
 import com.it.sim.util.BuildDataUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 //alibaba.fastjson.JSON;:   java对象转换成JSON字符串，若想要获得key、value键值对，只需要对象中有getXxx(  )方法即可！！！！
 //  额外增加了一个get方法，以让Student对象转成json格式的时候多一个"idName"的字段！
 //google.gson.Gson :   应该是利用反射,获取能反射的值
+@Slf4j
 public class TestJson {
+    public static ObjectMapper mapper = new ObjectMapper();
+    public static Gson gson = new Gson();//  new GsonBuilder().create();
 
+
+    /**
+     * 测试json框架的时间序列化, 反序列化
+     */
     @Test
-    public void getGson() {
-        Result<List<Country>> result = getData();
-        Gson gson = new Gson();
-        String json = gson.toJson(result);
-        System.out.println(json);
+    public void testDate() throws JsonProcessingException {
+        Date now = new Date();
+        System.out.println(now);
 
-        Result<List<Country>> result2 = gson.fromJson(json, new TypeToken<Result<List<Country>>>() {
-        }.getType());
-        String json2 = gson.toJson(result2);
-        System.out.println(json2);
-        System.out.println("==" + Objects.equals(result, result2));
-        System.out.println("==" + Objects.equals(json2, json));
+        String jacksonStr = mapper.writeValueAsString(now);
+        String fastjsonStr = JSON.toJSONString(now);
+        String gsonStr = gson.toJson(now);
+
+        System.out.println(jacksonStr);
+        System.out.println(fastjsonStr);
+        System.out.println(gsonStr);
+
+        System.out.println(mapper.readValue(jacksonStr, Date.class));
+        System.out.println(JSON.parseObject(fastjsonStr, Date.class));
+        System.out.println(gson.fromJson(gsonStr, Date.class));
+
+        String dateStr = "2000-10-10 00:00:00";
+        try {
+            System.out.println(mapper.readValue(dateStr, Date.class));
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+        try {
+            System.out.println(JSON.parseObject(dateStr, Date.class));
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
+        try {
+            System.out.println(gson.fromJson(dateStr, Date.class));
+        } catch (Exception e) {
+            log.info(e.getMessage());
+        }
     }
 
     @Test
-    public void testFastjson() {
-        Result<List<Country>> result = getData();
-        String json = JSON.toJSONString(result);
-        System.out.println(json);
+    public void testWithType() {
+        // todo @type在类型转换  fasterJson jackson gson
+        System.out.println(JSON.toJSONString(BuildDataUtil.createData(City.class), JSONWriter.Feature.WriteClassName));
+
+        String noType = "{\"cityName\":\"test_kwZ2Q7P3\",\"id\":8912}";
+        String withType = "{\"@type\":\"com.it.sim.test.json.dto.City\",\"cityName\":\"test_kwZ2Q7P3\",\"id\":8912}";
+
+        JSONObject jsonObject = JSON.parseObject(withType);
+
+        System.out.println(jsonObject.getString("id"));
+        System.out.println(jsonObject.getString("@type"));
+
+        Object city = JSON.parseObject(withType, JSONReader.Feature.SupportAutoType);
+        System.out.println(city.getClass());
+
+        // City类型, 可强制转换
+        City city2 = JSON.parseObject(withType, City.class, JSONReader.Feature.SupportAutoType);
+        System.out.println(city2.getClass());
+
+        // 根据@type, 实际是 City类型, 可强制转换
+        Object city3 = JSON.parseObject(withType, Object.class, JSONReader.Feature.SupportAutoType);
+        System.out.println(city3.getClass());
+
+        // JSONObject
+        Object city4 = JSON.parseObject(noType, Object.class, JSONReader.Feature.SupportAutoType);
+        System.out.println(city4.getClass());
+
+        // Jackson
+        ObjectMapper mapper = new ObjectMapper();
+        // mapper.enable().writeValueAsString(city );
+
+
+        // Gson
+        // new GsonBuilder().registerTypeHierarchyAdapter().create().toJson()
+
+    }
+
+    @Test
+    public void testTypeReference() throws JsonProcessingException {
+        Result<List<Country>> data = getData();
+
+        String jacksonStr = mapper.writeValueAsString(data);
+        String fastjsonStr = JSON.toJSONString(data);
+        String gsonStr = gson.toJson(data);
+
+        System.out.println(jacksonStr);
+        System.out.println(fastjsonStr);
+        System.out.println(gsonStr);
+
+        Result<List<Country>> result1 = gson.fromJson(jacksonStr, new TypeToken<Result<List<Country>>>() {
+        }.getType());
+
         // JSON.parse(json, User.class);
         // JSON.parseArray(json, User.class);
-        Result<List<Country>> result1 = JSON.parseObject(json, new TypeReference<Result<List<Country>>>() {
+        Result<List<Country>> result2 = JSON.parseObject(fastjsonStr, new TypeReference<Result<List<Country>>>() {
         }.getType());
-        String json2 = JSON.toJSONString(result1);
-        System.out.println(json2);
-        System.out.println("==" + Objects.equals(json2, json));
-    }
 
-    @Test
-    public void testJackson() throws JsonProcessingException {
-
-        Result<List<Country>> country = getData();
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        String json = mapper.writeValueAsString(country);
-        System.out.println(json);
-
-        Result<List<Country>> country2 = mapper.readValue(json, new com.fasterxml.jackson.core.type.TypeReference<Result<List<Country>>>() {
+        Result<List<Country>> result3 = mapper.readValue(gsonStr, new com.fasterxml.jackson.core.type.TypeReference<Result<List<Country>>>() {
         });
-
-        String json2 = mapper.writeValueAsString(country2);
-        System.out.println(json2);
-        System.out.println("==" + Objects.equals(json2, json));
     }
 
     private static Result<List<Country>> getData() {
@@ -93,31 +150,5 @@ public class TestJson {
         return result;
     }
 
-
-    public static <T> Result<T> test(String json) {
-        // return  JSON.parseObject(json, new TypeReference<Result<T>>() {
-        // }.getType());
-        Gson gson = new Gson();
-        return gson.fromJson(json, new TypeToken<Result<T>>() {
-        }.getType());
-    }
-
-    @Test
-    public void test2() {
-        Gson gson = new Gson();
-
-        Result<Country> result = new Result<>();
-        Country country = BuildDataUtil.createData(Country.class);
-        result.setData(country);
-        System.out.println(result);
-
-        String json = gson.toJson(result);
-
-        // 通过泛型函数, 返回的内嵌泛型是hashmap, 取出相当于强制转换, 导致异常报错
-        Result<Country> rr = test(json);
-        System.out.println(rr);
-        Country country2 = rr.getData();
-        System.out.println(country2);
-    }
 }
 

@@ -3,10 +3,8 @@ package com.it.boot.controller;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enumeration.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
-import com.it.boot.config.redis.RedisUtils;
-import com.it.boot.dto.MessageDto;
-import com.it.boot.dto.TimeRangeQo;
-import com.it.boot.vo.StudentVO;
+import com.it.boot.entity.dto.TimeRangeQo;
+import com.it.boot.entity.vo.StudentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -36,9 +32,6 @@ public class TestHelloController {
     //	POST的需要getParameterMap()方法遍历得到，不论GET或POST都可以通过getRequestURL+getParameterMap()来得到请求完整
     @Resource
     private HttpServletRequest req;
-
-    @Resource
-    private RedisUtils redisUtils;
 
     @Value("${templateBoot.testPort}")
     public Integer port;
@@ -154,17 +147,6 @@ public class TestHelloController {
         t.start();
         log.info("ret: " + new Date());
         return Thread.currentThread().isDaemon();
-    }
-
-    @ApiOperation(value = "发布redis消息")
-    @GetMapping("/publishRedisMessage")
-    public void publishRedisMessage(String topic, String title, String content) {
-        // 发布消息
-        MessageDto dto = new MessageDto();
-        dto.setData(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-        dto.setTitle(title);
-        dto.setContent(content);
-        redisUtils.convertAndSend(topic, dto);
     }
 
     @ApiOperation(value = "testValidated")

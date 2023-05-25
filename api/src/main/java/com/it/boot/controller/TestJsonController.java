@@ -3,7 +3,7 @@ package com.it.boot.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.boot.config.ApiResult;
-import com.it.boot.dto.IdVo;
+import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.TestJsonEntity;
 import com.it.boot.service.TestJsonService;
 import io.swagger.annotations.Api;

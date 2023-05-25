@@ -1,7 +1,7 @@
 package com.it.boot.dao.repository;
 
 import com.it.boot.dao.projection.UserProjection;
-import com.it.boot.dto.UserDto;
+import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -5,17 +5,16 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.redis2.AutoRedisJsonSerializer;
-import com.it.boot.config.redis2.MyRedisJsonNoTypeSerializer;
-import com.it.boot.config.redis2.MyRedisJsonWithTypeSerializer;
-import com.it.boot.config.redis2.WithTypeRedisService;
-import com.it.boot.dto.UserDto;
+import com.it.boot.config.redis.FasterJsonNoTypeSerializer;
+import com.it.boot.config.redis.FasterJsonWithTypeSerializer;
 import com.it.boot.entity.UserEntity;
+import com.it.boot.entity.dto.UserDto;
 import com.it.boot.util.BuildDataUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,26 +69,80 @@ public class TestRedisSerClassController {
     @Resource
     RedisTemplate<String, Object> redisTemplate;
 
-    // @Resource
-    // RedisTemplate<String, UserEntity> redisTemplate3; // 注入报错, 名称不匹配,类型不匹配
-    // @Resource
-    // RedisTemplate<String, UserDto> redisTemplate4; // 注入报错
-
-    // service
-    @Resource
-    WithTypeRedisService withTypeRedisService;
-
     @Resource
     RedisTemplate<Object, Object> redisTemplateWithType;
 
-
-    @Resource
-    RedisTemplate<String, UserEntity> autoRedisTemplate;
-
-    // @Resource
-    // RedisTemplate<Object, Object> redisTemplateNoType;
     @Resource
     RedisTemplate<String, UserEntity> redisTemplateNoType;
+
+    /**
+     * 各种序列化方式, 序列化数据
+     */
+    @GetMapping("/testSetValue")
+    public ApiResult<Boolean> test_01_init0() {
+        UserEntity user = BuildDataUtil.createData(UserEntity.class);
+
+        // jdk 原生序列化
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.opsForValue().set("JDK", user);
+
+        // string 原生序列化
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.opsForValue().set("String", JSON.toJSONString(user));
+
+        //
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.opsForValue().set("Jackson2Json", user);
+
+        //
+        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+        redisTemplate.opsForValue().set("Generic2String", user);
+
+        //
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.opsForValue().set("Generic2Json", user);
+
+        //
+        redisTemplate.setValueSerializer(new FasterJsonWithTypeSerializer<>(Object.class));
+        redisTemplate.opsForValue().set("WithType", user);
+
+        return ApiResult.success();
+    }
+
+    /**
+     * 测试获取数据
+     */
+    @GetMapping("/testGetValue")
+    public ApiResult<Boolean> testGetValue() {
+        // jdk 原生序列化
+        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
+        redisTemplate.opsForValue().get("JDK");
+
+        // string 原生序列化
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.opsForValue().get("String");
+
+        // 原生 Jackson
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.opsForValue().get("Jackson2Json");
+
+
+        //
+        redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+        redisTemplate.opsForValue().get("Generic2String");
+
+        //
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.opsForValue().get("Generic2Json");
+
+
+        //  with type
+        redisTemplate.setValueSerializer(new FasterJsonWithTypeSerializer<>(Object.class));
+        redisTemplate.opsForValue().get("WithType");
+
+
+        return ApiResult.success();
+    }
 
     /**
      * 生成数据
@@ -98,12 +151,15 @@ public class TestRedisSerClassController {
     @GetMapping("/test_01_init")
     public ApiResult<Boolean> test_01_init() {
         UserEntity user = BuildDataUtil.createData(UserEntity.class);
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
         redisTemplate.opsForValue().set(JACKSON_NO_TYPE, user);
+
         //
-        redisTemplate.setValueSerializer(new MyRedisJsonNoTypeSerializer<>(Object.class));
+        redisTemplate.setValueSerializer(new FasterJsonNoTypeSerializer<>(Object.class));
         redisTemplate.opsForValue().set(FASTERJSON_NO_TYPE, user);
+
         //
-        redisTemplate.setValueSerializer(new MyRedisJsonWithTypeSerializer<>(Object.class));
+        redisTemplate.setValueSerializer(new FasterJsonWithTypeSerializer<>(Object.class));
         redisTemplate.opsForValue().set(FASTERJSON_WITH_TYPE, user);
 
         return ApiResult.success();
@@ -139,15 +195,7 @@ public class TestRedisSerClassController {
     public ApiResult<Boolean> test_03_d_ser() {
         // redisTemplateNoType // 配置 序列化
 
-        // 方案二
-        UserEntity object1 = autoRedisTemplate.opsForValue().get(FASTERJSON_NO_TYPE);
-        //  bug todo
-        //      om.alibaba.fastjson2.JSONObject cannot be cast to com.it.boot.entity.UserEntity
-        System.out.println(object1);
-
-
-        // 方案二
-        redisTemplateNoType.setValueSerializer(new AutoRedisJsonSerializer<>(UserEntity.class));
+        redisTemplateNoType.setValueSerializer(new FasterJsonWithTypeSerializer<>(UserEntity.class));
         UserEntity object6 = redisTemplateNoType.opsForValue().get(FASTERJSON_NO_TYPE);
         System.out.println(object6);
 

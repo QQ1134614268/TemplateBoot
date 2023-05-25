@@ -1,7 +1,7 @@
 package com.it.boot.config.mybatis;
 
 import com.alibaba.fastjson2.TypeReference;
-import com.it.boot.dto.AddressDtoJson;
+import com.it.boot.entity.dto.AddressDtoJson;
 
 import java.util.List;
 

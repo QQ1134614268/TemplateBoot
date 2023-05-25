@@ -24,7 +24,7 @@ public class TestJackson {
      * writeValueAsString(Object arg0)把arg0转成json序列，并把结果输出成字符串。
      */
     @Test
-    public void run() throws IOException {
+    public void test() throws IOException {
         Country country = BuildDataUtil.createData(Country.class);
         String json = mapper.writeValueAsString(country);
         System.out.println(json);
@@ -33,7 +33,7 @@ public class TestJackson {
         System.out.println(country2);
     }
     @Test
-    public void testTypeReference2() throws IOException {
+    public void testTypeReference() throws IOException {
         //创建对象并设置值
         Result<List<Book>> data = new Result<>();
         data.setCode("200");

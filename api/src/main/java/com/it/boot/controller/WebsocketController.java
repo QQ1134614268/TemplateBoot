@@ -2,7 +2,7 @@ package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.Conf;
-import com.it.boot.config.websocket.websocket2.WsSessionManager;
+import com.it.boot.websocket.websocket2.WsSessionManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

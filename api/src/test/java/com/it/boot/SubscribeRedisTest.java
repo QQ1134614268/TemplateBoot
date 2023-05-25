@@ -2,7 +2,7 @@ package com.it.boot;
 
 import com.it.boot.config.redis.RedisConfig;
 import com.it.boot.config.redis.RedisUtils;
-import com.it.boot.dto.MessageDto;
+import com.it.boot.entity.dto.MessageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -19,21 +19,9 @@ import java.util.*;
  */
 public class TestGson {
     // str jsonObject object三者转换 jsonObject 得到 添加 删除属性
-    @Test
-    public void testTypeToken() {
-        Gson gson = new Gson();
-        String jsonList = "[{\"id\":\"1\",\"name\":\"Json技术\"},{\"id\":\"2\",\"name\":\"java技术\"}]";
-        Type type = new TypeToken<List<Book>>() {
-        }.getType();
-        ArrayList<Book> list = gson.fromJson(jsonList, type);
-        System.out.println(list);
-
-        List<?> list2 = gson.fromJson(jsonList, List.class);
-        System.out.println(list2);
-    }
 
     @Test
-    public void a() {
+    public void test() {
         Book book = BuildDataUtil.createData(Book.class);
 
         // GsonBuilder builder = new GsonBuilder();
@@ -64,7 +52,21 @@ public class TestGson {
     }
 
     @Test
-    public void test() {
+    public void testTypeToken() {
+        Gson gson = new Gson();
+        String jsonList = "[{\"id\":\"1\",\"name\":\"Json技术\"},{\"id\":\"2\",\"name\":\"java技术\"}]";
+        Type type = new TypeToken<List<Book>>() {
+        }.getType();
+        ArrayList<Book> list = gson.fromJson(jsonList, type);
+        System.out.println(list);
+
+        List<?> list2 = gson.fromJson(jsonList, List.class);
+        System.out.println(list2);
+    }
+
+
+    @Test
+    public void testAddSerializer() {
         @Data
         class TestDemo {
             Date date;

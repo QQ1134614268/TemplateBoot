@@ -3,7 +3,7 @@ package com.it.sim.test;
 /*
  * @date 2022-11-22 19:27
  */
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import lombok.Data;
 
