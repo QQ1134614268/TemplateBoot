@@ -1,6 +1,6 @@
 package com.it.boot;
 
-import com.it.boot.config.redis.RedisConfig;
+import com.it.boot.config.redis.RedisListenerConfig;
 import com.it.boot.config.redis.RedisUtils;
 import com.it.boot.entity.dto.MessageDto;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class SubscribeRedisTest {
         dto.setTitle("日常信息");
         dto.setContent("hello world!");
 
-        redisUtils.convertAndSend(RedisConfig.TOPIC_NAME1, dto);
+        redisUtils.convertAndSend(RedisListenerConfig.TOPIC_NAME1, dto);
 
     }
 }
