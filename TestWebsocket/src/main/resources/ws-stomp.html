@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>web-socket-demo</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/element-ui/2.4.5/index.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.4.5/theme-chalk/index.css" rel="stylesheet">
+
+    <script src="http://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+</head>
+<body>
+<div id="app" style="min-height: 100vh">
+    <el-tabs v-model="active">
+        <el-tab-pane label="News">
+            <div>
+                <el-button @click="submit"> 订阅</el-button>
+                <el-button @click="unSubmit"> 取消订阅</el-button>
+            </div>
+            <div>
+
+            </div>
+        </el-tab-pane>
+        <el-tab-pane label="SysAnno">
+
+        </el-tab-pane>
+    </el-tabs>
+</div>
+<script>
+    let t = new Vue(
+        {
+            el: '#app',
+            data: {
+                active: "",
+                topics: [""],
+                newsHistory: [],
+                sysAnnoHistory: [],
+                client: null
+            },
+            methods: {
+                init() {
+                    // https://blog.csdn.net/m0_62118859/article/details/125515118
+                    let url = "ws://127.0.0.1:8080/ws?token=1";
+                    this.client = Stomp.client(url);
+                    let connect_callback = function () {
+                        console.log("connect_callback")
+
+                        this.client.subscribe("/ws/test", (msg) => {
+                            console.log(msg)
+                        });
+                        this.client.send("/ws/test", {priority: 9}, "Hello, STOMP");
+                    };
+                    let error_callback = function (error) {
+                        // display the error's message header:
+                        alert(error.headers.message);
+                    };
+                    let headers = {
+                        login: 'mylogin',
+                        passcode: 'mypasscode',
+                        'client-id': 'my-client-id',
+                        "token": "token369"
+                    }
+                    debugger
+                    let res = this.client.connect(headers, connect_callback, () => {
+                        console.log(this.client)
+                    })
+                    console.log("over")
+
+                    // client.connect(login, passcode, connectCallback);
+                    // client.connect(login, passcode, connectCallback, errorCallback, host);
+                    // client.connect(headers, connectCallback);
+                    // client.connect(headers, connectCallback, errorCallback);
+                    // client.send("/queue/test", {priority: 9}, "Hello, STOMP");
+                    // let subscription = client.subscribe(destination, callback, { id: mysubid });
+                    // let subscription = client.subscribe(...);
+                    // client.send(destination, {}, body);
+                    // let subscription = client.subscribe("/queue/test", callback);
+                    // let mysubid = '...';
+
+                    // let subscription = client.subscribe(destination, callback, {id: mysubid});
+                },
+                submit() {
+                },
+                unSubmit() {
+
+                }
+            },
+            created() {
+                this.init()
+            },
+        }
+    );
+</script>
+</body>
+<style>
+</style>
+</html>

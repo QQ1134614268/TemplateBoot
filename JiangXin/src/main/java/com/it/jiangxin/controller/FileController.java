@@ -50,14 +50,14 @@ public class FileController {
         Path path = Paths.get(upload_path, newName);
 
         Files.write(path, file.getBytes());
-        return ApiResult.success(newName);
+        return ApiResult.success("http://localhost:29090/api/file/download/"+newName);
     }
 
     @ApiOperation("下载")
     @GetMapping("/download/{path}")
     public void download(@PathVariable("path") String path) throws IOException {
         if (path == null) {
-            throw new BizException("文件不存在!");
+            throw new BizException("文件不存在!"); //todo
         }
         Path filePath = Paths.get(upload_path, path);
         if (!Files.exists(filePath)) {

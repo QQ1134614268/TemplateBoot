@@ -1,6 +1,7 @@
 package com.it.jiangxin.util;
 
 import java.util.Collection;
+import java.util.Map;
 
 public class BoolUtils {
     public static boolean toBool(Object target) {
@@ -9,7 +10,9 @@ public class BoolUtils {
         if (target instanceof String)
             return ((String) target).length() != 0;
         if (target instanceof Collection)
-            return ((Collection<?>) target).size()!= 0;
+            return ((Collection<?>) target).size() != 0;
+        if (target instanceof Map)
+            return ((Map<?, ?>) target).size() != 0;
         if (target instanceof Number)
             return ((Number) target).doubleValue() != 0d;
         if (target instanceof Boolean)

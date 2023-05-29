@@ -19,11 +19,12 @@ import javax.annotation.Resource;
 @RequestMapping("/api/ImgTypeController")
 @Slf4j
 public class ImgTypeController extends BaseEnumController {
+    public static final String IMG_TYPE = "IMG-TYPE";
     @Resource
     private EnumService enumService;
 
     public String getGroupCode() {
-        return "IMG-TYPE";
+        return IMG_TYPE;
     }
 
     @ApiOperation(value = "新增")
@@ -36,9 +37,15 @@ public class ImgTypeController extends BaseEnumController {
     @ApiOperation(value = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page> getPage(Page page, EnumEntity enumEntity) {
+        Page page1 = getPage2(page, enumEntity);
+        return ApiResult.success(page1);
+    }
+
+    public Page getPage2(Page page, EnumEntity enumEntity) {
         enumEntity.setGroupCode(getGroupCode());
         // enumService.lambdaQuery().list()
-        return ApiResult.success(enumService.page(page, new QueryWrapper<>(enumEntity)));
+        Page page1 = enumService.page(page, new QueryWrapper<>(enumEntity));
+        return page1;
     }
 
     @ApiOperation(value = "根据id修改")

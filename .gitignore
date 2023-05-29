@@ -19,4 +19,4 @@ Thumbs.db
 
 # Maven files
 target/
-/data/log/
+data

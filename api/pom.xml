@@ -24,6 +24,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.9.7</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -149,44 +154,44 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-<!--    https://blog.csdn.net/fly_or/article/details/126846938-->
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            &lt;!&ndash; 开发环境 &ndash;&gt;-->
-<!--            <id>dev</id>-->
-<!--            <properties>-->
-<!--                <environment>dev</environment>&lt;!&ndash; 读取配置文件时,加上对应值`DEV`(大小写皆可)&ndash;&gt;-->
-<!--            </properties>-->
-<!--        </profile>-->
-<!--        <profile>-->
-<!--            <id>test</id>-->
-<!--            <properties>-->
-<!--                <environment>test</environment>-->
-<!--            </properties>-->
-<!--        </profile>-->
-<!--        <profile>-->
-<!--            <id>prod</id>-->
-<!--            <properties>-->
-<!--                <environment>prod</environment>-->
-<!--            </properties>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-<!--    <resources>-->
-<!--        <resource>-->
-<!--            <directory>src/main/resources/${environment}</directory>-->
-<!--            <filtering>true</filtering>-->
-<!--            &lt;!&ndash;				<targetPath>config</targetPath>&lt;!&ndash; 配置文件放在哪里 &ndash;&gt;&ndash;&gt;-->
-<!--        </resource>-->
-<!--        <resource>-->
-<!--            <directory>src/main/java</directory>-->
-<!--            <includes>-->
-<!--                <include>**/*.xml</include>-->
-<!--                <include>**/*.json</include>-->
-<!--                <include>**/*.ftl</include>-->
-<!--            </includes>-->
-<!--        </resource>-->
-<!--    </resources>-->
-<!--    <finalName>XX-${jarName}</finalName>-->
+    <!--    https://blog.csdn.net/fly_or/article/details/126846938-->
+    <!--    <profiles>-->
+    <!--        <profile>-->
+    <!--            &lt;!&ndash; 开发环境 &ndash;&gt;-->
+    <!--            <id>dev</id>-->
+    <!--            <properties>-->
+    <!--                <environment>dev</environment>&lt;!&ndash; 读取配置文件时,加上对应值`DEV`(大小写皆可)&ndash;&gt;-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>test</id>-->
+    <!--            <properties>-->
+    <!--                <environment>test</environment>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>prod</id>-->
+    <!--            <properties>-->
+    <!--                <environment>prod</environment>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--    </profiles>-->
+    <!--    <resources>-->
+    <!--        <resource>-->
+    <!--            <directory>src/main/resources/${environment}</directory>-->
+    <!--            <filtering>true</filtering>-->
+    <!--            &lt;!&ndash;				<targetPath>config</targetPath>&lt;!&ndash; 配置文件放在哪里 &ndash;&gt;&ndash;&gt;-->
+    <!--        </resource>-->
+    <!--        <resource>-->
+    <!--            <directory>src/main/java</directory>-->
+    <!--            <includes>-->
+    <!--                <include>**/*.xml</include>-->
+    <!--                <include>**/*.json</include>-->
+    <!--                <include>**/*.ftl</include>-->
+    <!--            </includes>-->
+    <!--        </resource>-->
+    <!--    </resources>-->
+    <!--    <finalName>XX-${jarName}</finalName>-->
     <build>
         <plugins>
             <plugin>
@@ -201,28 +206,28 @@
                     </excludes>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-dependency-plugin</artifactId>-->
-<!--                <version>2.10</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>copy-dependencies</id>-->
-<!--                        <phase>prepare-package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-dependencies</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.basedir}/maven-jars</outputDirectory>-->
-<!--                            <overWriteReleases>false</overWriteReleases>-->
-<!--                            <overWriteSnapshots>false</overWriteSnapshots>-->
-<!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
-<!--                            <includeScope>compile</includeScope>-->
-<!--                            <excludeScope>provided</excludeScope>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+            <!--                <version>2.10</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>copy-dependencies</id>-->
+            <!--                        <phase>prepare-package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>copy-dependencies</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <outputDirectory>${project.basedir}/maven-jars</outputDirectory>-->
+            <!--                            <overWriteReleases>false</overWriteReleases>-->
+            <!--                            <overWriteSnapshots>false</overWriteSnapshots>-->
+            <!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
+            <!--                            <includeScope>compile</includeScope>-->
+            <!--                            <excludeScope>provided</excludeScope>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 </project>

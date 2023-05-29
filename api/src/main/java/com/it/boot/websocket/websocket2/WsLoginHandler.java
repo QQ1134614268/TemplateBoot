@@ -8,9 +8,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.time.LocalDateTime;
+
 @Slf4j
 @Component
-public class WsLoginHandler extends TextWebSocketHandler { //WebSocketHandler
+public class WsLoginHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -31,7 +32,8 @@ public class WsLoginHandler extends TextWebSocketHandler { //WebSocketHandler
         String payload = message.getPayload();
         Object token = session.getAttributes().get("token");
         log.info("server 接收到 " + token + " 发送的 " + payload);
-        session.sendMessage(new TextMessage("server 发送给 " + token + " 消息 " + payload + " " + LocalDateTime.now().toString()));
+        session.sendMessage(new TextMessage("server 发送给 " + token + " 消息 " + payload + " " + LocalDateTime.now()
+                .toString()));
     }
 
 

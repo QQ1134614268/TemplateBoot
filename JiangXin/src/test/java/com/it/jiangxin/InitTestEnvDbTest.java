@@ -52,7 +52,7 @@ public class InitTestEnvDbTest {
         for (String v : list) {
             EnumEntity enumEntity = new EnumEntity();
             enumEntity.setGroupCode("IMG-TYPE");
-            enumEntity.setUniCode(UUID.randomUUID().toString());
+            // enumEntity.setUniCode(UUID.randomUUID().toString());
             enumEntity.setValue(v);
             EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
             if (one == null) {

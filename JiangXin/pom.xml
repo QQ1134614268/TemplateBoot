@@ -80,6 +80,11 @@
             <version>3.12.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+            <artifactId>mybatis-plus-join</artifactId>
+            <version>1.2.2</version>
+        </dependency>
     </dependencies>
 
     <build>

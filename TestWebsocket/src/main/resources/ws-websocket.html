@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>web-socket-demo</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/element-ui/2.4.5/index.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.4.5/theme-chalk/index.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="app" style="min-height: 100vh">
+    <el-tabs v-model="active">
+        <el-tab-pane label="News">
+            <div>
+                <el-button @click="submit"> 订阅</el-button>
+                <el-button @click="unSubmit"> 取消订阅</el-button>
+            </div>
+            <div>
+
+            </div>
+        </el-tab-pane>
+        <el-tab-pane label="SysAnno">
+
+        </el-tab-pane>
+    </el-tabs>
+</div>
+<script>
+    let t = new Vue(
+        {
+            el: '#app',
+            data: {
+                ws: null,
+                active: null
+            },
+            methods: {
+                init() {
+                    let ws = new WebSocket("ws://127.0.0.1:8080/ws?token=1");
+
+                    this.ws = ws
+                    ws.onopen = function () {
+                        console.log("onopen")
+                    }
+                    ws.onmessage = function (messageEvent) {
+                        console.log(messageEvent)
+                    }
+                    ws.onerror = function () {
+                        console.log("error")
+                    }
+                    ws.onclose = function () {
+                        console.log("close")
+                    }
+                    // ws.close()
+                },
+                wsSend(msg) {
+                    this.ws.send(msg)
+                },
+                submit() {
+                    console.log("submit")
+                },
+                unSubmit() {
+                    console.log("unSubmit")
+                }
+            },
+            created() {
+                this.init()
+            },
+        }
+    );
+</script>
+</body>
+<style>
+</style>
+</html>

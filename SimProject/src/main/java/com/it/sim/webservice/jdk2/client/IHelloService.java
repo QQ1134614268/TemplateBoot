@@ -6,7 +6,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.ws.Action;
 
 
 /**
@@ -15,7 +14,6 @@ import javax.xml.ws.Action;
  * Generated source version: 2.2
  * 
  */
-@SuppressWarnings({"HttpUrlsUsage", "UnnecessaryModifier"})
 @WebService(name = "IHelloService", targetNamespace = "http://it.com")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface IHelloService {
@@ -23,26 +21,26 @@ public interface IHelloService {
 
     /**
      * 
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://it.com/IHelloService/sayHelloRequest", output = "http://it.com/IHelloService/sayHelloResponse")
-    public String sayHello(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0);
-
-    /**
-     * 
+     * @param name
      * @return
      *     returns java.lang.String
      */
     @WebMethod
     @WebResult(name = "ret", partName = "ret")
-    @Action(input = "http://it.com/IHelloService/sayHiRequest", output = "http://it.com/IHelloService/sayHiResponse")
     public String sayHi(
         @WebParam(name = "name", partName = "name")
         String name);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    public String sayHello(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
 }

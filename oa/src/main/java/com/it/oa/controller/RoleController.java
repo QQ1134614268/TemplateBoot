@@ -41,24 +41,22 @@ public class RoleController {
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleName(para.getRoleName());
         roleEntity.setIsUse(true);
-        roleEntity.setMenus(para.getMenus().stream().map(String::valueOf).collect(Collectors.joining(",")));
+        roleEntity.setMenus(para.getMenus2().stream().map(String::valueOf).collect(Collectors.joining(ConstConf.LIST_SEPARATION)));
         return ApiResult.success(roleService.save(roleEntity));
     }
 
     @ApiOperation(value = "查询所有角色")
     @GetMapping("/getAll")
     public ApiResult<List<RoleUO>> getAll() {
-        List<RoleEntity> all = roleService.list();
-        List<RoleUO> ret = all.stream().map(vo -> {
-            RoleUO dto = new RoleUO();
-            dto.setId(vo.getId());
-            dto.setRoleName(vo.getRoleName());
-            dto.setIsUse(vo.getIsUse());
-            if (!vo.getMenus().isEmpty()) {
-                dto.setMenus(Arrays.asList(vo.getMenus().split(ConstConf.LIST_SEPARATION)).stream().map(Integer::valueOf).collect(Collectors.toList()));
-            }
-            return dto;
-        }).collect(Collectors.toList());
+        MPJLambdaWrapper<RoleEntity> wrapper = new MPJLambdaWrapper<>();
+        List<RoleUO> ret = roleService.getBaseMapper().selectJoinList(RoleUO.class, wrapper);
+        ret.stream().forEach(
+                vo -> {
+                    if (!vo.getMenus().isEmpty()) {
+                        vo.setMenus2(Arrays.asList(vo.getMenus().split(ConstConf.LIST_SEPARATION)).stream().map(Integer::valueOf).collect(Collectors.toList()));
+                    }
+                }
+        );
         return ApiResult.success(ret);
     }
 

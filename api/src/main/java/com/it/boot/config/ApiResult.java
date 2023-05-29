@@ -47,4 +47,10 @@ public class ApiResult<T> {
         res.message = message;
         return res;
     }
+    public boolean isSuccess() {
+        return  getCode() == ResCodeEnum.RES_SUCCESS.getCode();
+    }
+    public boolean isError() {
+        return  !isSuccess();
+    }
 }

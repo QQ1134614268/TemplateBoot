@@ -1,0 +1,88 @@
+<template>
+  <el-upload
+      class="avatar-uploader"
+      action="http://localhost:29090/api/file/upload"
+      :show-file-list="false"
+      :on-success="(response, file, fileList) => {handleAvatarSuccess(response,file,fileList)}">
+    <img v-if="form" :src="form" class="avatar">
+    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+<!--    <div slot="tip" class="el-upload__tip">请上传图片，且不超过5MB</div>-->
+  </el-upload>
+</template>
+<script>
+import {FileApi} from "@/api/api";
+import {beforeImgUpload} from "@/api/util";
+
+export default {
+  name: "WrdImgUpload",
+  props: {
+    value: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      FileApi,
+      form:this.value
+    };
+  },
+  methods: {
+    handleAvatarSuccess(res, file) {
+      if (res.code !== 1) {
+        this.$message.error(res.data)
+        return
+      }
+      this.$message.success("上传成功");
+      this.form=res.data;
+      this.returnRes()
+    },
+    beforeAvatarUpload(file) {
+      return beforeImgUpload(file)
+    },
+
+    beforeImgUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!');
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!');
+      }
+      return isJPG && isLt2M;
+    },
+    returnRes() {
+      this.$emit("input", this.form)
+    }
+  }
+}
+</script>
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
