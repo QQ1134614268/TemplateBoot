@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container p_c_test_border">
+  <div id="app">
     <router-view/>
   </div>
 </template>

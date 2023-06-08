@@ -14,7 +14,7 @@
           </el-menu-item>
         </el-menu>
       </div>
-      <div class="col-8">
+      <div class="col-10">
         <router-view></router-view>
       </div>
     </div>

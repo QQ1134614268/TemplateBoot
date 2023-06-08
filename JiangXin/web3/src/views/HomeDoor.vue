@@ -2,7 +2,7 @@
   <div class="container">
     <div id="header" class="p_c_box-flex_center ">
       <div style="" class="p_c_box-flex_center ">
-        <img src="@/assets/logo.jpg" style="width: 4rem; border-radius: 45rem" @click="go(root)">
+        <img src="@/assets/logo.jpg" style="width: 4rem; border-radius: 45rem" @click="go(root)" alt="">
         匠心装饰
       </div>
       <div @click="go(Home)"> 首页</div>

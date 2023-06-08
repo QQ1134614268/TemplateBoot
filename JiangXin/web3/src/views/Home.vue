@@ -11,7 +11,7 @@
           <div class="parent">
             <a :href="'/Info?id='+o.id">
               <div class="child">
-                <img :src="o.imgUrl" class="img">
+                <img :src="o.imgUrl" class="img" alt="">
               </div>
             </a>
           </div>

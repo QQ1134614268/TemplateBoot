@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.it</groupId>
-    <artifactId>es-test</artifactId>
+    <artifactId>TestEs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>es-test</name>
     <description>es-test</description>

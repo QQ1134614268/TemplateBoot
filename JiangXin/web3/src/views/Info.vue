@@ -4,7 +4,7 @@
       <div class="img_box p_c_test_border">
         <div class="parent">
           <div class="child">
-            <img :src="form.imgUrl" class="img">
+            <img :src="form.imgUrl" class="img" alt="">
           </div>
         </div>
         <div class="desc p_c_test_border">
