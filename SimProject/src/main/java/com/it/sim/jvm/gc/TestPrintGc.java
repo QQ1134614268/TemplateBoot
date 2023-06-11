@@ -28,28 +28,26 @@ public class TestPrintGc {
         byte[] allocation1;
         allocation1 = new byte[4 * _1MB];
     }
+
     /**
      * 长期存活的对象进入老年代
      * vm参数: -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1
-     *
+     * <p>
      * -XX:PretenureSizeThreshold=314578
-     *
+     * <p>
      * MaxTenuringThreshold=15
      */
     public static void testMaxTenuringThreshold() {
-        byte[] allocation1;
-        allocation1 = new byte[4 * _1MB];
     }
 
     /**
      * 动态对象年龄判定
-     *
      */
     public static void testMaxTenuringThreshold3() {
     }
+
     /**
      * 担保
-     *
      */
     public static void testMaxTenuringThreshold4() {
     }
