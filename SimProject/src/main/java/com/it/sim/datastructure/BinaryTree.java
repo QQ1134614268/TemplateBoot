@@ -2,7 +2,7 @@ package com.it.sim.datastructure;
 
 import lombok.Data;
 
-// todo
+// todo BinaryTree
 public class BinaryTree {
     // 表示根节点
     private Node root;

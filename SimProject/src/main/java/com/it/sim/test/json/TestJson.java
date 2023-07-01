@@ -66,26 +66,26 @@ public class TestJson {
 
     @Test
     public void testWithType() {
-        // todo @type在类型转换  fasterJson jackson gson
+        // @type在类型转换  fasterJson jackson gson
         System.out.println(JSON.toJSONString(BuildDataUtil.createData(City.class), JSONWriter.Feature.WriteClassName));
 
         String noType = "{\"cityName\":\"test_kwZ2Q7P3\",\"id\":8912}";
         String withType = "{\"@type\":\"com.it.sim.test.json.dto.City\",\"cityName\":\"test_kwZ2Q7P3\",\"id\":8912}";
 
-        JSONObject jsonObject = JSON.parseObject(withType);
+        JSONObject jsonObject = JSON.parseObject(withType); // JSONObject
+        System.out.println(jsonObject.getClass());
 
-        System.out.println(jsonObject.getString("id"));
-        System.out.println(jsonObject.getString("@type"));
+        Object city1 = JSON.parseObject(withType, City.class); // 指定的类型
+        System.out.println(city1.getClass());
 
-        Object city = JSON.parseObject(withType, JSONReader.Feature.SupportAutoType);
+        Object city = JSON.parseObject(withType, JSONReader.Feature.SupportAutoType);  // 没有类型, JSONObject
         System.out.println(city.getClass());
 
-        // City类型, 可强制转换
+        // 指定类型, SupportAutoType;  指定的类型无效, 实际根据@type
         City city2 = JSON.parseObject(withType, City.class, JSONReader.Feature.SupportAutoType);
         System.out.println(city2.getClass());
 
-        // 根据@type, 实际是 City类型, 可强制转换
-        Object city3 = JSON.parseObject(withType, Object.class, JSONReader.Feature.SupportAutoType);
+        Object city3 = JSON.parseObject(withType, Province.class, JSONReader.Feature.SupportAutoType);
         System.out.println(city3.getClass());
 
         // JSONObject
@@ -107,12 +107,12 @@ public class TestJson {
         Result<List<Country>> data = getData();
 
         String jacksonStr = mapper.writeValueAsString(data);
-        String fastjsonStr = JSON.toJSONString(data);
         String gsonStr = gson.toJson(data);
+        String fastjsonStr = JSON.toJSONString(data);
 
         System.out.println(jacksonStr);
-        System.out.println(fastjsonStr);
         System.out.println(gsonStr);
+        System.out.println(fastjsonStr);
 
         Result<List<Country>> result1 = gson.fromJson(jacksonStr, new TypeToken<Result<List<Country>>>() {
         }.getType());
@@ -124,6 +124,10 @@ public class TestJson {
 
         Result<List<Country>> result3 = mapper.readValue(gsonStr, new com.fasterxml.jackson.core.type.TypeReference<Result<List<Country>>>() {
         });
+        System.out.println(result1);
+        System.out.println(result2);
+        System.out.println(result3);
+
     }
 
     private static Result<List<Country>> getData() {
