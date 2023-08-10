@@ -3,7 +3,6 @@ package com.it.kafka.listener;
 import com.it.kafka.entity.KafkaUser;
 import com.it.kafka.entity.SomeSample;
 import com.it.kafka.stream.UserDto;
-import org.springframework.data.web.JsonPath;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
