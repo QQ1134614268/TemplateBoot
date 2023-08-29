@@ -1,7 +1,6 @@
 package com.it.sim.xml.javaxml;
 
 import com.it.sim.util.BuildDataUtil;
-import com.it.sim.xml.jacksonxml.UserAddressXml;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBContext;
@@ -19,15 +18,16 @@ public class TestJavaXml {
     @Test
     public void testXml() throws JAXBException {
         UserXml userXml = BuildDataUtil.createData(UserXml.class);
+        userXml.setXmlList1(Arrays.asList("1", "2"));
+        userXml.setXmlList2(Arrays.asList("1", "2"));
+        userXml.setUserAddrXmlList(
+                Arrays.stream(new UserAddrXml[]{
+                                BuildDataUtil.createData(UserAddrXml.class),
+                                BuildDataUtil.createData(UserAddrXml.class)})
+                        .collect(Collectors.toList()));
+        userXml.setUserInfoXml(BuildDataUtil.createData(UserInfoXml.class));
 
-        // userXml.setUserAddrXmlList(
-        //         Arrays.stream(new UserAddrXml[]{
-        //                         BuildDataUtil.createData(UserAddrXml.class),
-        //                         BuildDataUtil.createData(UserAddrXml.class)})
-        //                 .collect(Collectors.toList()));
-        // userXml.setUserInfoXml(BuildDataUtil.createData(UserInfoXml.class));
-
-        JAXBContext jaxbContext = JAXBContext.newInstance(UserXml.class  );
+        JAXBContext jaxbContext = JAXBContext.newInstance(UserXml.class);
         Marshaller marshaller = jaxbContext.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.toString());
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

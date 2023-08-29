@@ -1,0 +1,9 @@
+server:
+  port: 8080
+logging:
+  level:
+    com:
+      it: error
+    org: error
+    sun: error
+    javax: error
