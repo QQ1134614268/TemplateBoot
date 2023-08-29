@@ -1,4 +1,4 @@
-package com.it.boot.entity.dto;
+package com.it.boot.entity.qo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.it.boot.config.Conf;

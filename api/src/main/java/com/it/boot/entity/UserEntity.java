@@ -43,7 +43,7 @@ public class UserEntity extends BaseEntity {
 
     @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '部门id'")
     @ApiModelProperty(value = "部门id",example = "1")
-    private Long orgId;
+    private Long deptId;
     @Transient
     @TableField(exist = false)
     @ApiModelProperty(value = "用户地址")

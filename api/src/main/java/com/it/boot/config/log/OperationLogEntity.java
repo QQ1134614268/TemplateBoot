@@ -21,7 +21,7 @@ import java.util.Date;
 public class OperationLogEntity extends BaseEntity {
     @ApiModelProperty(value = "ID", example = "740991592", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT 'ID'")
-    private Integer userId;
+    private Long userId;
     @ApiModelProperty(value = "操作用户", example = "test_1", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '操作用户'")
     private String userName;
