@@ -6,6 +6,8 @@ import com.it.jiangxin.util.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +19,7 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Api(tags = "文件上传下载")
 @Slf4j
@@ -50,7 +53,7 @@ public class FileController {
         Path path = Paths.get(upload_path, newName);
 
         Files.write(path, file.getBytes());
-        return ApiResult.success("http://localhost:29090/api/file/download/"+newName);
+        return ApiResult.success("http://localhost:29090/api/file/download/" + newName);
     }
 
     @ApiOperation("下载")
@@ -67,6 +70,8 @@ public class FileController {
             byte[] bytes = Files.readAllBytes(filePath);
             response.reset(); // 清空response
             response.setCharacterEncoding("UTF-8");
+            Optional<MediaType> mediaType = MediaTypeFactory.getMediaType(path);
+            response.setContentType(mediaType.orElse(MediaType.ALL).getType());
             response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
             outputStream.write(bytes);
         }

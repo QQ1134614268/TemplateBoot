@@ -29,7 +29,9 @@ export default {
 #app {
   margin: auto;
   min-height: 100%;
-
+  background-image: url("@/assets/bg.webp");
+  background-size: cover;
+  object-fit: contain;
 }
 
 body {

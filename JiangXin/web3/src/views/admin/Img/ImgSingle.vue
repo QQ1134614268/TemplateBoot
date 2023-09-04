@@ -1,15 +1,11 @@
 <template>
   <div>
     <h1>{{ form.name }}</h1>
-    <el-select v-model="form.typeId" class="formItem" placeholder="请选择">
-      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.id">
-      </el-option>
-    </el-select>
     <div class="p_c_test_border container p_c_flexbox" style="width: 100%">
       <div v-if="form.imgUrl" class="col-3 p_c_test_border">
         <div class="parent p_c_test_border">
           <div class="child">
-            <img :src="form.imgUrl">
+            <img :src="form.imgUrl" alt="图片加载失败">
           </div>
         </div>
         <div>desc</div>
@@ -17,7 +13,7 @@
       <div v-for="item in form.children" :key="item.imgUrl" class="col-3">
         <div class="parent">
           <div class="child">
-            <img :src="item.imgUrl">
+            <img :src="item.imgUrl" alt="图片加载失败">
           </div>
         </div>
         <div> desc</div>
@@ -35,7 +31,10 @@ export default {
   name: 'App',
   props: {
     form: {
-      type: Object
+      type: Object,
+      imgUrl: {},
+      name: Object,
+      typeId: Object,
     }
   },
   data() {

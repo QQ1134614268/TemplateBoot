@@ -17,15 +17,16 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "LoginComponent",
   data() {
     return {
       form: {},
-
+      rules: [],
+      dialogVisible: false
     }
   },
-  methods:{
-    async login(){
+  methods: {
+    async login() {
 
     }
   }

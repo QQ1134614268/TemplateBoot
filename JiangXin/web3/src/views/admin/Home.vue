@@ -25,7 +25,7 @@
 import {adminLogin, AdminMessageBoard, adminSave, ImgAdmin, ImgType} from "@/api/url";
 
 export default {
-  name: "Home",
+  name: "HomeComponent",
   data() {
     return {
       fullPath: this.$route.fullPath,

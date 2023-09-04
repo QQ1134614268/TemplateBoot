@@ -3,12 +3,15 @@ module.exports = defineConfig({
     transpileDependencies: true,
     lintOnSave: "warning", // eslint 告警级别
     devServer: {
-        open: true,
-        host: "0.0.0.0",
+        // hot: true,
+        // contentBase:"/",
+        open: true, // 浏览器自动打开， 打包后
+        // useLocalIp: true, // 浏览器自动打开时 使用本机ip 报错
+        host: "127.0.0.1",
+        allowedHosts: "all",
         port: process.env.PORT,
         https: false,
         historyApiFallback: true,
-        allowedHosts: "all",
         proxy: {
             "^/api/": {
                 target: process.env.VUE_APP_BASE_URL,

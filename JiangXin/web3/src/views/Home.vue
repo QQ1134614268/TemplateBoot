@@ -1,32 +1,44 @@
 <template>
-  <div><!--  <div>滚动图</div>-->
-
+  <div>
+    <!--  <div>滚动图</div>-->
     <!--  风格 tag标签-->
     <div class="tagBox">
-      <el-button :key="o.id" v-for="o in tagList" @click="initSearch(o.id)">{{ o.label }}</el-button>
+      <el-button :key="o.id" v-for="o in tagList" @click="initSearch(o.id)" class="tag">{{ o.label }}</el-button>
     </div>
-    <div class="p_c_flexbox content">
-      <div :key="o.id" v-for="o in imgs" class="col-3">
-        <div class="img_box">
-          <div class="parent">
-            <a :href="'/Info?id='+o.id">
-              <div class="child">
-                <img :src="o.imgUrl" class="img" alt="">
-              </div>
-            </a>
-          </div>
-          <div class="desc">
-            <div class="title">
-              {{ o.description }}
+    <div class="page">
+      <div class="p_c_flexbox content">
+        <div :key="o.id" v-for="o in imgs" class="col-3">
+          <div class="img_box">
+            <div class="parent">
+              <a :href="'/Info?id='+o.id">
+                <div class="child">
+                  <img :src="o.imgUrl" class="img" alt="">
+                </div>
+              </a>
             </div>
-            <!--          <div class="star">-->
-            <!--            点赞-->
-            <!--          </div>-->
-            <avtar avatar-url="http://127.0.0.1:29090/api/file/download/QQ%E5%9B%BE%E7%89%8720210505153146.png"
-                   href="http://www.baidu.com" name="zhang"></avtar>
+            <div class="desc">
+              <div class="title">
+                {{ o.description }}
+              </div>
+              <!--          <div class="star">-->
+              <!--            点赞-->
+              <!--          </div>-->
+              <avtar class="avtar"
+                     avatar-url="http://127.0.0.1:29090/api/file/download/QQ%E5%9B%BE%E7%89%8720210505153146.png"
+                     href="https://www.baidu.com" name="zhang"></avtar>
+            </div>
           </div>
         </div>
       </div>
+      <el-pagination
+          @size-change="init"
+          @current-change="init"
+          :current-page="current"
+          :page-sizes="[16, 32, 64]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :page-size="size"
+          :total="total">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -36,13 +48,17 @@ import {img_getPage, ImgType_getPage} from "@/api/api";
 import Avtar from "@/components/avtar";
 
 export default {
-  name: "Home",
+  name: "HomeComponent",
   components: {Avtar},
   data() {
     return {
       imgs: [],
       Info: 123,
-      tagList: []
+      tagList: [],
+      size: 16,
+      total: 0,
+      current:1,
+      page: {},
     }
   },
   methods: {
@@ -52,10 +68,17 @@ export default {
     async initSearch(typeId) {
       let data = {
         parentId: 0,
-        typeId: typeId
+        typeId: typeId,
+        current:this.current,
+        size:this.size
       }
       let ret = await getJson3(img_getPage, data)
       this.imgs = ret.data.records;
+      this.size = ret.data.size;
+      this.total = ret.data.total;
+      this.current = ret.data.current;
+      this.page = ret.data
+      console.info("分页数据", this.page)
     },
     async init() {
       let ret = await getJson3(ImgType_getPage)
@@ -71,10 +94,20 @@ export default {
 
 <style scoped lang="less">
 .tagBox {
+  width: 100%;
+  height: 4.8rem;
+  margin: 1rem 0;
+
+  background-color: inherit;
+
   display: flex;
   align-content: center;
   justify-content: center;
   flex-wrap: wrap;
+
+  .tag {
+    background-color: red;
+  }
 }
 
 .content {
@@ -94,5 +127,9 @@ export default {
 
 .title {
   margin: 1rem;
+}
+
+.avtar {
+  margin: 0 1rem;
 }
 </style>

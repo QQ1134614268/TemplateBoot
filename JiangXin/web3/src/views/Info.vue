@@ -17,7 +17,7 @@
         <div class="img_box">
           <div class="parent">
             <div class="child">
-              <img :src="type.imgUrl" class="img">
+              <img :src="type.imgUrl" class="img" alt="图片加载失败">
             </div>
           </div>
           <div class="desc">
@@ -36,7 +36,7 @@
 import {getAllTree2} from "@/api/img";
 
 export default {
-  name: "Info",
+  name: "InfoComponent",
   data() {
     return {
       form: {},
