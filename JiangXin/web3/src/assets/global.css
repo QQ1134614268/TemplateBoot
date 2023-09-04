@@ -85,7 +85,7 @@
 }
 
 a, a:hover, a:active, a:visited, a:link, a:focus {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
     -webkit-tap-highlight-color: transparent;
     outline: none;
     background: none;
@@ -109,10 +109,10 @@ html {
 
 body {
     font-size: 1.6rem;
-    height: 100%;
+    min-height: 100%;
     /*超出body范围部分隐藏*/
     /*overflow: hidden;*/
-    overflow: auto
+    /*overflow: auto*/
 }
 
 img, video {

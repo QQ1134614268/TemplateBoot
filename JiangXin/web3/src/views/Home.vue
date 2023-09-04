@@ -6,7 +6,7 @@
       <el-button :key="o.id" v-for="o in tagList" @click="initSearch(o.id)" class="tag">{{ o.label }}</el-button>
     </div>
     <div class="page">
-      <div class="p_c_flexbox content">
+      <div v-if="imgs.length!==0" class="p_c_flexbox content">
         <div :key="o.id" v-for="o in imgs" class="col-3">
           <div class="img_box">
             <div class="parent">
@@ -18,11 +18,13 @@
             </div>
             <div class="desc">
               <div class="title">
-                {{ o.description }}
+                <span>
+                  {{ o.description }}
+                </span>
+                <span class="star">
+                  点赞
+                </span>
               </div>
-              <!--          <div class="star">-->
-              <!--            点赞-->
-              <!--          </div>-->
               <avtar class="avtar"
                      avatar-url="http://127.0.0.1:29090/api/file/download/QQ%E5%9B%BE%E7%89%8720210505153146.png"
                      href="https://www.baidu.com" name="zhang"></avtar>
@@ -30,6 +32,7 @@
           </div>
         </div>
       </div>
+      <el-empty v-else description="没有数据"></el-empty>
       <el-pagination
           @size-change="init"
           @current-change="init"
@@ -57,7 +60,7 @@ export default {
       tagList: [],
       size: 16,
       total: 0,
-      current:1,
+      current: 1,
       page: {},
     }
   },
@@ -69,8 +72,8 @@ export default {
       let data = {
         parentId: 0,
         typeId: typeId,
-        current:this.current,
-        size:this.size
+        current: this.current,
+        size: this.size
       }
       let ret = await getJson3(img_getPage, data)
       this.imgs = ret.data.records;
@@ -127,6 +130,9 @@ export default {
 
 .title {
   margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+
 }
 
 .avtar {

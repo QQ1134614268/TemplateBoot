@@ -26,17 +26,15 @@ export default {
 }
 </script>
 <style>
-#app {
-  margin: auto;
-  min-height: 100%;
+body {
+  /*background-color: #f90;*/
+  /*background-image: linear-gradient(0deg, rgba(255, 255, 255, .2) 10%, transparent 50%, transparent);*/
   background-image: url("@/assets/bg.webp");
   background-size: cover;
   object-fit: contain;
 }
-
-body {
-  /*background-color: #f90;*/
-  /*background-image: linear-gradient(0deg, rgba(255, 255, 255, .2) 10%, transparent 50%, transparent);*/
+#app {
+  margin: auto;
+  min-height: 100%;
 }
-
 </style>
