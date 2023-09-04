@@ -1,4 +1,4 @@
-package com.it.kafka.task;
+package com.it.kafka.listener;
 
 import com.it.kafka.config.Topics;
 import com.it.kafka.entity.KafkaUser;
