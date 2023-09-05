@@ -60,11 +60,11 @@ public class FileController {
     @GetMapping("/download/{path}")
     public void download(@PathVariable("path") String path) throws IOException {
         if (path == null) {
-            throw new BizException("文件不存在!");
+            throw new BizException("文件不存在!");// 抛出404
         }
         Path filePath = Paths.get(upload_path, path);
         if (!Files.exists(filePath)) {
-            throw new BizException("文件不存在!");
+            throw new BizException("文件不存在!"); // 抛出404
         }
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             byte[] bytes = Files.readAllBytes(filePath);

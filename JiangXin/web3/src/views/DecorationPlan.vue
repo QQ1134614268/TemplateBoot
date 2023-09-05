@@ -1,22 +1,21 @@
 <template>
-  <div>
+  <div style="width: 80rem">
     <el-form ref="form" :model="form" label-width="8rem" :rules="rules" style="padding: 1rem">
-      <el-form-item label="面积">
-        <el-input v-model="form.area"></el-input>
+      <el-form-item label="面积" style="font-size: 8rem">
+        <el-input v-model="form.area" type="text" class=""></el-input>
       </el-form-item>
       <el-form-item label="风格">
         <el-radio-group v-model="form.styleId" class="styleContent">
           <el-radio :key="o.id" v-for="o in tagList" :label="o.id">
-            {{ o.label }}
-<!--            <div>-->
-<!--              <img src="@/assets/logo.jpg">-->
-<!--              {{ o.label }}-->
-<!--            </div>-->
+            <div>
+              <img src="@/assets/logo.jpg" style="width: 4rem">
+              <div>{{ o.label }}</div>
+            </div>
           </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="您的称呼">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.name" class="name"></el-input>
       </el-form-item>
       <el-form-item label="手机号">
         <el-input v-model="form.phone"></el-input>
@@ -99,5 +98,12 @@ export default {
 .typeBox:first-child {
   padding-left: 0rem;
   /*border: #0a53be solid 1px;*/
+}
+
+.name /deep/ .el-input__inner {
+  background-color: #c5e8ef;
+}
+/deep/ .el-input__inner {
+  background-color:  #39bfda;
 }
 </style>

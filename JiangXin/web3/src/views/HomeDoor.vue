@@ -79,7 +79,7 @@ export default {
     .logoImg {
       width: 4rem;
       height: 4rem;
-      margin: 0 0.1rem ;
+      margin: 0 0.1rem;
       border-radius: 50%;
     }
 
@@ -104,8 +104,15 @@ export default {
   }
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 #body {
-  min-height: 80%
+  display: flex;
+  flex-grow: 1;
 }
 
 #footer {

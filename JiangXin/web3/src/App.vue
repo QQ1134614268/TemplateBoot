@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <router-view/>
   </div>
 </template>
@@ -32,9 +32,15 @@ body {
   background-image: url("@/assets/bg.webp");
   background-size: cover;
   object-fit: contain;
+
+  display: flex;
+  flex-direction: column;
 }
 #app {
+
   margin: auto;
-  min-height: 100%;
+
+  flex-grow: 1;
+  display: flex;
 }
 </style>
