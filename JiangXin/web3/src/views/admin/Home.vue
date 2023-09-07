@@ -5,7 +5,7 @@
     </div>
     <div class="homeContainer">
       <div class="col-2">
-        <el-menu :default-active="fullPath" active-text-color="#409EFF" router>
+        <el-menu :default-active="fullPath" active-text-color="#409EFF" router class="menu">
           <el-menu-item v-for="item in menuList" :key="item.menuName" :index="item.menuPath">
             <i :class="item.menuIcon"></i>
             <span>
@@ -69,5 +69,10 @@ export default {
 
 .homeContainer {
   display: flex;
+}
+
+.menu {
+  height: 100%;
+  margin: 0 1rem;
 }
 </style>
