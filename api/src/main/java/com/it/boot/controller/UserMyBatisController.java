@@ -25,9 +25,9 @@ import com.github.yulichang.base.mapper.wrapper.MappingQuery;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.jwt.JwtUtil;
-import com.it.boot.entity.dto.UserDto;
-import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.UserEntity;
+import com.it.boot.entity.dto.IdVo;
+import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.qo.UserQo;
 import com.it.boot.service.UserBatisService;
 import com.it.boot.util.BoolUtils;
@@ -44,9 +44,9 @@ import java.util.function.Consumer;
 
 @Api(tags = "测试/用户MyBatisPlus")
 @RestController
-@RequestMapping("/api/UserBatisController")
+@RequestMapping("/api/UserMyBatisController")
 @Slf4j
-public class UserBatisController {
+public class UserMyBatisController {
     @Resource
     private UserBatisService userBatisService;
 
@@ -87,8 +87,8 @@ public class UserBatisController {
     }
 
     @ApiOperation(value = "mybatis查询返回dto")
-    @GetMapping("/projection")
-    public ApiResult<List<UserDto>> projection(IdVo idVo) {
+    @GetMapping("/mpjDtoProjection")
+    public ApiResult<List<UserDto>> mpjDtoProjection(IdVo idVo) {
         MPJLambdaWrapper<UserEntity> wrapper = new MPJLambdaWrapper<>();
         wrapper.eq(UserEntity::getId, idVo.getId());
         // wrapper.selectAs();
@@ -157,8 +157,8 @@ public class UserBatisController {
 
             wrapper.nested(true, lambdaQueryWrapperConsumer);
             wrapper.func(true, lambdaQueryChainWrapperConsumer);
-            wrapper.apply(true,"apply sql", 1,2 );
-            wrapper.exists(true,   "existsSql", 1,2);
+            wrapper.apply(true, "apply sql", 1, 2);
+            wrapper.exists(true, "existsSql", 1, 2);
             wrapper.having(true, "having sql");
 
             wrapper.leSql(true, UserEntity::getUserName, "lesql");
@@ -179,13 +179,53 @@ public class UserBatisController {
         };
 
         userBatisService.lambdaQuery()
-                .eq(BoolUtils.toBool( qo.getPhone()), UserEntity::getPhone, qo.getPhone())
-                .ge(BoolUtils.toBool(qo.getStartTime() ), UserEntity::getCreateTime, qo.getStartTime() )
-                .le(BoolUtils.toBool(qo.getEndTime() ), UserEntity::getCreateTime, qo.getEndTime() )
-                .and(true,whereSearch)
+                .eq(BoolUtils.toBool(qo.getPhone()), UserEntity::getPhone, qo.getPhone())
+                .ge(BoolUtils.toBool(qo.getStartTime()), UserEntity::getCreateTime, qo.getStartTime())
+                .le(BoolUtils.toBool(qo.getEndTime()), UserEntity::getCreateTime, qo.getEndTime())
+                .and(true, whereSearch)
                 .and(true, whereAuth)
                 .and(true, where)
-                .orderBy(BoolUtils.toBool(qo.getOrderCreateTime()) ,false, UserEntity::getCreateTime);
+                        .orderBy(BoolUtils.toBool(qo.getOrderCreateTime()), false, UserEntity::getCreateTime);
+
+        return ApiResult.success();
+    }
+
+
+    @ApiOperation(value = "测试mybatis 复杂查询")
+    @GetMapping("/testMybatis2")
+    public ApiResult<UserEntity> testMybatis2(UserQo qo) {
+        LambdaQueryChainWrapper<UserEntity> var = userBatisService.lambdaQuery().eq(UserEntity::getId, qo.getId());
+        var.first("    ");
+        var.last("    ");
+        var.comment("    ");
+
+        // var.setEntity();
+
+        var.select(UserEntity::getId);
+
+        // 条件
+        // var.exists("",);
+        // var.leSql();
+        // var.inSql();
+        // var.isNull();
+        // var.allEq();
+
+        // var.and(); // or
+        // var.nested();
+        // var.func();
+        // var.apply();
+
+        // var.nonEmptyOfWhere();
+        // var.isEmptyOfNormal();
+
+        log.info(var.getSqlFirst());
+        log.info(var.getSqlComment());
+        log.info(var.getSqlSelect());
+        log.info(var.getTargetSql());
+        log.info(var.getSqlSet());
+        log.info(var.getCustomSqlSegment());
+        // log.info(var.getExpression());
+        // log.info(var.getEntity());
 
         return ApiResult.success();
     }

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 
 import java.util.List;
 
-@Configuration
+// @Configuration
 public class XmlMessageConverterConfig extends WebMvcConfigurationSupport {
 
     @Override
