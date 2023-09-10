@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="adminHome">
     <div class="header">
       <h1>匠心后台管理系统</h1>
     </div>
@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+.adminHome {
+  flex-grow: 1;
+}
+
 .header {
   display: flex;
   justify-content: center;

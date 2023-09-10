@@ -1,13 +1,14 @@
 package com.it.jiangxin.controller;
 
 import com.it.jiangxin.config.ApiResult;
-import com.it.jiangxin.config.exception.BizException;
 import com.it.jiangxin.util.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,22 +58,25 @@ public class FileController {
 
     @ApiOperation("下载")
     @GetMapping("/download/{path}")
-    public void download(@PathVariable("path") String path) throws IOException {
+    public ResponseEntity<Object> download(@PathVariable("path") String path) throws IOException {
         if (path == null) {
-            throw new BizException("文件不存在!");// 抛出404
+            // throw new BizException("文件不存在!");// 抛出404
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Path filePath = Paths.get(upload_path, path);
         if (!Files.exists(filePath)) {
-            throw new BizException("文件不存在!"); // 抛出404
+            // throw new BizException("文件不存在!"); // 抛出404
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             byte[] bytes = Files.readAllBytes(filePath);
             response.reset(); // 清空response
             response.setCharacterEncoding("UTF-8");
             Optional<MediaType> mediaType = MediaTypeFactory.getMediaType(path);
-            response.setContentType(mediaType.orElse(MediaType.ALL).getType());
-            response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
+            response.setContentType(mediaType.orElse(MediaType.ALL).toString());
+            // response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
             outputStream.write(bytes);
         }
+        return null;
     }
 }

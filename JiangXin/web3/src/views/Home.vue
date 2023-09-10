@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="flex-grow: 1">
     <!--  <div>滚动图</div>-->
     <!--  风格 tag标签-->
     <div class="tagBox">
