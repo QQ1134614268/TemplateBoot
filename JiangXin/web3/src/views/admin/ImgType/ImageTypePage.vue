@@ -15,15 +15,10 @@
       <el-button icon="el-icon-plus" plain size="mini" type="primary" @click="flag=!flag">新增</el-button>
     </el-form>
     <el-table :data="typeList">
-      <el-table-column label="id" prop="id"></el-table-column>
-      <el-table-column label="uniCode" prop="uniCode"></el-table-column>
-      <el-table-column label="value" prop="value"></el-table-column>
+      <el-table-column type="index"></el-table-column>
       <el-table-column label="label" prop="label"></el-table-column>
       <el-table-column label="createTime" prop="createTime"></el-table-column>
-      <el-table-column label="status" prop="status"></el-table-column>
-      <el-table-column label="groupCode" prop="groupCode"></el-table-column>
       <el-table-column label="sort" prop="sort"></el-table-column>
-      <el-table-column label="note" prop="note"></el-table-column>
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-button circle icon="el-icon-edit" type="danger" @click="handleEdit(scope.row)"></el-button>
