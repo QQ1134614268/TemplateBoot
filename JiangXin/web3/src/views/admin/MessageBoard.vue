@@ -8,7 +8,13 @@
       <el-table-column prop="phone" label="联系方式"></el-table-column>
       <el-table-column prop="phone" label="进度"></el-table-column>
       <el-table-column prop="phone" label="责任人"></el-table-column>
-      <el-table-column prop="phone" label="进度desc"></el-table-column>
+      <el-table-column prop="phone" label="进度desc">
+        <el-select>
+          <el-option label="1" value="未处理"></el-option>
+          <el-option label="2" value="进行中"></el-option>
+          <el-option label="3" value="已结束"></el-option>
+        </el-select>
+      </el-table-column>
     </el-table>
   </div>
 </template>
