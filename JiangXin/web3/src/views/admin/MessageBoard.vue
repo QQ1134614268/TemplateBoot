@@ -16,7 +16,11 @@
           </el-select>
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="进度desc"></el-table-column>
+      <el-table-column prop="phone" label="进度desc">
+        <template slot-scope="scope">
+          <el-input :value="scope.row.phone"></el-input>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>

@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item label="风格">
         <el-radio-group v-model="form.styleId" class="styleContent">
-          <el-radio :key="o.id" v-for="o in tagList" :label="o.id">
+          <el-radio :key="o.id" v-for="o in tagList" :label="o.id" style="width: 20%">
             <div>
               <img src="@/assets/logo.jpg" style="width: 4rem">
               <div>{{ o.label }}</div>
@@ -105,5 +105,8 @@ export default {
 }
 /deep/ .el-input__inner {
   background-color:  #39bfda;
+}
+/deep/ .el-radio__input{
+  display: none;
 }
 </style>
