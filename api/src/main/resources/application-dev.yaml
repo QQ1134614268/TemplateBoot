@@ -28,11 +28,16 @@ templateBoot:
 logging:
   file:
     path: data/log/api
+#  level:
+#    com.it: debug
+#    com.alibaba: warn
 #  pattern:
 #    console: %d{yyyy-MM-dd hh:mm:ss} [%thread] %-5level %logger{50} - %msg%n
 #    file: %d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} === - %msg%n
 mybatis-plus:
   mapper-locations: classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 mybatis:
   #如果使用了mybatis-plus，需要把classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml配置到这里：mybatis-plus.mapper-locations
   mapper-locations: classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml
