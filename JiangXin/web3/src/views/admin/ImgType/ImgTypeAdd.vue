@@ -17,13 +17,18 @@ import {ImgType_create} from "@/api/api";
 export default {
   name: "ImgType",
   data() {
-    return {}
+    return {
+      form: {},
+      rules: {},
+    }
   },
   methods: {
     async submit() {
       let res = await postJson3(ImgType_create, this.form);
       this.$message.info("成功");
     },
+    cancel() {
+    }
   },
 }
 </script>

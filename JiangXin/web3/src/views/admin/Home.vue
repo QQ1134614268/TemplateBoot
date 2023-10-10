@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="adminHome">
     <div class="header">
       <h1>匠心后台管理系统</h1>
     </div>
     <div class="homeContainer">
       <div class="col-2">
-        <el-menu :default-active="fullPath" active-text-color="#409EFF" router>
+        <el-menu :default-active="fullPath" active-text-color="#409EFF" router class="menu">
           <el-menu-item v-for="item in menuList" :key="item.menuName" :index="item.menuPath">
             <i :class="item.menuIcon"></i>
             <span>
@@ -25,7 +25,7 @@
 import {adminLogin, AdminMessageBoard, adminSave, ImgAdmin, ImgType} from "@/api/url";
 
 export default {
-  name: "Home",
+  name: "HomeComponent",
   data() {
     return {
       fullPath: this.$route.fullPath,
@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style scoped>
+.adminHome {
+  flex-grow: 1;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -69,5 +73,10 @@ export default {
 
 .homeContainer {
   display: flex;
+}
+
+.menu {
+  height: 100%;
+  margin: 0 1rem;
 }
 </style>

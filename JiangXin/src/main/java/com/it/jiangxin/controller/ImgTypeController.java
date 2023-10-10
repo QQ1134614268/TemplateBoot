@@ -29,41 +29,40 @@ public class ImgTypeController extends BaseEnumController {
 
     @ApiOperation(value = "新增")
     @PostMapping("/create")
-    public ApiResult create(@RequestBody EnumEntity enumEntity) {
+    public ApiResult<Boolean> create(@RequestBody EnumEntity enumEntity) {
         enumEntity.setGroupCode(getGroupCode());
         return ApiResult.success(enumService.save(enumEntity));
     }
 
     @ApiOperation(value = "分页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page> getPage(Page page, EnumEntity enumEntity) {
-        Page page1 = getPage2(page, enumEntity);
+    public ApiResult<Page<EnumEntity>> getPage(Page<EnumEntity> page, EnumEntity enumEntity) {
+        Page<EnumEntity> page1 = getPage2(page, enumEntity);
         return ApiResult.success(page1);
     }
 
-    public Page getPage2(Page page, EnumEntity enumEntity) {
+    public Page<EnumEntity> getPage2(Page<EnumEntity> page, EnumEntity enumEntity) {
         enumEntity.setGroupCode(getGroupCode());
         // enumService.lambdaQuery().list()
-        Page page1 = enumService.page(page, new QueryWrapper<>(enumEntity));
-        return page1;
+        return enumService.page(page, new QueryWrapper<>(enumEntity));
     }
 
     @ApiOperation(value = "根据id修改")
     @PostMapping("/updateById")
-    public ApiResult updateById(@RequestBody EnumEntity enumEntity) {
+    public ApiResult<Boolean> updateById(@RequestBody EnumEntity enumEntity) {
         enumEntity.setGroupCode(getGroupCode());
         return ApiResult.success(enumService.updateById(enumEntity));
     }
 
     @ApiOperation(value = "根据id删除")
     @PostMapping("/deleteById")
-    public ApiResult deleteById(@RequestBody IdPara para) {
+    public ApiResult<Boolean> deleteById(@RequestBody IdPara para) {
         return ApiResult.success(enumService.removeById(para.getId()));
     }
 
     @ApiOperation(value = "根据id批量删除")
     @PostMapping("/deleteByIds")
-    public ApiResult deleteByIds(@RequestBody IdsPara para) {
+    public ApiResult<Boolean> deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(enumService.removeByIds(para.getIds()));
     }
 

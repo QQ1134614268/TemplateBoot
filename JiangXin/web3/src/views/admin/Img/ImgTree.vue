@@ -41,7 +41,6 @@ export default {
         children: "children",
         label: "name",
       },
-      data: [],
     }
   },
   methods: {

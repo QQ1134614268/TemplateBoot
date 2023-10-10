@@ -1,16 +1,18 @@
 <template>
-  <a :href="href">
-    <div class="avatarBox">
-      <img :src="avatarUrl" class="img">
-      <div>{{ name }}</div>
-    </div>
-  </a>
+  <div>
+    <a :href="href">
+      <div class="avatarBox">
+        <img src="@/assets/logo.jpg" class="img" alt="图片加载失败">
+        <div class="text">{{ name }}</div>
+      </div>
+    </a>
+  </div>
 
 </template>
 
 <script>
 export default {
-  name: "avtar",
+  name: "AvtarComponent",
   props: {
     avatarUrl: String,
     name: String,
@@ -25,13 +27,19 @@ export default {
   justify-content: flex-start;
   align-content: center;
   align-items: center;
+
+  .img {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.2rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .text {
+    font-size: 0.8rem;
+    color: gray;
+  }
 }
 
-.img {
-  margin: 1rem;
-  object-fit: cover;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-}
 </style>

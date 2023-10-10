@@ -1,63 +1,24 @@
 <template>
   <div>
     <el-form ref="queryForm" :inline="true" :model="queryParams" label-width="68px" size="small">
-      <el-form-item label="显示顺序" prop="orderNum">
-        <el-input
-            v-model="queryParams.orderNum"
-            clearable
-            placeholder="请输入显示顺序"
-            @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-date-picker
-            v-model="daterangeCreateTime"
-            end-placeholder="结束日期"
-            range-separator="-"
-            start-placeholder="开始日期"
-            style="width: 240px"
-            type="daterange"
-            value-format="yyyy-MM-dd"
-        >
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item>
-        <el-button icon="el-icon-search" size="mini" type="primary" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
+      <el-date-picker
+          v-model="daterangeCreateTime"
+          end-placeholder="结束日期"
+          range-separator="-"
+          start-placeholder="开始日期"
+          style="width: 240px"
+          type="daterange"
+          value-format="yyyy-MM-dd">
+      </el-date-picker>
+      <el-button icon="el-icon-search" size="mini" type="primary" @click="handleQuery">搜索</el-button>
+      <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      <el-button icon="el-icon-plus" plain size="mini" type="primary" @click="flag=!flag">新增</el-button>
     </el-form>
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-            icon="el-icon-plus"
-            plain
-            size="mini"
-            type="primary"
-            @click="flag=!flag"
-        >新增
-        </el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-            icon="el-icon-download"
-            plain
-            size="mini"
-            type="warning"
-            @click="alert('待实现')"
-        >导出
-        </el-button>
-      </el-col>
-    </el-row>
     <el-table :data="typeList">
-      <el-table-column label="id" prop="id"></el-table-column>
-      <el-table-column label="uniCode" prop="uniCode"></el-table-column>
-      <el-table-column label="value" prop="value"></el-table-column>
+      <el-table-column type="index"></el-table-column>
       <el-table-column label="label" prop="label"></el-table-column>
       <el-table-column label="createTime" prop="createTime"></el-table-column>
-      <el-table-column label="status" prop="status"></el-table-column>
-      <el-table-column label="groupCode" prop="groupCode"></el-table-column>
       <el-table-column label="sort" prop="sort"></el-table-column>
-      <el-table-column label="note" prop="note"></el-table-column>
       <el-table-column label="操作" width="160">
         <template slot-scope="scope">
           <el-button circle icon="el-icon-edit" type="danger" @click="handleEdit(scope.row)"></el-button>
@@ -86,7 +47,7 @@ export default {
   data() {
     return {
       queryParams: {},
-      daterangeCreateTime:[],
+      daterangeCreateTime: [],
       typeList: [],
       flag: false,
       current: 1,

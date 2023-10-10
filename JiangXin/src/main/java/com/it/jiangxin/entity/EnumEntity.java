@@ -23,14 +23,6 @@ import java.util.List;
 @ApiModel(value = "系统枚举表")
 public class EnumEntity extends BaseEntity implements TreeNode {
 
-    @ApiModelProperty(value = "分组code", example = "test_1")
-    @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
-    private String groupCode;
-
-    @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '唯一编码'")
-    private String uniCode; // todo
-
     @ApiModelProperty(value = "值", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '值'")
     private String value;
@@ -38,6 +30,14 @@ public class EnumEntity extends BaseEntity implements TreeNode {
     @ApiModelProperty(value = "值", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '翻译标签'")
     private String label;
+
+    @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
+    @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '唯一编码'")
+    private String uniCode; // todo
+
+    @ApiModelProperty(value = "分组code", example = "test_1")
+    @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
+    private String groupCode;
 
     @ApiModelProperty(value = "相同groupCode下排序", example = "1")
     @Column(columnDefinition = "int(11) COMMENT '相同groupCode下排序'")
