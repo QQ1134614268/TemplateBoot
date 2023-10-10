@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -131,102 +132,97 @@ public class UserMyBatisController {
      * @see Join( Nested , Func , Compare )    and or isNull eq nest in
      * @see     AbstractWrapper
      * @see     AbstractChainWrapper
+     *
+     *         // QueryChainWrapper select 使用 字符串,可以拼接函数,自定义字段
+     *         // LambdaQueryChainWrapper select 使用SFunction, 自定义字段??
+     *         // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
      * */
-    @ApiOperation(value = "测试mybatis 复杂查询")
-    @GetMapping("/testMybatis")
-    public ApiResult<UserEntity> testMybatis(UserQo qo) {
+    @ApiOperation(value = "测试 LambdaQueryChainWrapper 复杂查询")
+    @GetMapping("/testLambdaQueryChainWrapper")
+    public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
         // todo
+        LambdaQueryChainWrapper<UserEntity> wrapper = userBatisService.lambdaQuery();
         Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w
                 .or(w2 -> w2.eq(UserEntity::getCreateBy, JwtUtil.getUserId()))
                 .or(w2 -> w2.eq(UserEntity::getDeptId, JwtUtil.getDeptId()));
 
         Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w.and(
-                BoolUtils.toBool( qo.getSearch()),
-                w2->w2.like(UserEntity::getUserName, qo.getSearch()).or().like(UserEntity::getPetName, qo.getSearch())
-                );
-
-        Consumer<LambdaQueryWrapper<UserEntity>> where = wrapper -> {
-            wrapper.first("first");
-            wrapper.last("limit 1");
-            wrapper.comment("this is comment");
-
-            Consumer<LambdaQueryWrapper<UserEntity>> lambdaQueryWrapperConsumer = w3 -> {
-            };
-            Consumer<LambdaQueryWrapper<UserEntity>> lambdaQueryChainWrapperConsumer = w -> {
-            };
-
-            wrapper.nested(true, lambdaQueryWrapperConsumer);
-            wrapper.func(true, lambdaQueryChainWrapperConsumer);
-            wrapper.apply(true, "apply sql", 1, 2);
-            wrapper.exists(true, "existsSql", 1, 2);
-            wrapper.having(true, "having sql");
-
-            wrapper.leSql(true, UserEntity::getUserName, "lesql");
-            wrapper.inSql(true, UserEntity::getUserName, "1,2,3");
-
-            wrapper.getExpression();
-
-            wrapper.isEmptyOfWhere();
-            wrapper.isEmptyOfNormal();
-
-            wrapper.getSqlSelect();
-            wrapper.getTargetSql();
-            wrapper.getCustomSqlSegment();
-            wrapper.getSqlFirst();
-            wrapper.getSqlComment();
-
-            wrapper.getSqlSet();
-        };
-
-        userBatisService.lambdaQuery()
+                BoolUtils.toBool(qo.getSearch()),
+                w2 -> w2.like(UserEntity::getUserName, qo.getSearch()).or().like(UserEntity::getPetName, qo.getSearch())
+        );
+        wrapper.select(UserEntity::getId, UserEntity::getId, UserEntity::getPhone)
                 .eq(BoolUtils.toBool(qo.getPhone()), UserEntity::getPhone, qo.getPhone())
                 .ge(BoolUtils.toBool(qo.getStartTime()), UserEntity::getCreateTime, qo.getStartTime())
                 .le(BoolUtils.toBool(qo.getEndTime()), UserEntity::getCreateTime, qo.getEndTime())
+                //
+                .first("first")
+                .last("limit 1")
+                .comment("this is comment")
+                //
+                .leSql(true, UserEntity::getUserName, "lesql")
+                .inSql(true, UserEntity::getUserName, "1,2,3")
+                //
+                .nested(true, w3 -> {
+                })
+                .func(true, w -> {
+                })
+                .apply(true, "apply sql", 1, 2)
+                .exists(true, "existsSql", 1, 2)
+                .having(true, "having sql")
+                //
+                .isNull(UserEntity::getUserName)
+                .allEq(new HashMap<>())
+                //
                 .and(true, whereSearch)
                 .and(true, whereAuth)
-                .and(true, where)
-                        .orderBy(BoolUtils.toBool(qo.getOrderCreateTime()), false, UserEntity::getCreateTime);
+                .orderBy(BoolUtils.toBool(qo.getOrderCreateTime()), false, UserEntity::getCreateTime);
 
-        return ApiResult.success();
+        wrapper.isEmptyOfWhere();
+        wrapper.nonEmptyOfWhere();
+        wrapper.isEmptyOfNormal();
+        wrapper.nonEmptyOfNormal();
+        wrapper.nonEmptyOfEntity();
+
+        // wrapper.getExpression();
+
+        // wrapper.getSqlFirst();
+        // wrapper.getSqlComment();
+        // wrapper.getSqlSelect();
+        // wrapper.getTargetSql();
+        // wrapper.getSqlSet();
+        // wrapper.getCustomSqlSegment();
+        // wrapper.getExpression();
+        // wrapper.getEntity();
+
+        List<UserEntity> res = wrapper.list();
+        return ApiResult.success(res);
     }
 
-
-    @ApiOperation(value = "测试mybatis 复杂查询")
+    @ApiOperation(value = "测试 QueryChainWrapper 复杂查询")
     @GetMapping("/testMybatis2")
-    public ApiResult<UserEntity> testMybatis2(UserQo qo) {
-        LambdaQueryChainWrapper<UserEntity> var = userBatisService.lambdaQuery().eq(UserEntity::getId, qo.getId());
-        var.first("    ");
-        var.last("    ");
-        var.comment("    ");
+    public void testQueryChainWrapper() {
+        QueryChainWrapper<UserEntity> wrapper = new QueryChainWrapper<>(userBatisService.getBaseMapper());
+        wrapper.select("id");
 
-        // var.setEntity();
+        log.info(wrapper.getSqlFirst());
 
-        var.select(UserEntity::getId);
+    }
 
-        // 条件
-        // var.exists("",);
-        // var.leSql();
-        // var.inSql();
-        // var.isNull();
-        // var.allEq();
+    @ApiOperation(value = "测试 LambdaQueryWrapper 复杂查询")
+    @GetMapping("/testLambdaQueryWrapper")
+    public void testLambdaQueryWrapper() {
+        LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.select(UserEntity::getId);
 
-        // var.and(); // or
-        // var.nested();
-        // var.func();
-        // var.apply();
+        log.info(wrapper.getSqlFirst());
+    }
 
-        // var.nonEmptyOfWhere();
-        // var.isEmptyOfNormal();
+    @ApiOperation(value = "测试 QueryWrapper 复杂查询")
+    @GetMapping("/testQueryWrapper")
+    public void testQueryWrapper() {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.select("id");
 
-        log.info(var.getSqlFirst());
-        log.info(var.getSqlComment());
-        log.info(var.getSqlSelect());
-        log.info(var.getTargetSql());
-        log.info(var.getSqlSet());
-        log.info(var.getCustomSqlSegment());
-        // log.info(var.getExpression());
-        // log.info(var.getEntity());
-
-        return ApiResult.success();
+        log.info(wrapper.getSqlFirst());
     }
 }

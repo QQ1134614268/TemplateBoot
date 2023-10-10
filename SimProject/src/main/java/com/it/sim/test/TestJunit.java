@@ -2,8 +2,6 @@ package com.it.sim.test;
 
 import org.junit.*;
 
-import static org.junit.Assert.assertEquals;
-
 public class TestJunit {
     @BeforeClass
     public static void beforeClass() {
@@ -22,7 +20,7 @@ public class TestJunit {
 
     @Test
     public void testAdd() {
-        assertEquals(1, 1);
+        Assert.assertEquals(1, 8 / 4);
         // int a = 8/0;
     }
 

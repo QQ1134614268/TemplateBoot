@@ -2,9 +2,12 @@ package com.it.boot.entity.qo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.it.boot.config.Conf;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,5 +31,12 @@ public class TestDateQo {
 
     @JsonFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date jsonFormatYmtHms;
+
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
+    private LocalDate localDate;
+
+    @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
+    @ApiModelProperty(example = "2022-10-10 10:10:10")
+    private LocalDateTime localDateTime;
 
 }

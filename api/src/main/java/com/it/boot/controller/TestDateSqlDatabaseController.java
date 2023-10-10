@@ -1,10 +1,7 @@
 package com.it.boot.controller;
 
-import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
 import com.it.boot.dao.repository.TestDateRepository;
-import com.it.boot.entity.qo.TestDateQo;
-import com.it.boot.entity.qo.TimeRangeQo;
 import com.it.boot.entity.TestDateEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +24,8 @@ import static com.it.boot.config.Conf.DATE_TIME_FORMAT;
 
 @Api(tags = "测试/TestDateController")
 @RestController
-@RequestMapping("/api/TestDateController")
-public class TestDateSerController {
+@RequestMapping("/api/TestDateSqlDatabaseController")
+public class TestDateSqlDatabaseController {
     // mysql 默认使用系统时区  可以设置时区
     // url中的时区相当于设置时区
     // 时区影响now()函数 从服务器获取时间 时区影响
@@ -61,54 +58,6 @@ public class TestDateSerController {
     public ApiResult<TestDateEntity> create(@RequestBody TestDateEntity entity) {
         testDateRepository.save(entity);
         return ApiResult.success(entity);
-    }
-
-    /**
-     * @see com.it.boot.config.serializer.SerializerConfig
-     */
-    @GetMapping("/testDateSer")
-    @ApiOperation("testDateSer")
-    public ApiResult<TestDateEntity> testDateSer(TestDateEntity entity) {
-        // todo 源码 书籍 博客(springboot 自动装配, httpMessageConvert)
-        // url中参数:
-        //      Convert localDateTimeConvert
-        //      Serializer localDateSerializer
-        //      @DateTimeFormat
-        // Body中参数:
-        //      @JsonFormat
-
-        System.out.println(entity);
-        return ApiResult.success(entity);
-    }
-
-    @ApiOperation("testDateSer2")
-    @PostMapping("/testDateSer2")
-    public ApiResult<TestDateQo> testDateSer2(@RequestBody TestDateQo qo1, @RequestParam TimeRangeQo qo2) {
-        // spring.jackson.date-format 序列化时间
-
-        // url中参数(Get请求):
-        //      反序列化: @DateTimeFormat
-        // RequestBody
-        //      序列化,反序列化: @JsonFormat
-        // 返回数据:
-        //      @JsonFormat 序列化
-
-        // LocalDateTime等 同样如此(TimeModule)
-
-        //POST http://localhost:9091/api/TestDateController/testDate?startTime=2022-10-10 10:10:10&endTime=2022-10-10 10:10:10
-        // Content-Type: application/json
-        //
-        // {
-        //   "datetime": "2022-10-10 10:10:10",
-        //   "datetimeYmt": "2022-10-10 10:10:10",
-        //   "datetimeYmtHms": "2022-10-10 10:10:10",
-        //   "jsonFormat": "2022-10-10 10:10:10",
-        //   "jsonFormatYmt": "2022-10-10",
-        //   "jsonFormatYmtHms": "2022-10-10 10:10:10"
-        // }
-        System.out.println(JSON.toJSONString(qo1));
-        System.out.println(JSON.toJSONString(qo2));
-        return ApiResult.success(qo1);
     }
 
     @ApiOperation("initDate")
