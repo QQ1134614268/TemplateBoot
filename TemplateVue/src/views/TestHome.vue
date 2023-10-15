@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import {routes} from "@/index"
+import routes from "./index"
 
 export default {
   name: "TestHome",
