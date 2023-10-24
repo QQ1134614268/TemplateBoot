@@ -118,7 +118,8 @@ public class TestConcurrentPackage {
     }
 
     @Test
-    public void testReentrantReadWriteLock() { // todo 读写锁??
+    public void testReentrantReadWriteLock() {
+        // 读写锁: 读之间不阻塞;读:共享锁,写:排斥锁;
         ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
         final ReentrantReadWriteLock.ReadLock readLock = lock.readLock();
