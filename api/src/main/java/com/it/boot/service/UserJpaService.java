@@ -1,6 +1,6 @@
 package com.it.boot.service;
 
-import com.it.boot.dao.repository.UserJpaRepository;
+import com.it.boot.repository.UserJpaRepository;
 import com.it.boot.entity.DeptEntity;
 import com.it.boot.entity.UserEntity;
 import org.springframework.data.domain.Example;

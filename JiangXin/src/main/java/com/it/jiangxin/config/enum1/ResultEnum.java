@@ -4,20 +4,18 @@ package com.it.jiangxin.config.enum1;
 /**
  * @date 2023-02-01 09:34
  */
-public enum ResultEnum implements IEnumDb<ResultEnum> {
-    male("success", "成功"),
-    female("fail", "失败");
+public enum ResultEnum implements IEnumDb {
+    male("success", "1", "成功"),
+    female("fail", "2", "失败");
 
     final String uniCode;
     final String value;
+    final String label;
 
-    public ResultEnum[] values2() {
-        return values();
-    }
-
-    ResultEnum(String uniCode, String value) {
+    ResultEnum(String uniCode, String value, String label) {
         this.uniCode = uniCode;
         this.value = value;
+        this.label = label;
     }
 
     @Override
@@ -28,5 +26,10 @@ public enum ResultEnum implements IEnumDb<ResultEnum> {
     @Override
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public String getLabel() {
+        return label;
     }
 }

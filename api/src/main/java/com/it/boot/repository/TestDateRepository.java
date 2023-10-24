@@ -1,4 +1,4 @@
-package com.it.boot.dao.repository;
+package com.it.boot.repository;
 
 import com.it.boot.entity.TestDateEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

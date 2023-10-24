@@ -1,4 +1,4 @@
-package com.it.boot.dao.mapper;
+package com.it.boot.mapper;
 
 import com.github.yulichang.base.MPJBaseMapper;
 import com.it.boot.entity.UserEntity;

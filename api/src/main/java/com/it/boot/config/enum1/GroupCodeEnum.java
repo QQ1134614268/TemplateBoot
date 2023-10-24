@@ -1,4 +1,5 @@
-package com.it.jiangxin.config.enum1;
+package com.it.boot.config.enum1;
+
 
 /**
  * @date 2023-02-01 09:34

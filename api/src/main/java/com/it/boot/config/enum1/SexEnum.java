@@ -1,18 +1,20 @@
-package com.it.jiangxin.config.enum1;
+package com.it.boot.config.enum1;
 
 /**
  * @date 2023-02-01 09:34
  */
-public enum GroupCodeEnum implements IEnumDb {
-    SexEnum(SexEnum.class.getSimpleName(), "1", "性别枚举"),
-    ResultEnum(ResultEnum.class.getSimpleName(), "2", "结果类型枚举"),
-    AccountEnum(AccountEnum.class.getSimpleName(), "3", "账号枚举");
+public enum SexEnum implements IEnumDb {
+
+
+    male("male", "1", "男"),
+    female("female", "2", "女"),
+    unknown("unknown", "0", "未知");
 
     final String uniCode;
     final String value;
     final String label;
 
-    GroupCodeEnum(String uniCode, String value, String label) {
+    SexEnum(String uniCode, String value, String label) {
         this.uniCode = uniCode;
         this.value = value;
         this.label = label;

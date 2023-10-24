@@ -15,14 +15,12 @@ import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
@@ -86,51 +84,26 @@ public class InitTestEnvDbTest {
             }
         }
     }
+
     @Test
-    void test_3_group2_code() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    void test_3_group2_code() {
+        // 反射 获取方法
+        Class<?>[] tables = {SexEnum.class, ResultEnum.class};
+        for (Class<?> clz : tables) {
+            Object[] arr = clz.getEnumConstants();
 
-        Class<SexEnum> sexEnumClass = SexEnum.class;
-
-        Class<IEnumDb> iEnumDbClass = IEnumDb.class;
-
-        // ss = SexEnum.values3();
-
-        // todo
-        // 获取静态方法类型：返回值与参数均为 String
-        MethodType methodType = MethodType.methodType(String.class, String.class);
-        Enum e;
-        // 继承接口, 判断实现
-        // 反射接口方法
-
-        // 参数 类
-
-        // 获取静态方法的句柄
-        // MethodHandle method =  MethodHandles.lookup() .findStatic(SexEnum.class, "getCode", methodType);
-        //
-        // 调用方法
-        // Object r = method.invoke("invoke");
-        //
-        Method method = SexEnum.class.
-                getDeclaredMethod("stringStaticMethod", String.class);
-
-        Object invoke = method.invoke(null, "invoke"); // obj 传 null
-        System.out.println(invoke);
-        Class<?>[] tables = {UserEntity.class};//UserEntity.class
-        // new IEnumDb[]  {SexEnum.values()};
-        // SexEnum.class.isEnum();
-        // SexEnum.class.getInterfaces()
-        SexEnum[] va = SexEnum.values();
-        // ResultEnum.values();
-        for (SexEnum enum1 : va) {
-            EnumEntity enumEntity = new EnumEntity();
-            enumEntity.setGroupCode("GroupCodeEnum");
-            enumEntity.setValue(enum1.getUniCode());
-            enumEntity.setValue(enum1.getValue());
-            EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
-            if (one == null) {
-                enumService.saveOrUpdate(enumEntity);
+            for (Object obj : arr) {
+                IEnumDb enum1 = (IEnumDb) obj;
+                EnumEntity enumEntity = new EnumEntity();
+                enumEntity.setGroupCode("GroupCodeEnum");
+                enumEntity.setValue(enum1.getUniCode());
+                enumEntity.setValue(enum1.getValue());
+                enumEntity.setValue(enum1.getLabel());
+                EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
+                if (one == null) {
+                    enumService.saveOrUpdate(enumEntity);
+                }
             }
         }
     }
-
 }

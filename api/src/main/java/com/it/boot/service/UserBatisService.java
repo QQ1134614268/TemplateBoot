@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
-import com.it.boot.dao.mapper.UserBatisMapper;
+import com.it.boot.mapper.UserBatisMapper;
 import com.it.boot.entity.DeptEntity;
 import com.it.boot.entity.UserEntity;
 import org.springframework.stereotype.Service;

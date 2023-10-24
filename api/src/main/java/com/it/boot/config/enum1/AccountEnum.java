@@ -1,4 +1,4 @@
-package com.it.jiangxin.config.enum1;
+package com.it.boot.config.enum1;
 
 import io.swagger.annotations.ApiModel;
 

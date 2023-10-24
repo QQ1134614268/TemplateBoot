@@ -33,7 +33,7 @@ public class EnumEntity extends BaseEntity implements TreeNode {
 
     @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '唯一编码'")
-    private String uniCode; // todo
+    private String uniCode;
 
     @ApiModelProperty(value = "分组code", example = "test_1")
     @Column(columnDefinition = "varchar(32) COMMENT '分组code'")

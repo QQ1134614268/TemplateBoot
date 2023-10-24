@@ -2,7 +2,7 @@ package com.it.boot.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
-import com.it.boot.dao.repository.TestDateRepository;
+import com.it.boot.repository.TestDateRepository;
 import com.it.boot.entity.dto.TestDateQo;
 import com.it.boot.entity.dto.TimeRangeQo;
 import com.it.boot.entity.TestDateEntity;

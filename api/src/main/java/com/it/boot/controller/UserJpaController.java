@@ -1,8 +1,8 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
-import com.it.boot.dao.projection.UserProjection;
-import com.it.boot.dao.repository.UserJpaRepository;
+import com.it.boot.projection.UserProjection;
+import com.it.boot.repository.UserJpaRepository;
 import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.dto.UserOnly;
 import com.it.boot.entity.UserEntity;
