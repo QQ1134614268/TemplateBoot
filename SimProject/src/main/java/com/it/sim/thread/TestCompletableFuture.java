@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
@@ -100,7 +101,7 @@ public class TestCompletableFuture {
                 System.out.println(Thread.currentThread().getName());
                 int result = ThreadLocalRandom.current().nextInt(20);
                 if (result > 5) {
-                    int i = 1 / 0;
+                    throw new RuntimeException("测试一场");
                 }
                 try {
                     TimeUnit.SECONDS.sleep(1);
@@ -154,7 +155,7 @@ public class TestCompletableFuture {
             }
         }
         class CompletableFutureMall {
-            public final List<NetMall> list = Arrays.asList(new NetMall("jd"), new NetMall("taobao"), new NetMall("dangdang"));
+            public final List<NetMall> list = Arrays.asList(new NetMall("TaoBao"), new NetMall("jd"), new NetMall("DangDang"));
 
             //一家家搜索
             public List<String> getPrice(List<NetMall> list, String productName) {
@@ -206,7 +207,7 @@ public class TestCompletableFuture {
             }
             return "计算完成";
         });
-        // System.out.println(completableFuture.get());//调用就必须给值
+        // System.out.println(completableFuture.get());// 调用就必须给值, 阻塞
         // System.out.println(completableFuture.get(0, TimeUnit.SECONDS));//调用后，只获得等待时间内的值
         // System.out.println(completableFuture.join());//与get方法一样
         System.out.println(completableFuture.getNow("替代值111"));// 立即获取结果不阻塞，计算完，返回计算完的值，否则就返回替代值
@@ -272,7 +273,9 @@ public class TestCompletableFuture {
             return 1;
         }, pool).handle((f, e) -> {
             System.out.println("222");
-            int i = 1 / 0;
+            if (Objects.equals(f, 1)) {
+                throw new RuntimeException("测试一场");
+            }
             return f + 2;
         }).handle((f, e) -> {
             System.out.println("333");
