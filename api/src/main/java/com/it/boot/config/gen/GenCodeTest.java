@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.FileWriter;
@@ -207,7 +208,7 @@ public class GenCodeTest {
             }
 
             public static Class<?> toJavaType(String columnType) {
-                assert columnType != null;
+                Assert.notNull(columnType, "not null");
                 if (Arrays.asList(COLUMN_TYPE_STR).contains(columnType)) {
                     return String.class;
                 }

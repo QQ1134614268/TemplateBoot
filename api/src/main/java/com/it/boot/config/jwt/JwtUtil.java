@@ -6,6 +6,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.it.boot.config.Conf;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -46,7 +47,7 @@ public class JwtUtil {
 
     public static String getUserName() {
         String token = getToken();
-        assert token != null;
+        Assert.assertNotNull(token);
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_NAME).asString();
     }
@@ -58,14 +59,14 @@ public class JwtUtil {
 
     public static Long getUserId() {
         String token = getToken();
-        assert token != null;
+        Assert.assertNotNull(token);
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_ID).asLong();
     }
 
     public static Long getDeptId() {
         String token = getToken();
-        assert token != null;
+        Assert.assertNotNull(token);
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(DEPT_ID).asLong();
     }
@@ -73,7 +74,7 @@ public class JwtUtil {
     public static Long getUserIdNullable() {
         try {
             String token = getToken();
-            assert token != null;
+            Assert.assertNotNull(token);
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim(USER_ID).asLong();
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.it.boot.util;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import org.hibernate.annotations.Table;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public class GetClassUtil {
         while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
             String[] file = new File(url.getFile()).list();
-            assert file != null;
+            Assert.notNull(file, "not null");
             for (String s : file) {
                 classList.add(Class.forName(packageName + "." + s.replaceAll("\\.class", "")));
             }

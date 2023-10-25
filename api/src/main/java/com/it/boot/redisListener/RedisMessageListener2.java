@@ -6,6 +6,7 @@ import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 
@@ -23,7 +24,7 @@ public class RedisMessageListener2 implements MessageListener {
 
         //序列化对象（特别注意：发布的时候需要设置序列化；订阅方也需要设置序列化）
         MessageDto messageDto = (MessageDto) redisTemplate.getValueSerializer().deserialize(message.getBody());
-        assert messageDto != null;
+        Assert.notNull(messageDto, "not null");
         log.info("{}, {} ", messageDto.getData(), messageDto.getContent());
     }
 }

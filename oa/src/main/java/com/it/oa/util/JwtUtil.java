@@ -4,9 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.util.Assert;
 
+@Slf4j
 public class JwtUtil {
     public static final String USER_NAME = "userName";
     public static final String USER_ID = "userId";
@@ -31,7 +34,7 @@ public class JwtUtil {
 
     public static String getUserName() {
         String token = getToken();
-        assert token != null;
+        Assert.notNull(token, "not null");
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_NAME).asString();
     }
@@ -43,7 +46,7 @@ public class JwtUtil {
 
     public static Integer getUserId() {
         String token = getToken();
-        assert token != null;
+        Assert.notNull(token, "not null");
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_ID).asInt();
     }
@@ -51,10 +54,11 @@ public class JwtUtil {
     public static Integer getUserIdNullable() {
         try {
             String token = getToken();
-            assert token != null;
+            Assert.notNull(token, "not null");
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim(USER_ID).asInt();
         } catch (Exception e) {
+            log.error("获取token失败",e);
             return null;
         }
     }

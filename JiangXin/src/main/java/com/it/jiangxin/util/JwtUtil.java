@@ -7,6 +7,7 @@ import com.it.jiangxin.config.constant.ConstConf;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,7 +43,7 @@ public class JwtUtil {
 
     public static String getUserName() {
         String token = getToken();
-        assert token != null;
+        Assert.notNull(token, "not null");
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_NAME).asString();
     }
@@ -54,7 +55,7 @@ public class JwtUtil {
 
     public static Integer getUserId() {
         String token = getToken();
-        assert token != null;
+        Assert.notNull(token, "not null");
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_ID).asInt();
     }
@@ -62,7 +63,7 @@ public class JwtUtil {
     public static Integer getUserIdNullable() {
         try {
             String token = getToken();
-            assert token != null;
+            Assert.notNull(token, "not null");
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim(USER_ID).asInt();
         } catch (Exception e) {

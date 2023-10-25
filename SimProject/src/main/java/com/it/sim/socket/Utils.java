@@ -1,6 +1,7 @@
 package com.it.sim.socket;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,7 +26,7 @@ public class Utils {
         }
         log.info("读取完毕");
         String data = sb.toString();
-        assert !data.equals("") : "异常,不能为空！";
+        Assert.isTrue(!data.equals(""),"异常,不能为空！" );
         return data;
     }
 
@@ -41,7 +42,7 @@ public class Utils {
         //3、IO读取
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String s = bufferedReader.readLine();
-        assert s != null : "异常,不能为空！";
+        Assert.notNull(s, "异常,不能为空！");
         return s;
     }
 
