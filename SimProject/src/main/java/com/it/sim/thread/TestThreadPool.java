@@ -8,7 +8,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @date 2022/8/22 todo 阅读
+ * @date 2022/8/22
  * --
  * Java中的关于线程池的核心类是Executor，Executor是一个接口，真正的线程池的实现为ThreadPoolExecutor;线程池的优点在于：
  * ① 复用线程池中的线程，避免因为线程的创建和销毁所带来的性能开销。
