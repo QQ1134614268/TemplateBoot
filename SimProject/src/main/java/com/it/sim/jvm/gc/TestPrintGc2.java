@@ -83,7 +83,7 @@ public class TestPrintGc2 {
         }
         Thread.sleep(_300_S);
         System.out.println("-----------------------");
-        // 最大堆迅速增长, 900M 现成占用 650M, CPU,垃圾回收 折现变化,(考虑睡眠)
+        // 最大堆迅速增长, 900M 线程占用 650M, CPU,垃圾回收 折现变化,(考虑睡眠)
         // char[] 325M 1kw
         // Sting  246M 1kw
         // Object[]   55M 4k
@@ -159,13 +159,13 @@ public class TestPrintGc2 {
         Thread.sleep(_300_S);
         System.out.println("-----------------------");
 
-        // 最大堆迅速增长, 900M 现成占用 650M, CPU,垃圾回收 折现变化,(考虑睡眠)
+        // 最大堆迅速增长, 900M 线程占用 650M, CPU,垃圾回收 折现变化,(考虑睡眠)
         // char[] 325M 1kw
         // Sting  246M 1kw
         // Object[]   55M 4k
         // int[]    1M  1k
 
-        // 现成死亡前后
+        // 线程死亡前后
         // thread 600M -> 0
         // main 10M -> 12M
     }

@@ -1,3 +1,13 @@
+SpringBoot高级片:
+    缓存
+    监控
+    部署
+    分布式
+    流程分析
+    事件监听
+    自定配置
+    中间件: kafka websocket等
+
 java基础（十）捕获异常还是抛出异常
 https://blogVO.csdn.net/miracle_8/article/details/78285940
 
@@ -36,45 +46,3 @@ https://blogVO.csdn.net/miracle_8/article/details/78285940
 17. 网关
 18. 适配的 团队,指导(教师 教与练习),获取, 预期的,结果的 过程的
 19. 版本升级, 数据库字段,数据同步更新 取消字符串
-
-#
-背景, 要求(目标(从背景提取))问题, 方案 测试
-
-###
-背景, 要求(目标(从背景提取))问题, 方案 测试
-
-###
-环境:
-    普通
-         SZ SH BJ
-    父子(类似下拉菜单 , 类似目录, 类似多张表合并)
-         省市县
-              县 根据市code(最好不要id)查找,
-              列表查询
-              树形结构
-问题(目标):
-    枚举表的结构,继承关系
-    唯一的GroupCode
-    每条的数据
-    自动对应表
-    根据code取值
-
-    code 唯一吗? 代码中不好确定唯一
-
-    使用id主键还是code?
-
-方案:
-    枚举类
-    普通类
-    理想约束下,code唯一, 宽松模式,code不唯一
-    原始状态,每个分类一张表, 主键id 还是code ?? value String还是int?? 关联使用id还是code??
-    使用groupCode 合并表, code会唯一吗 ??
-    下拉表合并??
-
-    转换代码,会不会太多?? 还需要吗, 自动生成, 唯一值控制
-
-    遵从规则, ITree父子关联, 面向人(易于理解阅读), 或者转换设配ITree(ITree理想状态), 省市县如何关联, 测试
-
-    父子,冗余设计,parentCode 与 parentId, code与id
-#
-研究: org.springframework.kafka.support.serializer.JsonDeserializer

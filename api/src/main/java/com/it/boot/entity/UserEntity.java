@@ -20,7 +20,7 @@ import java.util.List;
 @TableName(value = "user")
 @Entity(name = "user")
 @org.hibernate.annotations.Table(appliesTo = "user", comment = "用户")
-@Table(name = "user", indexes = {@Index(columnList = "userName", unique = true), @Index(columnList = "phone", unique = true), @Index(columnList = "email", unique = true), @Index(columnList = "petName")})
+@Table(name = "user", indexes = {@Index(columnList = "userName", unique = true), @Index(columnList = "phone", unique = true), @Index(columnList = "email", unique = true), @Index(columnList = "nickName")})
 public class UserEntity extends BaseEntity {
     @ApiModelProperty(value = "用户名", example = "test_1", required = true)
     @Column(unique = true, nullable = false, columnDefinition = "varchar(255) COMMENT '用户名'")
@@ -35,7 +35,7 @@ public class UserEntity extends BaseEntity {
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '手机号码'")
     private String phone;
     @ApiModelProperty(value = "昵称", example = "test_1", required = true)
-    @Column(unique = true, nullable = true, columnDefinition = "varchar(255) COMMENT '昵称'")
+    @Column(unique = true, nullable = true, columnDefinition = "varchar(20) COMMENT '昵称'")
     private String nickName;
     @ApiModelProperty(value = "邮箱", example = "test_1", required = false)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '邮箱'")
