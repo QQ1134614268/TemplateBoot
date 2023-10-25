@@ -48,11 +48,14 @@ public class UserEntity extends BaseEntity {
     private String status;
     @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '部门id'")
     @ApiModelProperty(value = "部门id", example = "1")
-    private Long orgId;
+    private Long deptId;
     @Transient
     @TableField(exist = false)
-    @ApiModelProperty(value = "用户地址")
-    private String orgName;
+    @ApiModelProperty(value = "部门名称")
+    private String deptName;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deptId", referencedColumnName = "id", insertable = false, updatable = false)
+    private DeptEntity deptEntity; // jpa 连表使用
     @Transient
     @TableField(exist = false)
     @ApiModelProperty(value = "用户地址")

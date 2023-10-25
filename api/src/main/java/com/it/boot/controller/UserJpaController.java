@@ -1,11 +1,11 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
-import com.it.boot.projection.UserProjection;
-import com.it.boot.repository.UserJpaRepository;
+import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.dto.UserOnly;
-import com.it.boot.entity.UserEntity;
+import com.it.boot.projection.UserProjection;
+import com.it.boot.repository.UserJpaRepository;
 import com.it.boot.service.UserJpaService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,8 +66,8 @@ public class UserJpaController {
 
     @ApiOperation(value = "连表")
     @GetMapping("/join")
-    public ApiResult<Object> join(@RequestBody List<Integer> ids) {
-        return ApiResult.success(userJpaService.join(ids));
+    public ApiResult<Object> join(UserEntity userEntity) {
+        return ApiResult.success(userJpaService.join(userEntity));
     }
 
     /*

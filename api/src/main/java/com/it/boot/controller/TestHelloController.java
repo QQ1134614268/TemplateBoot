@@ -19,7 +19,16 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
-
+/**
+ * 接收数组:
+ *      用 @RequestParam
+ *      转对象
+ *      用 @ModelAttribute
+ *      字符串接收, 手动转换
+ *      数组接收: Long[] projectIds
+ *      post请求 + @RequestBody
+ *      post请求 + @RequestBody + 对象
+ * */
 @Slf4j
 @Api(tags = "测试/hello")
 @RestController

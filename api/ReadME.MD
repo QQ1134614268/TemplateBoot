@@ -23,9 +23,6 @@ https://blogVO.csdn.net/miracle_8/article/details/78285940
 1. mybatis + mybatis-plus + AcTable(自动建表)
 2. jpa(太复杂) 自动建表,缓存, lambda(自定义), 连表查询, 投影
 
-#  
-1. 剥离JPA 或用于生产表 todo
-
 # 
 1. 开发工具-idea maven- git CiCd 面板, bug 需求
 2. 微服务 rest

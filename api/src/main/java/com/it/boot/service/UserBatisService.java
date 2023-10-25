@@ -22,8 +22,8 @@ public class UserBatisService extends ServiceImpl<UserBatisMapper, UserEntity> {
     public ApiResult<IPage<UserEntity>> join(Page<UserEntity> page, List<Integer> ids) {
         MPJLambdaWrapper<UserEntity> wrapper = new MPJLambdaWrapper<>();
         wrapper.selectAll(UserEntity.class);
-        wrapper.leftJoin(DeptEntity.class, DeptEntity::getId, UserEntity::getOrgId);
-        wrapper.selectAs(DeptEntity::getName, UserEntity::getOrgName);
+        wrapper.leftJoin(DeptEntity.class, DeptEntity::getId, UserEntity::getDeptId);
+        wrapper.selectAs(DeptEntity::getName, UserEntity::getDeptName);
         wrapper.in(UserEntity::getId, ids);
         return ApiResult.success(userBatisMapper.selectJoinPage(page, UserEntity.class, wrapper));
     }
