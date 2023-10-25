@@ -23,7 +23,7 @@ public class WsLoginHandler extends TextWebSocketHandler {
         // if(check(session)){
         // Object token = session.getAttributes().get("token");
         // }
-        WsSessionManager.SESSION_POOL.put(session.getId(), session);
+        WsSessionManager.getSessionPool().put(session.getId(), session);
     }
 
 
@@ -40,7 +40,7 @@ public class WsLoginHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        WsSessionManager.SESSION_POOL.remove(session.getId());
+        WsSessionManager.getSessionPool().remove(session.getId());
     }
 
 }

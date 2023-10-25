@@ -29,13 +29,13 @@ public class WsSubSysAnnoTopicHandler extends TextWebSocketHandler {
 
     AtomicInteger atomicInteger = new AtomicInteger(1);
     @Scheduled(fixedDelay = 2000)
-    public void pushSysAnno() throws IOException {
+    public void pushSysAnno() {
         SysAnno sysAnno = new SysAnno();
         int andIncrement = atomicInteger.getAndIncrement();
         sysAnno.setTitle(String.valueOf(andIncrement));
         sysAnno.setContent(String.valueOf(andIncrement));
         sysAnno.setAuth("wu");
         sysAnno.setTopic("SysAnno");
-        WsSessionManager.sendBatch(new ArrayList<>(WsSessionManager.SESSION_POOL.keySet()), JSON.toJSONString(sysAnno));
+        WsSessionManager.sendBatch(new ArrayList<>(WsSessionManager.getSessionPool().keySet()), JSON.toJSONString(sysAnno));
     }
 }
