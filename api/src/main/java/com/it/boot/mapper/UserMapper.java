@@ -24,7 +24,7 @@ public interface UserMapper extends MPJBaseMapper<UserEntity> {
     //         HazelcastCacheManager	使用Hazelcast作为缓存技术
     //         CompositeCacheManager	用于组合 CacheManager，可以从多个 CacheManager 中轮询得到相应的缓存
     // cacheResolver = "customCacheResolver"  自定义缓存数据方法
-    @Cacheable(value = "getUserById", key = "#p0", unless = "#result == null")
+    @Cacheable(value = "getUserById") //,key ="#p0",unless ="#result == null"
     @Select(value = "select * from user u where u.id=#{id}")
     UserEntity getUserById(Integer id);
 }
