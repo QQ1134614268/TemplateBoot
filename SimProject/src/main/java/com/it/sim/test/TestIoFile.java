@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @date 2022-09-30 11:46
+ * @date 2022-09-30 11:46 todo 阅读io nio socket uri url
  * Nio:
  *      Files.readAllLines          List<String>    一次性读出
  *      Files.newBufferedReader     BufferedReader  可以遍历, 一行行读
@@ -51,12 +51,12 @@ import java.util.stream.Stream;
  *         PipedReader                 管道字符输入流。
  *         FilterReader                读取过滤字符流的抽象类。提供将所有请求传递到包含流的默认方法，子类会覆盖这些方法，可能提供其他的方法和字段。
  *         PushbackReader              字符流读取器，允许字符推回到字符流中。
- *     Writer: 子类必须实现的方法为write(char[], int, int)、fulsh()和close()。大多数子类可以覆盖一些方法，以提高性能或提供更多功能。
+ *     Writer: 子类必须实现的方法为write(char[], int, int)、flush()和close()。大多数子类可以覆盖一些方法，以提高性能或提供更多功能。
  *         BufferedWriter              将文本写入字符输入流，缓冲字符可以高效写入单个字符、数组和字符串。
  *         CharArrayWriter             CharArrayWriter实现了可以用作Writer的字符缓存。当数据写入流时，缓存区会自动增长，可以使用toCharArray()和toString()检索数据。close方法是无效的，当关闭流后调用其他方法，不会抛出异常IOException。
  *         FilterWriter                FilterWriter是编写过滤字符流的抽象类。提供将请求传递到包含流的默认方法，FilterWriter子类会覆盖部分方法，甚至提供其他的方法和属性。
  *         OutputStreamWriter          OutputStreamWriter是字符流转换为字节流的桥梁：写入OutputStreamWriter的字符使用指定的字符集编码为字节。
- *         FileWriter                  FileWriter可以非常方便地写入字符文件，FileWriter类的构造函数假定默认字符编码和默认字节缓存大小是可以接受的。如要指定编码和缓存大小，可以在FileOutputStream上构造OutpuStreamWriter。文件是否可用或是否可以创建取决于底层平台，特别是一些平台，一次只允许一个FileWriter（或其他文件写入对象）打开文件进行写入，
+ *         FileWriter                  FileWriter可以非常方便地写入字符文件，FileWriter类的构造函数假定默认字符编码和默认字节缓存大小是可以接受的。如要指定编码和缓存大小，可以在FileOutputStream上构造OutputStreamWriter。文件是否可用或是否可以创建取决于底层平台，特别是一些平台，一次只允许一个FileWriter（或其他文件写入对象）打开文件进行写入，
  *         PrintWriter                 PrintWriter将对象格式化打印到文本输出流。
  *         PipedWriter                 管道化字符输出流。
  *         StringWriter                StringWriter是一种字符流，将输出收集到字符串缓冲区，然后用于构造字符串。关闭StringWriter是无效的，StringWriter关闭后调用方法，不会抛出异常IOException。
@@ -69,13 +69,13 @@ import java.util.stream.Stream;
 @Slf4j
 public class TestIoFile {
 
-    public static final String FILE = "src/test/resources/test/test.txt";
+    public static final String FILE = "src/main/resources/test/test.txt";
     public static final String EXPECTED_VALUE = "Hello,World!";
 
     // nio读取小文件
     @Test
     public void readSmallFile() throws IOException {
-        Path path = Paths.get(FILE);
+        Path path = Paths.get(System.getProperty("user.dir"), FILE);
         String read = Files.readAllLines(path).get(0);
         Assert.assertEquals(EXPECTED_VALUE, read);
     }
@@ -96,7 +96,7 @@ public class TestIoFile {
         Path path = Paths.get(FILE);
         try (Stream<String> data = Files.lines(path)) {
             List<String> lines = data.collect(Collectors.toList());
-            System.out.println(lines);
+            Assert.assertEquals(EXPECTED_VALUE, lines.get(0));
         }
     }
 
@@ -105,7 +105,7 @@ public class TestIoFile {
         Path path = Paths.get(FILE);
         InputStream in = Files.newInputStream(path);
         InputStreamReader in1 = new InputStreamReader(in, StandardCharsets.UTF_8);
-        try (BufferedReader reader = new BufferedReader(in1);) {
+        try (BufferedReader reader = new BufferedReader(in1)) {
             String currentLine = reader.readLine();
             Assert.assertEquals(EXPECTED_VALUE, currentLine);
         }

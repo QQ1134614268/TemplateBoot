@@ -4,14 +4,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // https://blog.csdn.net/blueheart20/article/details/79306032
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/TestGetFileController")
 public class TestGetFileController {
+    public static final String FILE = "test/test.txt";
     //	何为classpath
     //	在Maven项目中，所有的resources文件都将被复制到classes目录下。classpath在tomcat项目中就是/classes，/lib和tomcat下的其他路径。
     //	对于开发者来说，一般就是classes所在目录就是classpath路径的起点和base path.
@@ -29,9 +31,9 @@ public class TestGetFileController {
     @ApiOperation(value = "getFileClasspath")
     @GetMapping("/getFileClasspath")
     public List<String> getFileClasspath() throws IOException {
-        File file = ResourceUtils.getFile("classpath:a.txt");
-        try (FileReader fileReader = new FileReader(file);
-             BufferedReader bufferedReader = new BufferedReader(fileReader);) {
+        File file = ResourceUtils.getFile("classpath:" + FILE);
+        FileReader fileReader = new FileReader(file);
+        try (BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             return getLines(bufferedReader);
         }
     }
@@ -41,8 +43,7 @@ public class TestGetFileController {
     public List<String> getFileClassPathResource() throws IOException {
         Resource resource = new ClassPathResource("a.txt");
         File file = resource.getFile();
-        try (FileReader fileReader = new FileReader(file);
-             BufferedReader bufferedReader = new BufferedReader(fileReader);) {
+        try (FileReader fileReader = new FileReader(file); BufferedReader bufferedReader = new BufferedReader(fileReader);) {
             return getLines(bufferedReader);
         }
     }
@@ -50,10 +51,13 @@ public class TestGetFileController {
     @ApiOperation(value = "getFileAsStream")
     @GetMapping("/getFileAsStream")
     public List<String> getFileAsStream() throws IOException {
-        try (
-                InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("a.txt");
-                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-        ) {
+        InputStream inputStream = this.getClass()
+                .getClassLoader()
+                .getResourceAsStream(FILE);
+        if (inputStream == null) {
+            return Collections.emptyList();
+        }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
             return getLines(br);
         }
     }

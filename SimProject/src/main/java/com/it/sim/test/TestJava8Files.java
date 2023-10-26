@@ -22,13 +22,12 @@ public class TestJava8Files {
     @Test
     public void testReadWrite() throws IOException {
 
-        String newTxt = "china";
-        String oPath = "a.txt";
+        String newTxt = "abc";
+        String oPath = "out.txt"; // 项目目录下; 相对路径
         Path path = Paths.get(oPath);
         try (BufferedWriter bfw = Files.newBufferedWriter(path, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             bfw.write(newTxt);
         }
-
         try (BufferedReader bfr = Files.newBufferedReader(path)) {
             bfr.lines().forEach(System.out::println);
         }
