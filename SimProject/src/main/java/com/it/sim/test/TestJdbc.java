@@ -1,4 +1,4 @@
-package com.it.sim.apply;
+package com.it.sim.test;
 
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class TestJdbc {
 			String string = null;
 			String sql = "select version()";
 			try (Statement stmt = conn.createStatement();
-				 ResultSet rs = stmt.executeQuery(sql);) {
+				 ResultSet rs = stmt.executeQuery(sql)) {
 				while (rs.next()) {
 					string = rs.getString(1);
 				}
@@ -43,7 +43,7 @@ public class TestJdbc {
 	}
 
 	@Test
-	public void main() {
+	public void test() {
 		try {
 			String version = JdbcDao.selectVersion();
 			System.err.println(version);

@@ -4,16 +4,20 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.Properties;
 
 public class TestIssueVelocityTemplate {
     @Test
     public void test0() {
         String basePath = "header";
-        String sysRoot = TestIssueVelocityTemplate.class.getResource("").getPath();
+        URL resource = TestIssueVelocityTemplate.class.getResource("");
+        Assert.assertNotNull(resource);
+        String sysRoot = resource.getPath();
         Properties properties = new Properties();
         // 设置velocity资源加载方式为file
         properties.setProperty("resource.loader", "file");
@@ -33,7 +37,7 @@ public class TestIssueVelocityTemplate {
         StringWriter writer = new StringWriter();
         Template template = velocityEngine.getTemplate(sysRoot + basePath, "UTF-8");
         template.merge(velocityContext, writer);
-        writer.toString();
+        System.out.println(writer);
     }
 
     @Test
