@@ -15,7 +15,6 @@ import java.util.*;
 
 /**
  * @author zero DateTime 2018年4月28日 上午10:21:40
- * @ :
  */
 public class TestGson {
     // str jsonObject object三者转换 jsonObject 得到 添加 删除属性

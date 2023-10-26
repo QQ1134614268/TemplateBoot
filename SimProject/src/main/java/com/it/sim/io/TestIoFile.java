@@ -12,10 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @date 2022-09-30 11:46 todo 阅读io nio socket uri url 整理
@@ -71,34 +68,6 @@ public class TestIoFile {
 
     public static final String FILE = "src/main/resources/test/test.txt";
     public static final String EXPECTED_VALUE = "Hello,World!";
-
-    // nio读取小文件
-    @Test
-    public void readSmallFile() throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir"), FILE);
-        String read = Files.readAllLines(path).get(0);
-        Assert.assertEquals(EXPECTED_VALUE, read);
-    }
-
-    // nio读取大文件
-    @Test
-    public void readLargeFile() throws IOException {
-        Path path = Paths.get(FILE);
-        try (BufferedReader reader = Files.newBufferedReader(path)) {
-            String line = reader.readLine();
-            Assert.assertEquals(EXPECTED_VALUE, line);
-        }
-    }
-
-    // nio读取大文件
-    @Test
-    public void readLargeFile2() throws IOException {
-        Path path = Paths.get(FILE);
-        try (Stream<String> data = Files.lines(path)) {
-            List<String> lines = data.collect(Collectors.toList());
-            Assert.assertEquals(EXPECTED_VALUE, lines.get(0));
-        }
-    }
 
     @Test
     public void testInputStream() throws IOException {

@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 
 /**
  * @author zero DateTime 2018年5月30日 上午10:37:42
- * @ :
  */
 
 public class TestJava8Paths {

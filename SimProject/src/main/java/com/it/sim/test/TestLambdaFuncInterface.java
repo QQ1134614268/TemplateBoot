@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 
 /**
  * @author zero DateTime 2018年5月4日 下午2:38:38
- * @ :
  */
 public class TestLambdaFuncInterface {
 
