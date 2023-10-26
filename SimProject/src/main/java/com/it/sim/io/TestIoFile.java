@@ -1,4 +1,4 @@
-package com.it.sim.test;
+package com.it.sim.io;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @date 2022-09-30 11:46 todo 阅读io nio socket uri url
+ * @date 2022-09-30 11:46 todo 阅读io nio socket uri url 整理
  * Nio:
  *      Files.readAllLines          List<String>    一次性读出
  *      Files.newBufferedReader     BufferedReader  可以遍历, 一行行读

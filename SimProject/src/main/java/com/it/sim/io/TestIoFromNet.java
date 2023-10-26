@@ -1,4 +1,4 @@
-package com.it.sim.test;
+package com.it.sim.io;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
