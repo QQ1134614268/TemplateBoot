@@ -22,45 +22,26 @@ public class TestInputStream {
     }
 
     @Test
-    public void test_1() {
-        // 使用 IOUtils.toString (Apache Utils)
-        // String result = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-
-    }
-
-    @Test
-    public void test_2() {
-        // 使用 CharStreams (guava)
-        // String result = CharStreams.toString(new InputStreamReader(inputStream, Charsets.UTF_8));
-    }
-
-    @Test
     public void test_3() {
-        String result = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+        String result = new BufferedReader(new InputStreamReader(inputStream)).lines()
+                .collect(Collectors.joining("\n"));
 
     }
 
     @Test
-    public void test_4() {
-        String result = new BufferedReader(new InputStreamReader(inputStream)).lines().parallel().collect(Collectors.joining("\n"));
-
+    public void test_5() throws IOException {
+        final int bufferSize = 1024;
+        final char[] buffer = new char[bufferSize];
+        final StringBuilder out = new StringBuilder();
+        try (Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+            for (; ; ) {
+                int rsz = in.read(buffer, 0, buffer.length);
+                if (rsz < 0) break;
+                out.append(buffer, 0, rsz);
+            }
+            System.out.println(out);
+        }
     }
-
-   @Test
-   public void test_5() throws IOException {
-       final int bufferSize = 1024;
-       final char[] buffer = new char[bufferSize];
-       final StringBuilder out = new StringBuilder();
-       try (Reader in = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
-           for (; ; ) {
-               int rsz = in.read(buffer, 0, buffer.length);
-               if (rsz < 0) break;
-               out.append(buffer, 0, rsz);
-           }
-           System.out.println(out);
-       }
-
-   }
 
     @Test
     public void test_6() {

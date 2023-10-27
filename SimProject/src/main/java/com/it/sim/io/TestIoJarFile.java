@@ -31,8 +31,8 @@ public class TestIoJarFile {
     public static final String DATA = "Hello,World!";
 
     @Test
-    public void readResource() {
-        Class<?> clz = TestIoJarFile.class;// Test.class;
+    public void readClassResource() {
+        Class<?> clz = TestIoJarFile.class; // Test.class;
         String className = clz.getSimpleName() + ".class";
         // 1 返回 target/classes/package
         System.out.println(clz.getResource(""));
@@ -43,20 +43,24 @@ public class TestIoJarFile {
 
         // 4 返回 target/classes/
         System.out.println(clz.getResource("/"));
-        // 5 target/classes/ 目录下不存在 Resource.class
-        System.out.println(clz.getResource("/" + className));
-        // 6 target/classes/ 目录下存在 cn/zhang
-        System.out.println(clz.getResource("/no" + className));
+        // 5 target/classes/ 目录下存在 test
+        System.out.println(clz.getResource("/test"));
+        // 6 target/classes/ 目录下不存在 testNo
+        System.out.println(clz.getResource("/no" + "testNoExist"));
+    }
 
-        // ---------------------------
+    @Test
+    public void readClassLoaderResource() {
+        Class<?> clz = TestIoJarFile.class;// Test.class;
+        String className = clz.getSimpleName() + ".class";
         ClassLoader classLoader = clz.getClassLoader();
         System.out.println(classLoader.getResource(""));
         System.out.println(classLoader.getResource(className));
         System.out.println(classLoader.getResource("no" + className));
 
         System.out.println(classLoader.getResource("/"));
-        System.out.println(classLoader.getResource("/" + className));
-        System.out.println(classLoader.getResource("/no" + className));
+        System.out.println(clz.getResource("/test"));
+        System.out.println(clz.getResource("/" + "testNoExist"));
 
         // ---------------------------
         System.out.println(clz.getPackage().getName());
@@ -68,11 +72,13 @@ public class TestIoJarFile {
 
     @Test
     public void testClass() throws IOException {
-        Class<TestIoFile> clazz = TestIoFile.class;
-        InputStream inputStream = clazz.getResourceAsStream("/lib/b.txt"); // 本质时ClassLoader
+        Class<?> clazz = TestIoFile.class;
+        // 当前jar包下文件
+        InputStream inputStream = clazz.getResourceAsStream("/" + TEST_TEST_TXT); // 本质时ClassLoader
         String data = readFromInputStream(inputStream);
         System.out.println(data);
 
+        // junit jar包下 LICENSE-junit.txt文件
         InputStream inputStream2 = clazz.getResourceAsStream("/LICENSE-junit.txt");
         String data2 = readFromInputStream(inputStream2);
         System.out.println(data2);
@@ -80,8 +86,7 @@ public class TestIoJarFile {
 
     @Test
     public void testClassLoader() throws IOException {
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(TEST_TEST_TXT);
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(TEST_TEST_TXT);
         String data = readFromInputStream(inputStream);
         Assert.assertEquals(DATA, data.trim());
     }
