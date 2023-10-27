@@ -26,6 +26,7 @@ spring:
   cache:
     redis:
       time-to-live: 600000
+    type: redis
 templateBoot:
   testPort: 3666
 logging:
