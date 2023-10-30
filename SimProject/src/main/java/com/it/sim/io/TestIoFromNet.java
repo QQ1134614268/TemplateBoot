@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestIoFromNet.java
 package com.it.sim.io;
+========
+package com.it.sim.test.io;
+>>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestIo2Download.java
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,7 +20,11 @@ import java.util.Arrays;
 /**
  * @date 2023-01-17 16:01
  */
+<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestIoFromNet.java
 public class TestIoFromNet {
+========
+public class TestIo2Download {
+>>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestIo2Download.java
     public static void main(String[] args) throws IOException, InterruptedException {
         String url = "http://172.16.6.128:9009/coastal/2023/01/17/t01291c13c2f9a092ca_20230117102521A021.jpg";
         try (CloseableHttpClient httpclient = HttpClients.createDefault();

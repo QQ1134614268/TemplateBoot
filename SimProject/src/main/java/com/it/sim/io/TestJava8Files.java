@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestJava8Files.java
 package com.it.sim.io;
+========
+package com.it.sim.test.io;
+>>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestNioFiles.java
 
 
 import org.junit.Assert;
@@ -23,6 +27,7 @@ import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
  *      Files.newBufferedReader     BufferedReader  可以遍历, 一行行读
  *      Files.lines                 Stream          可以遍历, 一行行读
  */
+<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestJava8Files.java
 public class TestJava8Files {
     public static final String FILE = "src/main/resources/test/test.txt";
     public static final String EXPECTED_VALUE = "Hello,World!";
@@ -55,6 +60,10 @@ public class TestJava8Files {
         }
     }
 
+========
+
+public class TestNioFiles {
+>>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestNioFiles.java
     @Test
     public void testReadWrite() throws IOException {
 

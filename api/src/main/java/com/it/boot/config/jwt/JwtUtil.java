@@ -6,6 +6,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.it.boot.config.Conf;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 public class JwtUtil {
     public static final String USER_NAME = "userName";
     public static final String USER_ID = "userId";
+    public static final String DEPT_ID = "deptId";
     public static final String LOGIN_TERMINAL = "loginTerminal";
     private static String secret;
 
@@ -26,10 +28,11 @@ public class JwtUtil {
         JwtUtil.secret = secret;
     }
 
-    public static String toToken(Integer id, String userName) {
+    public static String toToken(Integer id, String userName, Integer deptId) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         return JWT.create()
                 .withClaim(USER_ID, id)
+                .withClaim(DEPT_ID, deptId)
                 .withClaim(USER_NAME, userName)
                 .withClaim(LOGIN_TERMINAL, "PC")
                 // .withExpiresAt(date)
@@ -44,7 +47,7 @@ public class JwtUtil {
 
     public static String getUserName() {
         String token = getToken();
-        assert token != null;
+        Assert.assertNotNull(token);
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_NAME).asString();
     }
@@ -56,15 +59,22 @@ public class JwtUtil {
 
     public static Long getUserId() {
         String token = getToken();
-        assert token != null;
+        Assert.assertNotNull(token);
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_ID).asLong();
+    }
+
+    public static Long getDeptId() {
+        String token = getToken();
+        Assert.assertNotNull(token);
+        DecodedJWT jwt = JWT.decode(token);
+        return jwt.getClaim(DEPT_ID).asLong();
     }
 
     public static Long getUserIdNullable() {
         try {
             String token = getToken();
-            assert token != null;
+            Assert.assertNotNull(token);
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim(USER_ID).asLong();
         } catch (Exception e) {
@@ -79,7 +89,8 @@ public class JwtUtil {
             return tokenObj;
         }
         DecodedJWT jwt = JWT.decode(token);
-        tokenObj.setUserId(jwt.getClaim(USER_ID).asInt());
+        tokenObj.setUserId(jwt.getClaim(USER_ID).asLong());
+        tokenObj.setDeptId(jwt.getClaim(DEPT_ID).asLong());
         tokenObj.setUserName(jwt.getClaim(USER_NAME).asString());
         tokenObj.setLoginTerminal(jwt.getClaim(LOGIN_TERMINAL).asString());
         return tokenObj;
@@ -92,7 +103,8 @@ public class JwtUtil {
 
     @Data
     public static class Token {
-        private Integer userId;
+        private Long userId;
+        private Long deptId;
         private String userName;
         private String loginTerminal;
         private Integer companyId;

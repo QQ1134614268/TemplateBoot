@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -64,7 +63,7 @@ public class TestDate {
     @Test
     public void test2() {
         // date为2013-09-19 14:22:30
-        Date date = new Date(113, Calendar.SEPTEMBER, 19, 14, 22, 30);
+        Date date = new Date();
 
         // 创建“简体中文”的Locale
         Locale localeCN = Locale.SIMPLIFIED_CHINESE;
@@ -85,11 +84,11 @@ public class TestDate {
         @Data
         @AllArgsConstructor
         class User {
-            @JsonFormat(pattern = TimeConf.YYYY_MM_DD_HH_MM_SS)
+            @JsonFormat(pattern = TimeConf.YMD_HMS)
             private Date date;
         }
         String date_time_str = "2000-01-01 00:00:00";
-        SimpleDateFormat sdf = new SimpleDateFormat(TimeConf.YYYY_MM_DD_HH_MM_SS);// 格式化时间
+        SimpleDateFormat sdf = new SimpleDateFormat(TimeConf.YMD_HMS);// 格式化时间
         Date date = sdf.parse(date_time_str);
 
         ObjectMapper objectMapper = new ObjectMapper();

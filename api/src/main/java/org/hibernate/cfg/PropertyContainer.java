@@ -25,27 +25,27 @@
 //     private static final CoreMessageLogger LOG = (CoreMessageLogger) Logger.getMessageLogger(CoreMessageLogger.class, PropertyContainer.class.getName());
 //     private final XClass xClass;
 //     private final XClass entityAtStake;
-//     private final org.hibernate.cfg.AccessType classLevelAccessType;
+//     private final AccessType classLevelAccessType;
 //     private final LinkedHashMap<String, XProperty> persistentAttributeMap;
 //
-//     PropertyContainer(XClass clazz, XClass entityAtStake, org.hibernate.cfg.AccessType defaultClassLevelAccessType) {
+//     PropertyContainer(XClass clazz, XClass entityAtStake, AccessType defaultClassLevelAccessType) {
 //         this.xClass = clazz;
 //         this.entityAtStake = entityAtStake;
-//         if (defaultClassLevelAccessType == org.hibernate.cfg.AccessType.DEFAULT) {
-//             defaultClassLevelAccessType = org.hibernate.cfg.AccessType.PROPERTY;
+//         if (defaultClassLevelAccessType == AccessType.DEFAULT) {
+//             defaultClassLevelAccessType = AccessType.PROPERTY;
 //         }
 //
-//         org.hibernate.cfg.AccessType localClassLevelAccessType = this.determineLocalClassDefinedAccessStrategy();
+//         AccessType localClassLevelAccessType = this.determineLocalClassDefinedAccessStrategy();
 //
 //         assert localClassLevelAccessType != null;
 //
-//         this.classLevelAccessType = localClassLevelAccessType != org.hibernate.cfg.AccessType.DEFAULT ? localClassLevelAccessType : defaultClassLevelAccessType;
+//         this.classLevelAccessType = localClassLevelAccessType != AccessType.DEFAULT ? localClassLevelAccessType : defaultClassLevelAccessType;
 //
-//         assert this.classLevelAccessType == org.hibernate.cfg.AccessType.FIELD || this.classLevelAccessType == org.hibernate.cfg.AccessType.PROPERTY;
+//         assert this.classLevelAccessType == AccessType.FIELD || this.classLevelAccessType == AccessType.PROPERTY;
 //
 //         this.persistentAttributeMap = new LinkedHashMap<>();
-//         List<XProperty> fields = this.xClass.getDeclaredProperties(org.hibernate.cfg.AccessType.FIELD.getType());
-//         List<XProperty> getters = this.xClass.getDeclaredProperties(org.hibernate.cfg.AccessType.PROPERTY.getType());
+//         List<XProperty> fields = this.xClass.getDeclaredProperties(AccessType.FIELD.getType());
+//         List<XProperty> getters = this.xClass.getDeclaredProperties(AccessType.PROPERTY.getType());
 //         this.preFilter(fields, getters);
 //         Map<String, XProperty> persistentAttributesFromGetters = new HashMap();
 //         this.collectPersistentAttributesUsingLocalAccessType(this.persistentAttributeMap, persistentAttributesFromGetters, fields, getters);
@@ -82,7 +82,7 @@
 //         while (propertyIterator.hasNext()) {
 //             xProperty = (XProperty) propertyIterator.next();
 //             localAccessAnnotation = (Access) xProperty.getAnnotation(Access.class);
-//             if (localAccessAnnotation != null && localAccessAnnotation.value() == AccessType.FIELD) {
+//             if (localAccessAnnotation != null && localAccessAnnotation.value() == javax.persistence.AccessType.FIELD) {
 //                 propertyIterator.remove();
 //                 persistentAttributeMap.put(xProperty.getName(), xProperty);
 //             }
@@ -93,7 +93,7 @@
 //         while (propertyIterator.hasNext()) {
 //             xProperty = (XProperty) propertyIterator.next();
 //             localAccessAnnotation = (Access) xProperty.getAnnotation(Access.class);
-//             if (localAccessAnnotation != null && localAccessAnnotation.value() == AccessType.PROPERTY) {
+//             if (localAccessAnnotation != null && localAccessAnnotation.value() == javax.persistence.AccessType.PROPERTY) {
 //                 propertyIterator.remove();
 //                 String name = xProperty.getName();
 //                 XProperty previous = (XProperty) persistentAttributesFromGetters.get(name);
@@ -111,7 +111,7 @@
 //     private void collectPersistentAttributesUsingClassLevelAccessType(LinkedHashMap<String, XProperty> persistentAttributeMap, Map<String, XProperty> persistentAttributesFromGetters, List<XProperty> fields, List<XProperty> getters) {
 //         Iterator var5;
 //         XProperty getter;
-//         if (this.classLevelAccessType == org.hibernate.cfg.AccessType.FIELD) {
+//         if (this.classLevelAccessType == AccessType.FIELD) {
 //             var5 = fields.iterator();
 //
 //             while (var5.hasNext()) {
@@ -148,7 +148,7 @@
 //         return this.xClass;
 //     }
 //
-//     public org.hibernate.cfg.AccessType getClassLevelAccessType() {
+//     public AccessType getClassLevelAccessType() {
 //         return this.classLevelAccessType;
 //     }
 //
@@ -173,24 +173,24 @@
 //         throw new AnnotationException(msg);
 //     }
 //
-//     private org.hibernate.cfg.AccessType determineLocalClassDefinedAccessStrategy() {
-//         org.hibernate.cfg.AccessType hibernateDefinedAccessType = org.hibernate.cfg.AccessType.DEFAULT;
-//         org.hibernate.cfg.AccessType jpaDefinedAccessType = org.hibernate.cfg.AccessType.DEFAULT;
+//     private AccessType determineLocalClassDefinedAccessStrategy() {
+//         AccessType hibernateDefinedAccessType = AccessType.DEFAULT;
+//         AccessType jpaDefinedAccessType = AccessType.DEFAULT;
 //         org.hibernate.annotations.AccessType accessType = (org.hibernate.annotations.AccessType) this.xClass.getAnnotation(org.hibernate.annotations.AccessType.class);
 //         if (accessType != null) {
-//             hibernateDefinedAccessType = org.hibernate.cfg.AccessType.getAccessStrategy(accessType.value());
+//             hibernateDefinedAccessType = AccessType.getAccessStrategy(accessType.value());
 //         }
 //
 //         Access access = (Access) this.xClass.getAnnotation(Access.class);
 //         if (access != null) {
-//             jpaDefinedAccessType = org.hibernate.cfg.AccessType.getAccessStrategy(access.value());
+//             jpaDefinedAccessType = AccessType.getAccessStrategy(access.value());
 //         }
 //
-//         if (hibernateDefinedAccessType != org.hibernate.cfg.AccessType.DEFAULT && jpaDefinedAccessType != org.hibernate.cfg.AccessType.DEFAULT && hibernateDefinedAccessType != jpaDefinedAccessType) {
+//         if (hibernateDefinedAccessType != AccessType.DEFAULT && jpaDefinedAccessType != AccessType.DEFAULT && hibernateDefinedAccessType != jpaDefinedAccessType) {
 //             throw new org.hibernate.MappingException("@AccessType and @Access specified with contradicting values. Use of @Access only is recommended. ");
 //         } else {
-//             org.hibernate.cfg.AccessType classDefinedAccessType;
-//             if (hibernateDefinedAccessType != org.hibernate.cfg.AccessType.DEFAULT) {
+//             AccessType classDefinedAccessType;
+//             if (hibernateDefinedAccessType != AccessType.DEFAULT) {
 //                 classDefinedAccessType = hibernateDefinedAccessType;
 //             } else {
 //                 classDefinedAccessType = jpaDefinedAccessType;

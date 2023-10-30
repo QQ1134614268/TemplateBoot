@@ -1,6 +1,9 @@
 package com.it.sim.test;
 
-@SuppressWarnings("FieldCanBeLocal")
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
 class Parent {
     public String name1 = "Parent_name1";
     private String name2 = "Parent_name2";
@@ -18,7 +21,9 @@ class Parent {
         System.out.println(getPrivate());
     }
 }
-@SuppressWarnings("FieldCanBeLocal")
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class TestExtends extends Parent {
     public String name1 = "Child2_name1";
     private String name2 = "Child2_name2";

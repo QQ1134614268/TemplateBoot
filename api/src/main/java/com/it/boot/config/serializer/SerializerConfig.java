@@ -26,7 +26,7 @@ public class SerializerConfig {
     //  * string转 localDate
     //  */
     // @Bean
-    // public Converter<String, LocalDate> localDateConverter() {
+    // public Converter<String, LocalDate> localDateConverter() { // todo
     //     return new Converter<String, LocalDate>() {
     //         @Override
     //         public LocalDate convert(String source) {
@@ -59,7 +59,7 @@ public class SerializerConfig {
     // }
 
     /**
-     * 统一配置
+     * LocalDateTime 等 序列化
      */
     @Bean
     public ObjectMapper getObjectMapper() {

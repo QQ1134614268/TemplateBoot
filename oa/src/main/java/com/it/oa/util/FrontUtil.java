@@ -3,6 +3,7 @@ package com.it.oa.util;
 import com.it.oa.controller.para.EnumParaPara;
 import com.it.oa.controller.para.EnumParaPara2;
 import com.it.oa.entity.EnumEntity;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,7 @@ public class FrontUtil {
         }
         ret.add(0, id);
         EnumEntity entity = list.stream().filter(vo -> Objects.equals(vo.getId(), id)).findFirst().orElse(null);
-        assert entity != null;
+        Assert.notNull(entity, "not null");
         return getParentList(entity.getParentId(), list, ret);
     }
 }

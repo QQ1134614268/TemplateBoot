@@ -3,7 +3,7 @@ package com.it.boot.controller;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enumeration.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
-import com.it.boot.entity.dto.TimeRangeQo;
+import com.it.boot.entity.qo.TimeRangeQo;
 import com.it.boot.entity.vo.StudentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

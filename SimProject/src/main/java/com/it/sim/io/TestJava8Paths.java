@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestJava8Paths.java
 package com.it.sim.io;
+========
+package com.it.sim.test.io;
+>>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestNioPaths.java
 
 
 import org.junit.Test;
@@ -10,7 +14,7 @@ import java.nio.file.Paths;
  * @author zero DateTime 2018年5月30日 上午10:37:42
  */
 
-public class TestJava8Paths {
+public class TestNioPaths {
     @Test
     public void test1() {
         Path path = Paths.get("F:", "迅雷下载", "寄生虫", "寄生虫/Parasite.寄生虫.2019.中文字幕.BDrip.1080P-BR.mp4");

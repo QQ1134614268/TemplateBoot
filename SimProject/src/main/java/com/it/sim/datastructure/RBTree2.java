@@ -1,5 +1,7 @@
 package com.it.sim.datastructure;
 
+import org.junit.Assert;
+
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -101,7 +103,6 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node rotateRight(Node h) {
-        // assert (h != null) && isRed(h.left);
         Node x = h.left;
         h.left = x.right;
         x.right = h;
@@ -117,7 +118,6 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node rotateLeft(Node h) {
-        // assert (h != null) && isRed(h.right);
         Node x = h.right;
         h.right = x.left;
         x.left = h;
@@ -133,8 +133,6 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private void flipColors(Node h) {
-        // assert (h != null) && (h.left != null) && (h.right != null);
-        // assert (!isRed(h) && isRed(h.left) && isRed(h.right))
         // || (isRed(h) && !isRed(h.left) && !isRed(h.right));
         h.color = !h.color;
         h.left.color = !h.left.color;
@@ -146,8 +144,6 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node moveRedRight(Node h) {
-        // assert (h != null);
-        // assert isRed(h) && !isRed(h.right) && !isRed(h.right.left);
         flipColors(h);
         if (isRed(h.left.left)) {
             h = rotateRight(h);
@@ -161,8 +157,7 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node moveRedLeft(Node h) {
-        // assert (h != null);
-        // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
+
 
         flipColors(h);
         if (isRed(h.right.left)) {
@@ -174,7 +169,7 @@ public class RBTree2<K extends Comparable<K>, V> {
     }
 
     private Node balance(Node h) {
-        // assert (h != null);
+
 
         if (isRed(h.right)) {
             h = rotateLeft(h);
@@ -205,7 +200,7 @@ public class RBTree2<K extends Comparable<K>, V> {
 
         root = put(root, key, value);
         root.color = BLACK;
-        assert check();
+        Assert.assertTrue(check());
     }
 
     /**
@@ -254,7 +249,7 @@ public class RBTree2<K extends Comparable<K>, V> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        assert check();
+        Assert.assertTrue(check());
     }
 
     private Node deleteMin(Node h) {
@@ -284,7 +279,7 @@ public class RBTree2<K extends Comparable<K>, V> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        assert check();
+        Assert.assertTrue(check());
     }
 
     private Node deleteMax(Node h) {
@@ -322,11 +317,11 @@ public class RBTree2<K extends Comparable<K>, V> {
         if (!isEmpty()) {
             root.color = BLACK;
         }
-        assert check();
+        Assert.assertTrue(check());
     }
 
     private Node delete(Node h, K key) {
-        // assert get(h, key) != null;
+
 
         if (key.compareTo(h.key) < 0) {
             if (!isRed(h.left) && !isRed(h.left.left)) {
@@ -384,7 +379,7 @@ public class RBTree2<K extends Comparable<K>, V> {
     }
 
     private Node min(Node x) {
-        // assert x != null;
+
         if (x.left == null) {
             return x;
         } else {
@@ -404,7 +399,7 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node max(Node x) {
-        // assert x != null;
+
         if (x.right == null) {
             return x;
         } else {
@@ -501,8 +496,8 @@ public class RBTree2<K extends Comparable<K>, V> {
      *
      */
     private Node select(Node x, int k) {
-        // assert x != null;
-        // assert k >= 0 && k < size(x);
+
+
         int t = size(x.left);
         if (t > k) {
             return select(x.left, k);
