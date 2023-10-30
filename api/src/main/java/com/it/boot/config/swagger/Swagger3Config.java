@@ -1,6 +1,6 @@
 // package com.it.boot.config.swagger;
 //
-// import com.it.oa.util.JwtUtil;
+// import com.it.boot.config.jwt.JwtUtil;
 // import io.swagger.annotations.Api;
 // import io.swagger.v3.oas.models.security.SecurityScheme;
 // import org.springframework.context.annotation.Bean;
