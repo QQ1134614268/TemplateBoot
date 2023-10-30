@@ -45,9 +45,9 @@ import java.util.function.Consumer;
 
 @Api(tags = "测试/用户MyBatisPlus")
 @RestController
-@RequestMapping("/api/UserMyBatisController")
+@RequestMapping("/api/UserBatisController")
 @Slf4j
-public class UserMyBatisController {
+public class UserBatisController {
     @Resource
     private UserBatisService userBatisService;
 
@@ -148,7 +148,7 @@ public class UserMyBatisController {
 
         Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w.and(
                 BoolUtils.toBool(qo.getSearch()),
-                w2 -> w2.like(UserEntity::getUserName, qo.getSearch()).or().like(UserEntity::getPetName, qo.getSearch())
+                w2 -> w2.like(UserEntity::getUserName, qo.getSearch()).or().like(UserEntity::getNickName, qo.getSearch())
         );
         wrapper.select(UserEntity::getId, UserEntity::getId, UserEntity::getPhone)
                 .eq(BoolUtils.toBool(qo.getPhone()), UserEntity::getPhone, qo.getPhone())

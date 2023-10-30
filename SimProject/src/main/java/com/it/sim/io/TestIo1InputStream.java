@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:SimProject/src/main/java/com/it/sim/io/TestInputStream.java
 package com.it.sim.io;
-========
-package com.it.sim.test.io;
->>>>>>>> e49c470e19e7ec0187968ffbdf3a56092728427c:SimProject/src/main/java/com/it/sim/test/io/TestIo1InputStream.java
 
 import org.junit.Test;
 
