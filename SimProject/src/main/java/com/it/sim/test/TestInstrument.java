@@ -14,6 +14,12 @@ import java.security.ProtectionDomain;
 
 /**
  * todo instrument 包
+ * 使用 Instrumentation，使得开发者可以构建一个独立于应用程序的代理程序（Agent），用来监测和协助运行在 JVM 上的程序，甚至能够替换和修改某些类的定义。
+ * 有了这样的功能，开发者就可以实现更为灵活的运行时虚拟机监控和 Java 类操作了，
+ * 这样的特性实际上提供了 一种虚拟机级别支持的 AOP 实现方式，
+ *      使得开发者无需对 JDK 做任何升级和改动，就可以实现某些 AOP 的功能了。
+ *      如果我们想要无侵入式的修改一个方法，大多数人想到的可能是 AOP 技术，
+ *      Instrument 有异曲同工之处，它可以对方法进行增强，甚至替换整个类。
  */
 public class TestInstrument {
     @Test
@@ -37,27 +43,23 @@ class TransFromMain {
 
 class ArgentMain {
     public static void premain(String agentArgs, Instrumentation inst) throws ClassNotFoundException, UnmodifiableClassException, InterruptedException {
-//  ClassDefinition def = new ClassDefinition(com.sean.source.TransClass.class,new Transformer().getBytesFromFile(Transformer.TRANSFORM_CLASS_NAME));
-//        inst.redefineClasses(new ClassDefinition[] { def });
-//        System.out.println("success");
+        //  ClassDefinition def = new ClassDefinition(com.sean.source.TransClass.class,new Transformer().getBytesFromFile(Transformer.TRANSFORM_CLASS_NAME));
+        //        inst.redefineClasses(new ClassDefinition[] { def });
+        //        System.out.println("success");
         inst.addTransformer(new Transformer());
-//  inst.retransformClasses(com.sean.source.TransClass.class);
+        //  inst.retransformClasses(com.sean.source.TransClass.class);
     }
 }
 
-/**
- * @author Sean_Zhang
- */
+
 class AgentMain {
     public static void premain(String agentArgs, Instrumentation inst) throws ClassNotFoundException, UnmodifiableClassException, InterruptedException {
         inst.addTransformer(new Transformer());
-//  inst.retransformClasses(com.sean.source.TransClass.class);
+        //  inst.retransformClasses(com.sean.source.TransClass.class);
     }
 }
 
-/**
- * @author Sean_Zhang
- */
+
 class Transformer implements ClassFileTransformer {
     public static final String TRANSFORM_CLASS_NAME = "com/sean/source/TransClass.class";
 

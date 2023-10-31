@@ -6,22 +6,8 @@ import org.junit.Test;
 import java.util.concurrent.*;
 
 @Slf4j
-public class TestThreadCreateWay {
-    /*
-     * runnable 执行
-     * thread   执行 捕获异常
-     * callable 执行 捕获异常 返回值
-     * Future   执行 捕获异常 返回值 取消,查询完成
-     *  RunnableFuture -> FutureTask -> ScheduledFutureTask
-     *  ScheduledFuture -> RunnableScheduledFuture
-     *  ForkJoinFuture -> RecursiveTask; RecursiveAction ??
-     *  CompletableFuture java8推荐
-     *
-     * CompletionService -> ExecutorCompletionService 异步 解耦?? 避免 FutureTask 阻塞
-     *
-     * ThreadPool -> execute(无返回值) submit(取结果)
-     *
-     * */
+public class TestThread2 {
+
     @Test
     public void test_1_runnable() {
         Runnable runnable = () -> log.info("runnable, 线程ID:{}", Thread.currentThread().getId());

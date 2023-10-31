@@ -7,6 +7,20 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * <pre>
+ * Runnable 执行
+ * Thread   执行 捕获异常
+ * Callable 执行 捕获异常 返回值
+ * Future   执行 捕获异常 返回值 取消,查询完成
+ *      RunnableFuture -> FutureTask -> ScheduledFutureTask
+ *      ScheduledFuture -> RunnableScheduledFuture
+ *      ForkJoinFuture -> RecursiveTask; RecursiveAction ??
+ *      CompletableFuture java8推荐
+ * ThreadPool -> execute(无返回值) submit(取结果)
+ * CompletionService -> 一组任务管理接口; submit() - 提交任务;take() - 获取任务结果;poll() - 获取任务结果; 实现类: ExecutorCompletionService
+ * </pre>
+ */
 @Slf4j
 public class TestThread {
 
