@@ -44,14 +44,6 @@ public class TestIo1InputStream {
     }
 
     @Test
-    public void test_6() {
-        // 使用 StringWriter 和 IOUtils.copy (Apache Commons)
-        // StringWriter writer = new StringWriter();
-        // IOUtils.copy(inputStream, writer, "UTF-8");
-        // writer.toString();
-    }
-
-    @Test
     public void test_7() throws IOException {
         ByteArrayOutputStream result = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
