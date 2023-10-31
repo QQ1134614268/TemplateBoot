@@ -16,9 +16,6 @@ bit byte bool int
 	
 	虚拟机参数：
 		打印配置
-		
-		
-		
 	
 	案例分析：
 		内存高：
@@ -31,9 +28,7 @@ bit byte bool int
 	打印gc收集器
 	直接内存  通道 nio
 	
-	
 	测试：
 		对象 占用内存
-		
 	
 	新生代 ( Young ) 与老年代 ( Old ) 的比例的值为 1:2 ( 该值可以通过参数 –XX:NewRatio 来指定 )即：新生代 ( Young ) = 1/3 的堆空间大小。老年代 ( Old ) = 2/3 的堆空间大小。其中，新生代 ( Young ) 被细分为 Eden 和 两个 Survivor 区域，这两个 Survivor 区域分别被命名为 from 和 to，以示区分。
