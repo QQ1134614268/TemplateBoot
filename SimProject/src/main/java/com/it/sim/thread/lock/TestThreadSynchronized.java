@@ -7,7 +7,6 @@ public class TestThreadSynchronized {
 
     public static void main(String[] args) {
         // 当一个线程进入一个对象的一个 synchronized 方法后，其它线程是否可进入此对象的其它方法?
-
         new Thread(new Thread1()).start();
         try {
             Thread.sleep(10);
@@ -62,7 +61,6 @@ public class TestThreadSynchronized {
                 }
                 log.info("thread2is going on...");
                 log.info("thread2is being over!");
-
             }
         }
     }

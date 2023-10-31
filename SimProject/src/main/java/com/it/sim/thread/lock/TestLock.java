@@ -11,20 +11,10 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
- * 说一说java的concurrent包1-concurrent包简介
- * 说一说java的concurrent包2-等待多个线程完成执行的CountDownLatch
- * 说一说java的concurrent包3-线程安全并且无阻塞的Atomic类
- * 说一说java的concurrent包4--可以代替synchronized关键字的ReentrantLock
- * 说一说java的concurrent包5--读写锁ReadWriteLock
- * 说一说java的concurrent包6–java里面的线程基础类Thread
- * 说一说java的concurrent包7–Thread和Runnable
- * 说一说java的concurrent包8–用在一个lock上的多个Condition
- * 说一说java的concurrent包9–Condition的代码例子BoundedBuffer
- * 说一说java的concurrent包10–Condition和BoundedBuffer的测试代码
- * 说一说java的concurrent包11–Condition和BoundedBuffer的测试代码2
+ * java 锁 并发 todo 整理 测试
  */
 @Slf4j
-public class TestConcurrentPackage {
+public class TestLock {
     @Test
     public void testCountDownLatch() {
         int count = 10;

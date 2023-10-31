@@ -15,7 +15,7 @@ public class TestPrintGc2 {
 
     /**
      * 缓存 对象 String byte channel
-     * 模拟缓存数据, map, 产生临时变量,不分变量,移除 todo
+     * 模拟缓存数据, map, 产生临时变量,不分变量,移除
      * vm参数: -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:+PrintCommandLineFlags -XX:SurvivorRatio=8
      * <p>
      * 模拟分析 堆栈 内存快照, jps jstat jinfo jmap jhat jstack HSDIS JConsole VisualVM
