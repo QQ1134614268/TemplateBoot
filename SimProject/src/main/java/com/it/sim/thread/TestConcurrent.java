@@ -1,5 +1,11 @@
 package com.it.sim.thread;
 
+import com.it.sim.config.TimeConf;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -33,6 +39,7 @@ import java.util.concurrent.locks.StampedLock;
  * threadLocal:
  * </pre>
  */
+@Slf4j
 public class TestConcurrent {
     //
     AtomicInteger atomicInteger;
@@ -55,4 +62,29 @@ public class TestConcurrent {
     ExecutorCompletionService<Integer> executorCompletionService;
     //
     ThreadLocal<Integer> threadLocal;
+
+    @Test
+    public void testThreadPoolExecutor() {
+        ConcurrentHashMap<String, SimpleDateFormat> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put(TimeConf.YMD_HMS, new SimpleDateFormat(TimeConf.YMD_HMS));
+        concurrentHashMap.put(TimeConf.HMS, new SimpleDateFormat(TimeConf.HMS));
+
+        ThreadPoolExecutor poolHandel = new ThreadPoolExecutor(2, 2, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20), new ThreadPoolExecutor.DiscardPolicy());
+        LocalDateTime end = LocalDateTime.now().plusSeconds(10);
+        while (LocalDateTime.now().isBefore(end)) {
+            poolHandel.execute(() -> {
+                try {
+                    SimpleDateFormat format = concurrentHashMap.get(TimeConf.YMD_HMS);
+                    format.parse("2023-10-10 10:10:10"); // bug
+                    // // 加锁, 避免异常
+                    // synchronized (format) {
+                    //     format.parse("2023-10-10 10:10:10");
+                    // }
+                    // System.out.println(concurrentHashMap.get(TimeConf.YMD_HMS).parse("2023-10-10 10:10:10"));
+                } catch (Throwable e) {
+                    log.error("异常", e);
+                }
+            });
+        }
+    }
 }
