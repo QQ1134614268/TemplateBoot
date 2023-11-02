@@ -2,10 +2,13 @@ package com.it.sim.thread;
 
 import com.it.sim.config.TimeConf;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.common.collect.CopyOnWriteHashMap;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -63,6 +66,9 @@ public class TestConcurrent {
     //
     ThreadLocal<Integer> threadLocal;
 
+    /**
+     * 测试ConcurrentHashMap 线程不安全此场景
+     */
     @Test
     public void testThreadPoolExecutor() {
         ConcurrentHashMap<String, SimpleDateFormat> concurrentHashMap = new ConcurrentHashMap<>();
@@ -86,5 +92,29 @@ public class TestConcurrent {
                 }
             });
         }
+    }
+
+    /**
+     * <pre>
+     * 对比ConcurrentHashMap HashMap HashTable:
+     * HashTable: 方法上加锁;
+     * ConcurrentHashMap: 类似HashTable, 锁的维度更细
+     *
+     * 类锁, 类方法锁, 对象方法锁, 对象锁
+     * 类锁: 所有实例化对象共用一把锁，称之为类锁; 类锁只是一个概念上的东西，并不是真实存在的，它只是用来帮助我们理解锁定实例方法和静态方法的区别的
+     * 对象锁: 修饰在方法上时，多个线程调用同一对象的同步方法时会阻塞，调用不同对象的同步方法时不会阻塞。
+     * </pre>
+     * 锁: 执行一个方法时, 里面会依赖很多变量, 多线程时,计算结果变得随机; 加上锁, 就保证结果不变;
+     */
+    @Test
+    public void testThreadPoolExecutor2() {
+        HashMap hashMap;
+        Hashtable hashtable;
+        ConcurrentHashMap concurrentHashMap1;
+    }
+
+    @Test
+    public void tesCopyOnWriteList() {
+        CopyOnWriteHashMap copyOnWriteHashMap;
     }
 }
