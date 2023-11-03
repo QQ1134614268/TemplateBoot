@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.StampedLock;
+import java.util.stream.IntStream;
 
 /**
  * todo 并发包 concurrent 整理
@@ -92,6 +93,40 @@ public class TestConcurrent {
                 }
             });
         }
+    }
+
+    /**
+     * 创建100个线程，每个线程向map中添加10000个元素: 线程太多,没有资源;
+     * 线程池: 避免同时创建线程太多,资源不够
+     * 并行流并发处理任务: 占用大量的CPU资源,
+     * 分治策略: 避免CPU资源的浪费
+     * 并发流和批量添加元素: 遍历数据仍然会消耗大量的时间和资源
+     * Spark框架进行并行计算: 解决数据量巨大问题
+     */
+    @Test
+    public void test2() {
+        ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
+        // 创建10个线程的线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        // 将100000个元素划分成100个小批量，每个小批量包含1000个元素
+        int batchSize = 1000;
+        IntStream.range(0, 100).forEach(i -> {
+            int start = i * batchSize;
+            int end = Math.min((i + 1) * batchSize, 100000);
+            executorService.submit(() -> {
+                ConcurrentHashMap<String, Integer> batchMap = new ConcurrentHashMap<>();
+                IntStream.range(start, end).forEach(j -> {
+                    String key = "key" + j;
+                    Integer value = j;
+                    batchMap.put(key, value);
+                });
+                map.putAll(batchMap);
+            });
+        });
+        // 关闭线程池
+        executorService.shutdown();
+        // 输出map的大小
+        System.out.println("map size: " + map.size());
     }
 
     /**
