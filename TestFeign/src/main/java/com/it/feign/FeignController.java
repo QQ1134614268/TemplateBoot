@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/api/TestFeignController")
-public class TestFeignController {
+@RequestMapping("/api/FeignController")
+public class FeignController {
 
     @Resource
     ApiService apiService;
@@ -21,7 +21,12 @@ public class TestFeignController {
     @GetMapping("/test")
     public String test() {
         System.out.println(apiService.hello());
-        System.out.println(apiService2.add(1,2));
+        return "ok";
+    }
+
+    @GetMapping("/test2")
+    public String test2() {
+        System.out.println(apiService2.add(1, 2));
         return "ok";
     }
 }
