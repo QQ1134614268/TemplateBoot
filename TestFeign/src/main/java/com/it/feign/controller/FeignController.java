@@ -1,4 +1,4 @@
-package com.it.feign;
+package com.it.feign.controller;
 
 import com.it.feign.config.ApiService;
 import com.it.feign.config.ApiService2;

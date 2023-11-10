@@ -1,5 +1,6 @@
 package com.it.feign;
 
+import com.it.feign.controller.FeignController;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

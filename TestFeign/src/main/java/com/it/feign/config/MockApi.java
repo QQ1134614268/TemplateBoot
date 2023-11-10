@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class Api {
+public class MockApi {
 
     @GetMapping("/add")
     public int add(int a, int b) {

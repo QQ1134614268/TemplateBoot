@@ -10,10 +10,10 @@ import org.springframework.core.env.Environment;
 @Slf4j
 @EnableFeignClients
 @SpringBootApplication
-public class TestFeignApplication {
+public class FeignApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext application = SpringApplication.run(TestFeignApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(FeignApplication.class, args);
         Environment env = application.getEnvironment();
         String port = env.getProperty("server.port");
         log.info("\n----------------------------------------------------------\n" +
