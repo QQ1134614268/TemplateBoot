@@ -21,6 +21,48 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * todo
+ * @see com.it.boot.config.redis.RedisConfig
+ * <pre>
+ * 模板	                                操作数据类型	添加@type	支持自动映射
+ * redisTemplate	                    string	    setValueSer
+ * redisTemplate<String, UserEntity>	hash	    setHashSer
+ * redisTemplate<String, UserDto>
+ * redisServiceWithType
+ *
+ *
+ * fasterJson序列化, Jackson序列化
+ * template->ser->objectMapper
+ * 类比kafka
+ *
+ * 图形结构(多参数,形成笛卡尔积场景, 参数相互影响,场景复杂):
+ *     eg: json序列化,, 注入类型, 序列化类, 操作数据类型 添加@type 支持自动映射
+ *     只面对单一参数:
+ *        1. 多参数, 测试注入, debugger, 查看注入的实际类型; 泛型表达式 ?, 如何注入
+ *        2. 不同序列化类 生成数据对比
+ *        3. 不同参数(@type) 测试反序列化
+ *     -
+ *        4. 测试操作数据类型(string hash)
+ *        5. 测试数组与Object 序列化与返许泪花, 思考mybatisPlus自动映射类型, kafka数据序列化
+ *        6. 思考springboot接口, 自动序列化类型,, 自定义序列化类(LocalDate等), MessageConvert
+ *        7. 测试service
+ *
+ *
+ *  回答:
+ *      1.自动注入  需要泛型也匹配
+ *
+ *
+ * 目标:
+ *      完全的自动反序列化, 类似springboot封装对象;
+ *
+ *  策略: 根据名称注入 redisTemplate;
+ *      序列化时,自动转型,使之匹配redisTemplate的泛型
+ *          序列化自动转型策略
+ *              1. 根据数据中类型,自动转型 (已经实现??)
+ *              2. 根据redisTemplate的泛型转换
+ *  </pre>
+ */
 @Api(tags = "测试/redis序列化, @type")
 @Slf4j
 @RestController
@@ -29,42 +71,6 @@ public class TestRedisSerClassController {
     public static final String JACKSON_NO_TYPE = "Jackson_no_type";
     public static final String FASTERJSON_NO_TYPE = "fasterjson_no_type";
     public static final String FASTERJSON_WITH_TYPE = "fasterjson_with_type";
-    //模板	                                操作数据类型	添加@type	支持自动映射
-    // redisTemplate	                    string	    setValueSer
-    // redisTemplate<String, UserEntity>	hash	    setHashSer
-    // redisTemplate<String, UserDto>
-    // redisServiceWithType
-
-
-    // fasterJson序列化, Jackson序列化
-    // template->ser->objectMapper
-    // 类比kafka
-
-    // 图形结构(多参数,形成笛卡尔积场景, 参数相互影响,场景复杂):
-    //     eg: json序列化,, 注入类型, 序列化类, 操作数据类型 添加@type 支持自动映射
-    //     只面对单一参数:
-    //        1. 多参数, 测试注入, debugger, 查看注入的实际类型; 泛型表达式 ?, 如何注入
-    //        2. 不同序列化类 生成数据对比
-    //        3. 不同参数(@type) 测试反序列化
-    //
-    //        4. 测试操作数据类型(string hash)
-    //        5. 测试数组与Object 序列化与返许泪花, 思考mybatisPlus自动映射类型, kafka数据序列化
-    //        6. 思考springboot接口, 自动序列化类型,, 自定义序列化类(LocalDate等), MessageConvert
-    //        7. 测试service
-
-
-    //  回答:
-    //      1.自动注入  需要泛型也匹配
-
-
-    // 目标:
-    //      完全的自动反序列化, 类似springboot封装对象;
-
-    //  策略: 根据名称注入 redisTemplate;
-    //      序列化时,自动转型,使之匹配redisTemplate的泛型
-    //          序列化自动转型策略
-    //              1. 根据数据中类型,自动转型 (已经实现??)
-    //              2. 根据redisTemplate的泛型转换
 
     @Resource
     RedisTemplate<String, Object> redisTemplate;
