@@ -12,7 +12,7 @@
     <groupId>com.it</groupId>
     <artifactId>TestEs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>es-test</name>
+    <name>TestEs</name>
     <description>es-test</description>
     <properties>
         <java.version>1.8</java.version>
