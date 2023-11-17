@@ -1,0 +1,16 @@
+server:
+    ssl:
+        # 证书文件名
+        key-store: classpath:test.p12
+        # 证书密钥别名
+        key-alias: myhttps
+        # 密钥口令
+        key-store-password: 123456
+    port: 443
+logging:
+    level:
+        com:
+            it: debug
+        org: debug
+        sun: debug
+        javax: debug
