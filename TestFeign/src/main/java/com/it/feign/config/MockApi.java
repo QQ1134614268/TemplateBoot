@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class MockApi {
 
-    @GetMapping("/add")
-    public int add(int a, int b) {
-        return a + b;
+    @GetMapping("/sum")
+    public int sum(int num1, int num2) {
+        return num1 + num2;
     }
 }

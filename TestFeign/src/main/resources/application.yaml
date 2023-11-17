@@ -7,3 +7,7 @@ logging:
     org: error
     sun: error
     javax: error
+TestFeign:
+  sumService:
+    url: http://127.0.0.1:8080
+    sumPath: /api/sum
