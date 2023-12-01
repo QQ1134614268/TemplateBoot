@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ApiResult handleException(Exception e) {
+    public ApiResult<String> handleException(Exception e) {
         log.error("全局异常", e);// 异常信息
         // log.info("Exception" + e.getMessage()); e.getMessage() 异常类型
         // e.printStackTrace();// 红色 异常信息
@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BizException.class)
-    public ApiResult handle404Exception(BizException e) {
+    public ApiResult<String> handle404Exception(BizException e) {
         log.error("全局异常", e);
         return ApiResult.fail("服务器发生异常: " + e.getMessage());
     }

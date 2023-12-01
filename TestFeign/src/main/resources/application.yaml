@@ -7,6 +7,12 @@ logging:
     org: error
     sun: error
     javax: error
+    com.it.feign.config.RemoteApiService: debug # feign日志第一步
+feign:
+  client:
+    config:
+      remoteApiService: # default: 就是全局配置，如果是写服务名称，则是针对某个微服务的配置
+        loggerLevel: full #  feign日志第二步; loggerLevel 包含 NONE、BASIC、HEADERS、FULL 四种级别的日志。
 TestFeign:
   sumService:
     url: http://127.0.0.1:8080

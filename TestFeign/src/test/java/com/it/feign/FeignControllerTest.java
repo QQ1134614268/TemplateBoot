@@ -14,11 +14,6 @@ public class FeignControllerTest {
 
     @Test
     public void test() {
-        feignController.test();
-    }
-
-    @Test
-    public void test2() {
-        feignController.test2();
+        feignController.getRemoteSum();
     }
 }

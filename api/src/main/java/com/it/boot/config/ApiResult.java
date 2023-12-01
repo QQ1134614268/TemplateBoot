@@ -51,6 +51,6 @@ public class ApiResult<T> {
         return  getCode() == ResCodeEnum.RES_SUCCESS.getCode();
     }
     public boolean isError() {
-        return  !isSuccess();
+        return !isSuccess();
     }
 }
