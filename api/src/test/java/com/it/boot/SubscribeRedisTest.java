@@ -4,7 +4,7 @@ import com.it.boot.config.redis.RedisListenerConfig;
 import com.it.boot.config.redis.RedisUtils;
 import com.it.boot.entity.dto.MessageDto;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
