@@ -3,6 +3,7 @@ package com.it.boot.jobs.quartz;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,7 @@ public class MyJob2 extends QuartzJobBean {
     }
 
     @Override
-    protected void executeInternal(JobExecutionContext jobExecutionContext) {
+    protected void executeInternal(@NonNull JobExecutionContext jobExecutionContext) {
         log.info("MyJob2 任务开始 : " + LocalDateTime.now().toLocalTime() + "，线程：" + Thread.currentThread().getName());
         // 处理相应的注入service业务
         Long id = new Random().nextLong();

@@ -48,7 +48,7 @@ public class JaxbXmlBean {
        
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         context.createMarshaller().marshal(xmlBean,bos);
-        String xml = new String(bos.toByteArray());
+        String xml = bos.toString();
         System.out.println(xml);
  
         JaxbXmlBean xmlBean1 = (JaxbXmlBean) context.createUnmarshaller().unmarshal(new ByteArrayInputStream(xml.getBytes()));

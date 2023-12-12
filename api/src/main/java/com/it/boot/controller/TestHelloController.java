@@ -1,7 +1,7 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.enumeration.ResCodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
 import com.it.boot.entity.qo.TimeRangeQo;
 import com.it.boot.entity.vo.StudentVO;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
@@ -69,7 +68,7 @@ public class TestHelloController {
     // http://127.0.0.1:9091/hello/name?name=tom&name=kate  // name=tom,kate
     @ApiOperation(value = "name", consumes = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping(value = "/name", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ApiResult<String> name(String name) throws IOException {//
+    public ApiResult<String> name(String name) {//
         return ApiResult.success(name);
     }
 
@@ -78,7 +77,7 @@ public class TestHelloController {
     @ApiOperation(value = "enumTest")
     public String enumTest(ResCodeEnum resCodeEnum) {
         System.err.println(resCodeEnum.getCode());
-        return resCodeEnum.getNote();
+        return resCodeEnum.getLabel();
     }
 
     // GET http://localhost:9091/api/HelloController/date?date=Oct 20 20:27:37 CST 2018

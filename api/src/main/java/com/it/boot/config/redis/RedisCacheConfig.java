@@ -2,8 +2,6 @@ package com.it.boot.config.redis;
 
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.CacheResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -24,6 +22,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
     // @Bean
     public CacheResolver customCacheResolver(RedisConnectionFactory redisConnectionFactory) {
-        return new CustomCacheResolver(redisCacheManager(redisConnectionFactory));
+        return new RedisCacheCustomResolver(redisCacheManager(redisConnectionFactory));
     }
 }

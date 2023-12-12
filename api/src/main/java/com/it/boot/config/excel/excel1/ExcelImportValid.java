@@ -27,7 +27,7 @@ public class ExcelImportValid {
             //设置可访问
             field.setAccessible(true);
             //属性的值
-            Object fieldValue = null;
+            Object fieldValue;
             try {
                 fieldValue = field.get(object);
             } catch (IllegalAccessException e) {
@@ -79,7 +79,7 @@ public class ExcelImportValid {
 
     private static boolean isBigDecimal(String decimal) {
         try {
-            BigDecimal bd = new BigDecimal(decimal);
+            BigDecimal ignore = new BigDecimal(decimal);
             return true;
         } catch (NumberFormatException e) {
             return false;

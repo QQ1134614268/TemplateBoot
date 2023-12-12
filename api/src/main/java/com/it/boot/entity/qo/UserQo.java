@@ -5,22 +5,24 @@ import com.it.boot.config.Conf;
 import com.it.boot.entity.UserEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class UserQo extends UserEntity {
 
     @ApiModelProperty(value = "搜索")
     private String search;
 
-    @ApiModelProperty(value = "起始时间", example = "2022-11-29 00:00:00", required = false)
+    @ApiModelProperty(value = "起始时间", example = "2022-11-29 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date startTime;
 
-    @ApiModelProperty(value = "结束时间", example = "2022-11-30 00:00:00", required = false)
+    @ApiModelProperty(value = "结束时间", example = "2022-11-30 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date endTime;
 

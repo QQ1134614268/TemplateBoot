@@ -5,24 +5,16 @@ package com.it.boot.config.enum1;
  */
 public enum SexEnum implements IEnumDb {
 
+    male("1", "男"),
+    female("2", "女"),
+    unknown("0", "未知");
 
-    male("male", "1", "男"),
-    female("female", "2", "女"),
-    unknown("unknown", "0", "未知");
-
-    final String uniCode;
     final String value;
     final String label;
 
-    SexEnum(String uniCode, String value, String label) {
-        this.uniCode = uniCode;
+    SexEnum(String value, String label) {
         this.value = value;
         this.label = label;
-    }
-
-    @Override
-    public String getUniCode() {
-        return uniCode;
     }
 
     @Override

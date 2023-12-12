@@ -1,7 +1,7 @@
 package com.it.boot.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.it.boot.config.enumeration.ResCodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +37,6 @@ public class StudentVO extends BaseVO implements Serializable {
   @ApiModelProperty(value = "枚举", example = "RES_SUCCESS")
   private ResCodeEnum resCodeEnum;
 
-  @ApiModelProperty(value = "地址", example = "")
+  @ApiModelProperty(value = "地址")
   private Address address;
 }

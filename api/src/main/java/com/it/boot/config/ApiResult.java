@@ -1,6 +1,6 @@
 package com.it.boot.config;
 
-import com.it.boot.config.enumeration.ResCodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,16 +11,16 @@ public class ApiResult<T> {
 
     @ApiModelProperty(value = "请求结果状态码", example = "1")
     private int code;
-    @ApiModelProperty(value = "返回数据", example = "")
+    @ApiModelProperty(value = "返回数据")
     private T data;
-    @ApiModelProperty(value = "请求异常时信息", example = "")
+    @ApiModelProperty(value = "请求异常时信息")
     private String message;
 
     public static <T> ApiResult<T> success(T data) {
         // if (data instanceof IPage) {
         //     return success(((IPage<?>) data).getRecords(), ((IPage<?>) data).getTotal());
         // }
-        ApiResult<T> res = new ApiResult<T>();
+        ApiResult<T> res = new ApiResult<>();
         res.code = ResCodeEnum.RES_SUCCESS.getCode();
         res.data = data;
         return res;

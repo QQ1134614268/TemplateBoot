@@ -19,25 +19,25 @@ import java.util.Date;
 @Entity(name = "operation_log")
 @Table(appliesTo = "operation_log", comment = "系统管理/系统设置/操作日志")
 public class OperationLogEntity extends BaseEntity {
-    @ApiModelProperty(value = "ID", example = "740991592", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT 'ID'")
+    @ApiModelProperty(value = "ID", example = "740991592")
+    @Column(columnDefinition = "int(11) COMMENT 'ID'")
     private Long userId;
-    @ApiModelProperty(value = "操作用户", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '操作用户'")
+    @ApiModelProperty(value = "操作用户", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '操作用户'")
     private String userName;
-    @ApiModelProperty(value = "行为", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '行为'")
+    @ApiModelProperty(value = "行为", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '行为'")
     private String action;
-    @ApiModelProperty(value = "链接", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '链接'")
+    @ApiModelProperty(value = "链接", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '链接'")
     private String urlLink;
-    @ApiModelProperty(value = "登陆终端", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '登陆终端'")
+    @ApiModelProperty(value = "登陆终端", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '登陆终端'")
     private String loginTerminal;
-    @ApiModelProperty(value = "操作IP", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '操作IP'")
+    @ApiModelProperty(value = "操作IP", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '操作IP'")
     private String ip;
-    @ApiModelProperty(value = "操作时间", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "datetime COMMENT '操作时间'")
+    @ApiModelProperty(value = "操作时间", example = "test_1")
+    @Column(columnDefinition = "datetime COMMENT '操作时间'")
     private Date operationTime;
 }

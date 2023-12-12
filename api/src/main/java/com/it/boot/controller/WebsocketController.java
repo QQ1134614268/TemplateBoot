@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 public class WebsocketController {
     @ApiOperation(value = "sendAll")
     @GetMapping("/sendAll")
-    public ApiResult<Boolean> sendAll(String msg) throws IOException {
+    public ApiResult<Boolean> sendAll(String msg) {
         WsSessionManager.sendAll(msg);
         return ApiResult.success();
     }
@@ -31,7 +30,7 @@ public class WebsocketController {
 
     @ApiOperation(value = "sendOne")
     @GetMapping("/sendOne")
-    public ApiResult<Boolean> sendOne(String key, String msg) throws IOException {
+    public ApiResult<Boolean> sendOne(String key, String msg) {
         WsSessionManager.sendOne(key, msg);
         return ApiResult.success();
     }
@@ -39,14 +38,12 @@ public class WebsocketController {
     @PostConstruct
     public ApiResult<Boolean> test() {
         log.info("PostConstruct - test");
-        new Thread(() -> {
-            log.info("测试----PostConstruct sub-thread over");
-        }).start();
+        new Thread(() -> log.info("测试----PostConstruct sub-thread over")).start();
         return ApiResult.success();
     }
 
     @Scheduled(fixedDelay = 60000)
-    public void schedule() throws IOException {
+    public void schedule() {
         log.info("schedule - start");
         String msg = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Conf.DATE_TIME_FORMAT));
         sendAll("服务端的时间是:" + msg);

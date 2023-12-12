@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +40,7 @@ public class DataBaseTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
-    public void test0() throws IOException, SQLException {
+    public void test0() throws SQLException {
         Connection conn = dataSource.getConnection();
         PreparedStatement pst = conn.prepareStatement("select now() as now");
         ResultSet res = pst.executeQuery();
@@ -50,7 +49,7 @@ public class DataBaseTest {
     }
 
     @Test
-    public void test6() throws IOException, SQLException {
+    public void test6() {
         String sql = "select id,username,password from user where id=?";
         BeanPropertyRowMapper<UserEntity> rowMapper = new BeanPropertyRowMapper<>(UserEntity.class);
         UserEntity userEntity = jdbcTemplate.queryForObject(sql, rowMapper, 1);// 查询单个
@@ -62,7 +61,7 @@ public class DataBaseTest {
     public void testInsert() {
         String sql = "insert into user (username,password) values (:username,:password)";
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("username", "Nam Ha Minh").addValue("password", "Da Nang, Vietnam");
+        params.addValue("username", "tom").addValue("password", "123456");
         namedParameterJdbcTemplate.update(sql, params);
     }
 
@@ -86,10 +85,12 @@ public class DataBaseTest {
     }
 
     @Test
-    public void test9() throws IOException, SQLException {
-        //        Connection conn = sqlSession.getConnection(); // session is close;
-        Connection conn = sqlSessionFactory.openSession().getConnection();
-        PreparedStatement pst = conn.prepareStatement("select 1");
-        ResultSet res = pst.executeQuery();
+    public void test9() throws SQLException {
+
+        try (Connection conn = sqlSession.getConnection()) {
+            PreparedStatement pst = conn.prepareStatement("select 1");
+            ResultSet res = pst.executeQuery();
+            System.out.println(res);
+        }
     }
 }

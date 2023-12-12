@@ -24,7 +24,7 @@ import javax.persistence.Table;
         }
 )
 public class RoleEntity extends BaseEntity {
-    @Column(unique = false, nullable = false, columnDefinition = "varchar(64) COMMENT '角色名称'")
+    @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '角色名称'")
     @ApiModelProperty(value = "角色名称")
     private String name;
 }

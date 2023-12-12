@@ -22,18 +22,18 @@ public class TestJsonEntity extends BaseEntity {
     public final static String tableName = "test_json";
 
     @TableField(typeHandler = JacksonTypeHandler.class)
-    @ApiModelProperty(value = "地址", example = "", required = false)
+    @ApiModelProperty(value = "地址")
     private AddressDtoJson addressDtoJson;
 
     @TableField(typeHandler = JacksonTypeHandler.class)
-    @ApiModelProperty(value = "审批信息json", example = "", required = false)
+    @ApiModelProperty(value = "审批信息json")
     private List<String> names;
 
     @TableField(typeHandler = TestDtoJsonListTypeHandler.class)
-    @ApiModelProperty(value = "地址集合", example = "", required = false)
+    @ApiModelProperty(value = "地址集合")
     private List<AddressDtoJson> addressDtoJsons;
 
     @TableLogic(value = "0", delval = "1")
-    @ApiModelProperty(value = "删除状态(0:未删除,1:删除)", example = "", required = false)
+    @ApiModelProperty(value = "删除状态(0:未删除,1:删除)")
     private Integer delFlag;
 }

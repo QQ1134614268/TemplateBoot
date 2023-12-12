@@ -3,7 +3,6 @@ package com.it.boot;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.it.boot.config.enum1.GroupCodeEnum;
 import com.it.boot.config.enum1.IEnumDb;
-import com.it.boot.config.enum1.ResultEnum;
 import com.it.boot.config.enum1.SexEnum;
 import com.it.boot.entity.SysEnumEntity;
 import com.it.boot.entity.UserEntity;
@@ -61,7 +60,6 @@ public class InitTestEnvDbTest {
         for (GroupCodeEnum groupCodeEnum : va) {
             SysEnumEntity sysEnumEntity = new SysEnumEntity();
             sysEnumEntity.setGroupCode("GroupCodeEnum");
-            sysEnumEntity.setValue(groupCodeEnum.getUniCode());
             sysEnumEntity.setValue(groupCodeEnum.getValue());
             SysEnumEntity one = sysEnumService.getOne(new QueryWrapper<>(sysEnumEntity));
             if (one == null) {
@@ -73,7 +71,7 @@ public class InitTestEnvDbTest {
     @Test
     void test_3_group2_code() {
         // 反射 获取方法
-        Class<?>[] tables = {SexEnum.class, ResultEnum.class};
+        Class<?>[] tables = {SexEnum.class};
         for (Class<?> clz : tables) {
             Object[] arr = clz.getEnumConstants();
 
@@ -81,8 +79,7 @@ public class InitTestEnvDbTest {
                 IEnumDb enum1 = (IEnumDb) obj;
                 SysEnumEntity sysEnumEntity = new SysEnumEntity();
                 sysEnumEntity.setGroupCode("GroupCodeEnum");
-                sysEnumEntity.setValue(enum1.getUniCode());
-                sysEnumEntity.setValue(enum1.getValue());
+                sysEnumEntity.setValue(String.valueOf(enum1.getValue()));
                 sysEnumEntity.setValue(enum1.getLabel());
                 SysEnumEntity one = sysEnumService.getOne(new QueryWrapper<>(sysEnumEntity));
                 if (one == null) {

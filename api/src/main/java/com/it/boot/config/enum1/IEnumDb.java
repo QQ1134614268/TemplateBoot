@@ -5,8 +5,6 @@ package com.it.boot.config.enum1;
  */
 public interface IEnumDb {
 
-    String getUniCode();
-
     String getValue();
 
     String getLabel();

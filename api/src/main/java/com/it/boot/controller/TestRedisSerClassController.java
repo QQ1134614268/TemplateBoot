@@ -12,7 +12,6 @@ import com.it.boot.entity.dto.UserDto;
 import com.it.boot.util.BuildDataUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Test;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,8 +68,8 @@ import javax.annotation.Resource;
 @RequestMapping("/api/RedisSerClassController")
 public class TestRedisSerClassController {
     public static final String JACKSON_NO_TYPE = "Jackson_no_type";
-    public static final String FASTERJSON_NO_TYPE = "fasterjson_no_type";
-    public static final String FASTERJSON_WITH_TYPE = "fasterjson_with_type";
+    public static final String FASTER_JSON_NO_TYPE = "faster_json_no_type";
+    public static final String FASTER_JSON_WITH_TYPE = "faster_json_with_type";
 
     @Resource
     RedisTemplate<String, Object> redisTemplate;
@@ -162,11 +161,11 @@ public class TestRedisSerClassController {
 
         //
         redisTemplate.setValueSerializer(new FasterJsonNoTypeSerializer<>(Object.class));
-        redisTemplate.opsForValue().set(FASTERJSON_NO_TYPE, user);
+        redisTemplate.opsForValue().set(FASTER_JSON_NO_TYPE, user);
 
         //
         redisTemplate.setValueSerializer(new FasterJsonWithTypeSerializer<>(Object.class));
-        redisTemplate.opsForValue().set(FASTERJSON_WITH_TYPE, user);
+        redisTemplate.opsForValue().set(FASTER_JSON_WITH_TYPE, user);
 
         return ApiResult.success();
     }
@@ -180,15 +179,15 @@ public class TestRedisSerClassController {
     @GetMapping("/test_02_d_ser")
     public ApiResult<Boolean> test_02_d_ser() {
         // WithType 序列化
-        Object object2 = redisTemplateWithType.opsForValue().get(FASTERJSON_NO_TYPE);// jsonObject
+        Object object2 = redisTemplateWithType.opsForValue().get(FASTER_JSON_NO_TYPE);// jsonObject
         System.out.println(object2);
-        Object object3 = redisTemplateWithType.opsForValue().get(FASTERJSON_WITH_TYPE);// UserEntity
+        Object object3 = redisTemplateWithType.opsForValue().get(FASTER_JSON_WITH_TYPE);// UserEntity
         System.out.println(object3);
 
         // NoType 序列化
-        Object object5 = redisTemplateNoType.opsForValue().get(FASTERJSON_NO_TYPE); // jsonObject
+        Object object5 = redisTemplateNoType.opsForValue().get(FASTER_JSON_NO_TYPE); // jsonObject
         System.out.println(object5);
-        Object object6 = redisTemplateNoType.opsForValue().get(FASTERJSON_WITH_TYPE); // jsonObject
+        Object object6 = redisTemplateNoType.opsForValue().get(FASTER_JSON_WITH_TYPE); // jsonObject
         System.out.println(object6);
 
         return ApiResult.success();
@@ -202,13 +201,12 @@ public class TestRedisSerClassController {
         // redisTemplateNoType // 配置 序列化
 
         redisTemplateNoType.setValueSerializer(new FasterJsonWithTypeSerializer<>(UserEntity.class));
-        UserEntity object6 = redisTemplateNoType.opsForValue().get(FASTERJSON_NO_TYPE);
+        UserEntity object6 = redisTemplateNoType.opsForValue().get(FASTER_JSON_NO_TYPE);
         System.out.println(object6);
 
         return ApiResult.success();
     }
 
-    @Test
     @GetMapping("/test2")
     public ApiResult<Boolean> test2() {
 

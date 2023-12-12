@@ -15,15 +15,4 @@ public class AuthFilter implements Filter {
         log.info(req.getRequestURI());
         chain.doFilter(request, response);
     }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void destroy() {
-
-    }
-
 }

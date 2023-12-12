@@ -3,7 +3,6 @@ package com.it.boot;
 
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -37,30 +36,4 @@ public class UserControllerTest {
         //
         // ThreadContext.bind(subject);
     }
-
-    @Test
-    public void test_0_create() {
-        // ApiResult res = userController.create(userEntity);
-        // Assertions.assertEquals(1, res.getCode());
-    }
-
-    @Test
-    public void test_1_getPage() {
-        // ApiResult res = userController.getPage(page, userEntity);
-        // Assertions.assertEquals(1, res.getCode());
-    }
-
-    @Test
-    public void login() {
-        // String text = VerificationCodeUtil.randomText();
-        // userController.verificationCodeToRedis(text);
-        // // stringRedisTemplate.
-        // UserParam user = new UserParam();
-        // user.setUserName("test");
-        // user.setPassword("test");
-        // user.setPassword(text);
-        // ApiResult res = userController.login(user);
-        // Assertions.assertEquals(1, res.getCode());
-    }
-
 }

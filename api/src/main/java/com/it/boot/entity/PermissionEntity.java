@@ -24,7 +24,7 @@ import javax.persistence.Table;
         }
 )
 public class PermissionEntity extends BaseEntity {
-    @Column(unique = false, nullable = false, columnDefinition = "varchar(64) COMMENT '权限名称'")
+    @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '权限名称'")
     @ApiModelProperty(value = "权限名称")
     private String name;
 }

@@ -47,25 +47,7 @@ public class ScriptTest {
     //     func(src, UserControllerTest.class, "/templates/test.java.vm");
     // }
 
-    public void func(String src, Class<?> clazz, String oPath2) throws IOException {
-        String s = getPath(clazz, src);
-
-        List<String> ss;
-        try (BufferedReader bfr = Files.newBufferedReader(Paths.get(s))) {
-            ss = bfr.lines().collect(Collectors.toList());
-        }
-        String txt = String.join(System.lineSeparator(), ss);
-        String pPath = clazz.getPackage().getName();
-
-        String newTxt = txt.replace("员工模块", "${tableComment}").replace(pPath.substring(0, pPath.lastIndexOf(".")), "${packageName}").replace("user", "${tableLowerCamel}").replace("User", "${tableUpperCamel}");
-
-        String oPath = getOutPath(oPath2);
-        try (BufferedWriter bfw = Files.newBufferedWriter(Paths.get(oPath), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
-            bfw.write(newTxt);
-        }
-    }
-
-    public void func2(String src, Class<?> clazz, String oPath2) throws IOException {
+    public void func2(String src, Class<?> clazz, String outPath) throws IOException {
         String s = getPath(clazz, src);
 
         List<String> ss;
@@ -88,7 +70,7 @@ public class ScriptTest {
                 .replace("require = false", "require = ${column.nullable}")
                 .replace("nullable = false", "nullable = ${column.nullable}")
                 .replace("// ", "");
-        String oPath = getOutPath(oPath2);
+        String oPath = getOutPath(outPath);
         try (BufferedWriter bfw = Files.newBufferedWriter(Paths.get(oPath), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             bfw.write(newTxt);
         }

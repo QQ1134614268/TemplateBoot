@@ -1,6 +1,6 @@
 package com.it.boot.config.exception;
 
-import com.it.boot.config.enumeration.ResCodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

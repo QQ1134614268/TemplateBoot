@@ -1,9 +1,5 @@
 //  参考       https://blog.csdn.net/shangmingtao/article/details/74463500
-
-const crypto = require('crypto')
-const assert = require('assert');
-const axios = require('axios')
-const qs = require('qs');
+const axios = require("axios")
 
 // get post  类,原始类型  大小写  参数多少
 

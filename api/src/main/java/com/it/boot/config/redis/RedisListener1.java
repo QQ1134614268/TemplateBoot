@@ -1,4 +1,4 @@
-package com.it.boot.redisListener;
+package com.it.boot.config.redis;
 
 import com.it.boot.entity.dto.MessageDto;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 
 @Slf4j
 @Component
-public class RedisMessageListener2 implements MessageListener {
+public class RedisListener1 implements MessageListener {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -28,3 +28,4 @@ public class RedisMessageListener2 implements MessageListener {
         log.info("{}, {} ", messageDto.getData(), messageDto.getContent());
     }
 }
+

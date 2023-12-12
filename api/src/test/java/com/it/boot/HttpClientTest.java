@@ -56,7 +56,7 @@ public class HttpClientTest {
         RequestConfig requestConfig = RequestConfig.custom().setProxy(proxy).build();
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
              CloseableHttpResponse response = httpClient.execute(httpPost);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));) {
+             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()))) {
             int status = response.getStatusLine().getStatusCode(); // 状态码 返回值
             if (status != 200) {
                 System.err.println("status:" + status);

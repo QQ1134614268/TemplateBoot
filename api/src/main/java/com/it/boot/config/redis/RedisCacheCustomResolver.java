@@ -17,9 +17,9 @@ import org.springframework.lang.NonNull;
 import java.util.Collection;
 
 @Slf4j
-public class CustomCacheResolver extends SimpleCacheResolver {
+public class RedisCacheCustomResolver extends SimpleCacheResolver {
 
-    public CustomCacheResolver(CacheManager cacheManager) {
+    public RedisCacheCustomResolver(CacheManager cacheManager) {
         super(cacheManager);
     }
 

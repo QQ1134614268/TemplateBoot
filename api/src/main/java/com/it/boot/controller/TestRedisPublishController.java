@@ -22,7 +22,7 @@ public class TestRedisPublishController {
 
     @ApiOperation(value = "发布redis消息")
     @GetMapping("/publishRedisMessage")
-    public void publishRedisMessage(String topic, String title, String content, TestHelloController testHelloController) {
+    public void publishRedisMessage(String topic, String title, String content) {
         // 发布消息
         MessageDto dto = new MessageDto();
         dto.setData(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));

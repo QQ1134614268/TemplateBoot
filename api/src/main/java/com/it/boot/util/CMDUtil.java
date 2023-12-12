@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 
 /**
  * 执行windows的cmd命令工具类
- *
  */
 public class CMDUtil {
 
@@ -26,8 +25,8 @@ public class CMDUtil {
      * @param isCloseWindow 执行完毕后是否关闭cmd窗口
      * @return bat文件输出log
      */
-    public static String excuteBatFile(String file, boolean isCloseWindow) {
-        String cmdCommand = null;
+    public static String execBatFile(String file, boolean isCloseWindow) {
+        String cmdCommand;
         if (isCloseWindow) {
             cmdCommand = "cmd.exe /c " + file;
         } else {
@@ -38,13 +37,13 @@ public class CMDUtil {
 
     private static String getString(String cmdCommand) {
         StringBuilder stringBuilder = new StringBuilder();
-        Process process = null;
+        Process process;
         try {
             process = Runtime.getRuntime().exec(cmdCommand);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream(), "GBK"));
-            String line = null;
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line + "\n");
+                stringBuilder.append(line).append("\n");
             }
             return stringBuilder.toString();
         } catch (Exception e) {
@@ -60,8 +59,8 @@ public class CMDUtil {
      * @param isCloseWindow 执行完毕后是否关闭cmd窗口
      * @return bat文件输出log
      */
-    public static String excuteBatFileWithNewWindow(String file, boolean isCloseWindow) {
-        String cmdCommand = null;
+    public static String execBatFileWithNewWindow(String file, boolean isCloseWindow) {
+        String cmdCommand;
         if (isCloseWindow) {
             cmdCommand = "cmd.exe /c start" + file;
         } else {
@@ -71,43 +70,29 @@ public class CMDUtil {
     }
 
     public static void main(String[] args) {
-//		Process process = Runtime.getRuntime().exec("E:/Java/AAA/budgeting_center/web_rest/mvnPackage2.bat", null,
-//				new File("E:/Java/AAA/budgeting_center/web_rest"));
+        //	Sun的doc里其实说明还有其他的用法：
+        //
+        //	exec(String[] cmdArray, String[] env, File dir)
+        //
+        //	Executes the specified command and arguments in a separate process with the specified environment and working directory.
+        //	那个dir就是调用的程序的工作目录，这句其实还是很有用的。
+        //
+        //	eg1: 下调用程序
+        //	Process proc =Runtime.getRuntime().exec("exeFile"); // windows
+        //	Process proc =Runtime.getRuntime().exec("./exeFile"); // Linux
+
+        //	eg2: 调用系统命令
+        // 	Process proc =Runtime.getRuntime().exec({"cmd","/C","copy exe1 exe2"});// windows
+        // 	Process proc =Runtime.getRuntime().exec({"/bin/sh","-c","ln -s exe1 exe2"}); // Linux
+
+        //	eg3: 调用系统命令并弹出命令行窗口
+        //	Process proc =Runtime.getRuntime().exec({"cmd","/C","start copy exe1 exe2"}); // windows
+        //	Process proc =Runtime.getRuntime().exec({"/bin/sh","-c","xterm -e ln -s exe1 exe2"});  // Linux
+
+        //	还有要设置调用程序的工作目录就要
+        //	Process proc =Runtime.getRuntime().exec("exeFile",null, new File("workPath"));
         String cmd = "ping www.baidu.com";
         String result = CMDUtil.executeCMDCommand(cmd);
         System.out.println(result);
     }
 }
-//	Sun的doc里其实说明还有其他的用法：
-//
-//	exec(String[] cmdarray, String[] envp, File dir)
-//
-//	Executes the specified command and arguments in a separate process with the specified environment and working directory.
-//	那个dir就是调用的程序的工作目录，这句其实还是很有用的。
-//
-//	Windows下调用程序
-//
-//	Process proc =Runtime.getRuntime().exec("exefile");
-//	Linux下调用程序就要改成下面的格式
-//
-//	Process proc =Runtime.getRuntime().exec("./exefile");
-//	Windows下调用系统命令
-//
-//	String [] cmd={"cmd","/C","copy exe1 exe2"}; 
-//	Process proc =Runtime.getRuntime().exec(cmd);
-//	Linux下调用系统命令就要改成下面的格式
-//
-//	String [] cmd={"/bin/sh","-c","ln -s exe1 exe2"}; 
-//	Process proc =Runtime.getRuntime().exec(cmd);
-//	Windows下调用系统命令并弹出命令行窗口
-//
-//	String [] cmd={"cmd","/C","start copy exe1 exe2"}; 
-//	Process proc =Runtime.getRuntime().exec(cmd);
-
-//	Linux下调用系统命令并弹出终端窗口就要改成下面的格式
-//
-//	String [] cmd={"/bin/sh","-c","xterm -e ln -s exe1 exe2"};
-//	Process proc =Runtime.getRuntime().exec(cmd);
-//	还有要设置调用程序的工作目录就要
-//
-//	Process proc =Runtime.getRuntime().exec("exeflie",null, new File("workpath"));

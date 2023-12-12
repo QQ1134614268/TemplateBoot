@@ -159,7 +159,7 @@ public class UserBatisController {
                 .last("limit 1")
                 .comment("this is comment")
                 //
-                .leSql(true, UserEntity::getUserName, "lesql")
+                .leSql(true, UserEntity::getUserName, "1,2,3")
                 .inSql(true, UserEntity::getUserName, "1,2,3")
                 //
                 .nested(true, w3 -> {

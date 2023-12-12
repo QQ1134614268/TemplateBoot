@@ -1,4 +1,4 @@
-package com.it.boot.config.swagger;
+package com.it.boot.config;
 
 import com.it.boot.config.Conf;
 import io.swagger.annotations.Api;

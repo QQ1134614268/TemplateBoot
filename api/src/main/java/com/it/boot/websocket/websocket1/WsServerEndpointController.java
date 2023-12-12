@@ -35,8 +35,10 @@ public class WsServerEndpointController {
      *
      */
     @OnClose
-    public void onClose(@PathParam("token") String token, Session session) {
-        SESSION_POOL.remove(token);
+    public void onClose(@PathParam("token") String token, Session session) throws IOException {
+       try(Session ignored =SESSION_POOL.remove(token)) {
+           log.info("onClose");
+       }
     }
 
     /**
@@ -44,7 +46,7 @@ public class WsServerEndpointController {
      *
      */
     @OnMessage
-    public String onMsg(String text, Session session) throws IOException {
+    public String onMsg(String text, Session session) {
         return "收到消息：" + text;
     }
 

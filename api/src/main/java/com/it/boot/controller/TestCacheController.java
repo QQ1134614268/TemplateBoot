@@ -20,9 +20,9 @@ import java.util.List;
  * 缓存一般放在dao中,service只关注业务处理,不关心缓存方式
  * 实现缓存，还需要考虑淘汰、最大限制、缓存过期时间淘汰等等功能
  * 关键注解:
- *     @EnableCaching 开启缓存功能，一般放在启动类上。
- *     @CacheConfig 注解在 class 之上来统一指定value的值
- *     @Cacheable 根据方法对其返回结果进行缓存，下次请求时，如果缓存存在，则直接读取缓存数据返回；如果缓存不存在，则执行方法，并把返回的结果存入缓存中。一般用在查询方法上。
+ *     EnableCaching 开启缓存功能，一般放在启动类上。
+ *     CacheConfig 注解在 class 之上来统一指定value的值
+ *     Cacheable 根据方法对其返回结果进行缓存，下次请求时，如果缓存存在，则直接读取缓存数据返回；如果缓存不存在，则执行方法，并把返回的结果存入缓存中。一般用在查询方法上。
  *         属性:
  *             value 缓存名，必填，它指定了你的缓存存放在哪块命名空间
  *             cacheNames 与 value 差不多，二选一即可
@@ -33,10 +33,9 @@ import java.util.List;
  *             condition	条件符合则缓存
  *             unless	条件符合则不缓存
  *             sync	是否使用异步模式，默认为false
- *     @CachePut 使用该注解标志的方法，每次都会执行，并将结果存入指定的缓存中。其他方法可以直接从响应的缓存中读取缓存数据，而不需要再去查询数据库。一般用在新增方法上
- *     @CacheEvict 使用该注解标志的方法，会清空指定的缓存。一般用在更新或者删除方法上
- *     @Caching 该注解可以实现同一个方法上同时使用多种注解。可从其源码看出
- *         @Caching(cacheable = {@Cacheable(value="emp",key = "#lastName")},put = {@CachePut(value="emp",key = "#result.id")})
+ *     CachePut 使用该注解标志的方法，每次都会执行，并将结果存入指定的缓存中。其他方法可以直接从响应的缓存中读取缓存数据，而不需要再去查询数据库。一般用在新增方法上
+ *     CacheEvict 使用该注解标志的方法，会清空指定的缓存。一般用在更新或者删除方法上
+ *     Caching 该注解可以实现同一个方法上同时使用多种注解。
  * CacheManager:
  *     SimpleCacheManager	使用简单的 Collection 来存储缓存
  *     ConcurrentMapCacheManager	使用 java.util.ConcurrentHashMap 来实现缓存

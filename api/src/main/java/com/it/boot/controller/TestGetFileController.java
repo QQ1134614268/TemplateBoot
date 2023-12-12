@@ -43,7 +43,7 @@ public class TestGetFileController {
     public List<String> getFileClassPathResource() throws IOException {
         Resource resource = new ClassPathResource("a.txt");
         File file = resource.getFile();
-        try (FileReader fileReader = new FileReader(file); BufferedReader bufferedReader = new BufferedReader(fileReader);) {
+        try (FileReader fileReader = new FileReader(file); BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             return getLines(bufferedReader);
         }
     }
@@ -57,7 +57,7 @@ public class TestGetFileController {
         if (inputStream == null) {
             return Collections.emptyList();
         }
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return getLines(br);
         }
     }

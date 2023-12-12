@@ -22,9 +22,9 @@ public class RedisUtils {
      * 向通道发布消息
      */
     @Resource
-    StringRedisTemplate stringRedisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
     @Resource
-    public RedisTemplate redisTemplateWithType;
+    private RedisTemplate redisTemplateWithType;
 
     public <T> void setCacheObject(final String key, final T value) {
         redisTemplateWithType.opsForValue().set(key, value);
@@ -38,6 +38,7 @@ public class RedisUtils {
         ValueOperations<String, T> operation = redisTemplateWithType.opsForValue();
         return operation.get(key);
     }
+
     public void convertAndSend(String channel, Object message) {
         if (!StringUtils.hasText(channel)) {
             return;

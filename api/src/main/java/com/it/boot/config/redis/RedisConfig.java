@@ -22,12 +22,12 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
-        // Json序列化配置
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+                .enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        serializer.setObjectMapper(objectMapper);
 
         // String的序列化
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
@@ -37,12 +37,13 @@ public class RedisConfig {
         // hash的key采用string的序列化
         template.setHashKeySerializer(stringRedisSerializer);
         // value序列化采用jackson
-        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.setValueSerializer(serializer);
         // hash的value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        template.setHashValueSerializer(serializer);
         template.afterPropertiesSet();
         return template;
     }
+
 
     @Bean
     public RedisTemplate<Object, Object> redisTemplateWithType(RedisConnectionFactory connectionFactory) {
@@ -114,4 +115,3 @@ public class RedisConfig {
     //     return redisTemplateWithType;
     // }
 }
-

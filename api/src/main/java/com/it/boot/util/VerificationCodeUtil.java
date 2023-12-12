@@ -30,8 +30,6 @@ public class VerificationCodeUtil {
     private static Font randomFont() {
         String name = fontNames[random.nextInt(fontNames.length)];
         int style = random.nextInt(4);
-        // private static int[]   styles = {Font.BOLD,Font.ITALIC,Font.PLAIN};
-        // int style = styles[random.nextInt(4)];
         int size = random.nextInt(5) + 24;
         return new Font(name, style, size);
     }

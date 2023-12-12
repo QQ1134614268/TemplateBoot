@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>菜鸟教程(runoob.com)</title>
+    <title>测试WebSocket</title>
 
     <script type="text/javascript">
         function WebSocketTest() {
@@ -10,7 +10,7 @@
                 console.log("您的浏览器支持 WebSocket!");
 
                 // 打开一个 web socket
-                var ws = new WebSocket("ws://localhost:9091/myWS");
+                let ws = new WebSocket("ws://localhost:9091/myWS");
 
                 ws.onopen = function () {
                     // Web Socket 已连接上，使用 send() 方法发送数据
@@ -19,7 +19,7 @@
                 };
 
                 ws.onmessage = function (evt) {
-                    var received_msg = evt.data;
+                    let received_msg = evt.data;
                     console.log("接收数据：" + received_msg)
                 };
 

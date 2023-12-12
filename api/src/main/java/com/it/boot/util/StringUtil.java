@@ -13,21 +13,14 @@ public class StringUtil {
     /**
      * 判断一个集合是否为null或者没有元素
      *
-     * @param collection
-     * @return
      */
     public static <T> boolean isCollectionEmpty(Collection<T> collection) {
-        if (collection == null || collection.isEmpty()) {
-            return true;
-        }
-        return false;
+        return collection == null || collection.isEmpty();
     }
 
     /**
      * 判断字符串是否为空
      *
-     * @param str
-     * @return
      */
     public static boolean isNull(String str) {
         return str == null || str.length() == 0 || str.equals(" ") || str.equals("null") || str.trim().length() == 0;
@@ -36,8 +29,6 @@ public class StringUtil {
     /**
      * 是否整形类型
      *
-     * @param data
-     * @return
      */
     public static boolean isInteger(Object data) {
         if (data == null || "".equals(data))
@@ -51,24 +42,16 @@ public class StringUtil {
     /**
      * 功能：判断字符串是否为数字
      *
-     * @param str
-     * @return
      */
     public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if (isNum.matches()) {
-            return true;
-        } else {
-            return false;
-        }
+        return isNum.matches();
     }
 
     /**
      * 判断字符串是否为long类型
      *
-     * @param obj
-     * @return
      */
     public static long parseLong(Object obj) {
         if (obj == null || obj.equals("")) {
@@ -88,19 +71,18 @@ public class StringUtil {
     /**
      * 按顺序加入元素(插入排序)
      *
-     * @param list
      * @param o    (实现Comparable接口)
      */
     @SuppressWarnings("unchecked")
     public static <T> void addOrderList(List<T> list, T o, boolean isDesc) {
         for (int i = 0; i < list.size(); i++) {
             if (isDesc) {
-                if (((Comparable<T>) o).compareTo(list.get(i)) == 1) {
+                if (((Comparable<T>) o).compareTo(list.get(i)) > 0) {
                     list.add(i, o);
                     return;
                 }
             } else {
-                if (((Comparable<T>) o).compareTo(list.get(i)) == -1) {
+                if (((Comparable<T>) o).compareTo(list.get(i)) < 0) {
                     list.add(i, o);
                     return;
                 }
@@ -112,12 +94,10 @@ public class StringUtil {
     /**
      * 返回字符串长度
      *
-     * @param value
-     * @return
      */
     public static int stringLength(String value) {
         int valueLength = 0;
-        String chinese = "[\u0391-\uFFE5]";
+        String chinese = "[Α-￥]";
         /* 获取字段值的长度，如果含中文字符，则每个中文字符长度为2，否则为1 */
         for (int i = 0; i < value.length(); i++) {
             /* 获取一个字符 */
@@ -137,12 +117,10 @@ public class StringUtil {
     /**
      * 转换字节
      *
-     * @param fileS
-     * @return
      */
-    public static String formetFileSize(long fileS) {
+    public static String formatFileSize(long fileS) {
         DecimalFormat df = new DecimalFormat("#.00");
-        String fileSizeString = "";
+        String fileSizeString;
         if (fileS < 1024) {
             fileSizeString = df.format((double) fileS) + "B";
         } else if (fileS < 1048576) {
@@ -158,9 +136,6 @@ public class StringUtil {
     /**
      * 是否包装类型
      *
-     * @param type1
-     * @param type2
-     * @return
      */
     public static boolean isWrappedType(Class<?> type1, Class<?> type2) {
         if (type1 == int.class && type2 == Integer.class)
@@ -189,10 +164,7 @@ public class StringUtil {
             return true;
         else if (type2 == boolean.class && type1 == Boolean.class)
             return true;
-        else if (type1 == boolean.class && type2 == Boolean.class)
-            return true;
-
-        return false;
+        else return type1 == boolean.class && type2 == Boolean.class;
     }
 
     /**
@@ -204,7 +176,7 @@ public class StringUtil {
             return true;
         }
         for (int i = 0; i < strLen; i++) {
-            if (Character.isWhitespace(cs.charAt(i)) == false) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
                 return false;
             }
         }
@@ -218,8 +190,8 @@ public class StringUtil {
      */
     public static String listToString(List<?> list, char separator) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            sb.append(list.get(i)).append(separator);
+        for (Object o : list) {
+            sb.append(o).append(separator);
         }
         return list.isEmpty() ? "" : sb.substring(0, sb.toString().length() - 1);
     }

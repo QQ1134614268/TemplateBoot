@@ -1,6 +1,5 @@
 package com.it.boot.config.excel.excel2;
 
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
@@ -42,7 +41,7 @@ public class ExcelExportUtil<T> {
         SXSSFCell cell;
         for (int i = 0; i < headers.length; i++) {
             cell = row.createCell(i);
-//			cell.setCellStyle(style);	// 设置样式 
+            //			cell.setCellStyle(style);	// 设置样式
             cell.setCellValue(new XSSFRichTextString(headers[i]));
         }
 
@@ -55,18 +54,17 @@ public class ExcelExportUtil<T> {
         while (it.hasNext()) {
             rowNum++;
             row = sheet.createRow(rowNum);
-            t = (T) it.next();
+            t = it.next();
             for (int i = 0; i < beanFields.length; i++) {
                 cell = row.createCell(i);
                 value = getFieldValueByFieldName(beanFields[i], t);
-                textValue = null;
                 if (value instanceof Integer) { // int
                     cell.setCellValue((Integer) value);
                 } else if (value instanceof Float) {
-                    textValue = String.valueOf((Float) value);
+                    textValue = String.valueOf(value);
                     cell.setCellValue(textValue);
                 } else if (value instanceof Double) {
-                    textValue = String.valueOf((Double) value);
+                    textValue = String.valueOf(value);
                     cell.setCellValue(textValue);
                 } else if (value instanceof Long) {
                     cell.setCellValue((Long) value);
@@ -92,55 +90,13 @@ public class ExcelExportUtil<T> {
         }
     }
 
-    public CellStyle getHeaderStyle(SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
-
-        // 设置这些样式
-//		style.setFillForegroundColor( );
-//		style.setFillPattern(SXSSFCellStyle.SOLID_FOREGROUND);
-//		style.setBorderBottom(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderLeft(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderRight(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderTop(SXSSFCellStyle.BORDER_THIN);
-//		style.setAlignment(SXSSFCellStyle.ALIGN_CENTER);
-//		// 生成一个字体
-//		SXSSFFont font = workbook.createFont();
-//		font.setColor(SXSSFColor.VIOLET.index);
-//		font.setFontHeightInPoints((short) 12);
-//		font.setBoldweight(SXSSFFont.BOLDWEIGHT_BOLD);
-//		// 把字体应用到当前的样式
-//		style.setFont(font);
-
-        return style;
-
-    }
-
-    public CellStyle getStyle(SXSSFWorkbook workbook) {
-        CellStyle style = workbook.createCellStyle();
-//		style.setFillForegroundColor(SXSSFColor.LIGHT_YELLOW.index);
-//		style.setFillPattern(SXSSFCellStyle.SOLID_FOREGROUND);
-//		style.setBorderBottom(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderLeft(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderRight(SXSSFCellStyle.BORDER_THIN);
-//		style.setBorderTop(SXSSFCellStyle.BORDER_THIN);
-//		style.setAlignment(SXSSFCellStyle.ALIGN_CENTER);
-//		style.setVerticalAlignment(SXSSFCellStyle.VERTICAL_CENTER);
-//		// 生成另一个字体
-//		SXSSFFont font2 = workbook.createFont();
-//		font2.setBoldweight(SXSSFFont.BOLDWEIGHT_NORMAL);
-//		// 把字体应用到当前的样式
-//		style.setFont(font2);
-        return style;
-
-    }
-
     public void writeToResponse(Workbook workbook, String fileName, HttpServletResponse response) throws IOException {
         fileName = new String(fileName.getBytes(), "iso8859-1") + ".xlsx";
         response.reset();
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         response.setContentType("application/force-download");// 设置强制下载不打开
         response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-        try (OutputStream os = new BufferedOutputStream(response.getOutputStream());) {
+        try (OutputStream os = new BufferedOutputStream(response.getOutputStream())) {
             workbook.write(os);// 将excel写入到输出流中
             os.flush();
         }
@@ -158,7 +114,8 @@ public class ExcelExportUtil<T> {
             field.setAccessible(true); // 恢复原来的可见性
             return field.get(object);
         } catch (Exception e) {
-            String message = String.format("类 [%s] 反射访问属性 [%s] 异常!", object.getClass().getCanonicalName(), fieldName);
+            String message = String.format("类 [%s] 反射访问属性 [%s] 异常!", object.getClass()
+                    .getCanonicalName(), fieldName);
             throw new RuntimeException(message, e);
         }
     }

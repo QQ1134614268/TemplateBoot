@@ -2,6 +2,7 @@ package com.it.boot.config.tree;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public interface TreeNode {
                 this.parentId = parentId;
             }
         }
+        @EqualsAndHashCode(callSuper = true)
         @Data
         @NoArgsConstructor
         class TestV2 extends Test {

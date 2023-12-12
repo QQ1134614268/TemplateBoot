@@ -1,11 +1,12 @@
-package com.it.boot.config.enumeration;
+package com.it.boot.config.enum1;
 
 /**
  * @date 2022-12-15 14:44
  */
-public enum TestCountryEnum {
-    China("China", "中国", "Country"),
-    USA("USA", "美国", "Country");
+public enum TestCityEnum {
+
+    shenzhen("shenzhen", "深圳", "city"),
+    guangzhou("guangzhou", "广州", "city");
 
     // 使用id主键还是code?
     private String groupCode; // UserStateEnum
@@ -17,9 +18,10 @@ public enum TestCountryEnum {
     private String status;
     private Long parentId;
 
-    TestCountryEnum(String value, String label, String groupCode) {
+    TestCityEnum(String value, String label, String groupCode) {
         this.value = value;
         this.label = label;
         this.groupCode = groupCode;
     }
+
 }

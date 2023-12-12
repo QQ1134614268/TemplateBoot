@@ -66,10 +66,10 @@ public class TestDateSerializerController {
         //     date在url中,YMD
         //
         //     date在body,@JSONFORMAT YMD_HMS序列化
-        //     date在body,@dateTimeForamt YMD_HMS序列化
+        //     date在body,@dateTimeFormat YMD_HMS序列化
         //
-        //     date在url中,@dateTimeForamt YMD_HMS序列化
-        //     date在url中,@dateTimeForamt YMD_HMS序列化
+        //     date在url中,@dateTimeFormat YMD_HMS序列化
+        //     date在url中,@dateTimeFormat YMD_HMS序列化
         //
         //     date在body,添加Convert, YMD_HMS序列化
         //     date在url中,添加Convert, YMD_HMS序列化

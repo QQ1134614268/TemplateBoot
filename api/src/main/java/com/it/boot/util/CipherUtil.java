@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 
 /**
@@ -36,7 +37,7 @@ public class CipherUtil {
 
     public static String getShaStrJava(String inputStr) throws NoSuchAlgorithmException {
         String KEY_SHA = "SHA";
-        BigInteger sha = null;
+        BigInteger sha;
         System.out.println("=======加密前的数据:" + inputStr);
         byte[] inputData = inputStr.getBytes();
         MessageDigest messageDigest = MessageDigest.getInstance(KEY_SHA);
@@ -54,11 +55,9 @@ public class CipherUtil {
         String encodeStr = "";
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
-            messageDigest.update(str.getBytes("UTF-8"));
+            messageDigest.update(str.getBytes(StandardCharsets.UTF_8));
             encodeStr = BinUtil.byte2Hex(messageDigest.digest());
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return encodeStr;
@@ -67,7 +66,7 @@ public class CipherUtil {
     /**
      * 使用AES对文件进行加密和解密
      */
-    private static String type = "AES";
+    private static final String type = "AES";
 
     /**
      * 把文件srcFile加密后存储为destFile
@@ -75,8 +74,6 @@ public class CipherUtil {
      * @param srcFile    加密前的文件
      * @param destFile   加密后的文件
      * @param privateKey 密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
      */
     public void encrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
@@ -84,12 +81,8 @@ public class CipherUtil {
         cipher.init(Cipher.ENCRYPT_MODE, key);
 
         try (FileInputStream fis = new FileInputStream(srcFile);
-             FileOutputStream fos = new FileOutputStream(mkdirFiles(destFile));) {
+             FileOutputStream fos = new FileOutputStream(mkdirFiles(destFile))) {
             crypt(fis, fos, cipher);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -99,8 +92,6 @@ public class CipherUtil {
      * @param srcFile    解密前的文件
      * @param destFile   解密后的文件
      * @param privateKey 密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
      */
     public void decrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
@@ -108,13 +99,9 @@ public class CipherUtil {
         cipher.init(Cipher.DECRYPT_MODE, key);
 
         try (FileInputStream fis = new FileInputStream(srcFile);
-             FileOutputStream fos = new FileOutputStream(mkdirFiles(destFile));) {
+             FileOutputStream fos = new FileOutputStream(mkdirFiles(destFile))) {
 
             crypt(fis, fos, cipher);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -123,7 +110,6 @@ public class CipherUtil {
      *
      * @param filePath 要创建的文件路经
      * @return file 文件
-     * @throws IOException
      */
     private File mkdirFiles(String filePath) throws IOException {
         File file = new File(filePath);
@@ -140,13 +126,11 @@ public class CipherUtil {
      *
      * @param secret 要生成密钥的字符串
      * @return secretKey 生成后的密钥
-     * @throws GeneralSecurityException
      */
     private static Key getKey(String secret) throws GeneralSecurityException {
-        KeyGenerator kgen = KeyGenerator.getInstance(type);
-        kgen.init(128, new SecureRandom(secret.getBytes()));
-        SecretKey secretKey = kgen.generateKey();
-        return secretKey;
+        KeyGenerator key = KeyGenerator.getInstance(type);
+        key.init(128, new SecureRandom(secret.getBytes()));
+        return key.generateKey();
     }
 
     /**
@@ -155,8 +139,6 @@ public class CipherUtil {
      * @param in     加密解密前的流
      * @param out    加密解密后的流
      * @param cipher 加密解密
-     * @throws IOException
-     * @throws GeneralSecurityException
      */
     private static void crypt(InputStream in, OutputStream out, Cipher cipher)
             throws IOException, GeneralSecurityException {
@@ -190,14 +172,12 @@ class AES {
     private static final Logger logger = LoggerFactory.getLogger(AES.class);
     private static final String defaultCharset = "UTF-8";
     private static final String KEY_AES = "AES";
-    private static final String KEY = "123456";
 
     /**
      * 加密
      *
      * @param data 需要加密的内容
      * @param key  加密密码
-     * @return
      */
     public static String encrypt(String data, String key) {
         return doAES(data, key, Cipher.ENCRYPT_MODE);
@@ -208,7 +188,6 @@ class AES {
      *
      * @param data 待解密内容
      * @param key  解密密钥
-     * @return
      */
     public static String decrypt(String data, String key) {
         return doAES(data, key, Cipher.DECRYPT_MODE);
@@ -219,7 +198,6 @@ class AES {
      *
      * @param data 待处理数据
      * @param mode 加解密mode
-     * @return
      */
     private static String doAES(String data, String key, int mode) {
         try {
@@ -236,12 +214,11 @@ class AES {
                 content = BinUtil.parseHexStr2Byte(data);
             }
             // 1.构造密钥生成器，指定为AES算法,不区分大小写
-            KeyGenerator kgen = KeyGenerator.getInstance(KEY_AES);
-            // 2.根据ecnodeRules规则初始化密钥生成器
-            // 生成一个128位的随机源,根据传入的字节数组
-            kgen.init(128, new SecureRandom(key.getBytes()));
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_AES);
+            // 2.初始化密钥生成器 生成一个128位的随机源,根据传入的字节数组
+            keyGenerator.init(128, new SecureRandom(key.getBytes()));
             // 3.产生原始对称密钥
-            SecretKey secretKey = kgen.generateKey();
+            SecretKey secretKey = keyGenerator.generateKey();
             // 4.获得原始对称密钥的字节数组
             byte[] enCodeFormat = secretKey.getEncoded();
             // 5.根据字节数组生成AES密钥
@@ -262,6 +239,4 @@ class AES {
         }
         return null;
     }
-
-
 }

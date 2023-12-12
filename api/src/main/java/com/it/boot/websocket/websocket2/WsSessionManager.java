@@ -28,9 +28,13 @@ public class WsSessionManager {
     /**
      * 删除 session,会返回删除的 session
      */
-    public static WebSocketSession remove(String key) {
+    public static void remove(String key) {
         // 删除 session
-        return SESSION_POOL.remove(key);
+        try (WebSocketSession ignored = SESSION_POOL.remove(key)) {
+            log.info("移除");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -83,8 +87,8 @@ public class WsSessionManager {
         getSessionPool().keySet().forEach(key -> sendOne(key, msg));
     }
 
-    @Scheduled(fixedDelay = 60 * 1000) // @Scheduled 单线程??
+    @Scheduled(fixedDelay = 300 * 1000) // @Scheduled 单线程??
     public void clear() {
-        // 清理数据
+        log.info("清理失效的websocket");
     }
 }

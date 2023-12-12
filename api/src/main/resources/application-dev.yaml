@@ -39,16 +39,6 @@ logging:
 #    console: %d{yyyy-MM-dd hh:mm:ss} [%thread] %-5level %logger{50} - %msg%n
 #    file: %d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} === - %msg%n
 mybatis-plus:
-  mapper-locations: classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-mybatis:
-  #如果使用了mybatis-plus，需要把classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml配置到这里：mybatis-plus.mapper-locations
-  mapper-locations: classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml
-  model:
-    pack: com.it.boot.entity  #扫描用于创建表的对象的包名，多个包用“,”隔开
-  database:
-    type: mysql #数据库类型 目前只支持mysql
-  table:
-    auto: update
 secret: abc@123

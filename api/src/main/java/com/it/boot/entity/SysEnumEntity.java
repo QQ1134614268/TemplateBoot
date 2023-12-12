@@ -24,40 +24,40 @@ import java.util.List;
 public class SysEnumEntity extends BaseEntity implements TreeNodeV1<Long> { //  implements TreeNode
 
     @ApiModelProperty(value = "分组code", example = "test_1")
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(32) COMMENT '分组code'")
+    @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
     private String groupCode;
 
     @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
     @Column(unique = true, nullable = false, columnDefinition = "varchar(64) COMMENT '唯一编码'")
     private String uniCode;
 
-    @ApiModelProperty(value = "值", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '值'")
+    @ApiModelProperty(value = "值", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '值'")
     private String value;
 
     @ApiModelProperty(value = "值", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '翻译标签'")
     private String label;
 
-    @ApiModelProperty(value = "备注", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '备注'")
+    @ApiModelProperty(value = "备注", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '备注'")
     private String note;
 
-    @ApiModelProperty(value = "相同groupCode下排序", example = "535233937", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '相同groupCode下排序'")
+    @ApiModelProperty(value = "相同groupCode下排序", example = "535233937")
+    @Column(columnDefinition = "int(11) COMMENT '相同groupCode下排序'")
     private Integer sort;
 
-    @ApiModelProperty(value = "状态", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '状态'")
+    @ApiModelProperty(value = "状态", example = "test_1")
+    @Column(columnDefinition = "varchar(255) COMMENT '状态'")
     private String status;
 
-    @ApiModelProperty(value = "父级id", example = "1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '父级id'")
+    @ApiModelProperty(value = "父级id", example = "1")
+    @Column(columnDefinition = "varchar(255) COMMENT '父级id'")
     private Long parentId;
 
     @Transient
     @TableField(exist = false)
-    @ApiModelProperty(value = "子节点", example = "", required = false)
+    @ApiModelProperty(value = "子节点")
     private List<SysEnumEntity> children = new ArrayList<>();
 
 }

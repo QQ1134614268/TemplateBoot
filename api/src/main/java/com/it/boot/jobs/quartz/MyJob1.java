@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@SuppressWarnings("unused")
 @Component
 @Slf4j
 public class MyJob1 {

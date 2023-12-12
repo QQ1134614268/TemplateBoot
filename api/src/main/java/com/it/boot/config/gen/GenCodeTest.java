@@ -40,11 +40,11 @@ public class GenCodeTest {
         String SRC_MAIN_JAVA = "/src/main/java/";
         String SRC_TEST_JAVA = "/src/test/java/";
         String base = TemplateBootApplication.class.getPackage().getName();
-        AutoCode.Arg entity = new AutoCode.Arg(base+".entity.%sEntity", "templates/entity.java.vm", "huangran", SRC_MAIN_JAVA);
-        AutoCode.Arg mapper = new AutoCode.Arg(base+".mapper.%sMapper", "templates/mapper.java.vm", "huangran", SRC_MAIN_JAVA);
-        AutoCode.Arg service = new AutoCode.Arg(base+".service.%sService", "templates/serviceImpl.java.vm", "huangran", SRC_MAIN_JAVA);
-        AutoCode.Arg controller = new AutoCode.Arg(base+".controller.%sController", "templates/controller.java.vm", "huangran", SRC_MAIN_JAVA);
-        AutoCode.Arg test = new AutoCode.Arg(base+".controller.%sControllerTest", "templates/test.java.vm", "huangran", SRC_TEST_JAVA);
+        AutoCode.Arg entity = new AutoCode.Arg(base+".entity.%sEntity", "templates/entity.java.vm", "zero", SRC_MAIN_JAVA);
+        AutoCode.Arg mapper = new AutoCode.Arg(base+".mapper.%sMapper", "templates/mapper.java.vm", "zero", SRC_MAIN_JAVA);
+        AutoCode.Arg service = new AutoCode.Arg(base+".service.%sService", "templates/serviceImpl.java.vm", "zero", SRC_MAIN_JAVA);
+        AutoCode.Arg controller = new AutoCode.Arg(base+".controller.%sController", "templates/controller.java.vm", "zero", SRC_MAIN_JAVA);
+        AutoCode.Arg test = new AutoCode.Arg(base+".controller.%sControllerTest", "templates/test.java.vm", "zero", SRC_TEST_JAVA);
 
         // Class[] tables = GetClassUtil.getClassByPackage(BaseEntity.class.getPackage().getName()).stream().toArray(Class[]::new);
         Class<?>[] tables = {UserEntity.class};//UserEntity.class

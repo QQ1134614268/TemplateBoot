@@ -1,6 +1,7 @@
 package com.it.boot.websocket.websocket2;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class WebSocketHandler extends TextWebSocketHandler { //WebSocketHandler
 
     @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    public void afterConnectionEstablished(@NonNull WebSocketSession session) {
         log.info("afterConnectionEstablished");
         // Object token = session.getAttributes().get("token");
         // if (token != null) {
@@ -35,7 +36,7 @@ public class WebSocketHandler extends TextWebSocketHandler { //WebSocketHandler
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         Object token = session.getAttributes().get("token");
         if (token != null) {
             // 用户退出，移除缓存
