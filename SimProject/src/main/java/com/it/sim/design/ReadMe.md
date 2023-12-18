@@ -1,6 +1,5 @@
 // todo 阅读 设计模式
-https://blogVO.csdn.net/yubujian_l/article/details/81455524
-https://blogVO.csdn.net/wmq880204/article/details/75106848
+Java中常用的10种设计模式详解: https://blog.csdn.net/wmq880204/article/details/75106848
 
 本质-- 规则 表现-- 作用-- 产生影响 场景-- 具体使用样板,面向消费者,易于理解,demo 多个例子
 
