@@ -1,11 +1,15 @@
-package com.it.sim.jvm.gc;
+package com.it.sim.jvm.tool.exe;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class TestPrintGc2 {
+public class TestJvmExe {
 
     public static final int _10_B = 10000000;
     public static final int _1_B = _10_B / 10;
@@ -168,5 +172,21 @@ public class TestPrintGc2 {
         // 线程死亡前后
         // thread 600M -> 0
         // main 10M -> 12M
+    }
+
+    @AllArgsConstructor
+    @Data
+    static
+    class UserVo {
+        private String name;
+        private Integer age;
+    }
+
+    @Data
+    static
+    class Db {
+        public static Map<String, UserVo> map = new ConcurrentHashMap<>();
+        public static List<String> listString = new ArrayList<>();
+        public static List<Integer> listInt = new ArrayList<>();
     }
 }

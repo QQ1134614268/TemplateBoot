@@ -1,0 +1,7 @@
+jvm线程状态: https://mp.weixin.qq.com/s?__biz=MzAxMjY5NDU2Ng==&mid=2651866070&idx=1&sn=7166e84c393eaaa51e251cdb095d2a95&chksm=8049069fb73e8f89089adc091920d5dfb426f8ff0ad598dc75bc30fe7a22143c21fd5296327a&scene=27
+JVirtualVM:
+  运行（runnable）：正在运行中的线程。
+  休眠（timed_waiting）：休眠线程，例如调用Thread.sleep方法。
+  等待（waiting）：等待唤醒的线程，可通过调用Object.wait方法获得这种状态，底层实现是基于对象头中的monitor对象。
+  驻留（waiting）：等待唤醒的线程，和等待状态类似，只不过底层的实现方式不同，处于这种状态的例子有线程池中的空闲线程，等待获取reentrantLock锁的线程，调用了reentrantLock的condition的await方法的线程等等，底层实现是基于Unsafe类的park方法，在AQS中有大量的应用。
+  监视（blocked）：等待获取monitor锁的线程，例如等待进入synchronize代码块的线程。
