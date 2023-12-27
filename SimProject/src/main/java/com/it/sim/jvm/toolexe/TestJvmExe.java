@@ -1,4 +1,4 @@
-package com.it.sim.jvm.tool.exe;
+package com.it.sim.jvm.toolexe;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
