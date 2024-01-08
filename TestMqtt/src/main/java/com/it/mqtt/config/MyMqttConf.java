@@ -25,7 +25,8 @@ public class MyMqttConf {
 
     @Bean
     public MqttClient mqttConsumerClient() throws MqttException {
-        MqttClient client = new MqttClient(mqttConfig.getHost(), mqttConfig.getClientId() + "1", new MemoryPersistence());
+        String clientId = mqttConfig.getClientId() + "1"; // 避免重复
+        MqttClient client = new MqttClient(mqttConfig.getHost(), clientId, new MemoryPersistence());
         MqttConnectOptions options = getMqttConnectOptions();
         client.setCallback(new ConsumerCallback(client, options));
         MqttUtil.connect(client, options);
