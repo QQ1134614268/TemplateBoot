@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 public class MqttUtil {
 
     @Resource
-    MqttClient mqttProduceClient;
+    private MqttClient mqttProduceClient;
 
     public void sendMQTTMessage(String topic, String data) throws MqttException {
         MqttMessage message = new MqttMessage();

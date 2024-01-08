@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 @Configuration
 public class MyMqttConf {
     @Resource
-    private MQTTConfig mqttConfig;
+    private MqttConfig mqttConfig;
 
     @Bean
     public MqttClient mqttProduceClient() throws MqttException {

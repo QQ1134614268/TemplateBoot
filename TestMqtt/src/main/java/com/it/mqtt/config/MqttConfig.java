@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(MQTTConfig.PREFIX)
-public class MQTTConfig {
+@ConfigurationProperties(MqttConfig.PREFIX)
+public class MqttConfig {
     // 指定配置文件application-local.properties中的属性名前缀
     public static final String PREFIX = "publish.mqtt";
     private String host;
