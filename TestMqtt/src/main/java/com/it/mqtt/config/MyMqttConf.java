@@ -1,6 +1,5 @@
 package com.it.mqtt.config;
 
-import com.it.mqtt.c.ConsumerCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -17,20 +16,19 @@ public class MyMqttConf {
 
     @Bean
     public MqttClient mqttProduceClient() throws MqttException {
-        MqttClient client = new MqttClient(mqttConfig.getHost(), mqttConfig.getClientid(), new MemoryPersistence());
-        client.setCallback(new ProduceCallback());
+        MqttClient client = new MqttClient(mqttConfig.getHost(), mqttConfig.getClientId(), new MemoryPersistence());
         MqttConnectOptions options = getMqttConnectOptions();
-        client.connect(options);
+        client.setCallback(new ProduceCallback(client, options));
+        MqttUtil.connect(client, options);        // connectWithResult
         return client;
     }
 
     @Bean
     public MqttClient mqttConsumerClient() throws MqttException {
-        MqttClient client = new MqttClient(mqttConfig.getHost(), mqttConfig.getClientid(), new MemoryPersistence());
-        client.setCallback(new ConsumerCallback());
+        MqttClient client = new MqttClient(mqttConfig.getHost(), mqttConfig.getClientId() + "1", new MemoryPersistence());
         MqttConnectOptions options = getMqttConnectOptions();
-        client.connect(options);
-        // connectWithResult
+        client.setCallback(new ConsumerCallback(client, options));
+        MqttUtil.connect(client, options);
         return client;
     }
 
@@ -43,7 +41,7 @@ public class MyMqttConf {
         // 设置会话心跳时间
         options.setKeepAliveInterval(mqttConfig.getKeepalive());
         // 是否清除session
-        options.setCleanSession(mqttConfig.isCleansession());
+        options.setCleanSession(mqttConfig.isCleanSession());
         System.out.println("--生成mqtt配置对象");
         return options;
     }

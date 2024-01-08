@@ -1,4 +1,4 @@
-package com.it.mqtt.c;
+package com.it.mqtt.controller;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping(value = "/SubscribeController")
-public class SubscribeController {
+public class ConsumerController {
     @Resource
     private MqttClient mqttConsumerClient;
 

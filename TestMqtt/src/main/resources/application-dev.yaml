@@ -4,9 +4,9 @@ publish:
     host: tcp://ggok.top:1883
     username: admin
     password: xc123456
-    cleansession: false #MQTT-是否清理session
-    clientid: mqtt_publish #MQTT-当前客户端的唯一标识
-    default_topic: 测试 #当前客户端的默认主题(大多数时候没什么用)
+    cleanSession: false #MQTT-是否清理session
+    clientId: mqtt_publish #MQTT-当前客户端的唯一标识
+    defaultTopic: 测试 #当前客户端的默认主题(大多数时候没什么用)
     timeout: 1000 #发送超时时间
     keepalive: 10 #心跳时间
     connectionTimeout: 3000 #连接超时时间

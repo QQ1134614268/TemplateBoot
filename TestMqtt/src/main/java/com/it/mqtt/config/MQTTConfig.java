@@ -11,11 +11,11 @@ public class MQTTConfig {
     // 指定配置文件application-local.properties中的属性名前缀
     public static final String PREFIX = "publish.mqtt";
     private String host;
-    private String clientid;
+    private String clientId;
     private String username;
     private String password;
-    private boolean cleansession;
-    private String default_topic;
+    private boolean cleanSession;
+    private String defaultTopic;
     private int timeout;
     private int keepalive;
     private int connectionTimeout;

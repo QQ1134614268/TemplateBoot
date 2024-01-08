@@ -1,9 +1,7 @@
 package com.it.mqtt.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 
 import java.nio.charset.StandardCharsets;
 
@@ -12,9 +10,25 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class ProduceCallback implements MqttCallback {
+    private final MqttClient client;
+    private final MqttConnectOptions options;
+
+    public ProduceCallback(MqttClient client, MqttConnectOptions options) {
+        this.client = client;
+        this.options = options;
+    }
+
     public void connectionLost(Throwable cause) {
         // 连接丢失后，一般在这里面进行重连
-        log.info("---------------------连接断开，可以做重连");
+        log.error("连接断开", cause);
+        if (!client.isConnected()) {
+            try {
+                Thread.sleep(30000);
+                MqttUtil.connect(client, options);
+            } catch (InterruptedException | MqttException e) {
+                log.error("mqtt连接异常", e);
+            }
+        }
     }
 
     /**
@@ -30,7 +44,7 @@ public class ProduceCallback implements MqttCallback {
     public void messageArrived(String topic, MqttMessage message) {
         // subscribe后得到的消息会执行到这里面
         String result = new String(message.getPayload(), StandardCharsets.UTF_8);
-        log.info("接收消息主题:" + topic + "\n接收消息Qos:" + message.getQos() + "\n接收消息内容 : " + result);
+        log.info("接收消息主题:" + topic + ";接收消息Qos: " + message.getQos() + ";接收消息内容 : " + result);
         // 这里可以针对收到的消息做处理，比如持久化
     }
 }
