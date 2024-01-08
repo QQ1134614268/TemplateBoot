@@ -1,7 +1,7 @@
 #MQTT-服务端地址
 publish:
   mqtt:
-    host: tcp://localhost:1883
+    host: tcp://ggok.top:1883
     username: admin
     password: xc123456
     cleansession: false #MQTT-是否清理session
