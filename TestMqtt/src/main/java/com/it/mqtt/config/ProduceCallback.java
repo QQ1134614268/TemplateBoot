@@ -35,7 +35,7 @@ public class ProduceCallback implements MqttCallback {
      * 发送消息，消息到达后处理方法
      */
     public void deliveryComplete(IMqttDeliveryToken token) {
-        System.out.println("deliveryComplete---------" + token.isComplete());
+        log.info("deliveryComplete---------" + token.isComplete());
     }
 
     /**
