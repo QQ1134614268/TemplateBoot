@@ -24,7 +24,7 @@ public class ConsumerCallback implements MqttCallback {
         if (!client.isConnected()) {
             try {
                 Thread.sleep(30000);
-                MqttUtil.connect(client, options);
+                BizUtil.connect(client, options);
             } catch (InterruptedException | MqttException e) {
                 log.error("mqtt连接异常", e);
             }

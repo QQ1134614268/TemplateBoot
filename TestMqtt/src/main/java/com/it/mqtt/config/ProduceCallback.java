@@ -3,8 +3,6 @@ package com.it.mqtt.config;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * 主要用来接收和处理订阅主题的消息
  */
@@ -24,7 +22,7 @@ public class ProduceCallback implements MqttCallback {
         if (!client.isConnected()) {
             try {
                 Thread.sleep(30000);
-                MqttUtil.connect(client, options);
+                BizUtil.connect(client, options);
             } catch (InterruptedException | MqttException e) {
                 log.error("mqtt连接异常", e);
             }
@@ -39,12 +37,9 @@ public class ProduceCallback implements MqttCallback {
     }
 
     /**
-     * 接收所订阅的主题的消息并处理
+     * 生产者没有订阅主题
      */
     public void messageArrived(String topic, MqttMessage message) {
-        // subscribe后得到的消息会执行到这里面
-        String result = new String(message.getPayload(), StandardCharsets.UTF_8);
-        log.info("接收消息主题:" + topic + ";接收消息Qos: " + message.getQos() + ";接收消息内容 : " + result);
-        // 这里可以针对收到的消息做处理，比如持久化
+        log.info("接收消息主题");
     }
 }

@@ -1,7 +1,6 @@
-package com.it.mqtt.config;
+package com.it.mqtt.controller;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class MqttUtil {
+public class ProduceService {
 
     @Resource
     private MqttClient mqttProduceClient;
@@ -20,9 +19,4 @@ public class MqttUtil {
         message.setPayload(data.getBytes());
         this.mqttProduceClient.publish(topic, message);
     }
-
-    public static void connect(MqttClient client, MqttConnectOptions options) throws MqttException {
-        client.connect(options);
-    }
-
 }
