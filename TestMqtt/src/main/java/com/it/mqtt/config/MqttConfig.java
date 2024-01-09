@@ -19,7 +19,8 @@ public class MqttConfig {
         MqttClient client = new MqttClient(mqttProp.getHost(), mqttProp.getClientId(), new MemoryPersistence());
         MqttConnectOptions options = getMqttConnectOptions();
         client.setCallback(new ProduceCallback(client, options));
-        BizUtil.connect(client, options);        // connectWithResult
+        // connectWithResult
+        client.connect(options);
         return client;
     }
 
@@ -29,7 +30,7 @@ public class MqttConfig {
         MqttClient client = new MqttClient(mqttProp.getHost(), clientId, new MemoryPersistence());
         MqttConnectOptions options = getMqttConnectOptions();
         client.setCallback(new ConsumerCallback(client, options));
-        BizUtil.connect(client, options);
+        client.connect(options);
         return client;
     }
 
