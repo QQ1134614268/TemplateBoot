@@ -12,10 +12,5 @@ import javax.annotation.Resource;
  */
 @Service
 public class UserService extends ServiceImpl<UserMapper, UserEntity> {
-    @Resource
-    private UserMapper userMapper;
 
-    public UserEntity getUserById(Integer id) {
-        return userMapper.getUserById(id);
-    }
 }

@@ -1,20 +1,22 @@
 package com.it.boot.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.boot.config.ApiResult;
-import com.it.boot.entity.UserEntity;
-import com.it.boot.service.UserService;
+import com.it.boot.entity.CacheEntity;
+import com.it.boot.service.CacheService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @date 2023-05-25 11:22
+ * <pre>
  * 参考: <a href="https://blog.csdn.net/ToBeMaybe_/article/details/126707473">...</a>
  *      <a href="https://www.cnblogs.com/wxl123/p/12537433.html">...</a>
  * 缓存一般放在dao中,service只关注业务处理,不关心缓存方式
@@ -70,13 +72,17 @@ import java.util.List;
  *     caches	root object	当前方法调用使用的缓存列表（如@Cacheable(value={“cache1”, “cache2”})），则有两个cache    #root.caches[0].name
  *     argument name	evaluation context	方法参数的名字. 可以直接 #参数名 ，也可以使用 #p0或#a0 的形式，0代表参数的索引；	#username 、 #a0 、 #p0
  *     result	evaluation context	方法执行后的返回值（仅当方法执行之后的判断有效，如‘unless’，’cache put’的表达式 ’cache evict’的表达式beforeInvocation=false）    #result
+ * </pre>
  */
+@Slf4j
 @Api(tags = "测试/Cache")
 @RestController
 @RequestMapping("/api/TestCacheController")
 public class TestCacheController {
     @Resource
-    private UserService userService;
+    private CacheService cacheService;
+    @Resource
+    private RedisTemplate redisTemplate;
 
     // 默认缓存到redis
     // @Cacheable 开启缓存，将查询到的结果对象，存到缓存中，一般用在查询方法上
@@ -86,13 +92,49 @@ public class TestCacheController {
     // @CacheConfig(cacheNames = "emp")//抽取缓存的公共配置，这样下面配置缓存的时候就不用了配置cacheNames了
 
     // cacheNames 可以理解为缓存 key 的前缀
-    @ApiOperation("cache")
-    @GetMapping("/cache")
-    public ApiResult<List<UserEntity>> cache(Integer id) {
-        List<UserEntity> ret = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            ret.add(userService.getUserById(id));
-        }
-        return ApiResult.success(ret);
+
+    @ApiOperation("page")
+    @GetMapping("/page")
+    public ApiResult<Page<CacheEntity>> page(Page<CacheEntity> page) {
+        return ApiResult.success(cacheService.page(page));
+    }
+
+    @CachePut(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
+    @ApiOperation("add")
+    @PostMapping("/add")
+    public ApiResult<Boolean> add(@RequestBody CacheEntity cache) {
+        boolean b = cacheService.save(cache);
+        return ApiResult.success(b);
+    }
+
+    @CachePut(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
+    @ApiOperation("edit")
+    @PostMapping("/edit")
+    public ApiResult<Boolean> edit(@RequestBody CacheEntity cache) {
+        boolean b = cacheService.updateById(cache);
+        return ApiResult.success(b);
+    }
+
+    @CacheEvict(value = "CACHE", key = "#id", condition = "#result.isSuccess()")
+    @ApiOperation("delete")
+    @PostMapping("/delete")
+    public ApiResult<Boolean> delete(Long id) {
+        boolean b = cacheService.removeById(id);
+        return ApiResult.success(b);
+    }
+
+    @Cacheable(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
+    @ApiOperation("getCacheById")
+    @GetMapping("/getCacheById")
+    public ApiResult<CacheEntity> getCacheById(CacheEntity cache) {
+        log.info("info");
+        return ApiResult.success(cacheService.getCacheById(cache.getId()));
+    }
+
+    @ApiOperation("getCache")
+    @GetMapping("/getCache")
+    public ApiResult<Boolean> getCache(Long id) {
+        ApiResult<Boolean> data = (ApiResult<Boolean>) redisTemplate.opsForValue().get("CACHE::" + id);
+        return data;
     }
 }

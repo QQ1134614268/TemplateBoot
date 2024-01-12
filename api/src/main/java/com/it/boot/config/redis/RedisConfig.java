@@ -1,5 +1,6 @@
 package com.it.boot.config.redis;
 
+import com.alibaba.fastjson2.support.spring.data.redis.GenericFastJsonRedisSerializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,30 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
+    /**
+     * <pre>
+     * @param redisConnectionFactory：配置不同的客户端，这里注入的redis连接工厂不同： JedisConnectionFactory、LettuceConnectionFactory配置Redis序列化，原因如下：
+     *  （1） StringRedisTemplate的序列化方式为字符串序列化，
+     *  RedisTemplate的序列化方式默为jdk序列化（实现Serializable接口）
+     *  （2） RedisTemplate的jdk序列化方式在Redis的客户端中为乱码，不方便查看，
+     *  因此一般修改RedisTemplate的序列化为方式为JSON方式【建议使用GenericJackson2JsonRedisSerializer】
+     * </pre>
+     */
+    @Bean
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        // 使用fastJson序列化
+        GenericFastJsonRedisSerializer fastJsonRedisSerializer = new GenericFastJsonRedisSerializer();
+        // value值的序列化采用fastJsonRedisSerializer
+        redisTemplate.setValueSerializer(fastJsonRedisSerializer);
+        redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
+
+        // key的序列化采用StringRedisSerializer
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
+    }
 
     // 编写配置类，可模仿RedisAutoConfiguration配置类，该类在开发中可直接使用
     @Bean

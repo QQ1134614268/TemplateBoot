@@ -5,9 +5,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @ApiModel("api返回对象")
 @Data
-public class ApiResult<T> {
+public class ApiResult<T> implements Serializable {
 
     @ApiModelProperty(value = "请求结果状态码", example = "1")
     private int code;
@@ -47,9 +49,11 @@ public class ApiResult<T> {
         res.message = message;
         return res;
     }
+
     public boolean isSuccess() {
-        return  getCode() == ResCodeEnum.RES_SUCCESS.getCode();
+        return getCode() == ResCodeEnum.RES_SUCCESS.getCode();
     }
+
     public boolean isError() {
         return !isSuccess();
     }
