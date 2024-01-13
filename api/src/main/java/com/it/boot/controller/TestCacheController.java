@@ -82,7 +82,7 @@ public class TestCacheController {
     @Resource
     private CacheService cacheService;
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<Object,Object> redisTemplate;
 
     // 默认缓存到redis
     // @Cacheable 开启缓存，将查询到的结果对象，存到缓存中，一般用在查询方法上
