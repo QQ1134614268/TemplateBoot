@@ -18,28 +18,28 @@ import java.time.Duration;
 @Configuration
 public class RedisCacheConfig {
 
-    // ${cache} 获取配置文件的配置信息   #{}是spring表达式，获取Bean对象的属性
-    // @Value("#{${cache}}")
-    // private Map<String, Long> ttlParams;
-
     /**
-     * redis作为缓存时配置缓存管理器CacheManager，主要配置序列化方式、自定义
-     * <p>
-     * 注意：配置缓存管理器CacheManager有两种方式：
-     * 方式1：通过RedisCacheConfiguration.defaultCacheConfig()获取到默认的RedisCacheConfiguration对象，
-     * 修改RedisCacheConfiguration对象的序列化方式等参数【这里就采用的这种方式】
-     * 方式2：通过继承CachingConfigurerSupport类自定义缓存管理器，覆写各方法，参考：
-     * <a href="https://blog.csdn.net/echizao1839/article/details/102660649">...</a>
-     * <p>
+     * redis作为缓存时配置缓存管理器CacheManager
      * 切记：在缓存配置类中配置以后，yaml配置文件中关于缓存的redis配置就不会生效，如果需要相关配置需要通过@value去读取
+     * <pre>
+     * 配置缓存管理器CacheManager有两种方式：
+     * 方式1：
+     *      通过RedisCacheConfiguration.defaultCacheConfig()获取到默认的RedisCacheConfiguration对象，
+     *      修改RedisCacheConfiguration对象的序列化方式等参数【这里就采用的这种方式】
+     * 方式2：
+     *      通过继承CachingConfigurerSupport类自定义缓存管理器，覆写各方法，参考：
+     * <a href="https://blog.csdn.net/echizao1839/article/details/102660649">...</a>
+     * </pre>
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+        // GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
+        GenericFastJsonRedisSerializer serializer = new GenericFastJsonRedisSerializer();
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 // 设置key采用String的序列化方式
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer.UTF_8))
                 // 设置value序列化方式采用jackson方式序列化
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer2()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
                 // .disableCachingNullValues()                // 当value为null时不进行缓存
                 // .prefixCacheNameWith("demo:")                // 配置缓存空间名称的前缀
                 .entryTtl(Duration.ofSeconds(-1));                // 全局配置缓存过期时间【可以不配置】
@@ -80,16 +80,5 @@ public class RedisCacheConfig {
             Object key = SimpleKeyGenerator.generateKey(params);
             return sb.append(key);
         };
-    }
-
-    /**
-     * 此方法不能用@Ben注解，避免替换Spring容器中的同类型对象
-     */
-    public GenericJackson2JsonRedisSerializer serializer() {
-        return new GenericJackson2JsonRedisSerializer();
-    }
-
-    public GenericFastJsonRedisSerializer serializer2() {
-        return new GenericFastJsonRedisSerializer();
     }
 }
