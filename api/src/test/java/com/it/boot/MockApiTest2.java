@@ -17,10 +17,11 @@ import javax.annotation.Resource;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
-public class UserControllerTest {
+public class MockApiTest2 {
 
     @Resource
     private WebApplicationContext webApplicationContext;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void beforeTest() {
@@ -29,7 +30,7 @@ public class UserControllerTest {
 
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
         mockHttpServletRequest.setSession(mockHttpSession);
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
         // SecurityUtils.setSecurityManager(securityManager);
         // Subject subject = new WebSubject.Builder(mockHttpServletRequest, mockHttpServletResponse).buildWebSubject();

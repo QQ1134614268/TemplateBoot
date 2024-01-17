@@ -31,8 +31,8 @@ import java.util.Enumeration;
 @Slf4j
 @Api(tags = "测试/hello")
 @RestController
-@RequestMapping("/api/TestHelloController")
-public class TestHelloController {
+@RequestMapping("/api/HelloController")
+public class HelloController {
     //	由于spring的RequestParam注解接收的参数是来自于requestHeader中，即请求头，也就是在url中，格式为xxx?username=123&password=456，
     //	而RequestBody注解接收的参数则是来自于requestBody中，即请求体中。
 

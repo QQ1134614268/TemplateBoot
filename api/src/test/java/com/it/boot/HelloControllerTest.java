@@ -1,15 +1,15 @@
 package com.it.boot;
 
-import com.it.boot.controller.TestHelloController;
+import com.it.boot.controller.HelloController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class AutowiredTest {
+public class HelloControllerTest {
     @Autowired
-    private TestHelloController controller; // 注入一个Controller bean
+    private HelloController controller; // 注入一个Controller bean
 
     @Test
     public void test01() { // 使用注入方式 ,调用 Controller 的方法,,,此方法类似单元测试
