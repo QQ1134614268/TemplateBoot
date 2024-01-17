@@ -27,8 +27,8 @@ public class SysEnumEntity extends BaseEntity implements TreeNodeV1<Long> { //  
     @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
     private String groupCode;
 
-    @ApiModelProperty(value = "唯一编码", example = "test_1", required = true)
-    @Column(unique = true, nullable = false, columnDefinition = "varchar(64) COMMENT '唯一编码'")
+    @ApiModelProperty(value = "编码", example = "test_1", required = true)
+    @Column(columnDefinition = "varchar(64) COMMENT '编码'")
     private String uniCode;
 
     @ApiModelProperty(value = "值", example = "test_1")

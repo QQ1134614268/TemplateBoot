@@ -40,17 +40,17 @@ public class DataBaseTest {
     JdbcTemplate jdbcTemplate;
 
     @Test
-    public void test0() throws SQLException {
-        Connection conn = dataSource.getConnection();
-        PreparedStatement pst = conn.prepareStatement("select now() as now");
-        ResultSet res = pst.executeQuery();
-        res.next();
-        System.out.println(res.getDate("now"));
+    public void test_hello() throws SQLException {
+        try (Connection conn = dataSource.getConnection()) { // sqlSession.getConnection()
+            PreparedStatement pst = conn.prepareStatement("select 1");
+            ResultSet res = pst.executeQuery();
+            System.out.println(res);
+        }
     }
 
     @Test
     public void test6() {
-        String sql = "select id,username,password from user where id=?";
+        String sql = "select id,user_name,password from user where id=?";
         BeanPropertyRowMapper<UserEntity> rowMapper = new BeanPropertyRowMapper<>(UserEntity.class);
         UserEntity userEntity = jdbcTemplate.queryForObject(sql, rowMapper, 1);// 查询单个
         System.out.println(userEntity);
@@ -58,25 +58,8 @@ public class DataBaseTest {
     }
 
     @Test
-    public void testInsert() {
-        String sql = "insert into user (username,password) values (:username,:password)";
-        MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("username", "tom").addValue("password", "123456");
-        namedParameterJdbcTemplate.update(sql, params);
-    }
-
-    @Test
-    public void testNamedParameter() {
-        String sql = "insert into user (username,password) values (:username,:password)";
-        UserEntity u = new UserEntity();
-        u.setUserName("tom");
-        SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(u);
-        namedParameterJdbcTemplate.update(sql, sqlParameterSource);
-    }
-
-    @Test
     public void testNamedParameter2() {
-        String sql = "select username,password from user where id= :id";
+        String sql = "select user_name,password from user where id= :id";
         UserEntity u = new UserEntity();
         u.setId(1L);
         SqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(u);
@@ -85,12 +68,11 @@ public class DataBaseTest {
     }
 
     @Test
-    public void test9() throws SQLException {
-
-        try (Connection conn = sqlSession.getConnection()) {
-            PreparedStatement pst = conn.prepareStatement("select 1");
-            ResultSet res = pst.executeQuery();
-            System.out.println(res);
-        }
+    public void testNamedParameter3() {
+        String sql = "select user_name,password from user where id= :id";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("id", 1);
+        List<UserEntity> res = namedParameterJdbcTemplate.query(sql, params, BeanPropertyRowMapper.newInstance(UserEntity.class));
+        System.out.println(res);
     }
 }

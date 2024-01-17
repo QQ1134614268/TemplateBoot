@@ -23,7 +23,7 @@ public class RedisUtils {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     public <T> void setCacheObject(final String key, final T value) {
         redisTemplate.opsForValue().set(key, value);

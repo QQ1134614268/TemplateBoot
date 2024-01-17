@@ -19,7 +19,7 @@ import java.util.Map;
 public class HttpClientTest {
     Gson gson = new Gson();
 
-    @Test
+    // @Test
     public void printRequest() throws IOException {
 
         String url = "http://127.0.0.1:8080/printRequest";

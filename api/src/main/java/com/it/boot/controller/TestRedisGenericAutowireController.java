@@ -13,9 +13,9 @@ import javax.annotation.Resource;
  * @date 2023-05-25 11:22
  */
 @Api(tags = "测试/注入泛型")
-@RequestMapping("/api/TestDateController")
+@RequestMapping("/api/TestRedisGenericAutowireController")
 @RestController
-public class TestGenericAutowireController {
+public class TestRedisGenericAutowireController {
     // 前置条件, 配置4个bean
 
     // 没有泛型:
@@ -32,11 +32,8 @@ public class TestGenericAutowireController {
     // @Resource
     // RedisTemplate redisTemplate1;  // 报错, 当前有四个配置
 
-    // @Resource
-    // RedisTemplate<Object, Object> redisTemplate2; //  有配置 RedisTemplate<Object, Object>, 多个,报错
-
     @Resource
-    RedisTemplate<String, Object> redisTemplate3; // 有配置 RedisTemplate<String, Object> 唯一类型
+    RedisTemplate<String, Object> redisTemplate2; // 有配置 RedisTemplate<String, Object> 唯一类型
 
     // @Resource
     // RedisTemplate<String, UserEntity> redisTemplate4; // 注入报错, 名称不匹配,类型不匹配
@@ -48,6 +45,6 @@ public class TestGenericAutowireController {
         System.out.println(redisTemplate);
         // System.out.println(redisTemplate1);
         // System.out.println(redisTemplate2);
-        System.out.println(redisTemplate3);
+        System.out.println(redisTemplate2);
     }
 }

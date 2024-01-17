@@ -32,12 +32,12 @@ public class InitTestEnvDbTest {
     void test_1_customer() {
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName("admin");
-        userEntity.setPassword("123456");
-        userEntity.setAvatar("");
-        LocalDate localDate = LocalDate.of(2000, 1, 1);
-        userEntity.setBirthDay(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         long count = userService.count(new QueryWrapper<>(userEntity));
         if (count == 0) {
+            userEntity.setPassword("123456");
+            userEntity.setAvatar("");
+            LocalDate localDate = LocalDate.of(2000, 1, 1);
+            userEntity.setBirthDay(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
             userService.saveOrUpdate(userEntity);
         }
     }

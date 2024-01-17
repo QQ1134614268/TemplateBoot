@@ -20,8 +20,8 @@ public class RedisConfig {
      * </pre>
      */
     @Bean
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // 使用Jackson, 序列化json带有 @class 类名

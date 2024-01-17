@@ -46,7 +46,7 @@ public class TestRedisSerClassController {
     public static final String FASTER_JSON_NO_TYPE = "FasterJsonNoType";
 
     @Resource
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 各种序列化方式, 序列化数据
