@@ -1,7 +1,5 @@
 package com.it.ac.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
@@ -15,8 +13,7 @@ import java.util.Date;
 @Data
 public class BaseTableEntity implements Serializable {
     @Id
-    @TableId(type = IdType.AUTO)
-    @Column(comment = "主键id")
+    @Column(isKey = true, isAutoIncrement = true, comment = "主键id")
     private Long id;
 
     /**
@@ -31,7 +28,7 @@ public class BaseTableEntity implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "创建时间")
-    @Column(type= MySqlTypeConstant.DATETIME, comment = "创建时间")
+    @Column(type = MySqlTypeConstant.DATETIME, comment = "创建时间", defaultValue = "CURRENT_TIMESTAMP")
     private Date createTime;
 
     /**
@@ -46,7 +43,7 @@ public class BaseTableEntity implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
-    @Column(type= MySqlTypeConstant.DATETIME, comment = "更新时间")
+    @Column(type = MySqlTypeConstant.DATETIME, comment = "更新时间", defaultValue = "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updateTime;
 
 }

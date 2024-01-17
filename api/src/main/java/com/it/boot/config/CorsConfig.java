@@ -17,6 +17,6 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*"); // 2允许任何头
         corsConfiguration.addAllowedMethod("*"); // 3允许任何方法（post、get等）
         source.registerCorsConfiguration("/**", corsConfiguration); // 4
-        return new CorsFilter(source);
+        return new CorsFilter(source); // 如果项目配置多个filter, 需要注册顺序
     }
 }

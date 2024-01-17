@@ -141,47 +141,37 @@ public class UserBatisController {
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
         // todo
-        LambdaQueryChainWrapper<UserEntity> wrapper = userBatisService.lambdaQuery();
+        LambdaQueryChainWrapper<UserEntity> query = userBatisService.lambdaQuery();
         Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w
-                .or(w2 -> w2.eq(UserEntity::getCreateBy, JwtUtil.getUserId()))
-                .or(w2 -> w2.eq(UserEntity::getDeptId, JwtUtil.getDeptId()));
+                .or(w2 -> w2.eq(UserEntity::getCreateBy, 1).eq(UserEntity::getCreateBy, 2))
+                .or(w2 -> w2.eq(UserEntity::getDeptId, 1).eq(UserEntity::getDeptId, 2));
 
-        Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w.and(
-                BoolUtils.toBool(qo.getSearch()),
-                w2 -> w2.like(UserEntity::getUserName, qo.getSearch()).or().like(UserEntity::getNickName, qo.getSearch())
-        );
-        wrapper.select(UserEntity::getId, UserEntity::getId, UserEntity::getPhone)
-                .eq(BoolUtils.toBool(qo.getPhone()), UserEntity::getPhone, qo.getPhone())
-                .ge(BoolUtils.toBool(qo.getStartTime()), UserEntity::getCreateTime, qo.getStartTime())
-                .le(BoolUtils.toBool(qo.getEndTime()), UserEntity::getCreateTime, qo.getEndTime())
-                //
-                .first("first")
-                .last("limit 1")
-                .comment("this is comment")
-                //
-                .leSql(true, UserEntity::getUserName, "1,2,3")
-                .inSql(true, UserEntity::getUserName, "1,2,3")
-                //
-                .nested(true, w3 -> {
-                })
-                .func(true, w -> {
-                })
-                .apply(true, "apply sql", 1, 2)
-                .exists(true, "existsSql", 1, 2)
-                .having(true, "having sql")
-                //
-                .isNull(UserEntity::getUserName)
-                .allEq(new HashMap<>())
-                //
+        Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w
+                .like(UserEntity::getUserName, qo.getSearch())
+                .or().like(UserEntity::getNickName, qo.getSearch());
+        query.select(UserEntity::getId, UserEntity::getUserName, UserEntity::getPhone)
+                .isNotNull(true, UserEntity::getUserName)
+                .leSql(true, UserEntity::getId, "10") //  id < 10
+                .inSql(true, UserEntity::getId, "1,2") // id in (1, 2)
+                .nested(true, w -> w.eq(UserEntity::getId, "1").or().eq(UserEntity::getId, "2"))
+                .func(true, w -> w.eq(UserEntity::getId, "5"))
+                .apply(true, "1=1", 1)
+                // .exists(true, "exists_Sql3", 1, 2)
+                // .allEq(new HashMap<>())
                 .and(true, whereSearch)
                 .and(true, whereAuth)
-                .orderBy(BoolUtils.toBool(qo.getOrderCreateTime()), false, UserEntity::getCreateTime);
+                .groupBy(true, UserEntity::getId)
+                // .having(true, "having_sql4")
+                .orderBy(true, false, UserEntity::getCreateTime)
+                // .first("# first \n")
+                .last("# last \n")
+                .comment("# this is comment\n");
 
-        wrapper.isEmptyOfWhere();
-        wrapper.nonEmptyOfWhere();
-        wrapper.isEmptyOfNormal();
-        wrapper.nonEmptyOfNormal();
-        wrapper.nonEmptyOfEntity();
+        // wrapper.isEmptyOfWhere();
+        // wrapper.nonEmptyOfWhere();
+        // wrapper.isEmptyOfNormal();
+        // wrapper.nonEmptyOfNormal();
+        // wrapper.nonEmptyOfEntity();
 
         // wrapper.getExpression();
 
@@ -194,7 +184,7 @@ public class UserBatisController {
         // wrapper.getExpression();
         // wrapper.getEntity();
 
-        List<UserEntity> res = wrapper.list();
+        List<UserEntity> res = query.list();
         return ApiResult.success(res);
     }
 
