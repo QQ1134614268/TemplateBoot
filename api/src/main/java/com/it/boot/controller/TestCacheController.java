@@ -7,10 +7,7 @@ import com.it.boot.service.CacheService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -81,8 +78,6 @@ import javax.annotation.Resource;
 public class TestCacheController {
     @Resource
     private CacheService cacheService;
-    @Resource
-    private RedisTemplate<Object,Object> redisTemplate;
 
     // 默认缓存到redis
     // @Cacheable 开启缓存，将查询到的结果对象，存到缓存中，一般用在查询方法上
@@ -96,45 +91,34 @@ public class TestCacheController {
     @ApiOperation("page")
     @GetMapping("/page")
     public ApiResult<Page<CacheEntity>> page(Page<CacheEntity> page) {
-        return ApiResult.success(cacheService.page(page));
+        return ApiResult.success(cacheService.getPage(page));
     }
 
-    @CachePut(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
-    @ApiOperation("add")
-    @PostMapping("/add")
-    public ApiResult<Boolean> add(@RequestBody CacheEntity cache) {
-        boolean b = cacheService.save(cache);
+    @ApiOperation("info")
+    @GetMapping("/info")
+    public ApiResult<CacheEntity> info(CacheEntity cache) {
+        log.info("info");
+        return ApiResult.success(cacheService.info(cache));
+    }
+
+    @ApiOperation("create")
+    @PostMapping("/create")
+    public ApiResult<CacheEntity> create(@Validated @RequestBody CacheEntity cache) {
+        CacheEntity b = cacheService.create(cache);
         return ApiResult.success(b);
     }
 
-    @CachePut(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
     @ApiOperation("edit")
     @PostMapping("/edit")
-    public ApiResult<Boolean> edit(@RequestBody CacheEntity cache) {
-        boolean b = cacheService.updateById(cache);
+    public ApiResult<CacheEntity> edit(@Validated @RequestBody CacheEntity cache) {
+        CacheEntity b = cacheService.edit(cache);
         return ApiResult.success(b);
     }
 
-    @CacheEvict(value = "CACHE", key = "#id", condition = "#result.isSuccess()")
     @ApiOperation("delete")
     @PostMapping("/delete")
     public ApiResult<Boolean> delete(Long id) {
-        boolean b = cacheService.removeById(id);
-        return ApiResult.success(b);
-    }
-
-    @Cacheable(value = "CACHE", key = "#cache.id", condition = "#result.isSuccess()")
-    @ApiOperation("getCacheById")
-    @GetMapping("/getCacheById")
-    public ApiResult<CacheEntity> getCacheById(CacheEntity cache) {
-        log.info("info");
-        return ApiResult.success(cacheService.getCacheById(cache.getId()));
-    }
-
-    @ApiOperation("getCache")
-    @GetMapping("/getCache")
-    public ApiResult<Boolean> getCache(Long id) {
-        ApiResult<Boolean> data = (ApiResult<Boolean>) redisTemplate.opsForValue().get("CACHE::" + id);
-        return data;
+        cacheService.delete(id);
+        return ApiResult.success();
     }
 }

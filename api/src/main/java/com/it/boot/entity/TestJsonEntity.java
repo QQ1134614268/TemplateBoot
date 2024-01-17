@@ -33,7 +33,4 @@ public class TestJsonEntity extends BaseEntity {
     @ApiModelProperty(value = "地址集合")
     private List<AddressDtoJson> addressDtoJsons;
 
-    @TableLogic(value = "0", delval = "1")
-    @ApiModelProperty(value = "删除状态(0:未删除,1:删除)")
-    private Integer delFlag;
 }

@@ -8,7 +8,4 @@ import org.springframework.cache.annotation.Cacheable;
 
 @Mapper
 public interface CacheMapper extends MPJBaseMapper<CacheEntity> {
-    @Cacheable(value = "getCacheById") //,key ="#p0",unless ="#result == null"
-    @Select(value = "select * from cache u where u.id=#{id}")
-    CacheEntity getCacheById(Long id);
 }

@@ -37,11 +37,5 @@ public class BaseEntity implements Serializable {
     @ApiModelProperty(value = "修改者id", example = "1", hidden = true)
     private Long updateBy;
 
-    /**
-     * 删除标记 0-未删除 1-已删除
-     */
-    @ApiModelProperty(value = "逻辑删除标记(0:未删除; 1:已删除)")
-    @TableLogic(value = "0", delval = "1")
-    private Integer delFlag;
 }
 

@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.base.mapper.wrapper.MappingQuery;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
+import com.it.boot.config.enum1.DelTypeEnum;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.dto.UserDto;

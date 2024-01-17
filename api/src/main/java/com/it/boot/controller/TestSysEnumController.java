@@ -1,6 +1,7 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
+import com.it.boot.config.enum1.DelTypeEnum;
 import com.it.boot.entity.SysEnumEntity;
 import com.it.boot.service.SysEnumService;
 import io.swagger.annotations.Api;
@@ -32,7 +33,7 @@ public class TestSysEnumController {
 
     @ApiOperation(value = "新增")
     @PostMapping("/create")
-    public ApiResult<Boolean> create(@RequestBody SysEnumEntity userEntity) {
-        return ApiResult.success(sysEnumService.save(userEntity));
+    public ApiResult<Boolean> create(@RequestBody SysEnumEntity sysEnumEntity) {
+        return ApiResult.success(sysEnumService.save(sysEnumEntity));
     }
 }

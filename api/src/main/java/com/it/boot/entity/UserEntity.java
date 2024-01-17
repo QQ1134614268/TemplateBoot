@@ -61,10 +61,4 @@ public class UserEntity extends BaseEntity {
     @ApiModelProperty(value = "用户地址")
     private List<AddressEntity> addressList = new ArrayList<>();
 
-    /**
-     * 删除标记 0-未删除 1-已删除
-     */
-    @ApiModelProperty(value = "逻辑删除标记(0:未删除; 1:已删除)")
-    @TableLogic(value = "0", delval = "1")
-    private Integer delFlag;
 }
