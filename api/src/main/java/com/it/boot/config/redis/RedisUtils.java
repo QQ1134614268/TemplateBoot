@@ -42,7 +42,7 @@ public class RedisUtils {
             return;
         }
         try {
-            stringRedisTemplate.convertAndSend(channel, message);
+            redisTemplate.convertAndSend(channel, message);
             // redisTemplate.execute( ) connection.publish(rawChannel, rawMessage);
 
             log.info("发送消息成功，channel：{}，message：{}", channel, message);
