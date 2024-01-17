@@ -1,16 +1,11 @@
 package com.it.boot.config.redis;
 
 import com.alibaba.fastjson2.support.spring.data.redis.FastJsonRedisSerializer;
-import com.alibaba.fastjson2.support.spring.data.redis.GenericFastJsonRedisSerializer;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 
 @Configuration
