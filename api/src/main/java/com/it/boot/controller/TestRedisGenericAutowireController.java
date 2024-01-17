@@ -1,9 +1,7 @@
 package com.it.boot.controller;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,35 +14,31 @@ import javax.annotation.Resource;
 @RequestMapping("/api/TestRedisGenericAutowireController")
 @RestController
 public class TestRedisGenericAutowireController {
-    // 前置条件, 配置4个bean
-
-    // 没有泛型:
-    //       RedisTemplate
-    //       RedisTemplate<?,?>
-    // 有泛型, 需要配置
-
-    // 根据名称
     @Resource
-    RedisTemplate redisTemplate; // 无配置 RedisTemplate 与 RedisTemplate<?, ?> 相同 与 RedisTemplate<?, ?>
-    // RedisTemplate<String, UserEntity> redisTemplate 等
-
-    // 根据类型
+    RedisTemplate<String, Object> redisTemplate; // ok
     // @Resource
-    // RedisTemplate redisTemplate1;  // 报错, 当前有四个配置
-
-    @Resource
-    RedisTemplate<String, Object> redisTemplate2; // 有配置 RedisTemplate<String, Object> 唯一类型
+    // RedisTemplate<Object, String> redisTemplate;// ok
 
     // @Resource
-    // RedisTemplate<String, UserEntity> redisTemplate4; // 注入报错, 名称不匹配,类型不匹配
+    // RedisTemplate<String, Object> redisTemplate1; // 报错: 名不匹配, 类型有三个
 
+    // @Resource
+    // RedisTemplate<Object, Object> redisTemplate2; // 报错: 名不匹配, 类型0个
 
-    @ApiOperation("testGenAutowire")
-    @PostMapping("/testGenAutowire")
-    public void testGenAutowire() {
-        System.out.println(redisTemplate);
-        // System.out.println(redisTemplate1);
-        // System.out.println(redisTemplate2);
-        System.out.println(redisTemplate2);
-    }
+    // @Resource
+    // RedisTemplate<Object, Object> redisTemplate2;// 报错: 名不匹配, 类型0个
+
+    // @Resource
+    // RedisTemplate<Object, Object> redisTemplate2;// 报错: 名不匹配, 类型0个; Object相当于指定类型,就是Object.class
+
+    // @Resource
+    // RedisTemplate redisTemplate3;     // 报错, 名不匹配, 类型多个(所有配置的RedisTemplate,忽略泛型); RedisTemplate = RedisTemplate<?, ?>
+    // @Resource
+    // RedisTemplate<?, ?> redisTemplate4;  // 报错, 名不匹配, 类型多个(所有配置的RedisTemplate,忽略泛型); RedisTemplate = RedisTemplate<?, ?>
+
+    // @Bean // 测试 Object类型
+    // public RedisTemplate<Object, Object> redisTemplateObject(RedisConnectionFactory redisConnectionFactory) {
+    //     RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    //     return template;
+    // }
 }

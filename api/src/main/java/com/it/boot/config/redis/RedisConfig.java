@@ -7,21 +7,21 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-
 @Configuration
 public class RedisConfig {
     /**
-     * @param redisConnectionFactory：配置不同的客户端，这里注入的redis连接工厂不同： JedisConnectionFactory、LettuceConnectionFactory配置Redis序列化，原因如下：
      * <pre>
-     *  （1） StringRedisTemplate的序列化方式为字符串序列化，
-     *  RedisTemplate的序列化方式默为jdk序列化（实现Serializable接口）
-     *  （2） RedisTemplate的jdk序列化方式在Redis的客户端中为乱码，不方便查看，
-     *  因此一般修改RedisTemplate的序列化为方式为JSON方式【建议使用GenericJackson2JsonRedisSerializer】
-     * </pre>
+     * redisConnectionFactory：配置不同的客户端，这里注入的redis连接工厂不同： JedisConnectionFactory、LettuceConnectionFactory配置Redis序列化
+     *   （1） StringRedisTemplate的序列化方式为字符串序列化，
+     *   RedisTemplate的序列化方式默为jdk序列化（实现Serializable接口）
+     *   （2） RedisTemplate的jdk序列化方式在Redis的客户端中为乱码，不方便查看，
+     *   因此一般修改RedisTemplate的序列化为方式为JSON方式【建议使用GenericJackson2JsonRedisSerializer】
+     *  </pre>
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory);
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // 使用Jackson, 序列化json带有 @class 类名
@@ -38,7 +38,6 @@ public class RedisConfig {
         template.setHashKeySerializer(stringRedisSerializer);
         template.setHashValueSerializer(serializer);
 
-        template.setConnectionFactory(redisConnectionFactory);
         return template;
     }
 
@@ -56,8 +55,6 @@ public class RedisConfig {
         // Hash的key也采用StringRedisSerializer的序列化方式
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setHashValueSerializer(serializer);
-
-        template.afterPropertiesSet();
         return template;
     }
 
@@ -75,8 +72,6 @@ public class RedisConfig {
         // Hash的key也采用StringRedisSerializer的序列化方式
         template.setHashKeySerializer(new StringRedisSerializer());
         template.setHashValueSerializer(serializer);
-
-        template.afterPropertiesSet();
         return template;
     }
 }
