@@ -24,13 +24,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.base.mapper.wrapper.MappingQuery;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.jwt.JwtUtil;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.qo.UserQo;
 import com.it.boot.service.UserBatisService;
-import com.it.boot.util.BoolUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +36,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -109,34 +106,34 @@ public class UserBatisController {
 
     /**
      * @see Query
-     * @see     QueryWrapper                    拼接sql
-     * @see         QueryChainWrapper               拼接sql chain(??)
-     * @see             MappingQuery
-     * @see     LambdaQueryChainWrapper
+     * @see QueryWrapper                    拼接sql
+     * @see QueryChainWrapper               拼接sql chain(??)
+     * @see MappingQuery
+     * @see LambdaQueryChainWrapper
      * @see ChainWrapper
-     * @see     ChainQuery                      执行query (list page one count)
-     * @see         LambdaQueryWrapper              拼接sql lambdaChain
-     * @see         QueryChainWrapper
-     * @see     ChainUpdate
+     * @see ChainQuery                      执行query (list page one count)
+     * @see LambdaQueryWrapper              拼接sql lambdaChain
+     * @see QueryChainWrapper
+     * @see ChainUpdate
      * @see ISqlSegment
-     * @see     Wrapper
-     * @see         AbstractWrapper
-     * @see             QueryWrapper
-     * @see             AbstractLambdaWrapper
-     * @see                 LambdaQueryWrapper
-     * @see         AbstractChainWrapper
-     * @see             LambdaQueryChainWrapper
-     * @see             QueryChainWrapper
+     * @see Wrapper
+     * @see AbstractWrapper
+     * @see QueryWrapper
+     * @see AbstractLambdaWrapper
+     * @see LambdaQueryWrapper
+     * @see AbstractChainWrapper
+     * @see LambdaQueryChainWrapper
+     * @see QueryChainWrapper
      * @see Mapper
-     * @see     BaseMapper                     执行 insert delete selectById selectList(条件)
+     * @see BaseMapper                     执行 insert delete selectById selectList(条件)
      * @see Join( Nested , Func , Compare )    and or isNull eq nest in
-     * @see     AbstractWrapper
-     * @see     AbstractChainWrapper
-     *
-     *         // QueryChainWrapper select 使用 字符串,可以拼接函数,自定义字段
-     *         // LambdaQueryChainWrapper select 使用SFunction, 自定义字段??
-     *         // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
-     * */
+     * @see AbstractWrapper
+     * @see AbstractChainWrapper
+     * <p>
+     * // QueryChainWrapper select 使用 字符串,可以拼接函数,自定义字段
+     * // LambdaQueryChainWrapper select 使用SFunction, 自定义字段??
+     * // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
+     */
     @ApiOperation(value = "测试 LambdaQueryChainWrapper 复杂查询")
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
