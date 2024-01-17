@@ -139,7 +139,6 @@ public class UserBatisController {
     @ApiOperation(value = "测试 LambdaQueryChainWrapper 复杂查询")
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
-        // todo
         LambdaQueryChainWrapper<UserEntity> query = userBatisService.lambdaQuery();
         Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w.or(w2 -> w2.eq(UserEntity::getCreateBy, 1)
                 .eq(UserEntity::getCreateBy, 2)).or(w2 -> w2.eq(UserEntity::getDeptId, 1).eq(UserEntity::getDeptId, 2));
