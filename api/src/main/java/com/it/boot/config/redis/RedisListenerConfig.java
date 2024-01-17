@@ -1,5 +1,7 @@
 package com.it.boot.config.redis;
 
+import com.alibaba.fastjson2.support.spring.data.redis.FastJsonRedisSerializer;
+import com.alibaba.fastjson2.support.spring.data.redis.GenericFastJsonRedisSerializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,13 +44,12 @@ public class RedisListenerConfig {
          * 特别注意：1. 发布的时候需要设置序列化；订阅方也需要设置序列化
          *         2. 设置序列化对象必须放在[加入消息监听器]这一步后面，否则会导致接收器接收不到消息
          */
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-
-        Jackson2JsonRedisSerializer<String> serializer1 = new Jackson2JsonRedisSerializer<>(String.class);
-        serializer1.setObjectMapper(objectMapper);
-        Jackson2JsonRedisSerializer<String> serializer = serializer1;
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        // objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        // Jackson2JsonRedisSerializer<String> serializer = new Jackson2JsonRedisSerializer<>(String.class);
+        // serializer.setObjectMapper(objectMapper);
+        FastJsonRedisSerializer<String> serializer = new FastJsonRedisSerializer<>(String.class);
         container.setTopicSerializer(serializer);
 
         return container;
