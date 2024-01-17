@@ -105,47 +105,48 @@ public class UserBatisController {
 
 
     /**
+     * <pre>
      * @see Query
-     * @see QueryWrapper                    拼接sql
-     * @see QueryChainWrapper               拼接sql chain(??)
-     * @see MappingQuery
-     * @see LambdaQueryChainWrapper
+     * @see     QueryWrapper                    拼接sql
+     * @see         QueryChainWrapper               拼接sql chain(??)
+     * @see             MappingQuery
+     * @see     LambdaQueryChainWrapper
      * @see ChainWrapper
-     * @see ChainQuery                      执行query (list page one count)
-     * @see LambdaQueryWrapper              拼接sql lambdaChain
-     * @see QueryChainWrapper
-     * @see ChainUpdate
+     * @see     ChainQuery                      执行query (list page one count)
+     * @see         LambdaQueryWrapper              拼接sql lambdaChain
+     * @see         QueryChainWrapper
+     * @see     ChainUpdate
      * @see ISqlSegment
-     * @see Wrapper
-     * @see AbstractWrapper
-     * @see QueryWrapper
-     * @see AbstractLambdaWrapper
-     * @see LambdaQueryWrapper
-     * @see AbstractChainWrapper
-     * @see LambdaQueryChainWrapper
-     * @see QueryChainWrapper
+     * @see     Wrapper
+     * @see         AbstractWrapper
+     * @see             QueryWrapper
+     * @see             AbstractLambdaWrapper
+     * @see                 LambdaQueryWrapper
+     * @see         AbstractChainWrapper
+     * @see             LambdaQueryChainWrapper
+     * @see             QueryChainWrapper
      * @see Mapper
-     * @see BaseMapper                     执行 insert delete selectById selectList(条件)
+     * @see     BaseMapper                     执行 insert delete selectById selectList(条件)
      * @see Join( Nested , Func , Compare )    and or isNull eq nest in
-     * @see AbstractWrapper
-     * @see AbstractChainWrapper
-     * <p>
-     * // QueryChainWrapper select 使用 字符串,可以拼接函数,自定义字段
-     * // LambdaQueryChainWrapper select 使用SFunction, 自定义字段??
-     * // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
+     * @see     AbstractWrapper
+     * @see     AbstractChainWrapper
+     *
+     *         // QueryChainWrapper select 使用 字符串,可以拼接函数,自定义字段
+     *         // LambdaQueryChainWrapper select 使用SFunction, 自定义字段??
+     *         // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
+     * </pre>
      */
     @ApiOperation(value = "测试 LambdaQueryChainWrapper 复杂查询")
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
         // todo
         LambdaQueryChainWrapper<UserEntity> query = userBatisService.lambdaQuery();
-        Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w
-                .or(w2 -> w2.eq(UserEntity::getCreateBy, 1).eq(UserEntity::getCreateBy, 2))
-                .or(w2 -> w2.eq(UserEntity::getDeptId, 1).eq(UserEntity::getDeptId, 2));
+        Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w.or(w2 -> w2.eq(UserEntity::getCreateBy, 1)
+                .eq(UserEntity::getCreateBy, 2)).or(w2 -> w2.eq(UserEntity::getDeptId, 1).eq(UserEntity::getDeptId, 2));
 
-        Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w
-                .like(UserEntity::getUserName, qo.getSearch())
-                .or().like(UserEntity::getNickName, qo.getSearch());
+        Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w.like(UserEntity::getUserName, qo.getSearch())
+                .or()
+                .like(UserEntity::getNickName, qo.getSearch());
         query.select(UserEntity::getId, UserEntity::getUserName, UserEntity::getPhone)
                 .isNotNull(true, UserEntity::getUserName)
                 .leSql(true, UserEntity::getId, "10") //  id < 10
