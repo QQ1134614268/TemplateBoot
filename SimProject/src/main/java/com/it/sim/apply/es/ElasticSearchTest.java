@@ -12,9 +12,7 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
-import org.apache.http.Header;
 import org.apache.http.HttpHost;
-import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.junit.After;
 import org.junit.Before;
@@ -39,7 +37,6 @@ public class ElasticSearchTest {
     public void startup() {
         RestClient restClient = RestClient
                 .builder(new HttpHost("127.0.0.1", 9200, "http"))
-                .setDefaultHeaders(new Header[]{new BasicHeader("X-Elastic-Product", "Elasticsearch")})
                 .build();
         transport = new RestClientTransport(restClient, jacksonJsonpMapper);// 创建传输层
         es = new ElasticsearchClient(transport);
@@ -85,12 +82,15 @@ public class ElasticSearchTest {
         }
         BulkResponse bulkResponse =
                 es.bulk(new BulkRequest.Builder().index(index).operations(list).build());//.type("_doc")加不加都可以
-        System.out.println("批量创建多个文档测试:(例:查看第一个文档创建结果)" + bulkResponse.items().get(0).result());// created
+        System.out.println("批量创建多个文档测试:(例:查看第一个文档创建结果)" + bulkResponse.items()
+                .get(0)
+                .result());// created
     }
 
     @Test
     public void test_4_searchIndex() throws IOException {
-        SearchResponse<Object> searchResponse = es.search(new SearchRequest.Builder().index(index).build(), Object.class);
+        SearchResponse<Object> searchResponse = es.search(new SearchRequest.Builder().index(index)
+                .build(), Object.class);
         List<Object> result = new ArrayList<>();
         for (Hit<Object> hit : searchResponse.hits().hits()) {
             result.add(hit.source());
@@ -107,7 +107,9 @@ public class ElasticSearchTest {
                                 c -> c.bool(
                                         b -> b.filter(
                                                 q -> q.range(
-                                                        v -> v.field("price").gte(JsonData.of("300")).lte(JsonData.of("500"))))))
+                                                        v -> v.field("price")
+                                                                .gte(JsonData.of("300"))
+                                                                .lte(JsonData.of("500"))))))
                         , Object.class);
         List<Hit<Object>> list = searchResponse.hits().hits();
         List<Object> result = new ArrayList<>();
