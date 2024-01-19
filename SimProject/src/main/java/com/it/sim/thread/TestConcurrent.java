@@ -2,7 +2,6 @@ package com.it.sim.thread;
 
 import com.it.sim.config.TimeConf;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.common.collect.CopyOnWriteHashMap;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -146,10 +145,7 @@ public class TestConcurrent {
         HashMap hashMap;
         Hashtable hashtable;
         ConcurrentHashMap concurrentHashMap1;
+        // todo
     }
 
-    @Test
-    public void tesCopyOnWriteList() {
-        CopyOnWriteHashMap copyOnWriteHashMap;
-    }
 }

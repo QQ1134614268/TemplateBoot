@@ -1,7 +1,7 @@
 package com.it.sim.socket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
+import org.junit.Assert;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 public class Utils {
 
     public String readFrom(Socket socket) throws IOException {
-        //read byte
+        // read byte
         InputStream inputStream = socket.getInputStream();
         log.info("开始读取");
         byte[] bytes = new byte[1024];
@@ -26,7 +26,7 @@ public class Utils {
         }
         log.info("读取完毕");
         String data = sb.toString();
-        Assert.isTrue(!data.equals(""),"异常,不能为空！" );
+        Assert.assertNotEquals("", data);
         return data;
     }
 
@@ -38,21 +38,21 @@ public class Utils {
     }
 
     public String lineRead(Socket socket) throws IOException {
-        //readline
-        //3、IO读取
+        // readline
+        // 3、IO读取
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String s = bufferedReader.readLine();
-        Assert.notNull(s, "异常,不能为空！");
+        Assert.assertNotNull("异常,不能为空！", s);
         return s;
     }
 
 
     public void lineWrite(Socket socket, String meg) throws IOException {
-        //readline
-        //2、IO写出
+        // readline
+        // 2、IO写出
         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         bufferedWriter.write(meg);
-        bufferedWriter.newLine();    //插入一个换行符，表示写入内容结束，注意：要求对方使用readLine();
-        bufferedWriter.flush();    //如果使用的字符流，需要手动刷新，否则数据不会写入数据通道
+        bufferedWriter.newLine();    // 插入一个换行符，表示写入内容结束，注意：要求对方使用readLine();
+        bufferedWriter.flush();    // 如果使用的字符流，需要手动刷新，否则数据不会写入数据通道
     }
 }

@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>SimProject</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project for Java</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -87,11 +87,6 @@
             <version>5.3.23</version>
         </dependency>
         <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-            <version>5.7.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
             <version>5.7.0</version>
@@ -105,11 +100,6 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.84.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.17.3</version>
         </dependency>
         <dependency>
             <groupId>co.elastic.clients</groupId>
@@ -134,6 +124,7 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/lib/tools.jar</systemPath>
         </dependency>
+        <!--  测试lambda函数  -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-core</artifactId>
@@ -154,16 +145,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.11</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.2.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
