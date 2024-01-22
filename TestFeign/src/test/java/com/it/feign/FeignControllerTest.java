@@ -15,5 +15,7 @@ public class FeignControllerTest {
     @Test
     public void test() {
         feignController.getRemoteSum();
+        feignController.getRemoteTextPlain();
+        feignController.contentType();
     }
 }
