@@ -2,6 +2,7 @@ package com.it.feign.controller;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.it.feign.config.RemoteApiService;
+import com.it.feign.config.RemoteHttpsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,8 @@ public class FeignController {
     @Resource
     private RemoteApiService remoteApiService;
     @Resource
+    private RemoteHttpsService remoteHttpsService;
+    @Resource
     private HttpServletResponse response;
 
     @GetMapping("/getRemoteSum")
@@ -31,6 +34,13 @@ public class FeignController {
     public JSONObject getRemoteTextPlain() {
         JSONObject ret = remoteApiService.textPlain();
         log.info("计算结果: {}", ret);
+        return ret;
+    }
+
+    @GetMapping("/helloHttps")
+    public String helloHttps() {
+        String ret = remoteHttpsService.helloHttps();
+        log.info("结果: {}", ret);
         return ret;
     }
 

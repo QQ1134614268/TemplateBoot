@@ -18,4 +18,9 @@ public class FeignControllerTest {
         feignController.getRemoteTextPlain();
         feignController.contentType();
     }
+
+    @Test
+    public void helloHttps() {
+        feignController.helloHttps();
+    }
 }
