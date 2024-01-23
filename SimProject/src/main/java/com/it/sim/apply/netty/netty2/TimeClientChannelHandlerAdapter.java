@@ -1,4 +1,4 @@
-package com.it.sim.netty.netty2;
+package com.it.sim.apply.netty.netty2;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

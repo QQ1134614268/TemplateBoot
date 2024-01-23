@@ -1,4 +1,4 @@
-package com.it.sim.netty.netty2;
+package com.it.sim.apply.netty.netty2;
 
 
 public class ConnectConfig {

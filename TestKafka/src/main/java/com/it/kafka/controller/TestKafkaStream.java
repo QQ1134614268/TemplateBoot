@@ -7,15 +7,31 @@ import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * 数据困难点与解决方案:
+ *      3V (海量,多样,实时) -> 3H(高并发,高扩展,高性能)
+ *      大数据
+ * <pre>
+ * KafkaStream: 类似Spark, 流数据进行实时处理(实时流处理), 包括数据清洗清洗,转换,聚合,过滤
+ * 对比Spark:
+ *  优点:
+ *      依赖更少
+ *      延迟更低(毫秒级, spark毫秒到几秒)
+ *  缺点:
+ *      兼容性差,不支持python等
+ * </pre>
+ */
 public class TestKafkaStream {
-
-    public static void main(String[] args) {
+    // todo
+    @Test
+    public void testKafkaStream() {
         Properties properties = new Properties();
         properties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount");
         properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.81.62:9092");

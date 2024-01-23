@@ -16,7 +16,7 @@ import java.util.Properties;
 public class TestKafka {
 
     @Test
-    public static void startConsume() {
+    public void startConsume() {
         int partitionIndex = 0;
         //创建kafka consumer
         Properties kafkaConfiguration = new Properties();
