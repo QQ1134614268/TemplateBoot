@@ -10,7 +10,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 
-public class FeignIgnoreHttpsSSLClient {
+public class FeignIgnoreHttpsConf {
     @Bean
     public Client ignoreHttpsFeignClient() {
         try {
