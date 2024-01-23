@@ -5,9 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", configuration = FeignTextPlainConf.class)
 // configuration fallback fallbackFactory
+@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", configuration = FeignTextPlainConf.class)
 public interface RemoteApiService {
     @GetMapping(value = "${TestFeign.sumService.sumPath}")
     int sum(@RequestParam("num1") int num1, @RequestParam("num2") int num2);
