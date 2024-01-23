@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", configuration = FeignTextPlainConfig.class)
+@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", configuration = FeignTextPlainConf.class)
 // configuration fallback fallbackFactory
 public interface RemoteApiService {
     @GetMapping(value = "${TestFeign.sumService.sumPath}")

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 // @Configuration
-public class FeignTextPlainConfig2 {
+public class FeignTextPlainConf2 {
 
     static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
         @Override
