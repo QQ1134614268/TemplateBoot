@@ -17,18 +17,8 @@ public class ProduceCallback implements MqttCallback {
     }
 
     public void connectionLost(Throwable cause) {
-        // 连接丢失后，一般在这里面进行重连
         log.error("连接断开", cause);
-        while (!client.isConnected()) {
-            try {
-                Thread.sleep(5000);
-                client.connect(options);
-                log.info("mqtt重新成功");
-                break;
-            } catch (InterruptedException | MqttException e) {
-                log.error("mqtt重新连接失败:", e);
-            }
-        }
+        MqttUtil.connect(client, options); // 连接丢失后，一般在这里面进行重连
     }
 
     /**

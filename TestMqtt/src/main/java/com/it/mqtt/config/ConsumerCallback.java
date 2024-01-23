@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.*;
 
 import java.nio.charset.StandardCharsets;
 
+
 /**
  * 主要用来接收和处理订阅主题的消息
  */
@@ -19,18 +20,8 @@ public class ConsumerCallback implements MqttCallback {
     }
 
     public void connectionLost(Throwable cause) {
-        // 连接丢失后，一般在这里面进行重连
         log.error("连接断开", cause);
-        while (!client.isConnected()) {
-            try {
-                Thread.sleep(5000);
-                client.connect(options);
-                log.info("mqtt重新成功");
-                break;
-            } catch (InterruptedException | MqttException e) {
-                log.error("mqtt重新连接失败:", e);
-            }
-        }
+        MqttUtil.connect(client, options); // 连接丢失后，一般在这里面进行重连
     }
 
     /**
@@ -41,10 +32,9 @@ public class ConsumerCallback implements MqttCallback {
     }
 
     /**
-     * 接收所订阅的主题的消息并处理
+     * 接收订阅的主题的消息并处理
      */
     public void messageArrived(String topic, MqttMessage message) {
-        // subscribe后得到的消息会执行到这里面
         String result = new String(message.getPayload(), StandardCharsets.UTF_8);
         log.info("接收消息主题:" + topic + ";接收消息Qos: " + message.getQos() + ";接收消息内容 : " + result);
         // 这里可以针对收到的消息做处理，比如持久化
