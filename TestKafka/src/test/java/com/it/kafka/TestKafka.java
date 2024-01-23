@@ -1,4 +1,4 @@
-package com.it.kafka.controller;
+package com.it.kafka;
 
 import com.it.kafka.config.Topics;
 import lombok.extern.slf4j.Slf4j;
