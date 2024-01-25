@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.it.sim.webservice.jdk.server package. 
+ * generated in the com.it.webservice.jdk.client package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -22,16 +22,15 @@ import javax.xml.namespace.QName;
  * 
  */
 @XmlRegistry
-@SuppressWarnings("HttpUrlsUsage")
 public class ObjectFactory {
 
-    private final static QName _AddResponse_QNAME = new QName("http://server.jdk.webservice.sim.it.com/", "addResponse");
-    private final static QName _Sub_QNAME = new QName("http://server.jdk.webservice.sim.it.com/", "sub");
-    private final static QName _SubResponse_QNAME = new QName("http://server.jdk.webservice.sim.it.com/", "subResponse");
-    private final static QName _Add_QNAME = new QName("http://server.jdk.webservice.sim.it.com/", "add");
+    private final static QName _Sub_QNAME = new QName("http://server.jdk.webservice.it.com/", "sub");
+    private final static QName _SubResponse_QNAME = new QName("http://server.jdk.webservice.it.com/", "subResponse");
+    private final static QName _Add_QNAME = new QName("http://server.jdk.webservice.it.com/", "add");
+    private final static QName _AddResponse_QNAME = new QName("http://server.jdk.webservice.it.com/", "addResponse");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.sim.webservice.jdk.server
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.webservice.jdk.client
      * 
      */
     public ObjectFactory() {
@@ -70,39 +69,39 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://server.jdk.webservice.sim.it.com/", name = "addResponse")
-    public JAXBElement<AddResponse> createAddResponse(AddResponse value) {
-        return new JAXBElement<>(_AddResponse_QNAME, AddResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Sub }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://server.jdk.webservice.sim.it.com/", name = "sub")
+    @XmlElementDecl(namespace = "http://server.jdk.webservice.it.com/", name = "sub")
     public JAXBElement<Sub> createSub(Sub value) {
-        return new JAXBElement<>(_Sub_QNAME, Sub.class, null, value);
+        return new JAXBElement<Sub>(_Sub_QNAME, Sub.class, null, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link SubResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://server.jdk.webservice.sim.it.com/", name = "subResponse")
+    @XmlElementDecl(namespace = "http://server.jdk.webservice.it.com/", name = "subResponse")
     public JAXBElement<SubResponse> createSubResponse(SubResponse value) {
-        return new JAXBElement<>(_SubResponse_QNAME, SubResponse.class, null, value);
+        return new JAXBElement<SubResponse>(_SubResponse_QNAME, SubResponse.class, null, value);
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Add }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://server.jdk.webservice.sim.it.com/", name = "add")
+    @XmlElementDecl(namespace = "http://server.jdk.webservice.it.com/", name = "add")
     public JAXBElement<Add> createAdd(Add value) {
-        return new JAXBElement<>(_Add_QNAME, Add.class, null, value);
+        return new JAXBElement<Add>(_Add_QNAME, Add.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://server.jdk.webservice.it.com/", name = "addResponse")
+    public JAXBElement<AddResponse> createAddResponse(AddResponse value) {
+        return new JAXBElement<AddResponse>(_AddResponse_QNAME, AddResponse.class, null, value);
     }
 
 }

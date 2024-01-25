@@ -11,7 +11,7 @@ public class Publish {
         String address = "http://localhost:49001/service/EvalService";
         Endpoint.publish(address, new EvalService());
         System.out.println("发布成功: " + address + "?wsdl");
-        // wsimport -encoding utf-8 -keep http://localhost:49001/service/EvalService?wsdl
-        // -d /tmp -s .
+        // cd $project_home/src/main/java
+        // wsimport -encoding utf-8 -s . -p com.it.webservice.jdk.client -extension -Xnocompile http://localhost:49001/service/EvalService?wsdl
     }
 }

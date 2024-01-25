@@ -1,8 +1,6 @@
 
 package com.it.webservice.jdk.client;
 
-import com.it.webservice.jdk.server.EvalService;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import javax.xml.namespace.QName;
@@ -19,15 +17,14 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@SuppressWarnings({"SpellCheckingInspection", "HttpUrlsUsage"})
-@WebServiceClient(name = "EvalServiceService", targetNamespace = "http://server.jdk.webservice.sim.it.com/", wsdlLocation = "http://localhost:49001/service/EvalService?wsdl")
+@WebServiceClient(name = "EvalServiceService", targetNamespace = "http://server.jdk.webservice.it.com/", wsdlLocation = "http://localhost:49001/service/EvalService?wsdl")
 public class EvalServiceService
     extends Service
 {
 
     private final static URL EVALSERVICESERVICE_WSDL_LOCATION;
     private final static WebServiceException EVALSERVICESERVICE_EXCEPTION;
-    private final static QName EVALSERVICESERVICE_QNAME = new QName("http://server.jdk.webservice.sim.it.com/", "EvalServiceService");
+    private final static QName EVALSERVICESERVICE_QNAME = new QName("http://server.jdk.webservice.it.com/", "EvalServiceService");
 
     static {
         URL url = null;
@@ -71,8 +68,8 @@ public class EvalServiceService
      *     returns EvalService
      */
     @WebEndpoint(name = "EvalServicePort")
-    public com.it.webservice.jdk.server.EvalService getEvalServicePort() {
-        return super.getPort(new QName("http://server.jdk.webservice.sim.it.com/", "EvalServicePort"), com.it.webservice.jdk.server.EvalService.class);
+    public EvalService getEvalServicePort() {
+        return super.getPort(new QName("http://server.jdk.webservice.it.com/", "EvalServicePort"), EvalService.class);
     }
 
     /**
@@ -83,8 +80,8 @@ public class EvalServiceService
      *     returns EvalService
      */
     @WebEndpoint(name = "EvalServicePort")
-    public com.it.webservice.jdk.server.EvalService getEvalServicePort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://server.jdk.webservice.sim.it.com/", "EvalServicePort"), EvalService.class, features);
+    public EvalService getEvalServicePort(WebServiceFeature... features) {
+        return super.getPort(new QName("http://server.jdk.webservice.it.com/", "EvalServicePort"), EvalService.class, features);
     }
 
     private static URL __getWsdlLocation() {

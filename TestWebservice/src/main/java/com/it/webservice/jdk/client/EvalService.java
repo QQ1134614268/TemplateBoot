@@ -6,7 +6,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
-import javax.xml.ws.Action;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -17,8 +16,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.2
  * 
  */
-@SuppressWarnings("ALL")
-@WebService(name = "EvalService", targetNamespace = "http://server.jdk.webservice.sim.it.com/")
+@WebService(name = "EvalService", targetNamespace = "http://server.jdk.webservice.it.com/")
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -27,15 +25,16 @@ public interface EvalService {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
      * @return
      *     returns int
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "add", targetNamespace = "http://server.jdk.webservice.sim.it.com/", className = "com.it.sim.webservice.jdk.server.Add")
-    @ResponseWrapper(localName = "addResponse", targetNamespace = "http://server.jdk.webservice.sim.it.com/", className = "com.it.sim.webservice.jdk.server.AddResponse")
-    @Action(input = "http://server.jdk.webservice.sim.it.com/EvalService/addRequest", output = "http://server.jdk.webservice.sim.it.com/EvalService/addResponse")
-    public int add(
+    @RequestWrapper(localName = "sub", targetNamespace = "http://server.jdk.webservice.it.com/", className = "com.it.webservice.jdk.client.Sub")
+    @ResponseWrapper(localName = "subResponse", targetNamespace = "http://server.jdk.webservice.it.com/", className = "com.it.webservice.jdk.client.SubResponse")
+    public int sub(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -43,15 +42,16 @@ public interface EvalService {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
      * @return
      *     returns int
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "sub", targetNamespace = "http://server.jdk.webservice.sim.it.com/", className = "com.it.sim.webservice.jdk.server.Sub")
-    @ResponseWrapper(localName = "subResponse", targetNamespace = "http://server.jdk.webservice.sim.it.com/", className = "com.it.sim.webservice.jdk.server.SubResponse")
-    @Action(input = "http://server.jdk.webservice.sim.it.com/EvalService/subRequest", output = "http://server.jdk.webservice.sim.it.com/EvalService/subResponse")
-    public int sub(
+    @RequestWrapper(localName = "add", targetNamespace = "http://server.jdk.webservice.it.com/", className = "com.it.webservice.jdk.client.Add")
+    @ResponseWrapper(localName = "addResponse", targetNamespace = "http://server.jdk.webservice.it.com/", className = "com.it.webservice.jdk.client.AddResponse")
+    public int add(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
         @WebParam(name = "arg1", targetNamespace = "")
