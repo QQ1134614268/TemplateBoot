@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.it.sim.webservice.cxf.client package. 
+ * generated in the com.it.webservice.cxf.client package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -21,15 +21,14 @@ import javax.xml.namespace.QName;
  * provided in this class.
  * 
  */
-@SuppressWarnings({"SpellCheckingInspection","HttpUrlsUsage"})
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _SayX_QNAME = new QName("http://service.cxf.webservice.sim.it.com/", "sayX");
-    private final static QName _SayXResponse_QNAME = new QName("http://service.cxf.webservice.sim.it.com/", "sayXResponse");
+    private final static QName _SayX_QNAME = new QName("http://service.cxf.webservice.it.com/", "sayX");
+    private final static QName _SayXResponse_QNAME = new QName("http://service.cxf.webservice.it.com/", "sayXResponse");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.sim.webservice.cxf.client
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.webservice.cxf.client
      * 
      */
     public ObjectFactory() {
@@ -59,9 +58,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link SayX }{@code >}
      */
-    @XmlElementDecl(namespace = "http://service.cxf.webservice.sim.it.com/", name = "sayX")
+    @XmlElementDecl(namespace = "http://service.cxf.webservice.it.com/", name = "sayX")
     public JAXBElement<SayX> createSayX(SayX value) {
-        return new JAXBElement<>(_SayX_QNAME, SayX.class, null, value);
+        return new JAXBElement<SayX>(_SayX_QNAME, SayX.class, null, value);
     }
 
     /**
@@ -72,9 +71,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link SayXResponse }{@code >}
      */
-    @XmlElementDecl(namespace = "http://service.cxf.webservice.sim.it.com/", name = "sayXResponse")
+    @XmlElementDecl(namespace = "http://service.cxf.webservice.it.com/", name = "sayXResponse")
     public JAXBElement<SayXResponse> createSayXResponse(SayXResponse value) {
-        return new JAXBElement<>(_SayXResponse_QNAME, SayXResponse.class, null, value);
+        return new JAXBElement<SayXResponse>(_SayXResponse_QNAME, SayXResponse.class, null, value);
     }
 
 }
