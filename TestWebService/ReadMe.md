@@ -16,3 +16,10 @@ wsimport:
     -Xnocompile	不编译生成的源码
     -Xdebug	显示DEBUG信息
     -quiet	静默执行该命令，不在屏幕输出信息
+
+# 环境变量
+1. CXF_HOME
+   变量名：CXF_HOME
+   变量值：D:\dev\apache-cxf-3.5.4
+2. Path
+   ;%CXF_HOME%\bin
