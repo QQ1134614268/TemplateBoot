@@ -107,17 +107,6 @@
             <version>8.1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>3.5.2</version>
-        </dependency>
-        <!-- 内置jetty web服务器 -->
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>3.5.2</version>
-        </dependency>
-        <dependency>
             <groupId>tools</groupId>
             <artifactId>tools</artifactId>
             <version>1.0.0</version>
