@@ -51,11 +51,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>3.3.1</version>
-        </dependency>
 <!--        idea 的junit框架与当前不匹配, 引入到此强制使用??-->
 <!--        <dependency>-->
 <!--            <groupId>org.junit.platform</groupId>-->

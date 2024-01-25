@@ -27,7 +27,7 @@ public class KafkaProduceTask {
 
         KafkaUser kafkaUser = new KafkaUser();
         kafkaUser.setId(new Random().nextLong());
-        kafkaUser.setName("name-" + DateUtil.getCurrentDateStr());
+        kafkaUser.setName("name-" + DateUtil.getCurrentDateTimeStr());
         kafkaUser.setAge(1);
         kafkaUser.setBirthTime(new Date());
         kafkaUser.setAddress("address" + new Random().nextInt(100));
@@ -44,7 +44,7 @@ public class KafkaProduceTask {
 
         KafkaUser kafkaUser = new KafkaUser();
         kafkaUser.setId(new Random().nextLong());
-        kafkaUser.setName("name-" + DateUtil.getCurrentDateStr());
+        kafkaUser.setName("name-" + DateUtil.getCurrentDateTimeStr());
         kafkaUser.setBirthTime(new Date());
         kafkaUser.setAge(1);
         kafkaUser.setAddress("address" + new Random().nextInt(100));
