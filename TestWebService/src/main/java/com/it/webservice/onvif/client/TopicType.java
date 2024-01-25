@@ -52,7 +52,7 @@ import javax.xml.namespace.QName;
     "any"
 })
 @XmlSeeAlso({
-    TopicNamespaceType.Topic.class
+    com.it.webservice.onvif.client.TopicNamespaceType.Topic.class
 })
 public class TopicType
     extends ExtensibleDocumented
