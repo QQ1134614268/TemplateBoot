@@ -45,7 +45,7 @@ import javax.xml.namespace.QName;
     "extension"
 })
 @XmlSeeAlso({
-    ConfigDescription.Messages.class
+    com.it.webservice.onvif.client.ConfigDescription.Messages.class
 })
 public class MessageDescription {
 

@@ -23,7 +23,6 @@ import javax.xml.namespace.QName;
  * 
  *                 An NVT shall provide at least one media profile at boot. An NVT should provide “ready to use”
  *                 profiles for the most common media configurations that the device offers.
- *                 
  * <pre>
  * &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;br xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xs="http://www.w3.org/2001/XMLSchema"/&gt;
  * </pre>

@@ -13,7 +13,7 @@ import javax.xml.ws.wsaddressing.W3CEndpointReference;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the com.it.sim.webservice.onvif.client package. 
+ * generated in the com.it.webservice.onvif.client package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -65,7 +65,6 @@ public class ObjectFactory {
     private final static QName _UnableToDestroySubscriptionFault_QNAME = new QName("http://docs.oasis-open.org/wsn/b-2", "UnableToDestroySubscriptionFault");
     private final static QName _PauseFailedFault_QNAME = new QName("http://docs.oasis-open.org/wsn/b-2", "PauseFailedFault");
     private final static QName _ResumeFailedFault_QNAME = new QName("http://docs.oasis-open.org/wsn/b-2", "ResumeFailedFault");
-    private final static QName _Include_QNAME = new QName("http://www.w3.org/2004/08/xop/include", "Include");
     private final static QName _Polygon_QNAME = new QName("http://www.onvif.org/ver10/schema", "Polygon");
     private final static QName _StringList_QNAME = new QName("http://www.onvif.org/ver10/schema", "StringList");
     private final static QName _IntRange_QNAME = new QName("http://www.onvif.org/ver10/schema", "IntRange");
@@ -85,6 +84,7 @@ public class ObjectFactory {
     private final static QName _AudioDecoderConfiguration_QNAME = new QName("http://www.onvif.org/ver10/schema", "AudioDecoderConfiguration");
     private final static QName _Polyline_QNAME = new QName("http://www.onvif.org/ver10/schema", "Polyline");
     private final static QName _PolygonOptions_QNAME = new QName("http://www.onvif.org/ver10/schema", "PolygonOptions");
+    private final static QName _Include_QNAME = new QName("http://www.w3.org/2004/08/xop/include", "Include");
     private final static QName _Envelope_QNAME = new QName("http://www.w3.org/2003/05/soap-envelope", "Envelope");
     private final static QName _Header_QNAME = new QName("http://www.w3.org/2003/05/soap-envelope", "Header");
     private final static QName _Body_QNAME = new QName("http://www.w3.org/2003/05/soap-envelope", "Body");
@@ -95,7 +95,7 @@ public class ObjectFactory {
     private final static QName _SubscribeInitialTerminationTime_QNAME = new QName("http://docs.oasis-open.org/wsn/b-2", "InitialTerminationTime");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.sim.webservice.onvif.client
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.it.webservice.onvif.client
      * 
      */
     public ObjectFactory() {
@@ -614,14 +614,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Include }
-     * 
-     */
-    public Include createInclude() {
-        return new Include();
-    }
-
-    /**
      * Create an instance of {@link Polygon }
      * 
      */
@@ -742,11 +734,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Message }
+     * Create an instance of {@link com.it.webservice.onvif.client.Message }
      * 
      */
-    public Message createMessage() {
-        return new Message();
+    public com.it.webservice.onvif.client.Message createMessage() {
+        return new com.it.webservice.onvif.client.Message();
     }
 
     /**
@@ -1894,11 +1886,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Capabilities }
+     * Create an instance of {@link com.it.webservice.onvif.client.Capabilities }
      * 
      */
-    public Capabilities createCapabilities() {
-        return new Capabilities();
+    public com.it.webservice.onvif.client.Capabilities createCapabilities() {
+        return new com.it.webservice.onvif.client.Capabilities();
     }
 
     /**
@@ -4302,6 +4294,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Include }
+     * 
+     */
+    public Include createInclude() {
+        return new Include();
+    }
+
+    /**
      * Create an instance of {@link Base64Binary }
      * 
      */
@@ -6668,19 +6668,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Include }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link Include }{@code >}
-     */
-    @XmlElementDecl(namespace = "http://www.w3.org/2004/08/xop/include", name = "Include")
-    public JAXBElement<Include> createInclude(Include value) {
-        return new JAXBElement<Include>(_Include_QNAME, Include.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Polygon }{@code >}
      * 
      * @param value
@@ -6925,6 +6912,19 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.onvif.org/ver10/schema", name = "PolygonOptions")
     public JAXBElement<PolygonOptions> createPolygonOptions(PolygonOptions value) {
         return new JAXBElement<PolygonOptions>(_PolygonOptions_QNAME, PolygonOptions.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Include }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link Include }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://www.w3.org/2004/08/xop/include", name = "Include")
+    public JAXBElement<Include> createInclude(Include value) {
+        return new JAXBElement<Include>(_Include_QNAME, Include.class, null, value);
     }
 
     /**
