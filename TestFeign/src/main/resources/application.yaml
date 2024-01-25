@@ -3,10 +3,7 @@ server:
 logging:
   level:
     com:
-      it: error
-    org: error
-    sun: error
-    javax: error
+      it: debug
     com.it.feign.config.RemoteApiService: debug # feign日志第一步
 feign:
   client:

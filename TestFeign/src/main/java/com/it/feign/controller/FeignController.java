@@ -25,6 +25,8 @@ public class FeignController {
 
     @GetMapping("/getRemoteSum")
     public int getRemoteSum() {
+        // feignClient中 可以有自定义方法
+        // response.sendRedirect("baidu.com"); 直接返回302, 后续方法继续执行
         int ret = remoteApiService.sum(1, 2);
         log.info("计算结果: {}", ret);
         return ret;
