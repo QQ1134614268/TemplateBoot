@@ -11,7 +11,7 @@ import javax.jws.WebService;
         targetNamespace = "http://it.com", // 接口同步修改, 限定名
         serviceName = "helloService", // 服务名
         portName = "helloServicePort",// 端口名
-        endpointInterface = "com.it.sim.webservice.jdk2.server.IHelloService"
+        endpointInterface = "com.it.webservice.jdk2.server.IHelloService"
 )
 public class HelloServiceImpl implements IHelloService {
 

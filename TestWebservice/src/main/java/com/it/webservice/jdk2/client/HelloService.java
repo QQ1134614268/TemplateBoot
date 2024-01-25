@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "helloService", targetNamespace = "http://it.com", wsdlLocation = "file:/E:/workspace/JavaSpace/TemplateBoot/SimProject/src/main/java/com/it/sim/webservice/onvif/EvalService.xml")
+@WebServiceClient(name = "helloService", targetNamespace = "http://it.com", wsdlLocation = "http://localhost:49002/service/EvalService?wsdl")
 public class HelloService
     extends Service
 {
@@ -30,7 +30,7 @@ public class HelloService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/E:/workspace/JavaSpace/TemplateBoot/SimProject/src/main/java/com/it/sim/webservice/onvif/EvalService.xml");
+            url = new URL("http://localhost:49002/service/EvalService?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
