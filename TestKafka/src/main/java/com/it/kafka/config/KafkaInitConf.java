@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class KafkaInitialConfiguration {
+public class KafkaInitConf {
     // 创建Topic并设置分区数为2，分区副本数为2
     @Bean
     public NewTopic initialTopic() {
