@@ -7,6 +7,7 @@ import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.UnsatisfiedDependencyException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
@@ -16,6 +17,7 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.kafka.config.StreamsBuilderFactoryBeanConfigurer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +27,8 @@ import java.util.Set;
 @EnableKafkaStreams
 @Configuration
 public class KafkaStreamsConfig {
-
+    @Resource
+   private KafkaProperties properties;
     /**
      * @see KafkaStreamsDefaultConfiguration
      */
@@ -33,7 +36,7 @@ public class KafkaStreamsConfig {
     public KafkaStreamsConfiguration defaultKafkaStreamsConfig() {
         Map<String, Object> props = new HashMap<>();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "applicationId");
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "group_001");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, JsonDeserializer.class.getName());
