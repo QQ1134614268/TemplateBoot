@@ -1,4 +1,4 @@
-[//]: # (todo websocket 与 socketIo)
+[//]: # (todo websocket 实战) 
 原生WebSocket与Spring Boot的集成主要涉及到在Spring Boot项目中引入WebSocket的支持，并通过配置和编码实现WebSocket的连接、消息处理等功能。以下是一些关键步骤和考虑因素：
 
 1. **依赖引入**：首先，在Spring Boot项目的`pom.xml`文件中添加WebSocket的依赖。例如：
