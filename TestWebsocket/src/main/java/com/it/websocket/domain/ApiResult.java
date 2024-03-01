@@ -1,4 +1,4 @@
-package com.it.websocket.controller.websocket2;
+package com.it.websocket.domain;
 
 import lombok.Data;
 

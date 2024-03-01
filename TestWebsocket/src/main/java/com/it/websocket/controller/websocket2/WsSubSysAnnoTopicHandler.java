@@ -1,6 +1,8 @@
 package com.it.websocket.controller.websocket2;
 
 import com.alibaba.fastjson2.JSON;
+import com.it.websocket.domain.ApiResult;
+import com.it.websocket.domain.SubEventVO;
 import com.it.websocket.domain.SysAnno;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,7 +11,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -44,7 +44,7 @@
             },
             methods: {
                 init() {
-                    let url = "ws://127.0.0.1:8080/ws?token=1";
+                    let url = "http://127.0.0.1:8080/ws?token=1";
                     let socket = io.connect(url);
                     socket.emit("ws/test", {"data": "666"});
 
