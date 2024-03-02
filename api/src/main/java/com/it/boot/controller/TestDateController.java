@@ -2,10 +2,9 @@ package com.it.boot.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
-import com.it.boot.entity.qo.TestDateQo;
-import com.it.boot.entity.qo.TimeRangeQo;
-import com.it.boot.repository.TestDateRepository;
 import com.it.boot.entity.TestDateEntity;
+import com.it.boot.entity.qo.TestDateQo;
+import com.it.boot.repository.TestDateRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static com.it.boot.config.Conf.DATE_FORMAT;
@@ -28,21 +29,14 @@ import static com.it.boot.config.Conf.DATE_TIME_FORMAT;
 @Api(tags = "测试/TestDateController")
 @RestController
 @RequestMapping("/api/TestDateController")
-public class TestDateSerController {
+public class TestDateController { // todo read date ser
     // mysql 默认使用系统时区  可以设置时区
     // url中的时区相当于设置时区
     // 时区影响now()函数 从服务器获取时间 时区影响
 
     // url时区 jackson时区, 系统时区, jvm时区? mysql服务器时区 -> mysql时区
-
     // &serverTimezone=Asia/Tokyo Shanghai Bangkok
 
-    // 通过开启数据库日志查询; 记录sql;
-    // show variables like '%log_output%';
-    // show variables like '%general_log%';
-    // SET GLOBAL log_output = 'FILE';
-    // SET GLOBAL general_log = 'ON'; -- //日志开启
-    // SET GLOBAL general_log = 'OFF';
     // 本地时间根据url时区,相应调整时间; 转成字符串插入到数据库;  时区影响格式化, 字符串转时间,不影响;
     // date不受时区影响, time, datetime, timestamp 受时区影响;
     // 同理,数据库时间转成本地时间, 受时区影响
@@ -61,54 +55,6 @@ public class TestDateSerController {
     public ApiResult<TestDateEntity> create(@RequestBody TestDateEntity entity) {
         testDateRepository.save(entity);
         return ApiResult.success(entity);
-    }
-
-    /**
-     * @see com.it.boot.config.serializer.SerializerConfig
-     */
-    @GetMapping("/testDateSer")
-    @ApiOperation("testDateSer")
-    public ApiResult<TestDateEntity> testDateSer(TestDateEntity entity) {
-        // todo 源码 书籍 博客(springboot 自动装配, httpMessageConvert)
-        // url中参数:
-        //      Convert localDateTimeConvert
-        //      Serializer localDateSerializer
-        //      @DateTimeFormat
-        // Body中参数:
-        //      @JsonFormat
-
-        System.out.println(entity);
-        return ApiResult.success(entity);
-    }
-
-    @ApiOperation("testDateSer2")
-    @PostMapping("/testDateSer2")
-    public ApiResult<TestDateQo> testDateSer2(@RequestBody TestDateQo qo1, @RequestParam TimeRangeQo qo2) {
-        // spring.jackson.date-format 序列化时间
-
-        // url中参数(Get请求):
-        //      反序列化: @DateTimeFormat
-        // RequestBody
-        //      序列化,反序列化: @JsonFormat
-        // 返回数据:
-        //      @JsonFormat 序列化
-
-        // LocalDateTime等 同样如此(TimeModule)
-
-        //POST http://localhost:9091/api/TestDateController/testDate?startTime=2022-10-10 10:10:10&endTime=2022-10-10 10:10:10
-        // Content-Type: application/json
-        //
-        // {
-        //   "datetime": "2022-10-10 10:10:10",
-        //   "datetimeYmt": "2022-10-10 10:10:10",
-        //   "datetimeYmtHms": "2022-10-10 10:10:10",
-        //   "jsonFormat": "2022-10-10 10:10:10",
-        //   "jsonFormatYmt": "2022-10-10",
-        //   "jsonFormatYmtHms": "2022-10-10 10:10:10"
-        // }
-        System.out.println(JSON.toJSONString(qo1));
-        System.out.println(JSON.toJSONString(qo2));
-        return ApiResult.success(qo1);
     }
 
     @ApiOperation("initDate")
@@ -146,5 +92,82 @@ public class TestDateSerController {
         System.out.println(vo.orElse(null));
 
         return ApiResult.success(vo.orElse(null));
+    }
+    /**
+     * 配置序列化
+     *
+     * @see com.it.boot.config.serializer.SerializerConfig
+     */
+    @ApiOperation("testDateSerializer")
+    @PostMapping("/testDateSerializer")
+    public ApiResult<List<TestDateQo>> testDateSerializer(@RequestBody TestDateQo qo1, @RequestParam TestDateQo qo2) {
+        // spring.jackson.date-format 序列化时间
+
+        // url中参数:
+        //      Convert localDateTimeConvert
+        //      Serializer localDateSerializer
+        //      @DateTimeFormat
+        // Body中参数:
+        //      @JsonFormat
+
+        // url中参数(Get请求):
+        //      反序列化: @DateTimeFormat
+        // RequestBody
+        //      序列化,反序列化: @JsonFormat
+        // 返回数据:
+        //      @JsonFormat 序列化
+
+        // LocalDateTime等 同样如此(TimeModule)
+
+        System.out.println(JSON.toJSONString(qo1));
+        System.out.println(JSON.toJSONString(qo2));
+        return ApiResult.success(Arrays.asList(qo1, qo2));
+    }
+
+    public static void main(String[] args) {
+        // todo test 各种序列化, 原始的, 配置ObjectMapper的,配置Convert的, url中的,body中的
+        //  测试类
+
+        // jsonFormat dateTimeFormat
+        // YMD YMD_HMS
+        // URL BODY
+        //
+        // date localDate localDateTime
+        //
+        // convert 动态添加bean,删除bean
+        // yaml springboot配置 (先去掉)
+        //
+        // 测试:
+        //     date在body YMD_HMS序列化
+        //     date在url中 YMD_HMS序列化
+        //
+        //     date在body,YMD
+        //     date在url中,YMD
+        //
+        //     date在body,@JSONFORMAT YMD_HMS序列化
+        //     date在body,@dateTimeFormat YMD_HMS序列化
+        //
+        //     date在url中,@dateTimeFormat YMD_HMS序列化
+        //     date在url中,@dateTimeFormat YMD_HMS序列化
+        //
+        //     date在body,添加Convert, YMD_HMS序列化
+        //     date在url中,添加Convert, YMD_HMS序列化
+        //
+        //     localDateTime 重复以上
+        //
+        //     localDateTime 手动直接序列化,反序列化
+
+
+        //POST http://localhost:9091/api/TestDateController/testDate?startTime=2022-10-10 10:10:10&endTime=2022-10-10 10:10:10
+        // Content-Type: application/json
+        //
+        // {
+        //   "datetime": "2022-10-10 10:10:10",
+        //   "datetimeYmt": "2022-10-10 10:10:10",
+        //   "datetimeYmtHms": "2022-10-10 10:10:10",
+        //   "jsonFormat": "2022-10-10 10:10:10",
+        //   "jsonFormatYmt": "2022-10-10",
+        //   "jsonFormatYmtHms": "2022-10-10 10:10:10"
+        // }
     }
 }
