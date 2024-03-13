@@ -10,7 +10,6 @@ import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.ValueMapper;
-import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -18,10 +17,11 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * <pre>
  * 数据困难点与解决方案:
  *      3V (海量,多样,实时) -> 3H(高并发,高扩展,高性能)
  *      大数据
- * <pre>
+ *
  * KafkaStream: 类似Spark, 流数据进行实时处理(实时流处理), 包括数据清洗清洗,转换,聚合,过滤
  * 对比Spark:
  *  优点:
@@ -33,14 +33,13 @@ import java.util.concurrent.CountDownLatch;
  */
 public class TestKafkaStream {
     // todo
-    @Test
     public void testKafkaStream() {
         Properties properties = new Properties();
         properties.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-wordcount");
         properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         properties.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
         properties.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.StringSerde.class.getName());
-        //使得每次运行程序时都能保证从头消费一次消息。
+        // 使得每次运行程序时都能保证从头消费一次消息。
         properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         StreamsBuilder builder = new StreamsBuilder();
