@@ -22,7 +22,7 @@ public class ApiResult<T> {
         // if (data instanceof IPage) {
         //     return success(((IPage<?>) data).getRecords(), ((IPage<?>) data).getTotal());
         // }
-        ApiResult<T> res = new ApiResult<T>();
+        ApiResult<T> res = new ApiResult<>();
         res.code = Success;
         res.data = data;
         return res;
