@@ -10,8 +10,8 @@ public class OrderService {
 	RestTemplate restTemplate;
 
 	public String getUser(int id) {
-// 获取用户信息？？？
-		String url = "http://yidiankt-user/user/{id}";
+		// 获取用户信息？？？
+		String url = "http://cloud-user/user/{id}";
 		String info = restTemplate.getForObject(url, String.class, id);
 		return info;
 	}

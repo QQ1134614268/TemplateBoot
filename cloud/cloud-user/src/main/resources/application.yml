@@ -4,7 +4,7 @@ server:
 ###服务名称(服务注册到eureka名称)
 spring:
   application:
-     name: yidiankt-user
+     name: cloud-user
 ###服务注册到eureka地址
 eureka:
   # instance:

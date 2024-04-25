@@ -9,7 +9,7 @@ public class UserController {
 	@RequestMapping("/user/{id}")
 	public String getUser(@PathVariable("id") int id) {
 		if (id == 1) {
-			return "yidiankt";
+			return "cloud";
 		} else if (id == 2) {
 			return "程老师";
 		} else {
