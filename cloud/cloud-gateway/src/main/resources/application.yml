@@ -1,0 +1,13 @@
+server:
+  port: 19090
+spring:
+  application:
+     name: cloud-gateway
+eureka:
+  # instance:
+    # prefer-ip-address: true
+    # instance-id: 192.168.3.2:${server.port}
+    # hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8888/eureka
