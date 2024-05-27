@@ -30,5 +30,6 @@ public class UserBatisService extends ServiceImpl<UserBatisMapper, UserEntity> {
 
     public UserEntity getUserById(Integer id) {
         return this.getBaseMapper().getUserById(id);
+        // return this.getBaseMapper().getUserById2(id);
     }
 }

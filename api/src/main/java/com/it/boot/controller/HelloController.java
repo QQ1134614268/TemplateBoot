@@ -1,5 +1,6 @@
 package com.it.boot.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enum1.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
@@ -44,15 +45,22 @@ public class HelloController {
     @Value("${templateBoot.testPort}")
     public Integer port;
 
-    @GetMapping("/hello")
     @ApiOperation("/hello")
+    @GetMapping("/hello")
     public String hello() {
         return "hello world!";
     }
 
 
-    @GetMapping("/configPort")
+    @ApiOperation(value = "test")
+    @GetMapping(value = "/test")
+    public String test(Inner inner0, String all, @RequestParam("all") String all2) {
+        log.info(JSON.toJSONString(inner0));
+        return JSON.toJSONString(inner0);
+    }
+
     @ApiOperation(value = "configPort")
+    @GetMapping("/configPort")
     public ApiResult<Integer> configPort() {
         return ApiResult.success(port);
     }
@@ -73,8 +81,8 @@ public class HelloController {
     }
 
     // GET http://localhost:9091/api/HelloController/enumTest?resCodeEnum=RES_SUCCESS
-    @GetMapping("/enumTest")
     @ApiOperation(value = "enumTest")
+    @GetMapping("/enumTest")
     public String enumTest(ResCodeEnum resCodeEnum) {
         System.err.println(resCodeEnum.getCode());
         return resCodeEnum.getLabel();
@@ -82,8 +90,8 @@ public class HelloController {
 
     // GET http://localhost:9091/api/HelloController/date?date=Oct 20 20:27:37 CST 2018
     // GET http://localhost:9091/api/HelloController/date?date=2000-01-01 00:00:00
-    @GetMapping("/date")
     @ApiOperation(value = "date")
+    @GetMapping("/date")
     public ApiResult<String> date(Date date) {
         System.err.println("接收到 Date 参数: " + date);
         return ApiResult.success();

@@ -49,10 +49,11 @@ public class UserEntity extends BaseEntity {
     @Column(columnDefinition = "int(11) COMMENT '部门id'")
     @ApiModelProperty(value = "部门id", example = "1")
     private Long deptId;
-    @Transient
-    @TableField(exist = false)
+    @Transient // jpa 忽略字段
+    @TableField(exist = false) // mybatis 忽略字段
     @ApiModelProperty(value = "部门名称")
     private String deptName;
+    @TableField(exist = false)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "deptId", referencedColumnName = "id", insertable = false, updatable = false)
     private DeptEntity deptEntity; // jpa 连表使用
