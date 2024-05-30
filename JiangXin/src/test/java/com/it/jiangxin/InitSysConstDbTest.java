@@ -6,5 +6,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
-public class InitDataTest {
+public class InitSysConstDbTest {
 }

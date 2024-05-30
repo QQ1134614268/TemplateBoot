@@ -33,8 +33,8 @@ public class InitTestEnvDbTest {
     @Test
     void test_1_customer() {
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserName("admin");
-        userEntity.setPassword("123456");
+        userEntity.setUserName("test");
+        userEntity.setPassword("test");
         userEntity.setAvatar("");
         LocalDate localDate = LocalDate.of(2000, 1, 1);
         userEntity.setBirthDay(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -55,54 +55,6 @@ public class InitTestEnvDbTest {
             EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
             if (one == null) {
                 enumService.saveOrUpdate(enumEntity);
-            }
-        }
-    }
-
-    @Test
-    void test_3_group_code() {
-        List<String> list = Collections.singletonList("imgType");
-        for (String v : list) {
-            EnumEntity enumEntity = new EnumEntity();
-            enumEntity.setGroupCode("GroupCodeEnum");
-            enumEntity.setValue(v);
-            EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
-            if (one == null) {
-                enumService.saveOrUpdate(enumEntity);
-            }
-        }
-
-        GroupCodeEnum[] va = GroupCodeEnum.values();
-        for (GroupCodeEnum groupCodeEnum : va) {
-            EnumEntity enumEntity = new EnumEntity();
-            enumEntity.setGroupCode("GroupCodeEnum");
-            enumEntity.setValue(groupCodeEnum.getUniCode());
-            enumEntity.setValue(groupCodeEnum.getValue());
-            EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
-            if (one == null) {
-                enumService.saveOrUpdate(enumEntity);
-            }
-        }
-    }
-
-    @Test
-    void test_3_group2_code() {
-        // 反射 获取方法
-        Class<?>[] tables = {SexEnum.class, ResultEnum.class};
-        for (Class<?> clz : tables) {
-            Object[] arr = clz.getEnumConstants();
-
-            for (Object obj : arr) {
-                IEnumDb enum1 = (IEnumDb) obj;
-                EnumEntity enumEntity = new EnumEntity();
-                enumEntity.setGroupCode("GroupCodeEnum");
-                enumEntity.setValue(enum1.getUniCode());
-                enumEntity.setValue(enum1.getValue());
-                enumEntity.setValue(enum1.getLabel());
-                EnumEntity one = enumService.getOne(new QueryWrapper<>(enumEntity));
-                if (one == null) {
-                    enumService.saveOrUpdate(enumEntity);
-                }
             }
         }
     }

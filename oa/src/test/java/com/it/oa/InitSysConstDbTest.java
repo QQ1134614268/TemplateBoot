@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
-public class InitDataTest {
+public class InitSysConstDbTest {
     @Resource
     private UserController userController;
     @Resource
