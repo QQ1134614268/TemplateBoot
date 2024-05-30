@@ -21,7 +21,7 @@ import java.util.List;
 @TableName(value = "img")
 @Entity(name = "img")
 @Table(appliesTo = "img", comment = "图片")
-public class ImgEntity extends BaseEntity implements TreeNode {
+public class ImgEntity extends BaseEntity implements TreeNode { // todo 优化数据结构 首页标识,label标签, name desc字段
 
     @ApiModelProperty(value = "首页名", example = "test_1", required = true)
     @Column(unique = false, nullable = true, columnDefinition = "varchar(64) COMMENT '首页名'")
@@ -36,7 +36,7 @@ public class ImgEntity extends BaseEntity implements TreeNode {
     private String description;
 
     @ApiModelProperty(value = "父级id", example = "0", required = true)
-    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '父级id'")//DEFAULT 0
+    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '父级id'")// DEFAULT 0
     private Integer parentId;
 
     @ApiModelProperty(value = "分类id", example = "1", required = true)

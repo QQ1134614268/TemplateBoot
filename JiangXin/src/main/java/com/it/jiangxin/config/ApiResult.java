@@ -57,4 +57,11 @@ public class ApiResult<T> {
         return res;
     }
 
+    public boolean isSuccess() {
+        return this.code == Success;
+    }
+
+    public boolean isError() {
+        return !isSuccess();
+    }
 }

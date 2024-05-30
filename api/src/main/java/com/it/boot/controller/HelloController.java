@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enum1.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
+import com.it.boot.entity.dto.Inner;
 import com.it.boot.entity.qo.TimeRangeQo;
 import com.it.boot.entity.vo.StudentVO;
 import io.swagger.annotations.Api;

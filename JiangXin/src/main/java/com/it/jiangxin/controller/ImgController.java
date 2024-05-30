@@ -37,11 +37,11 @@ public class ImgController {
     @ApiOperation(value = "admin/图片管理/新增")
     @PostMapping("/create")
     @Transactional
-    public ApiResult<String> create(@RequestBody ImgEntity imgEntity) {
+    public ApiResult<Integer> create(@RequestBody ImgEntity imgEntity) {
         imgService.saveOrUpdate(imgEntity);
         imgEntity.getChildren().forEach(vo -> vo.setParentId(imgEntity.getId()));
         imgService.saveOrUpdateBatch(imgEntity.getChildren());
-        return ApiResult.success();
+        return ApiResult.success(imgEntity.getId());
     }
 
     @ApiOperation(value = "admin/图片管理/修改")

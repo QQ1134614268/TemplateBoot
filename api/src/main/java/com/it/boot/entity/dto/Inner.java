@@ -1,4 +1,4 @@
-package com.it.boot.controller;
+package com.it.boot.entity.dto;
 
 import lombok.Data;
 

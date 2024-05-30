@@ -19,10 +19,10 @@ import java.util.List;
 // 从Spring Boot JAR加载文件
 // 如果要在Spring Boot JAR中从类路径加载文件，则必须使用该resource.getInputStream()方法将其作为InputStream进行检索。
 // 如果您尝试使用，resource.getFile()您将收到错误，因为Spring尝试访问文件系统路径，但它无法访问JAR中的路径。
-@Api(tags = "测试/GetFileController")
+@Api(tags = "测试/TestFileController")
 @RestController
-@RequestMapping("/api/TestGetFileController")
-public class TestGetFileController {
+@RequestMapping("/api/TestFileController")
+public class TestFileController {
     public static final String FILE = "test/test.txt";
     //	何为classpath
     //	在Maven项目中，所有的resources文件都将被复制到classes目录下。classpath在tomcat项目中就是/classes，/lib和tomcat下的其他路径。
