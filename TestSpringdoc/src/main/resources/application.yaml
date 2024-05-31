@@ -1,0 +1,23 @@
+server:
+  port: 29091
+spring:
+  application:
+    name:
+      TestSpringdoc
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    groups:
+      default:
+        paths-to-match: /api/**
+  swagger-ui:
+    path: /index.html
+    title: My API Documentation
+    description: API documentation for My Service
+    tags-sorter: alpha

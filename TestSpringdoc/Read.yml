@@ -1,0 +1,15 @@
+#todo swagger  OA jiangxin api springdoc
+地址:
+    http://localhost:29091/doc.html
+    http://localhost:29091/swagger-ui/index.html
+swagger2: io.springfox:springfox-swagger2 # 2020年暂停更新
+swagger3: 更名为 openApi3  # 即为 org.springdoc/springdoc-openapi-ui
+knife4j-openapi3-spring-boot-starter:
+    knife4j-openapi3-ui
+    springdoc-openapi-ui
+knife4j-spring-boot-starter_2021:
+    knife4j-spring-ui_2021
+io.springfox/springfox-boot-starter:
+    springfox-swagger2
+swagger-bootstrap-ui: # 后更名 knife4j 集成springmvc, 2019年暂停更新
+    springfox-swagger2
