@@ -8,9 +8,7 @@ import com.it.boot.entity.SysEnumEntity;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.service.SysEnumService;
 import com.it.boot.service.UserService;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
-import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -20,7 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SpringBootTest
 public class InitTestEnvDbTest {
     @Resource

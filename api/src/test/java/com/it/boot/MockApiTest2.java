@@ -1,9 +1,7 @@
 package com.it.boot;
 
 
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runners.MethodSorters;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -15,7 +13,6 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.annotation.Resource;
 
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
 public class MockApiTest2 {
 
