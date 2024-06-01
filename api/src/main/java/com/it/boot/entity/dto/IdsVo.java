@@ -1,7 +1,7 @@
 package com.it.boot.entity.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * @date 2022-10-22 18:41
  */
-@ApiModel
+@Schema
 @Data
 public class IdsVo {
-    @ApiModelProperty(value = "对象id集合", example = "[1,2]")
+    @Schema(name = "对象id集合", example = "[1,2]")
     private List<Long> ids;
 }

@@ -1,6 +1,6 @@
 package com.it.boot.controller;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 /**
  * @date 2023-05-25 11:22
  */
-@Api(tags = "测试/注入泛型")
+@Tag(name = "测试/注入泛型")
 @RequestMapping("/api/TestRedisGenericAutowireController")
 @RestController
 public class TestRedisGenericAutowireController {

@@ -3,14 +3,14 @@ package com.it.boot.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-@ApiModel(value = "用户")
+@Schema(name = "用户")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "address")
@@ -25,7 +25,7 @@ public class AddressEntity extends BaseEntity {
 
     @Transient
     @TableField(exist = false)
-    @ApiModelProperty(value = "用户名")
+    @Schema(name = "用户名")
     private String userName;
 
     @Transient

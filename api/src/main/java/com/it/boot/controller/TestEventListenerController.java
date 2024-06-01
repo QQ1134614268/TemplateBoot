@@ -2,8 +2,8 @@ package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
 import com.it.boot.entity.UserEntity;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  *      使用callback
  *      使用轮询结果
  */
-@Api(tags = "测试/事件响应")
+@Tag(name = "测试/事件响应")
 @Slf4j
 @RestController
 @RequestMapping("/api/UserJpaController")
@@ -32,7 +32,7 @@ public class TestEventListenerController {
     @Resource
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @ApiOperation(value = "发布事件")
+    @Operation(summary = "发布事件")
     @PostMapping("/pushEvent")
     public ApiResult<Long> pushEvent(@RequestBody UserEntity userEntity) {
         UserOfflineEvent event = new UserOfflineEvent(userEntity);

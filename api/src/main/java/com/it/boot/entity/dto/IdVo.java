@@ -1,15 +1,14 @@
 package com.it.boot.entity.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
  * @date 2022-10-22 18:41
  */
-@ApiModel
+@Schema
 @Data
 public class IdVo {
-    @ApiModelProperty(value = "对象id", example = "1")
+    @Schema(name = "对象id", example = "1")
     private Integer id;
 }

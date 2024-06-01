@@ -2,7 +2,7 @@ package com.it.boot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.UniqueConstraint;
 
 
-@ApiModel(value = "用户部门关系")
+@Schema(name = "用户部门关系")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "user_dept_relation")

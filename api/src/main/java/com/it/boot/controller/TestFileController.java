@@ -1,7 +1,7 @@
 package com.it.boot.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
@@ -19,7 +19,7 @@ import java.util.List;
 // 从Spring Boot JAR加载文件
 // 如果要在Spring Boot JAR中从类路径加载文件，则必须使用该resource.getInputStream()方法将其作为InputStream进行检索。
 // 如果您尝试使用，resource.getFile()您将收到错误，因为Spring尝试访问文件系统路径，但它无法访问JAR中的路径。
-@Api(tags = "测试/TestFileController")
+@Tag(name = "测试/TestFileController")
 @RestController
 @RequestMapping("/api/TestFileController")
 public class TestFileController {
@@ -28,7 +28,7 @@ public class TestFileController {
     //	在Maven项目中，所有的resources文件都将被复制到classes目录下。classpath在tomcat项目中就是/classes，/lib和tomcat下的其他路径。
     //	对于开发者来说，一般就是classes所在目录就是classpath路径的起点和base path.
 
-    @ApiOperation(value = "getFileClasspath")
+    @Operation(summary = "getFileClasspath")
     @GetMapping("/getFileClasspath")
     public List<String> getFileClasspath() throws IOException {
         File file = ResourceUtils.getFile("classpath:" + FILE);
@@ -38,7 +38,7 @@ public class TestFileController {
         }
     }
 
-    @ApiOperation(value = "getFileClassPathResource")
+    @Operation(summary = "getFileClassPathResource")
     @GetMapping("/getFileClassPathResource")
     public List<String> getFileClassPathResource() throws IOException {
         Resource resource = new ClassPathResource("a.txt");
@@ -48,7 +48,7 @@ public class TestFileController {
         }
     }
 
-    @ApiOperation(value = "getFileAsStream")
+    @Operation(summary = "getFileAsStream")
     @GetMapping("/getFileAsStream")
     public List<String> getFileAsStream() throws IOException {
         InputStream inputStream = this.getClass()

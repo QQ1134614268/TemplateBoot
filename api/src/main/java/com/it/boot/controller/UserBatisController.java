@@ -21,17 +21,15 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.ChainUpdate;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.yulichang.base.mapper.wrapper.MappingQuery;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.enum1.DelTypeEnum;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.dto.UserDto;
 import com.it.boot.entity.qo.UserQo;
 import com.it.boot.service.UserBatisService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +39,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-@Api(tags = "测试/用户MyBatisPlus")
+@Tag(name = "测试/用户MyBatisPlus")
 @RestController
 @RequestMapping("/api/UserBatisController")
 @Slf4j
@@ -49,43 +47,43 @@ public class UserBatisController {
     @Resource
     private UserBatisService userBatisService;
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Boolean> create(@RequestBody UserEntity userEntity) {
         return ApiResult.success(userBatisService.save(userEntity));
     }
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
         return ApiResult.success(userBatisService.page(page, new QueryWrapper<>(userEntity)));
     }
 
-    @ApiOperation(value = "根据id修改")
+    @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Boolean> updateById(@RequestBody UserEntity userEntity) {
         return ApiResult.success(userBatisService.updateById(userEntity));
     }
 
-    @ApiOperation(value = "根据id删除")
+    @Operation(summary = "根据id删除")
     @PostMapping("/deleteById")
     public ApiResult<Boolean> deleteById(@RequestBody Serializable id) {
         return ApiResult.success(userBatisService.removeById(id));
     }
 
-    @ApiOperation(value = "根据id批量删除")
+    @Operation(summary = "根据id批量删除")
     @PostMapping("/deleteByIds")
     public ApiResult<Boolean> deleteByIds(@RequestBody List<Integer> ids) {
         return ApiResult.success(userBatisService.removeByIds(ids));
     }
 
-    @ApiOperation(value = "连表")
+    @Operation(summary = "连表")
     @GetMapping("/join")
     public ApiResult<IPage<UserEntity>> join(Page<UserEntity> page, List<Integer> ids) {
         return userBatisService.join(page, ids);
     }
 
-    @ApiOperation(value = "mybatis查询返回dto")
+    @Operation(summary = "mybatis查询返回dto")
     @GetMapping("/mpjDtoProjection")
     public ApiResult<List<UserDto>> mpjDtoProjection(IdVo idVo) {
         MPJLambdaWrapper<UserEntity> wrapper = new MPJLambdaWrapper<>();
@@ -98,7 +96,7 @@ public class UserBatisController {
         return ApiResult.success(res);
     }
 
-    @ApiOperation(value = "测试mybatis 注解查询")
+    @Operation(summary = "测试mybatis 注解查询")
     @GetMapping("/testSelect")
     public ApiResult<UserEntity> testSelect(Integer id) {
         return ApiResult.success(userBatisService.getUserById(id));
@@ -110,7 +108,6 @@ public class UserBatisController {
      * @see Query
      * @see     QueryWrapper                    拼接sql
      * @see         QueryChainWrapper               拼接sql chain(??)
-     * @see             MappingQuery
      * @see     LambdaQueryChainWrapper
      * @see ChainWrapper
      * @see     ChainQuery                      执行query (list page one count)
@@ -137,7 +134,7 @@ public class UserBatisController {
      *         // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
      * </pre>
      */
-    @ApiOperation(value = "测试 LambdaQueryChainWrapper 复杂查询")
+    @Operation(summary = "测试 LambdaQueryChainWrapper 复杂查询")
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
         LambdaQueryChainWrapper<UserEntity> query = userBatisService.lambdaQuery();
@@ -186,7 +183,7 @@ public class UserBatisController {
         return ApiResult.success(res);
     }
 
-    @ApiOperation(value = "测试 QueryChainWrapper 复杂查询")
+    @Operation(summary = "测试 QueryChainWrapper 复杂查询")
     @GetMapping("/testMybatis2")
     public void testQueryChainWrapper() {
         QueryChainWrapper<UserEntity> wrapper = new QueryChainWrapper<>(userBatisService.getBaseMapper());
@@ -196,7 +193,7 @@ public class UserBatisController {
 
     }
 
-    @ApiOperation(value = "测试 LambdaQueryWrapper 复杂查询")
+    @Operation(summary = "测试 LambdaQueryWrapper 复杂查询")
     @GetMapping("/testLambdaQueryWrapper")
     public void testLambdaQueryWrapper() {
         LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
@@ -205,7 +202,7 @@ public class UserBatisController {
         log.info(wrapper.getSqlFirst());
     }
 
-    @ApiOperation(value = "测试 QueryWrapper 复杂查询")
+    @Operation(summary = "测试 QueryWrapper 复杂查询")
     @GetMapping("/testQueryWrapper")
     public void testQueryWrapper() {
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();

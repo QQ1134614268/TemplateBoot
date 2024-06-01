@@ -2,8 +2,8 @@ package com.it.boot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@ApiModel(value = "权限")
+@Schema(name = "权限")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "permission")
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 )
 public class PermissionEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '权限名称'")
-    @ApiModelProperty(value = "权限名称")
+    @Schema(name = "权限名称")
     private String name;
 }
 

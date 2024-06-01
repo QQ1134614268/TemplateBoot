@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.7.RELEASE</version>
+        <version>2.7.18</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -21,6 +21,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <revision>1.4.12</revision>
     </properties>
 
     <dependencies>
@@ -51,7 +52,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <!--            <scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,37 +63,32 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>1.9.6</version>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <version>4.5.0</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.30</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yulichang</groupId>
-            <artifactId>mybatis-plus-join</artifactId>
-            <version>1.2.2</version>
+            <version>3.5.6</version>
         </dependency>
         <!--代码生成器包-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.3</version>
+            <version>3.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yulichang</groupId>
+<!--            <artifactId>mybatis-plus-join-boot-starter</artifactId>-->
+<!--            <version>1.4.12</version>-->
+            <artifactId>mybatis-plus-join</artifactId>
+            <version>1.4.12</version>
         </dependency>
         <!--Velocity引擎模板-->
         <dependency>
@@ -126,7 +121,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.9.8</version>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
@@ -157,44 +151,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <!--    https://blog.csdn.net/fly_or/article/details/126846938-->
-    <!--    <profiles>-->
-    <!--        <profile>-->
-    <!--            &lt;!&ndash; 开发环境 &ndash;&gt;-->
-    <!--            <id>dev</id>-->
-    <!--            <properties>-->
-    <!--                <environment>dev</environment>&lt;!&ndash; 读取配置文件时,加上对应值`DEV`(大小写皆可)&ndash;&gt;-->
-    <!--            </properties>-->
-    <!--        </profile>-->
-    <!--        <profile>-->
-    <!--            <id>test</id>-->
-    <!--            <properties>-->
-    <!--                <environment>test</environment>-->
-    <!--            </properties>-->
-    <!--        </profile>-->
-    <!--        <profile>-->
-    <!--            <id>prod</id>-->
-    <!--            <properties>-->
-    <!--                <environment>prod</environment>-->
-    <!--            </properties>-->
-    <!--        </profile>-->
-    <!--    </profiles>-->
-    <!--    <resources>-->
-    <!--        <resource>-->
-    <!--            <directory>src/main/resources/${environment}</directory>-->
-    <!--            <filtering>true</filtering>-->
-    <!--            &lt;!&ndash;				<targetPath>config</targetPath>&lt;!&ndash; 配置文件放在哪里 &ndash;&gt;&ndash;&gt;-->
-    <!--        </resource>-->
-    <!--        <resource>-->
-    <!--            <directory>src/main/java</directory>-->
-    <!--            <includes>-->
-    <!--                <include>**/*.xml</include>-->
-    <!--                <include>**/*.json</include>-->
-    <!--                <include>**/*.ftl</include>-->
-    <!--            </includes>-->
-    <!--        </resource>-->
-    <!--    </resources>-->
-    <!--    <finalName>XX-${jarName}</finalName>-->
     <build>
         <plugins>
             <plugin>
@@ -209,28 +165,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-dependency-plugin</artifactId>-->
-            <!--                <version>2.10</version>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>copy-dependencies</id>-->
-            <!--                        <phase>prepare-package</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>copy-dependencies</goal>-->
-            <!--                        </goals>-->
-            <!--                        <configuration>-->
-            <!--                            <outputDirectory>${project.basedir}/maven-jars</outputDirectory>-->
-            <!--                            <overWriteReleases>false</overWriteReleases>-->
-            <!--                            <overWriteSnapshots>false</overWriteSnapshots>-->
-            <!--                            <overWriteIfNewer>true</overWriteIfNewer>-->
-            <!--                            <includeScope>compile</includeScope>-->
-            <!--                            <excludeScope>provided</excludeScope>-->
-            <!--                        </configuration>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -8,8 +8,8 @@ import ${packageName}.controller.para.DelPara;
 import ${packageName}.controller.para.DelParaList;
 import ${packageName}.entity.${tableUpperCamel}Entity;
 import ${packageName}.service.${tableUpperCamel}Service;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 
-@Api(tags = "${tableComment}")
+@Tag(name = "${tableComment}")
 @RestController
 @RequestMapping("/api/${tableLowerCamel}")
 @Slf4j
@@ -25,31 +25,31 @@ public class ${tableUpperCamel}Controller {
     @Resource
     private ${tableUpperCamel}Service ${tableLowerCamel}Service;
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Boolean> create(@RequestBody ${tableUpperCamel}Entity ${tableLowerCamel}Entity) {
         return ApiResult.success(${tableLowerCamel}Service.save(${tableLowerCamel}Entity));
     }
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<${tableUpperCamel}Entity>> getPage(Page<${tableUpperCamel}Entity> page, ${tableUpperCamel}Entity ${tableLowerCamel}Entity) {
         return ApiResult.success(${tableLowerCamel}Service.page(page, new QueryWrapper<>(${tableLowerCamel}Entity)));
     }
 
-    @ApiOperation(value = "根据id修改")
+    @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Boolean> updateById(@RequestBody ${tableUpperCamel}Entity ${tableLowerCamel}Entity) {
         return ApiResult.success(${tableLowerCamel}Service.updateById(${tableLowerCamel}Entity));
     }
 
-    @ApiOperation(value = "根据id删除")
+    @Operation(summary = "根据id删除")
     @PostMapping("/deleteById")
     public ApiResult<Boolean> deleteById(@RequestBody DelPara para) {
         return ApiResult.success(${tableLowerCamel}Service.removeById(para.getId()));
     }
 
-    @ApiOperation(value = "根据id批量删除")
+    @Operation(summary = "根据id批量删除")
     @PostMapping("/deleteByIds")
     public ApiResult<Boolean> deleteByIds(@RequestBody DelPara para) {
         return ApiResult.success(${tableLowerCamel}Service.removeByIds(para.getIds()));

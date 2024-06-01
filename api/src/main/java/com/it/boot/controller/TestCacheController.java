@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.boot.config.ApiResult;
 import com.it.boot.entity.CacheEntity;
 import com.it.boot.service.CacheService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +72,7 @@ import javax.annotation.Resource;
  * </pre>
  */
 @Slf4j
-@Api(tags = "测试/Cache")
+@Tag(name = "测试/Cache")
 @RestController
 @RequestMapping("/api/TestCacheController")
 public class TestCacheController {
@@ -88,34 +88,34 @@ public class TestCacheController {
 
     // cacheNames 可以理解为缓存 key 的前缀
 
-    @ApiOperation("page")
+    @Operation(summary = "page")
     @GetMapping("/page")
     public ApiResult<Page<CacheEntity>> page(Page<CacheEntity> page) {
         return ApiResult.success(cacheService.getPage(page));
     }
 
-    @ApiOperation("info")
+    @Operation(summary = "info")
     @GetMapping("/info")
     public ApiResult<CacheEntity> info(CacheEntity cache) {
         log.info("info");
         return ApiResult.success(cacheService.info(cache));
     }
 
-    @ApiOperation("create")
+    @Operation(summary = "create")
     @PostMapping("/create")
     public ApiResult<CacheEntity> create(@Validated @RequestBody CacheEntity cache) {
         CacheEntity b = cacheService.create(cache);
         return ApiResult.success(b);
     }
 
-    @ApiOperation("edit")
+    @Operation(summary = "edit")
     @PostMapping("/edit")
     public ApiResult<CacheEntity> edit(@Validated @RequestBody CacheEntity cache) {
         CacheEntity b = cacheService.edit(cache);
         return ApiResult.success(b);
     }
 
-    @ApiOperation("delete")
+    @Operation(summary = "delete")
     @PostMapping("/delete")
     public ApiResult<Boolean> delete(Long id) {
         cacheService.delete(id);

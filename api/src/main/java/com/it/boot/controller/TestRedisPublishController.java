@@ -2,7 +2,7 @@ package com.it.boot.controller;
 
 import com.it.boot.config.redis.RedisUtils;
 import com.it.boot.entity.dto.MessageDto;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ public class TestRedisPublishController {
     @Resource
     private RedisUtils redisUtils;
 
-    @ApiOperation(value = "发布redis消息")
+    @Operation(summary = "发布redis消息")
     @GetMapping("/publishRedisMessage")
     public void publishRedisMessage(String topic, String title, String content) {
         // 发布消息

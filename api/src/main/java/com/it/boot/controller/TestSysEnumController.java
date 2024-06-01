@@ -4,8 +4,8 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.config.enum1.DelTypeEnum;
 import com.it.boot.entity.SysEnumEntity;
 import com.it.boot.service.SysEnumService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  *      4. 省市县
  * 父级id,还是code
  */
-@Api(tags = "测试/枚举")
+@Tag(name = "测试/枚举")
 @Slf4j
 @RestController
 @RequestMapping("/api/TestSysEnumController")
@@ -31,7 +31,7 @@ public class TestSysEnumController {
     @Resource
     private SysEnumService sysEnumService;
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Boolean> create(@RequestBody SysEnumEntity sysEnumEntity) {
         return ApiResult.success(sysEnumService.save(sysEnumEntity));

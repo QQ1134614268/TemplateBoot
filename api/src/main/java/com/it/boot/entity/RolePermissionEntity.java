@@ -2,7 +2,7 @@ package com.it.boot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@ApiModel(value = "角色权限关系")
+@Schema(name = "角色权限关系")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "role_permission")

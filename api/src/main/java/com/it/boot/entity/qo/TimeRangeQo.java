@@ -1,7 +1,7 @@
 package com.it.boot.entity.qo;
 
 import com.it.boot.config.Conf;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,11 +13,11 @@ import java.util.Date;
 @Data
 public class TimeRangeQo {
 
-    @ApiModelProperty(value = "起始时间", example = "2022-11-29 00:00:00")
+    @Schema(name = "起始时间", example = "2022-11-29 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date startTime;
 
-    @ApiModelProperty(value = "结束时间", example = "2022-11-30 00:00:00")
+    @Schema(name = "结束时间", example = "2022-11-30 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date endTime;
 }

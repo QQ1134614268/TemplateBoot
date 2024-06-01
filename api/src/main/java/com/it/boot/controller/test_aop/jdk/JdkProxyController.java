@@ -1,14 +1,14 @@
 package com.it.boot.controller.test_aop.jdk;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@Api(tags = "测试/JdkProxyController")
+@Tag(name = "测试/JdkProxyController")
 @RestController
 @RequestMapping("/api/JdkProxyController")
 public class JdkProxyController {
@@ -18,7 +18,7 @@ public class JdkProxyController {
 
     // http://127.0.0.1:9091/test
     @GetMapping("/test")
-    @ApiOperation(value = "test")
+    @Operation(summary = "test")
     public String test() {
         chinese2.sayHello("listen");
         System.out.println(chinese2.getClass());

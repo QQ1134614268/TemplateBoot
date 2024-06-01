@@ -2,8 +2,8 @@ package com.it.boot.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@ApiModel(value = "角色")
+@Schema(name = "角色")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "role")
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 )
 public class RoleEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '角色名称'")
-    @ApiModelProperty(value = "角色名称")
+    @Schema(name = "角色名称")
     private String name;
 }
 

@@ -4,8 +4,8 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.config.Conf;
 import com.it.boot.config.exception.BizException;
 import com.it.boot.util.FileUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Api(tags = "文件上传下载")
+@Tag(name = "文件上传下载")
 @Slf4j
 @RestController
 @RequestMapping("/api/file")
@@ -28,7 +28,7 @@ public class FileController {
     @Resource
     public HttpServletResponse response;
 
-    @ApiOperation("上传")
+    @Operation(summary = "上传")
     @PostMapping("/upload")
     public ApiResult<String> upload(@RequestPart("file") MultipartFile file) throws IOException {
         log.info("上传");
@@ -46,7 +46,7 @@ public class FileController {
         return ApiResult.success(newName);
     }
 
-    @ApiOperation("下载")
+    @Operation(summary = "下载")
     @GetMapping("/download/{path}")
     public void download(@PathVariable("path") String path) throws IOException {
         Path filePath = Paths.get(Conf.upload_path, path);

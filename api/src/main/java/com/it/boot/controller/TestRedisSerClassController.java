@@ -10,7 +10,7 @@ import com.it.boot.config.redis.FasterJsonWithTypeSerializer;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.UserDto;
 import com.it.boot.util.BuildDataUtil;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,7 +31,7 @@ import java.util.Objects;
  * <p>
  * redisTemplate, 序列化指定类, 反序列化时也自动映射成对象
  */
-@Api(tags = "测试/redis序列化")
+@Tag(name = "测试/redis序列化")
 @Slf4j
 @RestController
 @RequestMapping("/api/RedisSerClassController")

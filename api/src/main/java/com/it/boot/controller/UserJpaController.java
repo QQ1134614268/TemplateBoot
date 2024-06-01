@@ -7,8 +7,8 @@ import com.it.boot.entity.dto.UserOnly;
 import com.it.boot.projection.UserProjection;
 import com.it.boot.repository.UserJpaRepository;
 import com.it.boot.service.UserJpaService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Api(tags = "测试/用户Jpa")
+@Tag(name = "测试/用户Jpa")
 @Slf4j
 @RestController
 @RequestMapping("/api/UserJpaController")
@@ -32,31 +32,31 @@ public class UserJpaController {
     @Resource
     private UserJpaRepository userJpaRepository;
 
-    @ApiOperation(value = "新增")
+    @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Long> create(@RequestBody UserEntity userEntity) {
         return ApiResult.success(userJpaService.create(userEntity));
     }
 
-    @ApiOperation(value = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<UserEntity>> getPage(Pageable page, UserEntity userEntity) {
         return ApiResult.success(userJpaService.getPage(page, userEntity));
     }
 
-    @ApiOperation(value = "根据id修改")
+    @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Long> updateById(@RequestBody UserEntity userEntity) {
         return ApiResult.success(userJpaService.updateById(userEntity));
     }
 
-    @ApiOperation(value = "根据id删除")
+    @Operation(summary = "根据id删除")
     @PostMapping("/deleteById")
     public ApiResult<Integer> deleteById(@RequestBody Integer id) {
         return ApiResult.success(userJpaService.removeById(id));
     }
 
-    @ApiOperation(value = "根据id批量删除")
+    @Operation(summary = "根据id批量删除")
     @PostMapping("/deleteByIds")
     public ApiResult<Boolean> deleteByIds(@RequestBody List<UserEntity> userEntities) {
         userJpaService.removeByIds(userEntities);
@@ -64,7 +64,7 @@ public class UserJpaController {
     }
 
 
-    @ApiOperation(value = "连表")
+    @Operation(summary = "连表")
     @GetMapping("/join")
     public ApiResult<Object> join(UserEntity userEntity) {
         return ApiResult.success(userJpaService.join(userEntity));
@@ -74,7 +74,7 @@ public class UserJpaController {
      *测试jpa 投影
      */
     @GetMapping("/projections")
-    @ApiOperation(value = "测试jpa 投影")
+    @Operation(summary = "测试jpa 投影")
     public Map<String, Object> projection() {
         Map<String, Object> map = new HashMap<>();
         Collection<UserProjection> projections = userJpaRepository.findAllNameAndEmail();
@@ -93,7 +93,7 @@ public class UserJpaController {
      *测试jpa dto
      */
     @GetMapping("/testJpaDto")
-    @ApiOperation(value = "testJpaDto")
+    @Operation(summary = "testJpaDto")
     public List<UserOnly> testJpaDto() {
         UserEntity userEntity = userJpaRepository.findByUserNameAndEmail("tom", "test@test.com", UserEntity.class);
         System.out.println(userEntity);
@@ -103,13 +103,13 @@ public class UserJpaController {
     }
 
     @GetMapping("/getNativeQuery")
-    @ApiOperation("getNativeQuery")
+    @Operation(summary = "getNativeQuery")
     public ApiResult<UserEntity> getNativeQuery() {
         return ApiResult.success(userJpaRepository.getNativeQuery(1));
     }
 
     @GetMapping("/getNativeQuery2")
-    @ApiOperation("getNativeQuery2")
+    @Operation(summary = "getNativeQuery2")
     public ApiResult<UserDto> getNativeQuery2() {
         // bug: org.hibernate.MappingException: Unknown entity
         return ApiResult.success(userJpaRepository.getNativeQuery2(1));

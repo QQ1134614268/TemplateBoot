@@ -1,21 +1,21 @@
 package com.it.boot.config;
 
 import com.it.boot.config.enum1.ResCodeEnum;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 
-@ApiModel("api返回对象")
+@Schema(name = "api返回对象")
 @Data
 public class ApiResult<T> implements Serializable {
 
-    @ApiModelProperty(value = "请求结果状态码", example = "1")
+    @Schema(name = "请求结果状态码", example = "1")
     private int code;
-    @ApiModelProperty(value = "返回数据")
+    @Schema(name = "返回数据")
     private T data;
-    @ApiModelProperty(value = "请求异常时信息")
+    @Schema(name = "请求异常时信息")
     private String message;
 
     public static <T> ApiResult<T> success(T data) {

@@ -5,8 +5,8 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.entity.TestDateEntity;
 import com.it.boot.entity.qo.TestDateQo;
 import com.it.boot.repository.TestDateRepository;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ import java.util.Optional;
 import static com.it.boot.config.Conf.DATE_FORMAT;
 import static com.it.boot.config.Conf.DATE_TIME_FORMAT;
 
-@Api(tags = "测试/TestDateController")
+@Tag(name = "测试/TestDateController")
 @RestController
 @RequestMapping("/api/TestDateController")
 public class TestDateController { // todo read date ser
@@ -43,21 +43,21 @@ public class TestDateController { // todo read date ser
     @Resource
     private TestDateRepository testDateRepository;
 
-    @ApiOperation("getPage")
+    @Operation(summary = "getPage")
     @GetMapping("/getPage")
     public ApiResult<Page<TestDateEntity>> getPage(Pageable page) {
         Page<TestDateEntity> ret = testDateRepository.findAll(page);
         return ApiResult.success(ret);
     }
 
-    @ApiOperation("create")
+    @Operation(summary = "create")
     @PostMapping("/create")
     public ApiResult<TestDateEntity> create(@RequestBody TestDateEntity entity) {
         testDateRepository.save(entity);
         return ApiResult.success(entity);
     }
 
-    @ApiOperation("initDate")
+    @Operation(summary = "initDate")
     @GetMapping("/initDate")
     public ApiResult<TestDateEntity> initDate() throws ParseException {
         // jackson 本地时区 utc+7, 影响datetime字段,datetime format 少1小时(utc+7),
@@ -98,7 +98,7 @@ public class TestDateController { // todo read date ser
      *
      * @see com.it.boot.config.serializer.SerializerConfig
      */
-    @ApiOperation("testDateSerializer")
+    @Operation(summary = "testDateSerializer")
     @PostMapping("/testDateSerializer")
     public ApiResult<List<TestDateQo>> testDateSerializer(@RequestBody TestDateQo qo1, @RequestParam TestDateQo qo2) {
         // spring.jackson.date-format 序列化时间
