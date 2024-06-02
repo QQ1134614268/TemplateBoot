@@ -19,7 +19,9 @@ import java.util.stream.Collectors;
 public class GetClassUtil {
     public static List<Class> getClassByPackage(String packageName) throws ClassNotFoundException, IOException {
         List<Class> classList = new ArrayList<>();
-        Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources(packageName.replace(".", "/"));
+        Enumeration<URL> resources = Thread.currentThread()
+                .getContextClassLoader()
+                .getResources(packageName.replace(".", "/"));
         while (resources.hasMoreElements()) {
             URL url = resources.nextElement();
             String[] file = new File(url.getFile()).list();

@@ -11,9 +11,7 @@ import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.UserService;
-import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Test;
-import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
@@ -30,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest
 public class InitTestEnvDbTest {
     @Resource

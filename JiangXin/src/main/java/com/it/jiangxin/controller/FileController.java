@@ -2,8 +2,8 @@ package com.it.jiangxin.controller;
 
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.util.FileUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-@Api(tags = "文件上传下载")
+@Tag(name = "文件上传下载")
 @Slf4j
 @RestController
 @RequestMapping("/api/file")
@@ -32,7 +32,7 @@ public class FileController {
 
     private final String upload_path = Paths.get(System.getProperty("user.dir"), "data/upload").toString();
 
-    @ApiOperation("上传")
+    @Operation(summary = "上传")
     @PostMapping("/upload")
     public ApiResult<String> upload(@RequestPart("file") MultipartFile file) throws IOException {
         log.info("上传");
@@ -56,7 +56,7 @@ public class FileController {
         return ApiResult.success("http://localhost:29090/api/file/download/" + newName);
     }
 
-    @ApiOperation("下载")
+    @Operation(summary = "下载")
     @GetMapping("/download/{path}")
     public ResponseEntity<Object> download(@PathVariable("path") String path) throws IOException {
         if (path == null) {

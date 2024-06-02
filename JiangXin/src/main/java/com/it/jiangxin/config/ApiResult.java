@@ -1,21 +1,20 @@
 package com.it.jiangxin.config;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-@ApiModel("api返回对象")
+@Schema(name = "api返回对象")
 @Data
 public class ApiResult<T> {
     public final static int Success = 1;
     public final static int Failure = 2;
     public final static int Forbidden = 3;
 
-    @ApiModelProperty(value = "请求结果状态码", example = "1")
+    @Schema(name = "请求结果状态码", example = "1")
     private int code;
-    @ApiModelProperty(value = "返回数据", example = "")
+    @Schema(name = "返回数据", example = "")
     private T data;
-    @ApiModelProperty(value = "请求异常时信息", example = "")
+    @Schema(name = "请求异常时信息", example = "")
     private String message;
 
     public static <T> ApiResult<T> success(T data) {

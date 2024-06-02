@@ -12,8 +12,8 @@ import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.util.BoolUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-@Api(tags = "匠心/图片")
+@Tag(name = "匠心/图片")
 @RestController
 @RequestMapping("/api/img")
 @Slf4j
@@ -34,7 +34,7 @@ public class ImgController {
     @Resource
     private EnumService enumService;
 
-    @ApiOperation(value = "admin/图片管理/新增")
+    @Operation(summary = "admin/图片管理/新增")
     @PostMapping("/create")
     @Transactional
     public ApiResult<Integer> create(@RequestBody ImgEntity imgEntity) {
@@ -44,7 +44,7 @@ public class ImgController {
         return ApiResult.success(imgEntity.getId());
     }
 
-    @ApiOperation(value = "admin/图片管理/修改")
+    @Operation(summary = "admin/图片管理/修改")
     @PostMapping("/updateTree")
     public ApiResult<Boolean> updateTree(@RequestBody ImgEntity imgEntity) {
         imgService.saveOrUpdate(imgEntity);
@@ -53,7 +53,7 @@ public class ImgController {
         return ApiResult.success();
     }
 
-    @ApiOperation(value = "首页查询")
+    @Operation(summary = "首页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<ImgEntity>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
         Page<ImgEntity> list = imgService.lambdaQuery()
@@ -63,7 +63,7 @@ public class ImgController {
         return ApiResult.success(list);
     }
 
-    @ApiOperation(value = "获取详情")
+    @Operation(summary = "获取详情")
     @GetMapping("/getInfo")
     public ApiResult<ImgEntity> getInfo(IdPara para) {
         ImgEntity e = imgService.getById(para.getId());
@@ -75,19 +75,19 @@ public class ImgController {
         return ApiResult.success(e);
     }
 
-    @ApiOperation(value = "根据id删除")
+    @Operation(summary = "根据id删除")
     @PostMapping("/deleteById")
     public ApiResult<Boolean> deleteById(@RequestBody IdPara para) {
         return ApiResult.success(imgService.removeById(para.getId()));
     }
 
-    @ApiOperation(value = "根据id批量删除")
+    @Operation(summary = "根据id批量删除")
     @PostMapping("/deleteByIds")
     public ApiResult<Boolean> deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(imgService.removeByIds(para.getIds()));
     }
 
-    @ApiOperation(value = "获取图片树形结构")
+    @Operation(summary = "获取图片树形结构")
     @GetMapping("/getImgTree")
     public ApiResult<List<ImgTreeDto>> getImgTree() {
         // List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
@@ -109,7 +109,9 @@ public class ImgController {
         List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
         List<ImgEntity> imgs = imgService.lambdaQuery().eq(ImgEntity::getParentId, 0).list();
         for (ImgTreeDto re : res) {
-            List<ImgEntity> imgs1 = imgs.stream().filter(vo -> Objects.equals(vo.getTypeId(), re.getId())).collect(Collectors.toList());
+            List<ImgEntity> imgs1 = imgs.stream()
+                    .filter(vo -> Objects.equals(vo.getTypeId(), re.getId()))
+                    .collect(Collectors.toList());
             re.setImgEntityList(imgs1);
         }
         return ApiResult.success(res);
