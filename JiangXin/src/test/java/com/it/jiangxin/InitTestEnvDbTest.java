@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.FileController;
 import com.it.jiangxin.controller.ImgController;
-import com.it.jiangxin.entity.vo.IdsPara;
-import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
+import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.UserEntity;
+import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -76,25 +76,27 @@ public class InitTestEnvDbTest {
     void test_2_img() throws IOException {
         List<SysEnumEntity> types = enumService.lambdaQuery().eq(SysEnumEntity::getGroupCode, "IMG-TYPE").list();
         for (SysEnumEntity e : types) {
-            ImgEntity imgEntity = new ImgEntity();
-            imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
-            imgEntity.setTypeId(e.getId());
-            imgEntity.setDescription(String.format("%s-01", e.getValue()));
-            imgEntity.setParentId(0);
-            imgEntity.setName(String.format("%s-01", e.getValue()));
-            ApiResult<Integer> res = imgController.create(imgEntity);
-            if (res.isError()) {
-                throw new RuntimeException(res.getMessage());
-            }
-            for (int i = 0; i < 4; i++) {
-                ImgEntity imgEntity2 = new ImgEntity();
-                imgEntity2.setImgUrl(getUploadUrl("house.法式.webp"));
-                imgEntity2.setTypeId(e.getId());
-                imgEntity2.setParentId(res.getData());
-                imgEntity2.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
-                ApiResult<Integer> res2 = imgController.create(imgEntity2);
-                if (res2.isError()) {
-                    throw new RuntimeException(res2.getMessage());
+            for (int j = 1; j < 4; j++) {
+                ImgEntity imgEntity = new ImgEntity();
+                imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
+                imgEntity.setTypeId(e.getId());
+                imgEntity.setDescription(String.format("%s-%s", e.getValue(), j));
+                imgEntity.setParentId(0);
+                imgEntity.setName(String.format("%s-%s", e.getValue(), j));
+                ApiResult<Integer> res = imgController.create(imgEntity);
+                if (res.isError()) {
+                    throw new RuntimeException(res.getMessage());
+                }
+                for (int i = 0; i < 4; i++) {
+                    ImgEntity imgEntity2 = new ImgEntity();
+                    imgEntity2.setImgUrl(getUploadUrl("house.法式.webp"));
+                    imgEntity2.setTypeId(e.getId());
+                    imgEntity2.setParentId(res.getData());
+                    imgEntity2.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
+                    ApiResult<Integer> res2 = imgController.create(imgEntity2);
+                    if (res2.isError()) {
+                        throw new RuntimeException(res2.getMessage());
+                    }
                 }
             }
         }
