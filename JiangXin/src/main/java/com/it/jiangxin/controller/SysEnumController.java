@@ -1,36 +1,32 @@
 package com.it.jiangxin.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.service.EnumService;
+import com.it.jiangxin.util.BoolUtils;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-@Tag(name = "图片类型")
+
+@Hidden
 @RestController
-@RequestMapping("/api/ImgTypeController")
+@RequestMapping("/api/SysEnumController")
 @Slf4j
-public class ImgTypeController extends BaseEnumController {
-    public static final String IMG_TYPE = "IMG-TYPE";
+public class SysEnumController {
     @Resource
     private EnumService enumService;
-
-    public String getGroupCode() {
-        return IMG_TYPE;
-    }
 
     @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Integer> create(@RequestBody SysEnumEntity enumEntity) {
-        enumEntity.setGroupCode(getGroupCode());
         boolean save = enumService.save(enumEntity);
         return ApiResult.success(enumEntity.getId());
     }
@@ -38,20 +34,20 @@ public class ImgTypeController extends BaseEnumController {
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<SysEnumEntity>> getPage(Page<SysEnumEntity> page, SysEnumEntity enumEntity) {
-        Page<SysEnumEntity> page1 = getPage2(page, enumEntity);
-        return ApiResult.success(page1);
-    }
-
-    public Page<SysEnumEntity> getPage2(Page<SysEnumEntity> page, SysEnumEntity enumEntity) {
-        enumEntity.setGroupCode(getGroupCode());
-        // enumService.lambdaQuery().list()
-        return enumService.page(page, new QueryWrapper<>(enumEntity));
+        Page<SysEnumEntity> enumPage = enumService.lambdaQuery()
+                .eq(BoolUtils.toBool(enumEntity.getId()), SysEnumEntity::getId, enumEntity.getId())
+                .eq(BoolUtils.toBool(enumEntity.getParentId()), SysEnumEntity::getParentId, enumEntity.getParentId())
+                .eq(BoolUtils.toBool(enumEntity.getGroupCode()), SysEnumEntity::getGroupCode, enumEntity.getGroupCode())
+                .eq(BoolUtils.toBool(enumEntity.getUniCode()), SysEnumEntity::getUniCode, enumEntity.getUniCode())
+                .eq(BoolUtils.toBool(enumEntity.getStatus()), SysEnumEntity::getStatus, enumEntity.getStatus())
+                .like(BoolUtils.toBool(enumEntity.getName()), SysEnumEntity::getName, enumEntity.getName())
+                .page(page);
+        return ApiResult.success(enumPage);
     }
 
     @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Boolean> updateById(@RequestBody SysEnumEntity enumEntity) {
-        enumEntity.setGroupCode(getGroupCode());
         return ApiResult.success(enumService.updateById(enumEntity));
     }
 
@@ -66,5 +62,4 @@ public class ImgTypeController extends BaseEnumController {
     public ApiResult<Boolean> deleteByIds(@RequestBody IdsPara para) {
         return ApiResult.success(enumService.removeByIds(para.getIds()));
     }
-
 }

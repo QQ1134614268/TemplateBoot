@@ -1,14 +1,13 @@
 package com.it.jiangxin.controller;
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.jiangxin.config.ApiResult;
+import com.it.jiangxin.entity.ImgEntity;
+import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.entity.vo.ImgTreeDto;
-import com.it.jiangxin.entity.SysEnumEntity;
-import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.util.BoolUtils;
@@ -21,7 +20,10 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.it.jiangxin.config.enum1.GroupCodeEnum.ImgType;
 
 
 @Tag(name = "匠心/图片")
@@ -38,27 +40,18 @@ public class ImgController {
     @PostMapping("/create")
     @Transactional
     public ApiResult<Integer> create(@RequestBody ImgEntity imgEntity) {
-        imgService.saveOrUpdate(imgEntity);
-        imgEntity.getChildren().forEach(vo -> vo.setParentId(imgEntity.getId()));
-        imgService.saveOrUpdateBatch(imgEntity.getChildren());
+        imgService.save(imgEntity);
         return ApiResult.success(imgEntity.getId());
-    }
-
-    @Operation(summary = "admin/图片管理/修改")
-    @PostMapping("/updateTree")
-    public ApiResult<Boolean> updateTree(@RequestBody ImgEntity imgEntity) {
-        imgService.saveOrUpdate(imgEntity);
-        imgEntity.getChildren().forEach(vo -> vo.setParentId(imgEntity.getId()));
-        imgService.saveOrUpdateBatch(imgEntity.getChildren());
-        return ApiResult.success();
     }
 
     @Operation(summary = "首页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<ImgEntity>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
         Page<ImgEntity> list = imgService.lambdaQuery()
-                .eq(imgEntity.getParentId() != null, ImgEntity::getParentId, imgEntity.getParentId())
-                .eq(BoolUtils.toBool(imgEntity.getTypeId()), ImgEntity::getTypeId, imgEntity.getTypeId())
+                .eq(BoolUtils.toBool(imgEntity.getGroupUuid()), ImgEntity::getGroupUuid, imgEntity.getGroupUuid())
+                .eq(BoolUtils.toBool(imgEntity.getStyleId()), ImgEntity::getStyleId, imgEntity.getStyleId())
+                .eq(BoolUtils.toBool(imgEntity.getIsHomeImg()), ImgEntity::getIsHomeImg, imgEntity.getIsHomeImg())
+                .like(BoolUtils.toBool(imgEntity.getHomeImgTitle()), ImgEntity::getHomeImgTitle, imgEntity.getHomeImgTitle())
                 .page(page);
         return ApiResult.success(list);
     }
@@ -67,11 +60,6 @@ public class ImgController {
     @GetMapping("/getInfo")
     public ApiResult<ImgEntity> getInfo(IdPara para) {
         ImgEntity e = imgService.getById(para.getId());
-        if (e == null) {
-            return ApiResult.fail("不存在");
-        }
-        List<ImgEntity> c = imgService.lambdaQuery().eq(ImgEntity::getParentId, e.getId()).list();
-        e.setChildren(c);
         return ApiResult.success(e);
     }
 
@@ -87,21 +75,37 @@ public class ImgController {
         return ApiResult.success(imgService.removeByIds(para.getIds()));
     }
 
-    @Operation(summary = "获取图片树形结构")
-    @GetMapping("/getImgTree")
+    @Operation(summary = "admin/图片管理/新增")
+    @PostMapping("/updateAllDesign")
+    @Transactional
+    public ApiResult<Integer> updateAllDesign(@RequestBody List<ImgEntity> list) {
+        if (list.isEmpty()) {
+            return ApiResult.fail("参数不正确");
+        }
+        String uuid = list.stream().map(ImgEntity::getGroupUuid).findFirst().orElse(UUID.randomUUID().toString());
+        list.forEach(v -> v.setGroupUuid(uuid));
+        imgService.saveOrUpdateBatch(list);
+        imgService.lambdaUpdate()
+                .eq(ImgEntity::getGroupUuid, uuid)
+                .notIn(ImgEntity::getId, list.stream().map(ImgEntity::getId).collect(Collectors.toList()))
+                .remove();
+        return ApiResult.success();
+    }
+
+    @Operation(summary = "获取图片风格/首页")
+    @GetMapping("/getImgHome")
     public ApiResult<List<ImgTreeDto>> getImgTree() {
         MPJLambdaWrapper<SysEnumEntity> wrapper = new MPJLambdaWrapper<>();
-        wrapper.eq(SysEnumEntity::getGroupCode, "IMG-TYPE");
+        wrapper.eq(SysEnumEntity::getGroupCode, ImgType);
         wrapper.selectAll(SysEnumEntity.class);
         List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
-        List<ImgEntity> imgs = imgService.lambdaQuery().eq(ImgEntity::getParentId, 0).list();
+        List<ImgEntity> imgList = imgService.lambdaQuery().eq(ImgEntity::getIsHomeImg, true).list();
         for (ImgTreeDto re : res) {
-            List<ImgEntity> imgs1 = imgs.stream()
-                    .filter(vo -> Objects.equals(vo.getTypeId(), re.getId()))
+            List<ImgEntity> img = imgList.stream()
+                    .filter(vo -> Objects.equals(vo.getStyleId(), re.getId()))
                     .collect(Collectors.toList());
-            re.setImgEntityList(imgs1);
+            re.setImgEntityList(img);
         }
         return ApiResult.success(res);
     }
-
 }

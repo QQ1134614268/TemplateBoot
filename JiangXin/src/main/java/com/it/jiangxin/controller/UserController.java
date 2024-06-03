@@ -31,7 +31,7 @@ public class UserController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page<UserEntity>> getPage(Page page, UserEntity userEntity) {
+    public ApiResult<Page<UserEntity>> getPage(Page<UserEntity> page, UserEntity userEntity) {
         return ApiResult.success(userService.page(page, new QueryWrapper<>(userEntity)));
     }
 

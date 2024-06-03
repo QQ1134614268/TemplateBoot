@@ -6,7 +6,9 @@ package com.it.jiangxin.config.enum1;
 public enum GroupCodeEnum implements IEnumDb {
     SexEnum(SexEnum.class.getSimpleName(), "1", "性别枚举"),
     ResultEnum(ResultEnum.class.getSimpleName(), "2", "结果类型枚举"),
-    AccountEnum(AccountEnum.class.getSimpleName(), "3", "账号枚举");
+    AccountEnum(AccountEnum.class.getSimpleName(), "3", "账号枚举"),
+    ImgType("IMG-TYPE", "4", "图片分类"),
+    ;
 
     final String uniCode;
     final String value;

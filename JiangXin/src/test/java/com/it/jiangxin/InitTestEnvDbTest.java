@@ -23,10 +23,10 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.it.jiangxin.config.enum1.GroupCodeEnum.ImgType;
 
 @SpringBootTest
 public class InitTestEnvDbTest {
@@ -62,7 +62,7 @@ public class InitTestEnvDbTest {
         List<String> list = Arrays.asList("中式", "日式", "欧式");//"最火", "曾看过"
         for (String v : list) {
             SysEnumEntity enumEntity = new SysEnumEntity();
-            enumEntity.setGroupCode("IMG-TYPE");
+            enumEntity.setGroupCode(ImgType.getUniCode());
             // enumEntity.setUniCode(UUID.randomUUID().toString());
             enumEntity.setValue(v);
             SysEnumEntity old = enumService.getOne(new QueryWrapper<>(enumEntity));
@@ -74,30 +74,27 @@ public class InitTestEnvDbTest {
 
     @Test
     void test_2_img() throws IOException {
-        List<SysEnumEntity> types = enumService.lambdaQuery().eq(SysEnumEntity::getGroupCode, "IMG-TYPE").list();
+        List<SysEnumEntity> types = enumService.lambdaQuery()
+                .eq(SysEnumEntity::getGroupCode, ImgType.getUniCode())
+                .list();
         for (SysEnumEntity e : types) {
-            for (int j = 1; j < 4; j++) {
-                ImgEntity imgEntity = new ImgEntity();
-                imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
-                imgEntity.setTypeId(e.getId());
-                imgEntity.setDescription(String.format("%s-%s", e.getValue(), j));
-                imgEntity.setParentId(0);
-                imgEntity.setName(String.format("%s-%s", e.getValue(), j));
-                ApiResult<Integer> res = imgController.create(imgEntity);
-                if (res.isError()) {
-                    throw new RuntimeException(res.getMessage());
-                }
-                for (int i = 0; i < 4; i++) {
-                    ImgEntity imgEntity2 = new ImgEntity();
-                    imgEntity2.setImgUrl(getUploadUrl("house.法式.webp"));
-                    imgEntity2.setTypeId(e.getId());
-                    imgEntity2.setParentId(res.getData());
-                    imgEntity2.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
-                    ApiResult<Integer> res2 = imgController.create(imgEntity2);
-                    if (res2.isError()) {
-                        throw new RuntimeException(res2.getMessage());
+            for (int i = 1; i < 4; i++) {
+                String uuid = UUID.randomUUID().toString();
+                ArrayList<ImgEntity> list = new ArrayList<>();
+                for (int j = 1; j < 6; j++) {
+                    ImgEntity imgEntity = new ImgEntity();
+                    imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
+                    imgEntity.setGroupUuid(uuid);
+                    if (j == 1) { // 首页
+                        imgEntity.setIsHomeImg(true);
+                        imgEntity.setHomeImgTitle(String.format("%s-%s", e.getValue(), j));
+                        imgEntity.setStyleId(e.getId());
+                    } else { // 其他
+                        imgEntity.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
                     }
+                    list.add(imgEntity);
                 }
+                imgController.updateAllDesign(list);
             }
         }
     }

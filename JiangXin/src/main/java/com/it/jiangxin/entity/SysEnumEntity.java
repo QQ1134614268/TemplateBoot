@@ -30,7 +30,7 @@ public class SysEnumEntity extends BaseEntity implements TreeNode {
     @Column(columnDefinition = "varchar(255) COMMENT '父级id'")
     private Integer parentId; // 标识级联
 
-    @Schema(name = "唯一编码", example = "test_1", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(name = "唯一编码", example = "test_1")
     @Column(columnDefinition = "varchar(64) COMMENT '唯一编码'")
     private String uniCode;//  value 的唯一值, 表级唯一
 

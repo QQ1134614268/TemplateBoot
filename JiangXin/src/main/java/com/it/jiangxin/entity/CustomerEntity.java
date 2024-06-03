@@ -16,16 +16,16 @@ import javax.persistence.Entity;
 @Entity(name = "customer")
 @Table(appliesTo = "customer", comment = "客户")
 public class CustomerEntity extends BaseEntity {
-    @Schema(name = "用户名", example = "test_1", required = true)
+    @Schema(name = "用户名", example = "test_1")
     @Column(unique = true, nullable = false, columnDefinition = "varchar(255) COMMENT '客户名'")
     private String name;
-    @Schema(name = "面积", example = "1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '面积'")
+    @Schema(name = "面积", example = "1")
+    @Column( columnDefinition = "int(11) COMMENT '面积'")
     private Double area;
-    @Schema(name = "手机号码", example = "test_1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "varchar(255) COMMENT '手机号码'")
+    @Schema(name = "手机号码", example = "test_1")
+    @Column( columnDefinition = "varchar(255) COMMENT '手机号码'")
     private String phone;
-    @Schema(name = "风格id", example = "1", required = false)
-    @Column(unique = false, nullable = true, columnDefinition = "int(11) COMMENT '状态'")
+    @Schema(name = "风格id", example = "1")
+    @Column( columnDefinition = "int(11) COMMENT '状态'")
     private Integer styleId;
 }

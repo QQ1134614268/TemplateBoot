@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.CustomerEntity;
-import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,7 +31,7 @@ public class CustomerController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page<UserEntity>> getPage(Page page, CustomerEntity entity) {
+    public ApiResult<Page<CustomerEntity>> getPage(Page<CustomerEntity> page, CustomerEntity entity) {
         return ApiResult.success(customerService.page(page, new QueryWrapper<>(entity)));
     }
 
