@@ -85,12 +85,11 @@ public class InitTestEnvDbTest {
                     ImgEntity imgEntity = new ImgEntity();
                     imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
                     imgEntity.setGroupUuid(uuid);
+                    imgEntity.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
                     if (j == 1) { // 首页
                         imgEntity.setIsHomeImg(true);
-                        imgEntity.setHomeImgTitle(String.format("%s-%s", e.getValue(), j));
+                        imgEntity.setName(String.format("%s-%s", e.getValue(), i));
                         imgEntity.setStyleId(e.getId());
-                    } else { // 其他
-                        imgEntity.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
                     }
                     list.add(imgEntity);
                 }

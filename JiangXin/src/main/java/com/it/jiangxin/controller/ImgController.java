@@ -51,7 +51,7 @@ public class ImgController {
                 .eq(BoolUtils.toBool(imgEntity.getGroupUuid()), ImgEntity::getGroupUuid, imgEntity.getGroupUuid())
                 .eq(BoolUtils.toBool(imgEntity.getStyleId()), ImgEntity::getStyleId, imgEntity.getStyleId())
                 .eq(BoolUtils.toBool(imgEntity.getIsHomeImg()), ImgEntity::getIsHomeImg, imgEntity.getIsHomeImg())
-                .like(BoolUtils.toBool(imgEntity.getHomeImgTitle()), ImgEntity::getHomeImgTitle, imgEntity.getHomeImgTitle())
+                .like(BoolUtils.toBool(imgEntity.getName()), ImgEntity::getName, imgEntity.getName())
                 .page(page);
         return ApiResult.success(list);
     }
@@ -75,6 +75,24 @@ public class ImgController {
         return ApiResult.success(imgService.removeByIds(para.getIds()));
     }
 
+
+    @Operation(summary = "获取图片风格/首页")
+    @GetMapping("/getImgHome")
+    public ApiResult<List<ImgTreeDto>> getImgTree() {
+        MPJLambdaWrapper<SysEnumEntity> wrapper = new MPJLambdaWrapper<>();
+        wrapper.eq(SysEnumEntity::getGroupCode, ImgType.getUniCode());
+        wrapper.selectAll(SysEnumEntity.class);
+        List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
+        List<ImgEntity> imgList = imgService.lambdaQuery().eq(ImgEntity::getIsHomeImg, true).list();
+        for (ImgTreeDto re : res) {
+            List<ImgEntity> img = imgList.stream()
+                    .filter(vo -> Objects.equals(vo.getStyleId(), re.getId()))
+                    .collect(Collectors.toList());
+            re.setImgEntityList(img);
+        }
+        return ApiResult.success(res);
+    }
+
     @Operation(summary = "admin/图片管理/新增")
     @PostMapping("/updateAllDesign")
     @Transactional
@@ -90,22 +108,5 @@ public class ImgController {
                 .notIn(ImgEntity::getId, list.stream().map(ImgEntity::getId).collect(Collectors.toList()))
                 .remove();
         return ApiResult.success();
-    }
-
-    @Operation(summary = "获取图片风格/首页")
-    @GetMapping("/getImgHome")
-    public ApiResult<List<ImgTreeDto>> getImgTree() {
-        MPJLambdaWrapper<SysEnumEntity> wrapper = new MPJLambdaWrapper<>();
-        wrapper.eq(SysEnumEntity::getGroupCode, ImgType);
-        wrapper.selectAll(SysEnumEntity.class);
-        List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
-        List<ImgEntity> imgList = imgService.lambdaQuery().eq(ImgEntity::getIsHomeImg, true).list();
-        for (ImgTreeDto re : res) {
-            List<ImgEntity> img = imgList.stream()
-                    .filter(vo -> Objects.equals(vo.getStyleId(), re.getId()))
-                    .collect(Collectors.toList());
-            re.setImgEntityList(img);
-        }
-        return ApiResult.success(res);
     }
 }

@@ -36,7 +36,7 @@ public class ImgEntity extends BaseEntity {
 
     @Schema(name = "首页名", example = "test_1")
     @Column(columnDefinition = "varchar(64) COMMENT '首页名'")
-    private String homeImgTitle;
+    private String name;
 
     @Schema(name = "风格id", example = "1")
     @Column(columnDefinition = "int(11) COMMENT '分类id'")

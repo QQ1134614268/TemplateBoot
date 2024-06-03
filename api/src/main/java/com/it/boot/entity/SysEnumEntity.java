@@ -2,7 +2,7 @@ package com.it.boot.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.it.boot.config.tree.TreeNode;
+import com.it.boot.config.tree.TreeNodeV1;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.List;
 @Entity(name = "sys_enum")
 @Table(appliesTo = "sys_enum", comment = "系统枚举")
 @Schema(name = "系统枚举表")
-public class SysEnumEntity extends BaseEntity implements TreeNode {
+public class SysEnumEntity extends BaseEntity implements TreeNodeV1<Long> {
     // 省市县, 下拉菜单, 下拉级联菜单
     @Schema(name = "分组code", example = "test_1")
     @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
@@ -28,7 +28,7 @@ public class SysEnumEntity extends BaseEntity implements TreeNode {
 
     @Schema(name = "父级id", example = "1")
     @Column(columnDefinition = "varchar(255) COMMENT '父级id'")
-    private Integer parentId; // 标识级联
+    private Long parentId; // 标识级联
 
     @Schema(name = "唯一编码", example = "test_1", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(columnDefinition = "varchar(64) COMMENT '唯一编码'")
