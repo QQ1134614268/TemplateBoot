@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.controller.FileController;
 import com.it.jiangxin.controller.ImgController;
-import com.it.jiangxin.controller.vo.IdsPara;
-import com.it.jiangxin.entity.EnumEntity;
+import com.it.jiangxin.entity.vo.IdsPara;
+import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.service.EnumService;
@@ -61,11 +61,11 @@ public class InitTestEnvDbTest {
     void test_2_imgType() {
         List<String> list = Arrays.asList("中式", "日式", "欧式");//"最火", "曾看过"
         for (String v : list) {
-            EnumEntity enumEntity = new EnumEntity();
+            SysEnumEntity enumEntity = new SysEnumEntity();
             enumEntity.setGroupCode("IMG-TYPE");
             // enumEntity.setUniCode(UUID.randomUUID().toString());
             enumEntity.setValue(v);
-            EnumEntity old = enumService.getOne(new QueryWrapper<>(enumEntity));
+            SysEnumEntity old = enumService.getOne(new QueryWrapper<>(enumEntity));
             if (old == null) {
                 enumService.save(enumEntity);
             }
@@ -74,8 +74,8 @@ public class InitTestEnvDbTest {
 
     @Test
     void test_2_img() throws IOException {
-        List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, "IMG-TYPE").list();
-        for (EnumEntity e : types) {
+        List<SysEnumEntity> types = enumService.lambdaQuery().eq(SysEnumEntity::getGroupCode, "IMG-TYPE").list();
+        for (SysEnumEntity e : types) {
             ImgEntity imgEntity = new ImgEntity();
             imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
             imgEntity.setTypeId(e.getId());

@@ -1,8 +1,8 @@
-package com.it.boot.entity;
+package com.it.jiangxin.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.it.boot.config.tree.TreeNode;
+import com.it.jiangxin.config.TreeNode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

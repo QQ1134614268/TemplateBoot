@@ -1,4 +1,4 @@
-package com.it.jiangxin.controller.vo;
+package com.it.jiangxin.entity.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

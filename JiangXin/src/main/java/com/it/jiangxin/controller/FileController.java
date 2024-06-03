@@ -72,6 +72,7 @@ public class FileController {
             byte[] bytes = Files.readAllBytes(filePath);
             response.reset(); // 清空response
             response.setCharacterEncoding("UTF-8");
+            response.setHeader("Cache-Control", "max-age=2592000");
             Optional<MediaType> mediaType = MediaTypeFactory.getMediaType(path);
             response.setContentType(mediaType.orElse(MediaType.ALL).toString());
             // response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));

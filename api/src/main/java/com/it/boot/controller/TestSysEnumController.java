@@ -1,7 +1,6 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.enum1.DelTypeEnum;
 import com.it.boot.entity.SysEnumEntity;
 import com.it.boot.service.SysEnumService;
 import io.swagger.v3.oas.annotations.tags.Tag;

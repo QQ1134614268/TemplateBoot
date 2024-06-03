@@ -4,10 +4,10 @@ package com.it.jiangxin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.jiangxin.config.ApiResult;
-import com.it.jiangxin.controller.vo.IdPara;
-import com.it.jiangxin.controller.vo.IdsPara;
-import com.it.jiangxin.controller.vo.ImgTreeDto;
-import com.it.jiangxin.entity.EnumEntity;
+import com.it.jiangxin.entity.vo.IdPara;
+import com.it.jiangxin.entity.vo.IdsPara;
+import com.it.jiangxin.entity.vo.ImgTreeDto;
+import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.service.EnumService;
 import com.it.jiangxin.service.ImgService;
@@ -90,22 +90,9 @@ public class ImgController {
     @Operation(summary = "获取图片树形结构")
     @GetMapping("/getImgTree")
     public ApiResult<List<ImgTreeDto>> getImgTree() {
-        // List<EnumEntity> types = enumService.lambdaQuery().eq(EnumEntity::getGroupCode, ImgTypeController.IMG_TYPE).list();
-        // List<ImgEntity> imgs = imgService.list();
-
-        // MPJLambdaWrapper<ConsumeGoodsRecordEntity> wrapper = new MPJLambdaWrapper<>();
-        // wrapper.leftJoin(ConsumeGoodsEntity.class, ConsumeGoodsEntity::getId, ConsumeGoodsRecordEntity::getConsumeGoodsId);
-        // wrapper.leftJoin(EnumEntity.class, EnumEntity::getId, ConsumeGoodsEntity::getTypeId);
-        // wrapper.between(toBool(qo.getStartTime()), ConsumeGoodsRecordEntity::getLendTime, qo.getStartTime(), qo.getEndTime());
-        // wrapper.like(toBool(qo.getSearch()), ConsumeGoodsEntity::getGoodsName, qo.getSearch());
-        // wrapper.eq(toBool(qo.getTypeId()), ConsumeGoodsEntity::getTypeId, qo.getTypeId());
-        // wrapper.select(ConsumeGoodsEntity::getGoodsName, ConsumeGoodsEntity::getModel, ConsumeGoodsEntity::getUnit);
-        // wrapper.selectAs(EnumEntity::getValue, ConsumeGoodsRecordDto::getTypeName);
-        // wrapper.select(ConsumeGoodsRecordEntity::getLendName, ConsumeGoodsRecordEntity::getChangeNum, ConsumeGoodsRecordEntity::getLendTime);
-        // return ApiResult.success(consumeGoodsRecordMapper.selectJoinPage(page, ConsumeGoodsRecordDto.class, wrapper));
-
-        MPJLambdaWrapper<EnumEntity> wrapper = new MPJLambdaWrapper<>();
-        wrapper.selectAll(EnumEntity.class);
+        MPJLambdaWrapper<SysEnumEntity> wrapper = new MPJLambdaWrapper<>();
+        wrapper.eq(SysEnumEntity::getGroupCode, "IMG-TYPE");
+        wrapper.selectAll(SysEnumEntity.class);
         List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
         List<ImgEntity> imgs = imgService.lambdaQuery().eq(ImgEntity::getParentId, 0).list();
         for (ImgTreeDto re : res) {
