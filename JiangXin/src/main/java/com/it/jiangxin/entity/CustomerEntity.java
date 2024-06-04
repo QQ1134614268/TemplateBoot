@@ -26,6 +26,12 @@ public class CustomerEntity extends BaseEntity {
     @Column( columnDefinition = "varchar(255) COMMENT '手机号码'")
     private String phone;
     @Schema(name = "风格id", example = "1")
-    @Column( columnDefinition = "int(11) COMMENT '状态'")
+    @Column( columnDefinition = "int(11) COMMENT '风格id'")
     private Integer styleId;
+    @Schema(name = "风格id", example = "1")
+    @Column( columnDefinition = "int(11) COMMENT '进度'")
+    private Integer process;
+    @Schema(name = "风格id", example = "1")
+    @Column( columnDefinition = "int(11) COMMENT '责任人id'")
+    private Integer headId;
 }
