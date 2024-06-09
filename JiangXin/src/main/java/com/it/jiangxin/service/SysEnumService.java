@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service;
  * (Enum)表服务接口
  */
 @Service
-public class EnumService extends ServiceImpl<EnumMapper, SysEnumEntity> {
+public class SysEnumService extends ServiceImpl<EnumMapper, SysEnumEntity> {
 
 }

@@ -9,7 +9,7 @@ import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.entity.vo.IdsPara;
-import com.it.jiangxin.service.EnumService;
+import com.it.jiangxin.service.SysEnumService;
 import com.it.jiangxin.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ import static com.it.jiangxin.config.enum1.GroupCodeEnum.ImgType;
 @SpringBootTest
 public class InitTestEnvDbTest {
     @Resource
-    EnumService enumService;
+    SysEnumService sysEnumService;
     @Resource
     UserService userService;
     @Resource
@@ -65,16 +65,16 @@ public class InitTestEnvDbTest {
             enumEntity.setGroupCode(ImgType.getUniCode());
             // enumEntity.setUniCode(UUID.randomUUID().toString());
             enumEntity.setValue(v);
-            SysEnumEntity old = enumService.getOne(new QueryWrapper<>(enumEntity));
+            SysEnumEntity old = sysEnumService.getOne(new QueryWrapper<>(enumEntity));
             if (old == null) {
-                enumService.save(enumEntity);
+                sysEnumService.save(enumEntity);
             }
         }
     }
 
     @Test
     void test_2_img() throws IOException {
-        List<SysEnumEntity> types = enumService.lambdaQuery()
+        List<SysEnumEntity> types = sysEnumService.lambdaQuery()
                 .eq(SysEnumEntity::getGroupCode, ImgType.getUniCode())
                 .list();
         for (SysEnumEntity e : types) {

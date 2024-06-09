@@ -1,7 +1,6 @@
 package com.it.jiangxin.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.CustomerEntity;
@@ -32,7 +31,8 @@ public class CustomerController {
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<CustomerEntity>> getPage(Page<CustomerEntity> page, CustomerEntity entity) {
-        return ApiResult.success(customerService.page(page, new QueryWrapper<>(entity)));
+        Page<CustomerEntity> page1 = customerService.getPage(page, entity);
+        return ApiResult.success(page1);
     }
 
     @Operation(summary = "根据id修改")

@@ -8,7 +8,7 @@ import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.entity.vo.ImgTreeDto;
-import com.it.jiangxin.service.EnumService;
+import com.it.jiangxin.service.SysEnumService;
 import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.util.BoolUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,7 +34,7 @@ public class ImgController {
     @Resource
     private ImgService imgService;
     @Resource
-    private EnumService enumService;
+    private SysEnumService sysEnumService;
 
     @Operation(summary = "admin/图片管理/新增")
     @PostMapping("/create")
@@ -82,7 +82,7 @@ public class ImgController {
         MPJLambdaWrapper<SysEnumEntity> wrapper = new MPJLambdaWrapper<>();
         wrapper.eq(SysEnumEntity::getGroupCode, ImgType.getUniCode());
         wrapper.selectAll(SysEnumEntity.class);
-        List<ImgTreeDto> res = enumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
+        List<ImgTreeDto> res = sysEnumService.getBaseMapper().selectJoinList(ImgTreeDto.class, wrapper);
         List<ImgEntity> imgList = imgService.lambdaQuery().eq(ImgEntity::getIsHomeImg, true).list();
         for (ImgTreeDto re : res) {
             List<ImgEntity> img = imgList.stream()
