@@ -27,7 +27,7 @@ public class SysEnumController {
     @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Integer> create(@RequestBody SysEnumEntity enumEntity) {
-        boolean save = sysEnumService.save(enumEntity);
+        boolean save = sysEnumService.saveOrUpdate(enumEntity);
         return ApiResult.success(enumEntity.getId());
     }
 
