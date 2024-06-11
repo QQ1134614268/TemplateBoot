@@ -33,8 +33,8 @@ public class BaseEntity implements Serializable {
     private Integer updateBy;
 
     public void setCreate() {
-        this.setCreateBy(JwtUtil.getUserIdNullable());
-        this.setUpdateBy(JwtUtil.getUserIdNullable());
+        this.setCreateBy(JwtUtil.getUserId());
+        this.setUpdateBy(JwtUtil.getUserId());
     }
 
     public void setUpdate() {

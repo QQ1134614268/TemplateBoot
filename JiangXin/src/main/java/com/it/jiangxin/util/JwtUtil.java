@@ -7,17 +7,16 @@ import com.it.jiangxin.config.constant.ConstConf;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Component
 public class JwtUtil {
     public static final String USER_NAME = "userName";
     public static final String USER_ID = "userId";
-    public static final String LOGIN_TERMINAL = "loginTerminal";
     private static String secret;
 
     @Value("${secret:abc@123}")
@@ -30,8 +29,7 @@ public class JwtUtil {
         return JWT.create()
                 .withClaim(USER_ID, id)
                 .withClaim(USER_NAME, userName)
-                .withClaim(LOGIN_TERMINAL, "PC")
-                // .withExpiresAt(date)
+                .withExpiresAt(new Date())
                 .sign(algorithm);
     }
 
@@ -43,7 +41,9 @@ public class JwtUtil {
 
     public static String getUserName() {
         String token = getToken();
-        Assert.notNull(token, "not null");
+        if (token == null) {
+            return null;
+        }
         DecodedJWT jwt = JWT.decode(token);
         return jwt.getClaim(USER_NAME).asString();
     }
@@ -55,20 +55,11 @@ public class JwtUtil {
 
     public static Integer getUserId() {
         String token = getToken();
-        Assert.notNull(token, "not null");
-        DecodedJWT jwt = JWT.decode(token);
-        return jwt.getClaim(USER_ID).asInt();
-    }
-
-    public static Integer getUserIdNullable() {
-        try {
-            String token = getToken();
-            Assert.notNull(token, "not null");
-            DecodedJWT jwt = JWT.decode(token);
-            return jwt.getClaim(USER_ID).asInt();
-        } catch (Exception e) {
+        if (token == null) {
             return null;
         }
+        DecodedJWT jwt = JWT.decode(token);
+        return jwt.getClaim(USER_ID).asInt();
     }
 
     public static Token decode() {
@@ -80,7 +71,6 @@ public class JwtUtil {
         DecodedJWT jwt = JWT.decode(token);
         tokenObj.setUserId(jwt.getClaim(USER_ID).asInt());
         tokenObj.setUserName(jwt.getClaim(USER_NAME).asString());
-        tokenObj.setLoginTerminal(jwt.getClaim(LOGIN_TERMINAL).asString());
         return tokenObj;
     }
 
@@ -94,8 +84,5 @@ public class JwtUtil {
     public static class Token {
         private Integer userId;
         private String userName;
-        private String loginTerminal;
-        private Integer companyId;
     }
-
 }
