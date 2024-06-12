@@ -19,17 +19,17 @@ public class BaseEntity implements Serializable {
     @Column(columnDefinition = "int(11) COMMENT '主键'")
     @Schema(name = "对象id", example = "1")
     private Integer id;
-    @Column( columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
-    @Schema(name = "创建时间", example = "2022-02-02 10:10:10",  hidden = true)
+    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
+    @Schema(name = "创建时间", example = "2022-02-02 10:10:10", hidden = true)
     private LocalDateTime createTime;
-    @Column( columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'")
-    @Schema(name = "修改时间", example = "1",  hidden = true)
+    @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间'")
+    @Schema(name = "修改时间", example = "1", hidden = true)
     private LocalDateTime updateTime;
-    @Column( columnDefinition = "int(11) COMMENT '创建者id'")
-    @Schema(name = "创建者id", example = "1",  hidden = true)
+    @Column(columnDefinition = "int(11) COMMENT '创建者id'")
+    @Schema(name = "创建者id", example = "1", hidden = true)
     private Integer createBy;
-    @Column( columnDefinition = "int(11) COMMENT '修改者id'")
-    @Schema(name = "修改者id", example = "1",  hidden = true)
+    @Column(columnDefinition = "int(11) COMMENT '修改者id'")
+    @Schema(name = "修改者id", example = "1", hidden = true)
     private Integer updateBy;
 
     public void setCreate() {

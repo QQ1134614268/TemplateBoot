@@ -1,6 +1,12 @@
 package com.it.jiangxin;
 
 
+import com.it.jiangxin.config.ApiResult;
+import com.it.jiangxin.config.enum1.AccountEnum;
+import com.it.jiangxin.controller.UserController;
+import com.it.jiangxin.entity.UserEntity;
+import com.it.jiangxin.util.PasswordUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,11 +18,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.Date;
 
 
 @SpringBootTest
 public class UserControllerTest {
 
+    @Resource
+    private UserController userController;
+    @Resource
+    private Util util;
     @Resource
     private WebApplicationContext webApplicationContext;
 
@@ -36,9 +48,20 @@ public class UserControllerTest {
     }
 
     @Test
-    public void test_0_create() {
-        // ApiResult res = userController.create(userEntity);
-        // Assertions.assertEquals(1, res.getCode());
+    public void test_0_create() throws IOException {
+        String[] names = new String[]{"admin", "test"};
+        for (String name : names) {
+            UserEntity user = new UserEntity();
+            user.setUserName(name);
+            user.setNickName(name);
+            user.setPassword(PasswordUtil.desPassword(name));
+            user.setAvatar(util.getUploadUrl("avtar.test.webp"));
+            user.setPhone("188****1234");
+            user.setStatus(AccountEnum.normal.value);
+            user.setBirthDay(new Date());
+            ApiResult<Integer> res = userController.create(user);
+            Assertions.assertEquals(1, res.getCode());
+        }
     }
 
     @Test
@@ -59,5 +82,4 @@ public class UserControllerTest {
         // ApiResult res = userController.login(user);
         // Assertions.assertEquals(1, res.getCode());
     }
-
 }

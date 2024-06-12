@@ -35,9 +35,9 @@ public class InitTestEnvDbTest {
     @Resource
     UserService userService;
     @Resource
-    FileController fileController;
-    @Resource
     ImgController imgController;
+    @Resource
+    Util util;
 
     @Value("${clearTestData:false}")
     private Boolean clearTestData;
@@ -47,7 +47,7 @@ public class InitTestEnvDbTest {
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName("test");
         userEntity.setPassword("test");
-        userEntity.setAvatar(getUploadUrl("avtar.test.webp"));
+        userEntity.setAvatar(util.getUploadUrl("avtar.test.webp"));
         LocalDate localDate = LocalDate.of(2000, 1, 1);
         userEntity.setBirthDay(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         UserEntity old = userService.lambdaQuery().eq(UserEntity::getUserName, userEntity.getUserName()).one();
@@ -83,7 +83,7 @@ public class InitTestEnvDbTest {
                 ArrayList<ImgEntity> list = new ArrayList<>();
                 for (int j = 1; j < 6; j++) {
                     ImgEntity imgEntity = new ImgEntity();
-                    imgEntity.setImgUrl(getUploadUrl("house.法式.webp"));
+                    imgEntity.setImgUrl(util.getUploadUrl("house.法式.webp"));
                     imgEntity.setGroupUuid(uuid);
                     imgEntity.setDescription("这套风格借鉴了" + e.getValue() + "艺术......");
                     if (j == 1) { // 首页
@@ -101,7 +101,7 @@ public class InitTestEnvDbTest {
     @Test
     void test_1_upload() throws IOException {
         String path = "avtar.test.webp";
-        System.out.println(getUploadUrl(path));
+        System.out.println(util.getUploadUrl(path));
     }
 
     @Test
@@ -114,13 +114,4 @@ public class InitTestEnvDbTest {
         imgController.deleteByIds(new IdsPara(ids));
     }
 
-    private String getUploadUrl(String path) throws IOException {
-        org.springframework.core.io.Resource resource = new ClassPathResource(path);
-        MultipartFile multipartFile = new MockMultipartFile("file", path, MediaType.TEXT_PLAIN_VALUE, resource.getInputStream());
-        ApiResult<String> res = fileController.upload(multipartFile);
-        if (res.isError()) {
-            throw new RuntimeException(res.getMessage());
-        }
-        return res.getData();
-    }
 }

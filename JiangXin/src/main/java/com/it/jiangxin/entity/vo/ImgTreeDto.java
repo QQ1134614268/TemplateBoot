@@ -1,7 +1,7 @@
 package com.it.jiangxin.entity.vo;
 
-import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.ImgEntity;
+import com.it.jiangxin.entity.SysEnumEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 
 @Tag(name = "系统用户")
@@ -25,9 +26,10 @@ public class UserController {
 
     @Operation(summary = "新增")
     @PostMapping("/create")
-    public ApiResult<Boolean> create(@RequestBody UserEntity userEntity) {
+    public ApiResult<Integer> create(@RequestBody UserEntity userEntity) {
+        // userEntity.setPassword(PasswordUtil.desPassword(userEntity.getPassword()));
         userService.save(userEntity);
-        return ApiResult.success();
+        return ApiResult.success(userEntity.getId());
     }
 
     @Operation(summary = "分页查询")
@@ -54,14 +56,16 @@ public class UserController {
     @Operation(summary = "login")
     @PostMapping("/login")
     public ApiResult<String> login(@RequestBody UserEntity user) {
-        user = userService.lambdaQuery()
+        UserEntity old = userService.lambdaQuery()
                 .eq(UserEntity::getUserName, user.getUserName())
-                .eq(UserEntity::getPassword, user.getPassword())
                 .one();
-        if (user == null) {
+        if (old == null) {
             return ApiResult.fail("用户或者密码不存在");
         }
-        return ApiResult.success(JwtUtil.toToken(user.getId(), user.getUserName()));
+        if (Objects.equals(old.getPassword(), user.getPassword())) {
+            return ApiResult.success(JwtUtil.toToken(old.getId(), old.getUserName()));
+        }
+        return ApiResult.fail("用户或者密码不存在");
     }
 
     @Operation(summary = "logout")
