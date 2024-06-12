@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebApplication {
+public class JiangxinApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
+        SpringApplication.run(JiangxinApplication.class, args);
         // SpringApplication app = new SpringApplication(WebApplication.class);
         // Environment env = app.run(args).getEnvironment();
         // System.out.println(env.getProperty("server.port"));
