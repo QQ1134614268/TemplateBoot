@@ -6,18 +6,19 @@ WORKDIR /app
 COPY pom.xml /app
 COPY src /app/src
 # 在 Docker 容器中构建 Maven 项目
-RUN mvn clean package
+RUN mvn clean package # -DskipTests
 
 # 使用一个轻量级的 JDK 镜像作为基础镜像
 FROM openjdk:8-jre-slim
 # 设置工作目录
 WORKDIR /app
+RUN mkdir -p data/upload
+RUN mkdir -p data/log
 # 将 Maven 容器中的 target/*.jar 复制到 Docker 容器的 /app 目录下
-COPY --from=build /app/target/*.jar /app/app.jar
-# 暴露 8080 端口，Spring Boot 应用默认使用 8080 端口
-EXPOSE 8080
+COPY --from=build /app/target/jiangxin.jar /app/jiangxin.jar
+EXPOSE 29090 # 暴露端口
 # 在容器启动时运行 jar 包
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "-Dactive=pro", "jiangxin.jar"]
 
-# docker build -t springboot-demo .
-# docker run -p 8080:8080 springboot-demo
+# docker build -t jiangxin:20240613 .
+# docker run -d -p 29090:29090 -v /app/jiangxin/data:/app/data jiangxin:20240613

@@ -5,6 +5,7 @@ import com.it.jiangxin.util.FileUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
@@ -29,8 +30,8 @@ public class FileController {
 
     @Resource
     public HttpServletResponse response;
-
-    private final String upload_path = Paths.get(System.getProperty("user.dir"), "data/upload").toString();
+    @Value("${upload_path:}")
+    private String upload_path;
 
     @Operation(summary = "上传")
     @PostMapping("/upload")
