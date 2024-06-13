@@ -21,7 +21,7 @@ import java.util.List;
 @Table(appliesTo = "sys_enum", comment = "系统枚举")
 @Schema(name = "系统枚举表")
 public class SysEnumEntity extends BaseEntity implements TreeNode {
-    // 省市县, 下拉菜单, 下拉级联菜单
+
     @Schema(name = "分组code", example = "test_1")
     @Column(columnDefinition = "varchar(32) COMMENT '分组code'")
     private String groupCode; // 标识下拉
