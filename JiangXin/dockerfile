@@ -28,5 +28,5 @@ EXPOSE 29090
 # 在容器启动时运行 jar 包
 CMD ["java", "-jar", "-Dactive=pro", "JiangxinServe.jar"]
 
-# docker build -t JiangxinServe:20240613 .
-# docker run -d --name JiangxinServe -p 29090:29090 -v /app/jiangxin/data:/app/data jiangxin:20240613
+# docker build -t jiangxin_serve:20240613 .
+# docker run -d --name JiangxinServe -p 29090:29090 -v /app/jiangxin/data:/app/data jiangxin_serve:20240613
