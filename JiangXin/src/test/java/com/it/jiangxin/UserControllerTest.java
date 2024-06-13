@@ -1,6 +1,7 @@
 package com.it.jiangxin;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.config.enum1.AccountEnum;
 import com.it.jiangxin.controller.UserController;
@@ -49,25 +50,24 @@ public class UserControllerTest {
 
     @Test
     public void test_0_create() throws IOException {
-        String[] names = new String[]{"admin", "test"};
-        for (String name : names) {
-            UserEntity user = new UserEntity();
-            user.setUserName(name);
-            user.setNickName(name);
-            user.setPassword(PasswordUtil.desPassword(name));
-            user.setAvatar(util.getUploadUrl("avtar.test.webp"));
-            user.setPhone("188****1234");
-            user.setStatus(AccountEnum.normal.value);
-            user.setBirthDay(new Date());
-            ApiResult<Integer> res = userController.create(user);
-            Assertions.assertEquals(1, res.getCode());
-        }
+        String name = "test01";
+        UserEntity user = new UserEntity();
+        user.setUserName(name);
+        user.setNickName(name);
+        user.setPassword(PasswordUtil.desPassword(name));
+        user.setAvatar(util.getUploadUrl("avtar.test.webp"));
+        user.setPhone("188****1234");
+        user.setStatus(AccountEnum.normal.value);
+        user.setBirthDay(new Date());
+        user.setCreate();
+        ApiResult<Integer> res = userController.create(user);
+        Assertions.assertEquals(1, res.getCode());
     }
 
     @Test
     public void test_1_getPage() {
-        // ApiResult res = userController.getPage(page, userEntity);
-        // Assertions.assertEquals(1, res.getCode());
+        ApiResult<Page<UserEntity>> res = userController.getPage(Page.of(1, 10), new UserEntity());
+        Assertions.assertEquals(1, res.getCode());
     }
 
     @Test

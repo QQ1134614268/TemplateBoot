@@ -12,11 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/api/test")
+@RequestMapping
 @Hidden
 public class TestController {
 
-    @GetMapping
+    @GetMapping("/")
     @Operation(summary = "测试连通性")
     public String hello() {
         return "hello world!";

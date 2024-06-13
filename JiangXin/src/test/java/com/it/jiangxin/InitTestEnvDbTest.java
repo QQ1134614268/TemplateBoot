@@ -3,26 +3,22 @@ package com.it.jiangxin;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
-import com.it.jiangxin.controller.FileController;
+import com.it.jiangxin.config.enum1.AccountEnum;
 import com.it.jiangxin.controller.ImgController;
+import com.it.jiangxin.controller.UserController;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.service.SysEnumService;
-import com.it.jiangxin.service.UserService;
+import com.it.jiangxin.util.PasswordUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,7 +29,7 @@ public class InitTestEnvDbTest {
     @Resource
     SysEnumService sysEnumService;
     @Resource
-    UserService userService;
+    private UserController userController;
     @Resource
     ImgController imgController;
     @Resource
@@ -44,17 +40,20 @@ public class InitTestEnvDbTest {
 
     @Test
     void test_1_user() throws IOException {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUserName("test");
-        userEntity.setPassword("test");
-        userEntity.setAvatar(util.getUploadUrl("avtar.test.webp"));
-        LocalDate localDate = LocalDate.of(2000, 1, 1);
-        userEntity.setBirthDay(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        UserEntity old = userService.lambdaQuery().eq(UserEntity::getUserName, userEntity.getUserName()).one();
-        if (old != null) {
-            userEntity.setId(old.getId());
+        String[] names = new String[]{"admin", "test"};
+        for (String name : names) {
+            UserEntity user = new UserEntity();
+            user.setUserName(name);
+            user.setNickName(name);
+            user.setPassword(PasswordUtil.desPassword(name));
+            user.setAvatar(util.getUploadUrl("avtar.test.webp"));
+            user.setPhone("188****1234");
+            user.setStatus(AccountEnum.normal.value);
+            user.setBirthDay(new Date());
+            user.setCreate();
+            ApiResult<Integer> res = userController.create(user);
+            Assertions.assertEquals(1, res.getCode());
         }
-        userService.saveOrUpdate(userEntity);
     }
 
     @Test
@@ -64,7 +63,7 @@ public class InitTestEnvDbTest {
             SysEnumEntity enumEntity = new SysEnumEntity();
             enumEntity.setGroupCode(ImgType.getUniCode());
             // enumEntity.setUniCode(UUID.randomUUID().toString());
-            enumEntity.setValue(v);
+            enumEntity.setName(v);
             SysEnumEntity old = sysEnumService.getOne(new QueryWrapper<>(enumEntity));
             if (old == null) {
                 sysEnumService.save(enumEntity);

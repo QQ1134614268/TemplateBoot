@@ -38,3 +38,4 @@ mybatis-plus:
       table-underline: false
 secret: abc@123
 upload_path: /app/data/upload
+serveHost: ggok.top

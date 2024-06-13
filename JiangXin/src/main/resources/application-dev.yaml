@@ -38,3 +38,4 @@ mybatis-plus:
       table-underline: false
 secret: abc@123
 upload_path: D:\workspace\TemplateBoot\JiangXin\data\upload
+serveHost: 127.0.0.1

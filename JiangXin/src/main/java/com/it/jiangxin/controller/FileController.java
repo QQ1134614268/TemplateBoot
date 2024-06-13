@@ -32,6 +32,8 @@ public class FileController {
     public HttpServletResponse response;
     @Value("${upload_path:}")
     private String upload_path;
+    @Value("${serveHost:127.0.0.1}")
+    private String serveHost;
 
     @Operation(summary = "上传")
     @PostMapping("/upload")
@@ -54,7 +56,7 @@ public class FileController {
         Path path = Paths.get(upload_path, newName);
 
         Files.write(path, file.getBytes());
-        return ApiResult.success("http://localhost:29090/api/file/download/" + newName);
+        return ApiResult.success(String.format("http://%s:29090/api/file/download/%s", serveHost, newName));
     }
 
     @Operation(summary = "下载")
