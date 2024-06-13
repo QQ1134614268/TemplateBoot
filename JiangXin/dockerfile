@@ -5,7 +5,7 @@ WORKDIR /app
 # 将本地 Maven 项目的 pom.xml 和 src 目录复制到 Docker 容器的 /app 目录下
 COPY pom.xml /app
 COPY src /app/src
-# 在 Docker 容器中构建 Maven 项目, maven.repo.local 默认为卷,其他容器会覆盖掉, 利用docker缓存,避免重复下载; 参考 https://blog.csdn.net/LK_Lawliet/article/details/131950674
+# 在 Docker 容器中构建 Maven 项目, maven.repo.local 默认为卷,其他容器会覆盖掉??, 利用docker缓存,避免重复下载; 参考 https://blog.csdn.net/LK_Lawliet/article/details/131950674
 RUN mvn install -DskipTests -Dmaven.repo.local=./.m2
 
 # 使用一个轻量级的 JDK 镜像作为基础镜像
