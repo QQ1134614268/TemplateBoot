@@ -1,5 +1,5 @@
 # 使用官方的 Maven 镜像作为基础镜像
-FROM maven:3.6.3-jdk-11 AS build
+FROM maven:3.6.3-jdk-8 AS build
 # 将当前目录设置为工作目录
 WORKDIR /app
 # 将本地 Maven 项目的 pom.xml 和 src 目录复制到 Docker 容器的 /app 目录下
@@ -9,7 +9,7 @@ COPY src /app/src
 RUN mvn clean package
 
 # 使用一个轻量级的 JDK 镜像作为基础镜像
-FROM openjdk:11-jre-slim
+FROM openjdk:8-jre-slim
 # 设置工作目录
 WORKDIR /app
 # 将 Maven 容器中的 target/*.jar 复制到 Docker 容器的 /app 目录下
