@@ -6,7 +6,7 @@ WORKDIR /app
 COPY pom.xml /app
 COPY src /app/src
 # 在 Docker 容器中构建 Maven 项目
-RUN mvn clean package # -DskipTests
+RUN mvn clean package -DskipTests
 
 # 使用一个轻量级的 JDK 镜像作为基础镜像
 FROM openjdk:8-jre-slim
