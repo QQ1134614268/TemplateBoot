@@ -4,7 +4,7 @@ FROM maven:3.6.0-jdk-8-alpine AS build
 WORKDIR /app
 COPY pom.xml /app
 # 优化: 使用自定义setting.xml, 配置国内源,加快下载速度; go-offline: 下载依赖和maven插件
-RUN mvn dependency:go-resolve
+RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
