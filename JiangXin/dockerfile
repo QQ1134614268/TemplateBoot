@@ -23,4 +23,4 @@ EXPOSE 29090
 CMD ["java", "-jar", "-Dactive=pro", "JiangxinServe.jar"]
 
 # docker build -t jiangxin_serve .
-# docker run -d --name jiangxin_serve -p 29090:29090 -v /app/jiangxin/data:/app/data jiangxin_serve
+# docker run -d --name jiangxin_serve -p 29090:29090 -v /app/jiangxin/data:/app/data --restart=always jiangxin_serve
