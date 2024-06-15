@@ -5,8 +5,8 @@ package com.it.boot.config.enum1;
  */
 public enum DelTypeEnum  {
 
-    NO(0, "男"),
-    YES(1, "女");
+    NO(0, "是"),
+    YES(1, "否");
 
     final Integer value;
     final String label;

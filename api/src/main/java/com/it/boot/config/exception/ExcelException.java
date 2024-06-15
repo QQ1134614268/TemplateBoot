@@ -1,6 +1,6 @@
 package com.it.boot.config.exception;
 
-import com.it.boot.config.enum1.ResCodeEnum;
+import com.it.boot.config.enum1.CodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ public class ExcelException extends Exception {
     private Integer code;
 
     public ExcelException(String msg) {
-        this(ResCodeEnum.RES_EXCEPTION.getCode(), msg);
+        this(CodeEnum.EXCEPTION.getCode(), msg);
     }
 
     public ExcelException(Integer code, String msg) {

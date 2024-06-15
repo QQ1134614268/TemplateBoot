@@ -2,7 +2,7 @@ package com.it.boot.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.enum1.ResCodeEnum;
+import com.it.boot.config.enum1.CodeEnum;
 import com.it.boot.config.exception.BizException;
 import com.it.boot.entity.dto.Inner;
 import com.it.boot.entity.qo.TimeRangeQo;
@@ -69,7 +69,7 @@ public class HelloController {
     @Operation(summary = "myException")
     @GetMapping("/myException")
     public ApiResult<Boolean> myException() {
-        throw new BizException(ResCodeEnum.RES_FAILURE.getCode(), "MyException");
+        throw new BizException(CodeEnum.FAILURE.getCode(), "MyException");
     }
 
     // http://127.0.0.1:9091/hello/name?name= -------输出--"" 空串
@@ -84,7 +84,7 @@ public class HelloController {
     // GET http://localhost:9091/api/HelloController/enumTest?resCodeEnum=RES_SUCCESS
     @Operation(summary = "enumTest")
     @GetMapping("/enumTest")
-    public String enumTest(ResCodeEnum resCodeEnum) {
+    public String enumTest(CodeEnum resCodeEnum) {
         System.err.println(resCodeEnum.getCode());
         return resCodeEnum.getLabel();
     }

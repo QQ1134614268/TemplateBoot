@@ -3,25 +3,20 @@ package com.it.boot.config.enum1;
 public enum CodeEnum {
     SUCCESS(1, "成功"),
     FAILURE(2, "失败"),
-    FORBIDDEN(4, "禁止"),
-    ;
+    EXCEPTION(4, "异常");
+    private final int code;
+    private final String label;
 
-    final Integer value;
+    CodeEnum(int code, String label) {
+        this.code = code;
+        this.label = label;
+    }
 
-    public Integer getValue() {
-        return value;
+    public int getCode() {
+        return code;
     }
 
     public String getLabel() {
         return label;
     }
-
-    final String label;
-
-    CodeEnum(Integer value, String label) {
-        this.value = value;
-        this.label = label;
-    }
-
-
 }

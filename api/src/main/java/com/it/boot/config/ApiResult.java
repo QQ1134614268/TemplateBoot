@@ -19,27 +19,27 @@ public class ApiResult<T> {
 
     public static <T> ApiResult<T> success(T data) {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.SUCCESS.getValue();
+        res.code = CodeEnum.SUCCESS.getCode();
         res.data = data;
         return res;
     }
 
     public static <T> ApiResult<T> success() {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.SUCCESS.getValue();
+        res.code = CodeEnum.SUCCESS.getCode();
         res.data = null;
         return res;
     }
 
     public static <T> ApiResult<T> fail(String message) {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.FAILURE.getValue();
+        res.code = CodeEnum.FAILURE.getCode();
         res.message = message;
         return res;
     }
 
     public boolean isSuccess() {
-        return this.code == CodeEnum.SUCCESS.getValue();
+        return this.code == CodeEnum.SUCCESS.getCode();
     }
 
     public boolean isError() {
