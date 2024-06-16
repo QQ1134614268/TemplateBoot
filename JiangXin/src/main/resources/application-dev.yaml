@@ -16,7 +16,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
   redis:
     host: 127.0.0.1
-    database: 0
+    database: 1
     port: 6379
     password: 1234567890
   jackson:
