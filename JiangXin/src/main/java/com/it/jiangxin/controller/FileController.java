@@ -34,8 +34,8 @@ public class FileController {
     private String upload_path;
     @Value("${serveHost:127.0.0.1}")
     private String serveHost;
-    @Value("${serve.port:}")
-    private String servePort;
+    @Value("${server.port:}")
+    private Integer servePort;
 
     @Operation(summary = "上传")
     @PostMapping("/upload")
