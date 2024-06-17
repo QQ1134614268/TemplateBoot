@@ -37,5 +37,5 @@ mybatis-plus:
     db-config:
       table-underline: false
 secret: abc@123
-upload_path: /app/data/upload
+upload_path: /app/jingxin_serve/data/upload
 serveHost: ggok.top
