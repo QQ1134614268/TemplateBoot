@@ -41,10 +41,10 @@ public class TestJava8Stream {
         Integer res = numbers.stream().reduce(Integer::sum).orElse(0);
         System.out.println(res);
 
-        res = numbers.stream().reduce(0, Integer::sum); // todo
+        res = numbers.stream().reduce(0, Integer::sum);
         System.out.println(res);
 
-        res = numbers.stream().reduce(0, Integer::sum, (x, y) -> 1); // todo
+        res = numbers.stream().parallel().reduce(0, Integer::sum, (x, y) -> 1); // 并行时, 各个结果怎么合并的函数
         System.out.println(res);
     }
 
@@ -52,7 +52,9 @@ public class TestJava8Stream {
     public void testFlatMap() {
         List<List<Integer>> listOfLists = Arrays.asList(Arrays.asList(1, 2, 3), Arrays.asList(4, 5, 6));
 
-        List<Integer> res = listOfLists.stream().flatMap(List::stream).collect(Collectors.toList());// 将每个内部列表转换为Stream，并合并成一个Stream
+        List<Integer> res = listOfLists.stream()
+                .flatMap(List::stream)
+                .collect(Collectors.toList());// 将每个内部列表转换为Stream，并合并成一个Stream
 
         System.out.println(JSON.toJSONString(res));
     }
@@ -110,12 +112,17 @@ public class TestJava8Stream {
 
     @Test
     public void testGroupBy() {
-        Map<Integer, List<Integer>> res = numbers.stream().collect(Collectors.groupingBy(v -> v)); //Function.identity()
+        Map<Integer, List<Integer>> res = numbers.stream()
+                .collect(Collectors.groupingBy(v -> v)); // Function.identity()
 
-        Map<Integer, Set<Integer>> res3 = numbers.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.mapping(Function.identity(), Collectors.toSet())));
-        Map<Integer, Set<Integer>> res5 = numbers.stream().collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.mapping(Function.identity(), Collectors.toSet())));
-        Map<Integer, List<Integer>> res4 = numbers.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.mapping(Function.identity(), Collectors.toList())));
-        Map<Integer, Integer> res6 = numbers.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(v -> v)));
+        Map<Integer, Set<Integer>> res3 = numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.mapping(Function.identity(), Collectors.toSet())));
+        Map<Integer, Set<Integer>> res5 = numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.mapping(Function.identity(), Collectors.toSet())));
+        Map<Integer, List<Integer>> res4 = numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.mapping(Function.identity(), Collectors.toList())));
+        Map<Integer, Integer> res6 = numbers.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.summingInt(v -> v)));
         Map<Boolean, List<Integer>> res7 = numbers.stream().collect(Collectors.partitioningBy(s -> s > 50));
         // Collection<Integer> r = res6.values();
 
