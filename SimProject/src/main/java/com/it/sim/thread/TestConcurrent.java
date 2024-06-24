@@ -18,8 +18,10 @@ import java.util.stream.IntStream;
 /**
  * todo 并发包 concurrent 整理
  * <pre>
+ * synchronized和Lock对比: 如果说传统的synchronized是一个密码箱自带锁扣，那么lock就是为我们开发者提供的一把可以自由上锁的高级锁。
+ * --
  * atomic包: 提供了一系列原子类; CAS，Compare and Swap即比较并交换。
- * locks包: 锁的一些扩展操作。synchronized和Lock API的使用: 如果说传统的synchronized是一个密码箱自带锁扣，那么lock就是为我们开发者提供的一把可以自由上锁的高级锁。
+ * locks包: 锁的一些扩展操作。
  *      ReentrantLock: 可重入锁
  *      Condition 接口: Condition接口一般与Lock配合使用，拥有一系列的await、signal方法。Lock+Condition的wait/signal相当于sync+wait/notify。
  *      ReentrantReadWriteLock: 可重入读写锁; 优化了的共享&排它锁，它允许多个线程同时读取共享数据，但又只允许一次只有一个线程对共享数据进行更新。从读取测提升了一定的效率。使用时只产生一个读写锁对象，但是可以取得两个不同的角色（读/写）锁进行读写上锁。
@@ -147,5 +149,4 @@ public class TestConcurrent {
         ConcurrentHashMap concurrentHashMap1;
         // todo
     }
-
 }
