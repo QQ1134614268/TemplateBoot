@@ -22,7 +22,7 @@ import java.util.concurrent.CountDownLatch;
  *      3V (海量,多样,实时) -> 3H(高并发,高扩展,高性能)
  *      大数据
  *
- * KafkaStream: 类似Spark, 流数据进行实时处理(实时流处理), 包括数据清洗清洗,转换,聚合,过滤
+ * KafkaStream: 提供了对流数据进行窗口操作、聚合、连接等操作的API; 类似Spark
  * 对比Spark:
  *  优点:
  *      依赖更少
