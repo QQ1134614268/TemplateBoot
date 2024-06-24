@@ -1,18 +1,13 @@
 package com.it.sim.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.junit.Test;
 
 import javax.swing.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author zero DateTime 2018年5月30日 上午10:37:42
