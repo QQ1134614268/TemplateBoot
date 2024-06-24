@@ -6,21 +6,17 @@ import java.util.Arrays;
 
 enum SexEnum {
 
+    male("1", "男"),
+    female("2", "女"),
+    unknown("0", "未知"),
+    ;
 
-    male("male", "1", "男"), female("female", "2", "女"), unknown("unknown", "0", "未知");
-
-    final String uniCode;
     final String value;
     final String label;
 
-    SexEnum(String uniCode, String value, String label) {
-        this.uniCode = uniCode;
+    SexEnum(String value, String label) {
         this.value = value;
         this.label = label;
-    }
-
-    public String getUniCode() {
-        return uniCode;
     }
 
     public String getValue() {
@@ -36,7 +32,7 @@ public class TestEnum {
     @Test
     public void eg1() {
         Class<?> clz = SexEnum.class;
-        System.out.println(clz.getSuperclass() ==Enum.class);
+        System.out.println(clz.getSuperclass() == Enum.class);
         System.out.println(clz.isEnum());
         // clz.enumConstants
         // clz.enumConstantDirectory
@@ -46,5 +42,4 @@ public class TestEnum {
         Object[] arr = clz.getEnumConstants();
         Arrays.stream(arr).forEach(System.out::println);
     }
-
 }
