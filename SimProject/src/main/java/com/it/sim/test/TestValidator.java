@@ -3,6 +3,7 @@ package com.it.sim.test;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.*;
 import jakarta.validation.groups.Default;
 import lombok.Data;
@@ -12,7 +13,6 @@ import org.junit.Test;
 import java.util.Set;
 import java.util.stream.Collectors;
 /**
- * @date 2023-05-04 18:21
  * <pre>
  *  Validator
  *      validate(T var1, Class<?>... var2);
@@ -65,12 +65,17 @@ class Model {
  */
 final class ValidatorUtil {
 
-    // private static final Validator validator  = Validation.buildDefaultValidatorFactory().getValidator();
-    private static final Validator validator = Validation.byProvider(HibernateValidator.class)
-            .configure()
-            .addProperty("hibernate.validator.fail_fast", "true")
-            .buildValidatorFactory()
-            .getValidator();
+    private static final Validator validator;
+
+    static {
+        try (ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .addProperty("hibernate.validator.fail_fast", "true")
+                .buildValidatorFactory()) {
+            validator = validatorFactory
+                    .getValidator();
+        }
+    }
 
     public static <T> Set<ConstraintViolation<T>> validate(T obj, Class<?>... groups) {
         return validator.validate(obj, groups);
