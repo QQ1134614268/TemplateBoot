@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class TestLambdaComparator {
     @Test
-    public void eg1() {
+    public void testComparator() {
         User p1 = new User("B", 1);
         User p2 = new User("D", 3);
         User p3 = new User("A", 2);
@@ -33,9 +33,9 @@ public class TestLambdaComparator {
         User p3 = new User("A", 2);
         List<User> users = Arrays.asList(p2, p1, p3, null);
         // 自定义比较器
-        Comparator<User> comparator = Comparator.comparing(User::getAge, Comparator.nullsFirst(Integer::compareTo))
-                .reversed(); // nullsFirst 优先级高,  允许age 为空
-        Comparator<User> c = Comparator.nullsFirst(comparator);// 允许user为空
+        Comparator<User> comparator = Comparator.comparing(User::getAge, Comparator.nullsFirst(Integer::compareTo)); // 允许age 为空
+        Comparator<User> c = Comparator.nullsFirst(comparator)// 允许user为空
+                .reversed();// 反转顺序
         List<User> res = users.stream().sorted(c).collect(Collectors.toList());
         res.forEach(System.out::println);
     }
@@ -47,5 +47,3 @@ class User {
     String name;
     Integer age;
 }
-
-
