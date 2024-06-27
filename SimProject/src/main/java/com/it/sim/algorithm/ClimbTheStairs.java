@@ -2,8 +2,6 @@ package com.it.sim.algorithm;
 
 /**
  * 爬楼梯问题其实质就是斐波那契数列！
- * <p>
- * <a href="https://blog.csdn.net/wu2304211/article/details/52717578">...</a> 版权声明：本文为博主原创文章，转载请附上博文链接！ *
  */
 public class ClimbTheStairs {
     // todo
@@ -23,14 +21,14 @@ public class ClimbTheStairs {
         return (n == 1 || n == 2) ? n : fib02(n - 2) + fib02(n - 1);
     }
 
-    // 备忘录法
-    public static int dfs(int n, int[] array) {
+    private static int dfs(int n, int[] array) {
         if (array[n] == 0) {
             array[n] = dfs(n - 1, array) + dfs(n - 2, array);
         }
         return array[n];
     }
 
+    // 备忘录法
     public static int fib03(int n) {
         if (n == 0) {
             return 1;
