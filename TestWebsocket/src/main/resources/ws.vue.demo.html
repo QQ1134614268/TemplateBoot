@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ws-vue-demo</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.15.14/index.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.15.14/theme-chalk/index.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/axios/1.3.5/axios.js"></script>
+</head>
+<body>
+<div id="app" class="appPage">
+    <el-form ref="form" :model="form" label-width="5rem">
+        <el-form-item label="消息">
+            <el-input :value="message"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button @click="send">发送</el-button>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    new Vue(
+        {
+            el: '#app',
+            data: {
+                ws: null,
+                message: ''
+            },
+            methods: {
+                init() {
+                    this.ws = new WebSocket('ws://127.0.0.1:8080/ws');
+                    this.ws.onopen = function (event) {
+                        console.log('onopen: ', event);
+                    };
+
+                    this.ws.onmessage = function (event) {
+                        console.log('onmessage: ', event);
+                    };
+
+                    this.ws.onclose = function (event) {
+                        console.log('onclose: ', event, event?.wasClean);
+                    };
+
+                    this.ws.onerror = function (error) {
+                        console.error('onerror: ', error);
+                    };
+                },
+                send() {
+                    this.ws.send(JSON.stringify({
+                        'event': 'my_event',
+                        'data': 'Hello, Server!'
+                    }));
+                }
+            },
+            created() {
+                this.init()
+            }
+        }
+    )
+</script>
+</body>
+<style>
+    .appPage {
+        width: 200px;
+        min-height: 100vh;
+
+        margin: auto;
+    }
+</style>
+</html>

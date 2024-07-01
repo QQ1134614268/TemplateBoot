@@ -19,9 +19,6 @@ public class ApiResult<T> {
     private String message;
 
     public static <T> ApiResult<T> success(T data) {
-        // if (data instanceof IPage) {
-        //     return success(((IPage<?>) data).getRecords(), ((IPage<?>) data).getTotal());
-        // }
         ApiResult<T> res = new ApiResult<T>();
         res.code = Success;
         res.data = data;
@@ -34,14 +31,6 @@ public class ApiResult<T> {
         res.data = null;
         return res;
     }
-
-    // public static <T> ApiResult<T> success(T data, Long total) {
-    //     ApiResult res = new ApiResult();
-    //     res.code = Success;
-    //     res.data = data;
-    //     // res.total = total;
-    //     return res;
-    // }
 
     public static <T> ApiResult<T> fail(String message) {
         ApiResult<T> res = new ApiResult<>();

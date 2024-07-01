@@ -4,39 +4,36 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Component
-public class WebSocketInterceptor implements HandshakeInterceptor {
+public class WsInterceptor implements HandshakeInterceptor {
 
     /**
      * 握手前
      */
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+        // wsHandler.supportsPartialMessages();
+        // wsHandler.afterConnectionEstablished();
+        // wsHandler.afterConnectionClosed();
+        // wsHandler.handleMessage();
         log.info("握手开始");
-        log.info(Optional.ofNullable(request.getHeaders().get("Authorization")).toString());
-        request.getURI().getQuery();
-        request.getHeaders();
-        HttpServletRequest request1;
-        // request1.getParameterMap()
-        // HttpServletRequest r = (HttpServletRequest) request;
-        // return true;
-        // HttpServletRequest req = (HttpServletRequest) request;
-        // String token =  req.getHeader("token");
-        // if (token != null) {
-        //     // 放入属性域
-        //     attributes.put("token", token);
-        //     log.info("用户 token " + token + " 握手成功！");
-        //     return true;
-        // }
-        // log.info("用户登录已失效");
+        MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(request.getURI())
+                .build()
+                .getQueryParams();
+        String userId = queryParams.getFirst("userId");
+        log.info("用户userId: {}", userId);
+        // String token = queryParams.getFirst("token"); // 验证token
+        attributes.put("testAttribute", "123");
+        attributes.put("userId", userId);
+
         return true;
     }
 

@@ -1,0 +1,17 @@
+ServerEndpoint:
+    @ServerEndpoint 是 Java WebSocket API（JSR 356）中的一个注解，用于定义 WebSocket 服务器端点。
+    它将类定义为一个 WebSocket 服务器，并允许你通过注解（如 @OnOpen、@OnClose、@OnMessage 和 @OnError）来处理 WebSocket 事件。
+WebSocketHandler: 
+    WebSocketHandler 是 Spring Framework 提供的接口，用于处理 WebSocket 会话。
+    它提供了处理 WebSocket 消息、连接打开、关闭和异常等事件的回调方法。
+WebSocketMessageBrokerConfigurer: ??
+发送:
+    加锁
+    并发 异步发送, 多线程发送?? todo
+场景:
+    A -> 发送给B, 发送给C; 发送给A,B;
+    群组消息
+    系统推送给所有用户
+
+    post发布消息, 触发推送消息, 推送一个人,推送全部
+    页面, 连接,发送,token, 回显, 前后分离

@@ -1,4 +1,4 @@
-package com.it.websocket.domain;
+package com.it.websocket.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +10,5 @@ import lombok.NoArgsConstructor;
 public class Msg {
     String from;
     String to;
-    String content;
-
-    String topic;
-
+    String msg;
 }

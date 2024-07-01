@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Native WebSocket</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.15.14/index.js"></script>
+    <link href="https://cdn.bootcss.com/element-ui/2.15.14/theme-chalk/index.css" rel="stylesheet">
+
+    <script src="https://cdn.bootcss.com/axios/1.3.5/axios.js"></script>
+</head>
+<body>
+<div id="app" style="min-height: 100vh">
+    <div v-for="(user, index) in userAll" :key="index" class="itemBox">
+        <div class="topic">
+            <el-button @click="subNews(user)">订阅News</el-button>
+            <el-button @click="unSubNews(user)">取消订阅News</el-button>
+            <el-button @click="user.resMsgList=[]">清除数据</el-button>
+            <div>
+                <div v-for="res in user.resMsgList">
+                    {{res}}
+                </div>
+            </div>
+        </div>
+        <el-table :data="user.friends">
+            <el-table-column prop="id" label="id"></el-table-column>
+            <el-table-column prop="userName" label="userName"></el-table-column>
+            <el-table-column prop="history" label="history">
+                <template slot-scope="scope">
+                    {{scope.row.history}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="message" label="message">
+                <template slot-scope="scope">
+                    <el-input v-model="scope.row.message"></el-input>
+                    <el-button @click="httpSendMsg(scope.row, user)">发送</el-button>
+                </template>
+            </el-table-column>
+            <el-table-column prop="message" label="message">
+                <template slot-scope="scope">
+                    <el-input v-model="scope.row.message"></el-input>
+                    <el-button @click="wsSendMsg(scope.row, user)">发送</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+
+    </div>
+</div>
+<script>
+    new Vue(
+        {
+            el: '#app',
+            data: {
+                userAll: [],
+            },
+            methods: {
+                init() {
+                    for (let i = 1; i <= 3; i++) {
+                        let user = {
+                            id: i,
+                            userName: "用户" + i,
+                            friends: [],
+                            resMsgList: [],
+                        }
+                        user.ws = new WebSocket(`ws://127.0.0.1:8080/ws?userId=${user.id}`);
+                        for (let j = 1; j <= 2; j++) {
+                            let friendId = (i + j - 1) % 3 + 1
+                            user.friends.push({id: friendId, userName: "用户" + friendId})
+                        }
+                        user.ws.onmessage = function (event) {
+                            console.log('收到message', event.data)
+                            let message = JSON.parse(event.data);
+                            user.resMsgList.unshift(message)
+                        };
+                        this.userAll.push(user)
+                    }
+                },
+                httpSendMsg(friend, user) {
+                    let url = "http://127.0.0.1:8080/api/ws/sendMsg"
+                    let data = {
+                        from: user.id,
+                        to: friend.id,
+                        msg: friend.message,
+                    }
+                    let res = this.post(url, data)
+                    if (res.data.code === 1) {
+                        friend.message = ""
+                    }
+                },
+                wsSendMsg(friend, user) {
+                    let data = {
+                        path: "sendMsg",
+                        data: {
+                            from: user.id,
+                            to: friend.id,
+                            msg: friend.message,
+                        }
+                    }
+                    this.wsSend(user.ws, data)
+                },
+                subNews(user) {
+                    this.wsSend(user.ws, {path: "subNews"})
+                },
+                unSubNews(user) {
+                    this.wsSend(user.ws, {path: "unSubNews"})
+                },
+                wsSend(ws, data) {
+                    if (!(data instanceof String)) {
+                        data = JSON.stringify(data)
+                    }
+                    ws.send(data)
+                },
+                post(url, data, params) {
+                    return new axios({method: 'POST', url: url, data: data, params: params,})
+                },
+                get(url, params,) {
+                    return new axios({method: 'GET', url: url, params: params,})
+                },
+            },
+            created() {
+                this.init()
+            },
+        }
+    );
+</script>
+</body>
+<style>
+    .itemBox {
+        margin: 16px;
+
+        display: flex;
+
+        border: black 1px solid;
+
+    }
+
+    .topic {
+        width: 400px;
+        border: black 1px solid;
+    }
+</style>
+</html>
