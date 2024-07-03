@@ -1,4 +1,4 @@
-package com.it.websocket.controller.websocket2;
+package com.it.websocket.config.websocket2;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

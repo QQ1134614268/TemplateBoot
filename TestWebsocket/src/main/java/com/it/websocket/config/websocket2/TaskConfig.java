@@ -1,4 +1,4 @@
-package com.it.websocket.controller.websocket2;
+package com.it.websocket.config.websocket2;
 
 import com.it.websocket.config.WsCommand;
 import com.it.websocket.config.WsTopic;

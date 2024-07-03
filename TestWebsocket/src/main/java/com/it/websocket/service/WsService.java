@@ -1,7 +1,7 @@
 package com.it.websocket.service;
 
 import com.it.websocket.config.WsCommand;
-import com.it.websocket.controller.websocket2.WsSessionManager;
+import com.it.websocket.config.websocket2.WsSessionManager;
 import com.it.websocket.dto.Msg;
 import com.it.websocket.dto.WsDto;
 import lombok.extern.slf4j.Slf4j;
