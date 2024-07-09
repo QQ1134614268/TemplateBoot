@@ -5,8 +5,8 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.entity.TestDateEntity;
 import com.it.boot.entity.qo.TestDateQo;
 import com.it.boot.repository.TestDateRepository;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -29,17 +29,11 @@ import static com.it.boot.config.Conf.DATE_TIME_FORMAT;
 @Tag(name = "测试/TestDateController")
 @RestController
 @RequestMapping("/api/TestDateController")
-public class TestDateController { // todo read date ser
-    // mysql 默认使用系统时区  可以设置时区
-    // url中的时区相当于设置时区
-    // 时区影响now()函数 从服务器获取时间 时区影响
-
-    // url时区 jackson时区, 系统时区, jvm时区? mysql服务器时区 -> mysql时区
-    // &serverTimezone=Asia/Tokyo Shanghai Bangkok
-
-    // 本地时间根据url时区,相应调整时间; 转成字符串插入到数据库;  时区影响格式化, 字符串转时间,不影响;
-    // date不受时区影响, time, datetime, timestamp 受时区影响;
-    // 同理,数据库时间转成本地时间, 受时区影响
+public class TestDateController {
+    // serverTimezone:
+    //      Asia/Tokyo Shanghai Bangkok
+    //      数据库查出来是字符串, 会根据serverTimezone 与 本地时间进行转换; 同理Date转字符串存入数据库
+    //      date, time, datetime, timestamp 受时区影响;
     @Resource
     private TestDateRepository testDateRepository;
 
@@ -158,7 +152,7 @@ public class TestDateController { // todo read date ser
         //     localDateTime 手动直接序列化,反序列化
 
 
-        //POST http://localhost:9091/api/TestDateController/testDate?startTime=2022-10-10 10:10:10&endTime=2022-10-10 10:10:10
+        // POST http://localhost:9091/api/TestDateController/testDate?startTime=2022-10-10 10:10:10&endTime=2022-10-10 10:10:10
         // Content-Type: application/json
         //
         // {
