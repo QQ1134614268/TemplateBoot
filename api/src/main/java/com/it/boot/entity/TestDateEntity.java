@@ -1,9 +1,9 @@
 package com.it.boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.it.boot.config.Conf;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +24,7 @@ public class TestDateEntity implements Serializable {
     @Schema(example = "1")
     private Integer id;
 
+    // @JsonFormat(pattern = Conf.DATE_TIME_FORMAT, timezone = "GMT+8")
     @Schema(example = "2022-10-10 10:10:10")
     private Date date;
 
@@ -42,7 +43,6 @@ public class TestDateEntity implements Serializable {
     @Schema(example = "2022-10-10 10:10:10")
     private LocalDate localDate;
 
-    @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     @Schema(example = "2022-10-10 10:10:10")
     private LocalDateTime localDateTime;
 

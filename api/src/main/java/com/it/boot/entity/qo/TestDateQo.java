@@ -17,6 +17,7 @@ public class TestDateQo {
 
     @DateTimeFormat(pattern = Conf.DATE_FORMAT)
     @JsonFormat(pattern = Conf.DATE_TIME_FORMAT)
+    // @JsonDeserialize(using = CustomDateDeserializer.class)
     private Date datetime;
 
     private LocalDate localDate;

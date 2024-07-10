@@ -1,7 +1,8 @@
 package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.DateSerializerConfig;
+import com.it.boot.config.SerializerConvertConfig;
+import com.it.boot.config.SerializerObjectMapperConfig;
 import com.it.boot.entity.TestDateEntity;
 import com.it.boot.entity.qo.TestDateQo;
 import com.it.boot.repository.TestDateRepository;
@@ -81,7 +82,8 @@ public class TestDateController {
     /**
      * 配置序列化
      *
-     * @see DateSerializerConfig
+     * @see SerializerConvertConfig
+     * @see SerializerObjectMapperConfig
      */
     @Operation(summary = "testDateSerializer")
     @PostMapping("/testDateSerializer")
