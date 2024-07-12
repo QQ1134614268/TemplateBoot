@@ -134,17 +134,70 @@ public class UserBatisController {
      *         // 继承 AbstractChainWrapper方法, 众多sql字符相关,不能使用(getSqlSelect,getSqlComment,getTargetSql,getSqlSet,getCustomSqlSegment)
      * </pre>
      */
+    @Operation(summary = "测试 QueryWrapper 复杂查询")
+    @GetMapping("/testQueryWrapper")
+    public void testQueryWrapper() {
+        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
+        wrapper.select("id");
+        log.info("Wrapper/QueryWrapper 获取sql: {}", wrapper.getExpression().getSqlSegment());
+        // wrapper.isEmptyOfWhere();
+        // wrapper.nonEmptyOfWhere();
+        // wrapper.isEmptyOfNormal();
+        // wrapper.nonEmptyOfNormal();
+        // wrapper.nonEmptyOfEntity();
+        //
+        // wrapper.getExpression();
+        // wrapper.getExpression().getSqlSegment();
+        // wrapper.getExpression().getNormal();
+        // wrapper.getExpression().getGroupBy();
+        // wrapper.getExpression().getHaving();
+        //
+        // wrapper.getSqlFirst();
+        // wrapper.getSqlComment();
+        // wrapper.getSqlSelect();
+        // wrapper.getTargetSql();
+        // wrapper.getSqlSet();
+        // wrapper.getCustomSqlSegment();
+        // wrapper.getEntity();
+
+        userBatisService.list(wrapper);
+    }
+
+    @Operation(summary = "测试 LambdaQueryWrapper 复杂查询")
+    @GetMapping("/testLambdaQueryWrapper")
+    public void testLambdaQueryWrapper() {
+        LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.select(UserEntity::getId);
+        wrapper.getExpression();
+        log.info("Wrapper/LambdaQueryWrapper 获取sql: {}", wrapper.getExpression().getSqlSegment());
+
+        userBatisService.list(wrapper);
+    }
+
+    @Operation(summary = "测试 QueryChainWrapper 复杂查询")
+    @GetMapping("/testQueryChainWrapper")
+    public void testQueryChainWrapper() {
+        QueryChainWrapper<UserEntity> wrapper = new QueryChainWrapper<>(userBatisService.getBaseMapper());
+        wrapper.select("id");
+
+        log.info("ChainWrapper/QueryChainWrapper 获取sql: {}", wrapper.getWrapper().getExpression().getSqlSegment());
+
+        userBatisService.list(wrapper);
+    }
+
     @Operation(summary = "测试 LambdaQueryChainWrapper 复杂查询")
     @GetMapping("/testLambdaQueryChainWrapper")
     public ApiResult<List<UserEntity>> testLambdaQueryChainWrapper(UserQo qo) {
-        LambdaQueryChainWrapper<UserEntity> query = userBatisService.lambdaQuery();
+        LambdaQueryChainWrapper<UserEntity> wrapper = userBatisService.lambdaQuery();
+        log.info("ChainWrapper/LambdaQueryChainWrapper 获取sql: {}", wrapper.getWrapper().getExpression().getSqlSegment());
+
         Consumer<LambdaQueryWrapper<UserEntity>> whereAuth = w -> w.or(w2 -> w2.eq(UserEntity::getCreateBy, 1)
                 .eq(UserEntity::getCreateBy, 2)).or(w2 -> w2.eq(UserEntity::getDeptId, 1).eq(UserEntity::getDeptId, 2));
 
         Consumer<LambdaQueryWrapper<UserEntity>> whereSearch = w -> w.like(UserEntity::getUserName, qo.getSearch())
                 .or()
                 .like(UserEntity::getNickName, qo.getSearch());
-        query.select(UserEntity::getId, UserEntity::getUserName, UserEntity::getPhone)
+        wrapper.select(UserEntity::getId, UserEntity::getUserName, UserEntity::getPhone)
                 .isNotNull(true, UserEntity::getUserName)
                 .leSql(true, UserEntity::getId, "10") //  id < 10
                 .inSql(true, UserEntity::getId, "1,2") // id in (1, 2)
@@ -162,52 +215,7 @@ public class UserBatisController {
                 .last("# last \n")
                 .comment("# this is comment\n");
 
-        // wrapper.isEmptyOfWhere();
-        // wrapper.nonEmptyOfWhere();
-        // wrapper.isEmptyOfNormal();
-        // wrapper.nonEmptyOfNormal();
-        // wrapper.nonEmptyOfEntity();
-
-        // wrapper.getExpression();
-
-        // wrapper.getSqlFirst();
-        // wrapper.getSqlComment();
-        // wrapper.getSqlSelect();
-        // wrapper.getTargetSql();
-        // wrapper.getSqlSet();
-        // wrapper.getCustomSqlSegment();
-        // wrapper.getExpression();
-        // wrapper.getEntity();
-
-        List<UserEntity> res = query.list();
+        List<UserEntity> res = wrapper.list();
         return ApiResult.success(res);
-    }
-
-    @Operation(summary = "测试 QueryChainWrapper 复杂查询")
-    @GetMapping("/testMybatis2")
-    public void testQueryChainWrapper() {
-        QueryChainWrapper<UserEntity> wrapper = new QueryChainWrapper<>(userBatisService.getBaseMapper());
-        wrapper.select("id");
-
-        log.info(wrapper.getSqlFirst());
-
-    }
-
-    @Operation(summary = "测试 LambdaQueryWrapper 复杂查询")
-    @GetMapping("/testLambdaQueryWrapper")
-    public void testLambdaQueryWrapper() {
-        LambdaQueryWrapper<UserEntity> wrapper = new LambdaQueryWrapper<>();
-        wrapper.select(UserEntity::getId);
-
-        log.info(wrapper.getSqlFirst());
-    }
-
-    @Operation(summary = "测试 QueryWrapper 复杂查询")
-    @GetMapping("/testQueryWrapper")
-    public void testQueryWrapper() {
-        QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-        wrapper.select("id");
-
-        log.info(wrapper.getSqlFirst());
     }
 }

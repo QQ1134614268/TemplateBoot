@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.enum1.CodeEnum;
 import com.it.boot.config.exception.BizException;
-import com.it.boot.entity.dto.Inner;
+import com.it.boot.entity.qo.StudentQo;
 import com.it.boot.entity.qo.TimeRangeQo;
 import com.it.boot.entity.vo.StudentVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,16 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Enumeration;
-/**
- * 接收数组:
- *      用 @RequestParam
- *      转对象
- *      用 @ModelAttribute
- *      字符串接收, 手动转换
- *      数组接收: Long[] projectIds
- *      post请求 + @RequestBody
- *      post请求 + @RequestBody + 对象
- * */
+
+
 @Slf4j
 @Tag(name = "测试/hello")
 @RestController
@@ -48,16 +40,64 @@ public class HelloController {
 
     @Operation(summary = "/hello")
     @GetMapping("/hello")
-    public String hello() {
+    public String hello() { // 返回String: Content-Type: text/plain; 返回对象: Content-Type: application/json
         return "hello world!";
     }
 
+    @Operation(summary = "testName")
+    @GetMapping(value = "/testName")
+    public ApiResult<StudentQo> testName(String name, @RequestParam(value = "name", required = false) String name2, StudentQo studentQo) {
+        // ?name=tom        "tom"
+        // ?name=           ""
+        // ?                 null
 
-    @Operation(summary = "test")
-    @GetMapping(value = "/test")
-    public String test(Inner inner0, String all, @RequestParam("all") String all2) {
-        log.info(JSON.toJSONString(inner0));
-        return JSON.toJSONString(inner0);
+        // 默认 从url取值; 根据参数类型, 赋值
+        log.info(name);
+        log.info(name2);
+        log.info(JSON.toJSONString(studentQo));
+        return ApiResult.success(studentQo);
+    }
+
+    // GET http://localhost:9091/api/HelloController/testDate?date=Oct 20 20:27:37 CST 2018
+    // GET http://localhost:9091/api/HelloController/testDate?date=2000-01-01 00:00:00
+    @Operation(summary = "testDate")
+    @GetMapping("/testDate")
+    public ApiResult<String> testDate(Date date) {
+        System.err.println("接收到 Date 参数: " + date);
+        return ApiResult.success();
+    }
+
+    @Operation(summary = "testRequestBody")
+    @PostMapping("/testRequestBody")
+    public ApiResult<StudentVO> testRequestBody(@RequestBody StudentVO vo) { // RequestBody 只从 body中取值, 只能有一个
+        log.info(JSON.toJSONString(vo));
+        return ApiResult.success(vo);
+    }
+    /**
+     * 接收数组:
+     * 用 @RequestParam
+     * 用对象
+     * 用 @ModelAttribute
+     * 字符串接收, 手动转换
+     * 数组接收: Long[] projectIds
+     * <br/>
+     * post请求 + @RequestBody
+     * post请求 + @RequestBody + 对象
+     */
+    // GET http://localhost:9091/api/HelloController/testArray?array=1,2,3
+    @Operation(summary = "testArray")
+    @RequestMapping(value = "/testArray", method = {RequestMethod.GET, RequestMethod.POST})
+    public int[] testArray(int[] array) {
+        System.err.println("接收到int[] array参数: " + Arrays.toString(array));
+        return array;
+    }
+
+    // GET http://localhost:9091/api/HelloController/testEnum?codeEnum=SUCCESS
+    @Operation(summary = "testEnum")
+    @GetMapping("/enumTest")
+    public String testEnum(CodeEnum codeEnum) {
+        System.err.println(codeEnum.getCode());
+        return codeEnum.getLabel();
     }
 
     @Operation(summary = "configPort")
@@ -66,57 +106,21 @@ public class HelloController {
         return ApiResult.success(port);
     }
 
-    @Operation(summary = "myException")
-    @GetMapping("/myException")
-    public ApiResult<Boolean> myException() {
+    @Operation(summary = "testException")
+    @GetMapping("/testException")
+    public ApiResult<Boolean> testException() {
         throw new BizException(CodeEnum.FAILURE.getCode(), "MyException");
     }
 
-    // http://127.0.0.1:9091/hello/name?name= -------输出--"" 空串
-    // http://127.0.0.1:9091/hello/name? -------输出--null 没有
-    // http://127.0.0.1:9091/hello/name?name=tom&name=kate  // name=tom,kate
-    @Operation(summary = "name")
-    @GetMapping(value = "/name", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ApiResult<String> name(String name) {//
+    @Operation(summary = "testContentType")
+    @PostMapping(value = "/testContentType",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},  // 指定 Content-Type: application/json
+            produces = {MediaType.APPLICATION_JSON_VALUE})  // 指定返回 Content-Type: application/json, 并序列化
+    public ApiResult<String> testContentType(String name) {
+        // consumes 指定request的 Content-Type,
+        // produces 指定response的 Content-Type, 并且有序列化类,否则 No converter for [class com.it.boot.config.ApiResult] with preset Content-Type 'null'"
+        log.info(name);
         return ApiResult.success(name);
-    }
-
-    // GET http://localhost:9091/api/HelloController/enumTest?resCodeEnum=RES_SUCCESS
-    @Operation(summary = "enumTest")
-    @GetMapping("/enumTest")
-    public String enumTest(CodeEnum resCodeEnum) {
-        System.err.println(resCodeEnum.getCode());
-        return resCodeEnum.getLabel();
-    }
-
-    // GET http://localhost:9091/api/HelloController/date?date=Oct 20 20:27:37 CST 2018
-    // GET http://localhost:9091/api/HelloController/date?date=2000-01-01 00:00:00
-    @Operation(summary = "date")
-    @GetMapping("/date")
-    public ApiResult<String> date(Date date) {
-        System.err.println("接收到 Date 参数: " + date);
-        return ApiResult.success();
-    }
-
-    // list接收方式 1,数组; 2,对象接收; 3,string自行转换; 4, body接收(post)
-    // GET http://localhost:9091/api/HelloController/getArray?array=1,2,3
-    @Operation(summary = "getArray")
-    @GetMapping("/getArray")
-    public int[] getArray(int[] array) {
-        System.err.println("接收到int[] array参数: " + Arrays.toString(array));
-        return array;
-    }
-
-    /**
-     * springboot 参数映射方式
-     * <br/>
-     * 没有 @RequestBody,从param中取值, 多个@RequestBody报IOException: Stream closed 异常
-     */
-    @Operation(summary = "studentVo_name")
-    @PostMapping("/studentVo_name")
-    public ApiResult<StudentVO> studentVo_name(@RequestBody StudentVO vo, String name) {
-        System.err.println(vo.toString() + name);
-        return ApiResult.success(vo);
     }
 
     @GetMapping("/printRequest")
