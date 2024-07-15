@@ -18,6 +18,7 @@ public class TopicListener {
 
     // 转字符串, 会有转义的 \" 存入是什么类型, 接收就用什么类型;
     // JsonSerializer 会把任意类型(包括String) 转一次JsonString, 导致转义
+    // @KafkaListener(topics = {Topics.USER_TOPIC}, groupId ="${kafka.consumer.groupId}")
     @KafkaListener(topics = {Topics.USER_TOPIC}, groupId = Topics.GROUP_ID)
     public void onMessage1(ConsumerRecord<String, String> record) {
         log.info("简单消费: record<String, String> 接收数据; topic: {}\tpartition: {}\tkey: {}\tvalue: {}",

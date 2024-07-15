@@ -57,6 +57,7 @@ public class KafkaConfig {
 
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
+        // props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         // props.put(ErrorHandlingDeserializer.VALUE_FUNCTION, FailedFooProvider.class);
 
         return new DefaultKafkaConsumerFactory<>(
