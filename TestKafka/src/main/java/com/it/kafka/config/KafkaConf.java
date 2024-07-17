@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * https://www.saoniuhuo.com/article/detail-21577.html
  */
-public class KafkaConfig {
+public class KafkaConf {
     // 概念
     //      ConsumerFactory|ProducerFactory ->
     //      DefaultKafkaProducerFactory|DefaultKafkaConsumerFactory

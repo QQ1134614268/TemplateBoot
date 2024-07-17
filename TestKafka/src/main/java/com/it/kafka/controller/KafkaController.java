@@ -2,13 +2,17 @@ package com.it.kafka.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.it.kafka.config.Topics;
+import com.it.kafka.config.ConstConf;
 import com.it.kafka.entity.KafkaUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.clients.admin.ListTopicsResult;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.KafkaFuture;
 import org.apache.kafka.common.PartitionInfo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.TopicPartitionOffset;
@@ -18,9 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @RestController
@@ -39,17 +42,17 @@ public class KafkaController {
         String msg = mapper.writeValueAsString(kafkaUser);
         // send(String topic, K key, @Nullable V data) 发送消息的时候指定 key，
         // key 用来确定消息写入分区时，进入哪一个分区。
-        kafkaTemplate.send(Topics.USER_TOPIC, msg);
+        kafkaTemplate.send(ConstConf.USER_TOPIC, msg);
     }
 
     @PostMapping("/sendObj")
     public void sendObj(KafkaUser kafkaUser) {
-        kafkaTemplate.send(Topics.USER_TOPIC, kafkaUser);
+        kafkaTemplate.send(ConstConf.USER_TOPIC, kafkaUser);
     }
 
     @GetMapping("/getStr")
     public List<Object> getStr() {
-        List<PartitionInfo> partitions = kafkaTemplate.partitionsFor(Topics.USER_TOPIC);
+        List<PartitionInfo> partitions = kafkaTemplate.partitionsFor(ConstConf.USER_TOPIC);
         Collection<TopicPartitionOffset> topicPartitionOffsets = new ArrayList<>();
         for (PartitionInfo partitionInfo : partitions) {
             TopicPartitionOffset topicPartitionOffset = new TopicPartitionOffset(partitionInfo.topic(), partitionInfo.partition(), 1L, true);

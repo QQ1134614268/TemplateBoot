@@ -1,16 +1,18 @@
 package com.it.kafka.stream;
 
-import com.it.kafka.config.Topics;
+import com.it.kafka.config.ConstConf;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
-import org.apache.kafka.streams.kstream.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Produced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.support.serializer.JsonSerde;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.function.Consumer;
 
@@ -18,14 +20,12 @@ import java.util.function.Consumer;
 @Component
 public class KafkaStreamProcessor {
 
-    @Autowired
+    @Resource
     public void onStream(StreamsBuilder defaultKafkaStreamsBuilder) {
         KStream<String, String> messageStream = defaultKafkaStreamsBuilder
-                .stream(Topics.USER_TOPIC, Consumed.with(Serdes.String(), Serdes.String()));
-        messageStream.foreach((k,v)->{
-            log.info("KAFKA_STREAM_onStream");
-            log.info(k);
-            log.info(v);
+                .stream(ConstConf.STREAM_TOPIC, Consumed.with(Serdes.String(), Serdes.String()));
+        messageStream.foreach((k, v) -> {
+            log.info("KAFKA_STREAM_onStream: {}, {}", k, v);
         });
         // KStream<String, String> messageStream = defaultKafkaStreamsBuilder
         //         .stream("input-topic", Consumed.with(STRING_SERDE, STRING_SERDE));
@@ -49,11 +49,9 @@ public class KafkaStreamProcessor {
     @Bean
     public KStream<String, String> onStream1(StreamsBuilder defaultKafkaStreamsBuilder) {
         KStream<String, String> messageStream = defaultKafkaStreamsBuilder
-                .stream(Topics.USER_TOPIC, Consumed.with(Serdes.String(), Serdes.String()));
+                .stream(ConstConf.STREAM_TOPIC, Consumed.with(Serdes.String(), Serdes.String()));
         messageStream.map((key, value) -> { // do something with each msg, square the values in our case
-            log.info("KAFKA_STREAM_onStream1");
-            log.info(key);
-            log.info(value);
+            log.info("KAFKA_STREAM_onStream1: {}, {}", key, value);
             return KeyValue.pair(key, value);
         }).to("out-topic", Produced.with(Serdes.String(), Serdes.String())); // send downstream to another topic
         return messageStream;
@@ -61,8 +59,8 @@ public class KafkaStreamProcessor {
 
     // @Bean
     public KStream<String, OrderModelVo> onStream2(StreamsBuilder streamBuild1) {
-        KStream<String, OrderModelVo> stream = streamBuild1.stream("streamTopic");
-        stream.map(KeyValue::new).to("tableTopic", Produced.with(Serdes.String(), new JsonSerde<>()));
+        KStream<String, OrderModelVo> stream = streamBuild1.stream(ConstConf.STREAM_TOPIC);
+        stream.map(KeyValue::new).to(ConstConf.STREAM_OUT_TOPIC, Produced.with(Serdes.String(), new JsonSerde<>()));
         stream.filter((k, v) -> {
             BigDecimal orderAmt = v.getOrderAmt();
             return orderAmt.compareTo(new BigDecimal(1)) < 0;

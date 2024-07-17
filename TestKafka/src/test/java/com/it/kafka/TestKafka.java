@@ -1,6 +1,6 @@
 package com.it.kafka;
 
-import com.it.kafka.config.Topics;
+import com.it.kafka.config.ConstConf;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -32,7 +32,7 @@ public class TestKafka {
 
         try (KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<>(properties)) {
             // 指定该consumer对应的消费分区
-            TopicPartition partition = new TopicPartition(Topics.USER_TOPIC, partitionIndex);
+            TopicPartition partition = new TopicPartition(ConstConf.USER_TOPIC, partitionIndex);
             consumer.assign(Lists.newArrayList(partition));
 
             long seekOffset = 0;
