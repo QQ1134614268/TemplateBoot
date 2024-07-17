@@ -96,11 +96,4 @@ public class KafkaConf {
         return factory;
     }
 
-
-    // @Bean
-    // public KafkaTemplate<String, String> kafkaTemplate() {
-    //     KafkaTemplate<String, String> template = new KafkaTemplate<>(kafkaProducerFactory());
-    //     template.setMessageConverter(new StringJsonMessageConverter());
-    //     return template;
-    // }
 }
