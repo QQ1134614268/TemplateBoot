@@ -141,13 +141,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
-        <!--        idea 的junit框架与当前不匹配, 引入到此强制使用??-->
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-launcher</artifactId>
-            <version>1.3.1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
