@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- 配置文件修改时重新加载，默认true -->
 <configuration scan="true">
-
-    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="CATALINA_BASE" value="**/logs"></property>
-
+    <!--  %-10level级别案例为设置10个字符，左对齐
+      %d{yyyy-MM-dd HH:mm:ss.sss}日期
+      %c当前类全限定名
+      %M当前执行日志的方法
+      %L行号
+      %thread线程名称
+      %m或者%msg信息
+      %n换行  -->
+    <!--  property 配置通用属性，方便后面的配置通过${name}形式引用  -->
+    <!--  以property形式将日志输出格式配置为文件通用的属性，后面配置输出方式可以重复复引用该通用属性 -->
+    <property name="patternConsole" value="%red(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%yellow(%thread)] %cyan(%logger{20}).%M\(%F:%L\): %msg%n"/>
+    <property name="patternFile" value="%d{MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{20}.%M\(%F:%L\): %msg%n"/>
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
             <!-- 输出日志记录格式 -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${patternConsole}</pattern>
         </encoder>
     </appender>
 
@@ -24,7 +31,7 @@
         </rollingPolicy>
         <encoder charset="UTF-8">
             <!-- 输出日志记录格式 -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${patternFile}</pattern>
         </encoder>
     </appender>
 
@@ -36,25 +43,23 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder charset="UTF-8">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${patternFile}</pattern>
         </encoder>
     </appender>
 
-    <appender name="CUSTOM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE3" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${CATALINA_BASE}/custom.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
             <fileNamePattern>${CATALINA_BASE}/custom.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <!-- keep 30 days' worth of history -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder charset="UTF-8">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>${patternFile}</pattern>
         </encoder>
     </appender>
 
     <!-- 设置日志输出级别 -->
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="CONSOLE" />
     </root>
     <logger name="file1" level="DEBUG">
@@ -63,8 +68,7 @@
     <logger name="file1" level="INFO">
         <appender-ref ref="FILE2" />
     </logger>
-    <!-- 自定义logger -->
-    <logger name="custom" level="INFO">
-        <appender-ref ref="CUSTOM" />
+    <logger name="file3" level="ERROR">
+        <appender-ref ref="FILE3" />
     </logger>
 </configuration>
