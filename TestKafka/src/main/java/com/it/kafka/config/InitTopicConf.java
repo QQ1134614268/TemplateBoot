@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 // @Component
-public class KafkaTopicCreator {
+public class InitTopicConf {
 
     @Resource
     AdminClient adminClient;
