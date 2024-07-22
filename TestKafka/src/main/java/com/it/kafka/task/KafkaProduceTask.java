@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Component
 @Slf4j
@@ -20,18 +19,25 @@ public class KafkaProduceTask {
     @Resource
     private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @Scheduled(cron = "1-10/5 * * * * ?")
+    @Resource
+    private KafkaTemplate<String, Object> kafkaTemplateWithJson;
+
+    AtomicLong atomicLong = new AtomicLong();
+
+    @Scheduled(initialDelay = 3000, fixedRate = 1000 * 30) // initialDelay 搭配 fixedRate
     public void cron() {
         log.info("生产者- 数据存入kafka");
 
         KafkaUser kafkaUser = new KafkaUser();
-        kafkaUser.setId(new Random().nextLong());
-        kafkaUser.setName("name-" + LocalDateTime.now().format(ConstConf.FORMATTER_YMD_HMS));
-        kafkaUser.setAge(1);
+        kafkaUser.setId(atomicLong.incrementAndGet());
+        kafkaUser.setName("name-" + atomicLong.get());
+        kafkaUser.setAge((int) atomicLong.get());
         kafkaUser.setBirthDay(LocalDate.now());
 
-        kafkaTemplate.send(ConstConf.USER_TOPIC, JSON.toJSONString(kafkaUser));
+        kafkaTemplate.send(ConstConf.USER_TOPIC, kafkaUser.getName(), JSON.toJSONString(kafkaUser));
 
-        kafkaTemplate.send(ConstConf.USER_TOPIC_OBJECT, kafkaUser);
+        kafkaTemplate.send(ConstConf.USER_TOPIC_OBJECT, kafkaUser.getName(), kafkaUser);
+
+        kafkaTemplateWithJson.send(ConstConf.USER_TOPIC_WITH_TYPE_ID, kafkaUser.getName(), kafkaUser);
     }
 }

@@ -1,49 +1,44 @@
 package com.it.kafka.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.admin.AdminClient;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.core.ConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.core.*;
+import org.springframework.kafka.listener.KafkaListenerErrorHandler;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class KafkaConf {
 
     @Bean
-    public ProducerFactory<String, Object> produceFactoryV2(KafkaProperties properties) {
+    public KafkaTemplate<?, ?> kafkaTemplateWithJson(KafkaProperties properties) {
         Map<String, Object> props = properties.buildProducerProperties();
 
-        JsonSerializer<String> keyDeserializer = new JsonSerializer<String>().noTypeInfo();
-        JsonSerializer<Object> valueDeserializer = new JsonSerializer<>().noTypeInfo();
-        return new DefaultKafkaProducerFactory<>(props, keyDeserializer, valueDeserializer);
+        StringSerializer key = new StringSerializer();
+        JsonSerializer<Object> value = new JsonSerializer<>();
+        // StringSerializer value = new StringSerializer();
+        ProducerFactory<String, Object> producerFactory = new DefaultKafkaProducerFactory<>(props, key, value);
 
-        // return new DefaultKafkaProducerFactory<>(props);
+        return new KafkaTemplate<>(producerFactory);
     }
 
-    // JsonDeserializer<?> customDeserializer
-    @Resource
-    private KafkaProperties properties;
+    @Bean
+    KafkaListenerErrorHandler errorHandler() {
+        return (message, exception) -> {
+            log.error("测试KafkaListenerErrorHandler", exception);
+            return null;
+        };
+    }
 
     @Bean
-    public ConsumerFactory<String, Object> consumerFactory2() {
+    AdminClient adminClient(KafkaProperties properties) {
         Map<String, Object> props = properties.buildConsumerProperties();
-        // props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        // props.put(ErrorHandlingDeserializer.VALUE_FUNCTION, FailedFooProvider.class);
-
-        // props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        // props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        // // 其他必要的消费者配置...
-        // return new DefaultKafkaConsumerFactory<>(props);
-        JsonDeserializer<String> keyDeserializer = new JsonDeserializer<String>().forKeys().ignoreTypeHeaders();
-        JsonDeserializer<Object> valueDeserializer = new JsonDeserializer<>().ignoreTypeHeaders();
-        // return new DefaultKafkaConsumerFactory<>(props, keyDeserializer, valueDeserializer);
-        return new DefaultKafkaConsumerFactory<>(props);
+        return AdminClient.create(props);
     }
 }

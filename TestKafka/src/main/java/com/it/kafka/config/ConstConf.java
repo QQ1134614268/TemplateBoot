@@ -14,11 +14,8 @@ public interface ConstConf {
 
     String USER_TOPIC = "USER_TOPIC_1";
     String USER_TOPIC_OBJECT = "USER_TOPIC_OBJECT";
+    String USER_TOPIC_WITH_TYPE_ID = "USER_TOPIC_WITH_TYPE_ID";
     String STREAM_TOPIC = "STREAM_TOPIC";
     String STREAM_OUT_TOPIC = "STREAM_TOPIC";
 
-    String GROUP_ID_1 = "Group_1";
-    String GROUP_ID_2 = "Group_ID_2";
-    String GROUP_ID_3 = "GROUP_ID_3";
-    String GROUP_ID_4 = "GROUP_ID_4";
 }

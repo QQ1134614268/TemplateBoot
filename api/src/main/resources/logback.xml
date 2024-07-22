@@ -1,12 +1,94 @@
-<configuration>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%red(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%yellow(%thread)] %cyan(%logger{20}).%M\(%F:%L\): %msg%n
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 配置文件修改时重新加载，默认true -->
+<configuration scan="true">
+    <!--  %-10level级别案例为设置10个字符，左对齐
+      %d{yyyy-MM-dd HH:mm:ss.sss}日期
+      %c当前类全限定名
+      %M当前执行日志的方法
+      %L行号
+      %thread线程名称
+      %m或者%msg信息
+      %n换行  -->
+    <!--  property 配置通用属性，方便后面的配置通过${name}形式引用  -->
+    <!--  以property形式将日志输出格式配置为文件通用的属性，后面配置输出方式可以重复复引用该通用属性 -->
+    <property name="LogDir" value="data/log/api"/>
+    <!-- 控制台输出 -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <!-- 输出日志记录格式 -->
+            <pattern>
+                %red(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%yellow(%thread)] %cyan(%logger{20}).%M\(%F:%L\): %msg%n
             </pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 根据精确的级别匹配过滤事件 -->
+            <!--过滤 Error-->
+            <level>INFO</level>
+            <!--匹配到就禁止-->
+            <onMatch>ACCEPT</onMatch>
+            <!--没有匹配到就允许-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
-    <root level="info">
-        <appender-ref ref="STDOUT" />
+
+    <!-- 第一个文件输出,每天产生一个文件 -->
+    <appender name="DebugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LogDir}/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 输出文件路径+文件名 -->
+            <fileNamePattern>${LogDir}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>
+                yyyy-MM-dd HH:mm:ss.SSS %-5level [%thread] %logger{20}.%M\(%F:%L\): %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 根据精确的级别匹配过滤事件 -->
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="InfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LogDir}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LogDir}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>0</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>yyyy-MM-dd HH:mm:ss.SSS %-5level [%thread] %logger{20}.%M\(%F:%L\): %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 根据精确的级别匹配过滤事件 -->
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LogDir}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LogDir}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>0</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>yyyy-MM-dd HH:mm:ss.SSS %-5level [%thread] %logger{20}.%M\(%F:%L\): %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 根据精确的级别匹配过滤事件 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 设置日志输出级别 -->
+    <root level="DEBUG">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="DebugLog"/>
+        <appender-ref ref="InfoLog"/>
+        <appender-ref ref="ErrorLog"/>
     </root>
 </configuration>
