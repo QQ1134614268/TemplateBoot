@@ -14,18 +14,17 @@ public class TestTask2 {
     @Async("taskScheduler1")
     @Scheduled(fixedDelay = 60000)
     public void execute1() {
-        log.info("execute1定时任务开始 : " + LocalDateTime.now().toLocalTime() + "，线程：" + Thread.currentThread().getName());
+        log.info("testScheduler线程: {}", Thread.currentThread().getName());
     }
 
     @Async("taskScheduler2")
     @Scheduled(cron = "0 */5 * * * ?")
     public void execute2() {
-        log.info("execute2定时任务开始 : " + LocalDateTime.now().toLocalTime() + "，线程：" + Thread.currentThread().getName());
+        log.info("testScheduler线程: {}", Thread.currentThread().getName());
     }
 
     @Scheduled(cron = "0 */5 * * * ?")
     public void execute5() {
-        log.info("execute5定时任务开始 : " + LocalDateTime.now().toLocalTime() + "，线程：" + Thread.currentThread()
-                .getName());
+        log.info("testScheduler线程: {}", Thread.currentThread().getName());
     }
 }

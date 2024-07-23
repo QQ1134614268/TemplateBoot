@@ -17,7 +17,7 @@
         <encoder charset="UTF-8">
             <!-- 输出日志记录格式 -->
             <pattern>
-                %red(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%yellow(%thread)] %cyan(%logger{20}).%M\(%F:%L\): %msg%n
+                %red(%d{MM-dd HH:mm:ss.SSS}) %highlight(%-5level) [%yellow(%15.15t)] %cyan(%logger{20}).%M\(%F:%L\): %msg%n
             </pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter"> <!-- LevelFilter 根据精确的级别匹配过滤事件 -->
