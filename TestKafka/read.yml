@@ -1,0 +1,65 @@
+消息队列:
+  类型:
+    kafka
+    RabbitMQ
+    ActiveMQ
+    RocketMQ
+  使用场景:
+    解耦,异步: 只关心发送数据 或者消费数据
+    削峰: 消息可以堆积,然后慢慢处理
+
+序列化:
+  本质: 对象转byte , byte转对象
+  eg:
+    json:
+    string:
+    UUID:
+    Integer:
+    User:
+  redisTemplate:
+    获取对象,直接转成该Class
+    注入时,注入类型不能泛型化, 并且可能需要多个 redisTemplate<String, User> ,  redisTemplate<String, Student>
+    
+    所以使用redisTemplate<String, Object> 兼容, 然后强制转换, 就需要没有Class, 根据数据,自行组装;
+
+  KafkaListener:
+    反序列化成对象:
+      - 写入类信息,直接反序列化成对象 __typeId__, @Type; 例如, JsonSerializer
+      - 根据方法名称,反序列化成指定对象; StringSerializer
+    字符串: 直接使用字符串序列化和反序列化; 自己转换,麻烦一些
+  JsonSerializer:
+    key值是String,JsonSerializer会在序列化一次,如果是序列化后的Json字符, 特殊字符会被转义
+    所以要么key为Object,通Value
+    要么使用StringSerializer
+
+org.apache.kafka.common.serialization.StringSerializer:
+org.apache.kafka.common.serialization.StringDeserializer:
+
+org.springframework.kafka.support.serializer.JsonSerializer:
+org.springframework.kafka.support.serializer.JsonDeserializer:
+
+spring.kafka.consumer.value-deserializer: 序列化会在header中添加 __typeId__; 反序列化会自动根据 __typeId__ 转成对象
+spring.kafka.consumer.properties.spring.json.trusted.packages: 使用自定义对象接收时,会报异常 # Caused by: java.lang.IllegalArgumentException: The class 'com.it.kafka.entity.KafkaUser' is not in the trusted packages: [java.util, java.lang]. If you believe this class is safe to deserialize, please provide its name. If the serialization is only done by a trusted source, you can also enable trust all (*).
+spring.kafka.consumer.properties.spring.json.use.type.headers: 这个配置项特别有用于处理多态类型或复杂的类结构，其中不同的消息可能对应于不同的Java类实例。通过将类型信息存储在头部，你可以保持JSON消息体的简洁，并避免在消息体中嵌入可能不需要的类型元数据。
+spring.kafka.consumer.properties.spring.json.remove.type.headers:
+spring.kafka.consumer.properties.spring.json.value.type.method:
+
+KafkaListener:
+  id
+  containerFactory
+  topics 
+  topicPattern 
+  containerGroup 
+  errorHandler 
+  groupId 
+  idIsGroup
+  clientIdPrefix 
+  beanRef 
+  concurrency
+  autoStartup 
+  properties
+  splitIterables
+  contentTypeConverter
+  batch
+  filter
+  info
