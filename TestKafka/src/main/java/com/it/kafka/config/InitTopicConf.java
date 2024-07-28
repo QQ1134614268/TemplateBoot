@@ -24,7 +24,7 @@ public class InitTopicConf {
     @PostConstruct // 或者使用 CommandLineRunner
     public void initTopic() throws Exception {
         log.info("初始化");
-        List<String> list = Arrays.asList(ConstConf.USER_TOPIC, ConstConf.USER_TOPIC_OBJECT, ConstConf.STREAM_TOPIC, ConstConf.STREAM_OUT_TOPIC);
+        List<String> list = Arrays.asList(ConstConf.USER_TOPIC, ConstConf.USER_TOPIC_OBJECT, ConstConf.STREAM_OUT_TOPIC_1, ConstConf.STREAM_OUT_TOPIC_2);
 
         ListTopicsResult listTopicsResult = adminClient.listTopics();
         KafkaFuture<Set<String>> topicNamesFuture = listTopicsResult.names();

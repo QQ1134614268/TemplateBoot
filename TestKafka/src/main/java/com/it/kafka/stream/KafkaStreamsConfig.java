@@ -6,16 +6,20 @@ import com.it.kafka.entity.KafkaUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
 
 @Slf4j
 @Component
@@ -31,25 +35,43 @@ public class KafkaStreamsConfig {
 
     @Bean
     public KafkaStreams testKafkaStreams() {
-        StreamsBuilder kStreamBuilder = new StreamsBuilder();
-        // 构建Kafka Streams拓扑
-        KStream<String, String> kStream = kStreamBuilder
-                .stream(ConstConf.USER_TOPIC_OBJECT, Consumed.with(Serdes.String(), Serdes.String()))
-                // .map((k, v) -> (k,v))
-                .filter((key, value) -> {
-                    KafkaUser user = JSON.parseObject(value, KafkaUser.class);
-                    return user.getAge() % 2 == 0;
-                });
-        kStream.to(ConstConf.STREAM_OUT_TOPIC, Produced.with(Serdes.String(), Serdes.String()));
-
-        // 构建KafkaStreams实例的配置属性
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        // 这里可以添加更多的配置属性，如处理保证、状态存储配置等
+
+        KStream<String, String> kStream = new StreamsBuilder()
+                .stream(ConstConf.USER_TOPIC_OBJECT, Consumed.with(Serdes.String(), Serdes.String()))
+                .filter((k, v) -> Objects.nonNull(v))
+                .map((k, v) -> {
+                    KafkaUser user = JSON.parseObject(v, KafkaUser.class);
+                    user.setName(String.format("name-out-%s", user.getAge())); // 模拟业务逻辑
+                    return KeyValue.pair(k, user);
+                })
+                .map((k, v) -> KeyValue.pair(k, JSON.toJSONString(v)));
+        kStream.to(ConstConf.STREAM_OUT_TOPIC_2, Produced.with(Serdes.String(), Serdes.String()));
+        // kStream.map()
+        // kStream.flatMap()
+        // kStream.flatMapValues()
+        // kStream.filter()
+        // kStream.groupBy()
+        // kStream.foreach();
+        // kStream.filterNot()
+        // kStream.flatTransform()
+        // kStream.groupBy()
+        // kStream.groupByKey()
+        // kStream.join();
+        // kStream.leftJoin()
+        // kStream.mapValues()
+        // kStream.merge();
+        // kStream.peek();
+        // kStream.process();
+        // kStream.repartition();
+        // kStream.split()
+        // kStream.to();
+        // kStream.toTable();
 
         // 创建KafkaStreams实例
-        KafkaStreams streams = new KafkaStreams(kStreamBuilder.build(), props);
+        KafkaStreams streams = new KafkaStreams(new StreamsBuilder().build(), props);
 
         // 设置状态监听器（可选）
         streams.setStateListener((newState, oldState) -> {
@@ -65,50 +87,37 @@ public class KafkaStreamsConfig {
         return streams;
     }
 
-    @Bean
-    public KafkaStreams testKafkaStreamsV2() {
-        StreamsBuilder kStreamBuilder = new StreamsBuilder();
-        // 构建Kafka Streams拓扑
-        KStream<String, String> source = kStreamBuilder.stream(ConstConf.USER_TOPIC_OBJECT, Consumed.with(Serdes.String(), Serdes.String()));
-        // messageStream.map()
-        // messageStream.flatMap()
-        // messageStream.flatMapValues()
-        // messageStream.filter()
-        // messageStream.groupBy()
-        // messageStream.foreach();
-        // messageStream.filterNot()
-        // messageStream.flatTransform()
-        // messageStream.groupBy()
-        // messageStream.groupByKey()
-        // messageStream.join();
-        // messageStream.leftJoin()
-        // messageStream.mapValues()
-        // messageStream.merge();
-        // messageStream.peek();
-        // messageStream.process();
-        // messageStream.repartition();
-        // messageStream.split()
-        // messageStream.to();
-        // messageStream.toTable();
+    @Test
+    public void testKafkaStream() {
+        Properties properties = new Properties();
+        properties.put(StreamsConfig.APPLICATION_ID_CONFIG, "id_002");
+        properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+        StreamsBuilder builder = new StreamsBuilder();
+        builder.<String, String>stream(ConstConf.USER_TOPIC_OBJECT)
+                .filter((key, value) -> {
+                    KafkaUser user = JSON.parseObject(value, KafkaUser.class);
+                    return user.getAge() % 2 == 0;
+                })
+                .to("outputTopic", Produced.with(Serdes.String(), Serdes.String()));
 
-        // KTable<String, Long> wordCounts = messageStream
-        //         .mapValues((ValueMapper<String, String>) String::toLowerCase)
-        //         .flatMapValues(value -> Arrays.asList(value.split("\\W+")))
-        //         .groupBy((key, word) -> word, Grouped.with(STRING_SERDE, STRING_SERDE))
-        //         .count();
-        // wordCounts.toStream().to("output-topic");
-
-        // 构建KafkaStreams实例的配置属性
-        Properties props = new Properties();
-        props.put(StreamsConfig.APPLICATION_ID_CONFIG, applicationId);
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-
-        KafkaStreams streams = new KafkaStreams(kStreamBuilder.build(), props);
-
-        // 启动Kafka Streams
-        streams.start();
-
-        // 返回KafkaStreams实例以便Spring容器管理其生命周期
-        return streams;
+        try (KafkaStreams streams = new KafkaStreams(builder.build(), properties)) {
+            // 添加监控，关闭之后释放资源
+            final CountDownLatch latch = new CountDownLatch(1);
+            Runtime.getRuntime().addShutdownHook(new Thread("streams-wordcount-shutdown-hook") {
+                @Override
+                public void run() {
+                    streams.close();
+                    latch.countDown();
+                }
+            });
+            try {
+                // 运行 这里不会阻塞
+                streams.start(); // 持续监听解决
+                // 阻塞主线程
+                latch.await();
+            } catch (Throwable e) {
+                System.exit(1);
+            }
+        }
     }
 }
