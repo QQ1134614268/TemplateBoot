@@ -1,3 +1,12 @@
+KafkaStream 对比 Spark:
+  数据困难点与解决方案: 3V (海量,多样,实时) -> 3H(高并发,高扩展,高性能)
+  KafkaStream: 提供了对流数据进行窗口操作、聚合、连接等操作的API; 类似Spark
+  对比Spark:
+    优点:
+      依赖更少
+      延迟更低(毫秒级, spark毫秒到几秒)
+    缺点:
+      兼容性差,不支持python等
 消息队列:
   类型:
     kafka
@@ -47,16 +56,16 @@ spring.kafka.consumer.properties.spring.json.value.type.method:
 KafkaListener:
   id
   containerFactory
-  topics 
-  topicPattern 
-  containerGroup 
-  errorHandler 
-  groupId 
+  topics
+  topicPattern
+  containerGroup
+  errorHandler
+  groupId
   idIsGroup
-  clientIdPrefix 
-  beanRef 
+  clientIdPrefix
+  beanRef
   concurrency
-  autoStartup 
+  autoStartup
   properties
   splitIterables
   contentTypeConverter
