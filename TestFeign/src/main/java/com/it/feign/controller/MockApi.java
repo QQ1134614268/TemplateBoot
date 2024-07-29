@@ -1,5 +1,6 @@
 package com.it.feign.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.it.feign.config.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -24,6 +25,6 @@ public class MockApi {
     @GetMapping(value = "/textPlain", produces = MediaType.TEXT_PLAIN_VALUE)
     public String textPlain() {
         log.info("textPlain");
-        return ApiResult.success("textPlain").toString();
+        return JSON.toJSONString(ApiResult.success("textPlain"));
     }
 }

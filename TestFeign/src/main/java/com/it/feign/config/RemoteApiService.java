@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * GetMapping 的 value 不支持 #{} 语法
  */
 // @FeignClient(name = "remoteApiService", url = "#{config.url}", configuration = {FeignTextPlainConf.class}, fallbackFactory = RemoteApiServiceFallbackFactory.class)
-@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", configuration = {FeignTextPlainConf.class}, fallbackFactory = RemoteApiServiceFallbackFactory.class)
+@FeignClient(name = "remoteApiService", url = "${TestFeign.sumService.url}", fallbackFactory = RemoteApiServiceFallbackFactory.class)
 public interface RemoteApiService {
 
     // @GetMapping(value = "#{config.sumPath}") // 不支持#{} 语法

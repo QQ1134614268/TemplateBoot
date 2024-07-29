@@ -20,6 +20,11 @@ public class FeignController {
     @Resource
     private RemoteHttpsService remoteHttpsService;
 
+    @GetMapping("/hello")
+    public ApiResult<String> hello() {
+        return ApiResult.success("hello !");
+    }
+
     @GetMapping("/testRemoteSum")
     public ApiResult<Integer> testRemoteSum() {
         // feignClient中 可以有自定义方法
