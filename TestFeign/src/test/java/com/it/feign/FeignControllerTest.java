@@ -14,13 +14,12 @@ public class FeignControllerTest {
 
     @Test
     public void test() {
-        feignController.getRemoteSum();
-        feignController.getRemoteTextPlain();
-        feignController.contentType();
+        feignController.testRemoteSum();
+        feignController.testTextPlain();
     }
 
     @Test
-    public void helloHttps() {
-        feignController.helloHttps();
+    public void testHttps() {
+        feignController.testHttps();
     }
 }

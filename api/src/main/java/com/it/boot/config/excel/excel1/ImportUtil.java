@@ -2,7 +2,7 @@ package com.it.boot.config.excel.excel1;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.event.AnalysisEventListener;
-import com.it.boot.config.enum1.CodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import com.it.boot.config.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +17,7 @@ public class ImportUtil {
             EasyExcel.read(file.getInputStream(), clazz, listener).sheet().doRead();
         } catch (Exception e) {
             log.warn("import file error: ", e);
-            throw new BizException(CodeEnum.FAILURE.getCode(), "导入失败异常信息");
+            throw new BizException(ResCodeEnum.FAILURE.getCode(), "导入失败异常信息");
         }
     }
 }

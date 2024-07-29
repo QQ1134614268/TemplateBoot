@@ -1,6 +1,6 @@
 package com.it.jiangxin.config;
 
-import com.it.jiangxin.config.enum1.CodeEnum;
+import com.it.jiangxin.config.enum1.ResCodeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ApiResult<T> {
     /**
-     * @see CodeEnum
+     * @see ResCodeEnum
      */
     @Schema(name = "请求结果状态码", example = "1")
     private int code;
@@ -19,27 +19,27 @@ public class ApiResult<T> {
 
     public static <T> ApiResult<T> success(T data) {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.SUCCESS.getValue();
+        res.code = ResCodeEnum.SUCCESS.getValue();
         res.data = data;
         return res;
     }
 
     public static <T> ApiResult<T> success() {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.SUCCESS.getValue();
+        res.code = ResCodeEnum.SUCCESS.getValue();
         res.data = null;
         return res;
     }
 
     public static <T> ApiResult<T> fail(String message) {
         ApiResult<T> res = new ApiResult<>();
-        res.code = CodeEnum.FAILURE.getValue();
+        res.code = ResCodeEnum.FAILURE.getValue();
         res.message = message;
         return res;
     }
 
     public boolean isSuccess() {
-        return this.code == CodeEnum.SUCCESS.getValue();
+        return this.code == ResCodeEnum.SUCCESS.getValue();
     }
 
     public boolean isError() {

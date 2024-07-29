@@ -1,6 +1,6 @@
-package com.it.feign.config;
+package com.it.feign.controller;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.it.feign.config.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MockApi {
 
     @GetMapping("/sum")
-    public int sum(int num1, int num2) {
+    public ApiResult<Integer> sum(int num1, int num2) {
         log.info("开始计算");
-        return num1 + num2;
+        return ApiResult.success(num1 + num2);
     }
 
-
-    @GetMapping(value = "/textPlain", produces = MediaType.TEXT_PLAIN_VALUE) // TEXT_PLAIN_VALUE 返回对象报错
+    /**
+     * produces: 指定返回的contentType; TEXT_PLAIN_VALUE: 默认只序列化字符串
+     */
+    @GetMapping(value = "/textPlain", produces = MediaType.TEXT_PLAIN_VALUE)
     public String textPlain() {
         log.info("textPlain");
-        return JSONObject.of("code", 1, "data", true).toJSONString();
+        return ApiResult.success("textPlain").toString();
     }
 }

@@ -1,7 +1,7 @@
 package com.it.boot.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.it.boot.config.enum1.CodeEnum;
+import com.it.boot.config.enum1.ResCodeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class StudentVO extends BaseVO implements Serializable {
   private List<String> nameList;
 
   @Schema(name = "枚举", example = "RES_SUCCESS")
-  private CodeEnum resCodeEnum;
+  private ResCodeEnum resCodeEnum;
 
   @Schema(name = "地址")
   private Address address;
