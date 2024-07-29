@@ -1,4 +1,4 @@
-package com.it.es.config;
+package com.it.feign.config;
 
 import lombok.Data;
 

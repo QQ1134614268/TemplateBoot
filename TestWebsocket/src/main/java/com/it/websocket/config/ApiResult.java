@@ -6,7 +6,6 @@ import lombok.Data;
 public class ApiResult<T> {
     public final static int Success = 1;
     public final static int Failure = 2;
-    public final static int Forbidden = 3;
 
     private int code;
     private T data;
@@ -29,13 +28,6 @@ public class ApiResult<T> {
     public static <T> ApiResult<T> fail(String message) {
         ApiResult<T> res = new ApiResult<>();
         res.code = Failure;
-        res.message = message;
-        return res;
-    }
-
-    public static <T> ApiResult<T> forbidden(String message) {
-        ApiResult<T> res = new ApiResult<>();
-        res.code = Forbidden;
         res.message = message;
         return res;
     }
