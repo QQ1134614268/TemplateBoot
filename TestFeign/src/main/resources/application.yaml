@@ -2,8 +2,7 @@ server:
   port: 8080
 logging:
   level:
-    com:
-      it: debug
+    com.it.feign: info
     com.it.feign.config.RemoteApiService: debug # feign日志第一步
 feign:
   client:
