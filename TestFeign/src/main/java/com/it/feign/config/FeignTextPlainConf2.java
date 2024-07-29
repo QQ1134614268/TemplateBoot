@@ -4,11 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 
-// @Configuration
+/**
+ * 全局配置: 使用@Component
+ * 类配置: 添加到 @FeignClient(configuration = {FeignTextPlainConf2.class})
+ */
+@Component
 public class FeignTextPlainConf2 {
 
     static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {

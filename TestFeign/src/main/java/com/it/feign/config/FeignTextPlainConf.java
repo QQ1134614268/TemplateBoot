@@ -19,7 +19,7 @@ import java.util.List;
  * <p>
  * 返回结果: 获取Decoder, 解析数据
  */
-@Configuration // 或者添加到 @FeignClient(configuration = FeignTextPlainConfig.class)
+@Configuration
 public class FeignTextPlainConf {
 
     static class CustomMappingJackson2HttpMessageConverter extends MappingJackson2HttpMessageConverter {
