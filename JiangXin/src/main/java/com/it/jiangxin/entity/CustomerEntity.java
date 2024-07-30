@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 @Table(appliesTo = "customer", comment = "客户")
 public class CustomerEntity extends BaseEntity {
     @Schema(name = "用户名", example = "test_1")
-    @Column(unique = true, nullable = false, columnDefinition = "varchar(255) COMMENT '客户名'")
+    @Column(columnDefinition = "varchar(255) COMMENT '客户名'")
     private String name;
     @Schema(name = "面积", example = "1")
     @Column(columnDefinition = "int(11) COMMENT '面积'")
