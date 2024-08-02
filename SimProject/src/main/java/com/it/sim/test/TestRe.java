@@ -75,21 +75,36 @@ public class TestRe {
 
     @Test
     public void test3() {
-        String regex = "(?<province>[^省]+自治区|.*?省|.*?行政区|.*?市|.*?京|.*?海|.*?津)(?<city>[^市]+自治州|.*?地区|.*?行政单位|.+盟|市辖区|.*?市|.*?县)(?<country>[^(区|市|县|旗|岛)]+区|.*?市|.*?县|.*?旗|.*?岛)?(?<town>[^区]+区|.+市|.+镇)?(?<village>.*)";
+        String regex = "(?<province>.+?省|.+?自治区|.+?行政区|北京|上海|天津|重庆)(?<city>.+?(自治州|地区|行政区划|盟|市))?(?<county>.+?(区|县|旗|岛|市))?(?<town>.+?(区|市|镇))?(?<village>.*)"; // 台湾除外 台湾省宜兰县宜兰市
         Pattern pet = Pattern.compile(regex);
-        List<String> args = Arrays.asList("广东省深圳市南山区", "新疆维吾尔自治区喀什地区塔什库尔干塔吉克自治县");
-        for (String sr : args) {
-            Matcher match = pet.matcher(sr);
-            while (match.find()) {
+        String taiwan = "(?<province>.+?省)(?<city>.+?市|.+?县)?(?<county>.+?市|.+?镇|.+?乡|.+?区)?(?<town>.+?区|.+?市|.+?镇)?(?<village>.*)";
+        Pattern taiwanPet = Pattern.compile(taiwan);
+        List<String> lines = Arrays.asList(
+                "北京东城区",
+                "广东省深圳市南山区",
+                "新疆维吾尔自治区自治区直辖县级行政区划石河子市",
+                "新疆维吾尔自治区喀什地区塔什库尔干塔吉克自治县",
+                "台湾省台北市松山区",
+                "err深圳市南山区",
+                "err广东省广东省深圳市南山区"
+                );
+        for (String line : lines) {
+            Matcher match;
+            if (line.startsWith("台湾")) {
+                match = taiwanPet.matcher(line);
+            } else {
+                match = pet.matcher(line);
+            }
+            if (match.find()) {
                 String province = match.group("province");
                 String city = match.group("city");
-                String country = match.group("country");
+                String county = match.group("county");
                 String town = match.group("town");
                 String village = match.group("village");
-
-                log.info("{}, {}, {}, {}, {}", province, city, country, town, village);
+                log.info("{}, {}, {}, {}, {}", province, city, county, town, village);
+            } else {
+                log.error("---- 匹配异常: {}", line);
             }
         }
-
     }
 }
