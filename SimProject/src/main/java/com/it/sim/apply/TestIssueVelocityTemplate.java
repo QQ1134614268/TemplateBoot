@@ -62,7 +62,7 @@ public class TestIssueVelocityTemplate {
         Properties p = new Properties();
         p.setProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH, "");
         Velocity.init(p);
-        Template template = Velocity.getTemplate("D:\\workspace\\demos\\TemplateBoot\\SimProject\\src\\main\\resources\\header.vm");
+        Template template = Velocity.getTemplate("D:\\workspace\\TemplateBoot\\SimProject\\src\\main\\resources\\header.vm");
         StringWriter writer = new StringWriter();
 
         VelocityContext context = new VelocityContext();
@@ -70,6 +70,4 @@ public class TestIssueVelocityTemplate {
         template.merge(context, writer);
         System.out.println(writer);
     }
-
-
 }

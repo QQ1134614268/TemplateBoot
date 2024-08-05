@@ -1,10 +1,13 @@
 package com.it.sim.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
 
+@Slf4j
 public class CmdTask implements Runnable {
-    private String command;
-    private String dirPath;
+    private final String command;
+    private final String dirPath;
 
     public static void main(String[] args) {
         String command = "cmd.exe /c ffmpeg -i video.m4s -i audio.m4s -codec copy ";
@@ -29,7 +32,7 @@ public class CmdTask implements Runnable {
 
             exitVal = process.waitFor();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            log.error("异常", e);
         }
 
         if (exitVal != 0) {
@@ -55,8 +58,8 @@ public class CmdTask implements Runnable {
                     System.out.println(printType + ">" + line);
                 }
 
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            } catch (IOException e) {
+                log.error("异常", e);
             }
         }
     }
