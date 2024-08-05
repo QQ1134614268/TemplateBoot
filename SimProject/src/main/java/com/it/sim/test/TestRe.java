@@ -75,9 +75,9 @@ public class TestRe {
 
     @Test
     public void test3() {
-        String regex = "(?<province>.+?省|.+?自治区|.+?行政区|北京|上海|天津|重庆)(?<city>.+?(自治州|地区|行政区划|盟|市))?(?<county>.+?(区|县|旗|岛|市))?(?<town>.+?(区|市|镇))?(?<village>.*)"; // 台湾除外 台湾省宜兰县宜兰市
+        String regex = "(?<province>.+?省|.+?自治区|.+?行政区|北京|上海|天津|重庆)(?<city>.+?(自治州|地区|行政区划|盟|市))?(?<county>.+?[区县旗岛市])?(?<town>.+?[区市镇])?(?<village>.*)"; // 台湾除外 台湾省宜兰县宜兰市
         Pattern pet = Pattern.compile(regex);
-        String taiwan = "(?<province>.+?省)(?<city>.+?市|.+?县)?(?<county>.+?市|.+?镇|.+?乡|.+?区)?(?<town>.+?区|.+?市|.+?镇)?(?<village>.*)";
+        String taiwan = "(?<province>.+?省)(?<city>.+?[市县])?(?<county>.+?[市镇乡区])?(?<town>.+?[区市镇])?(?<village>.*)";
         Pattern taiwanPet = Pattern.compile(taiwan);
         List<String> lines = Arrays.asList(
                 "北京东城区",
