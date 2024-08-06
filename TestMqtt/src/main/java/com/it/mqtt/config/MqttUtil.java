@@ -15,7 +15,7 @@ public class MqttUtil {
         while (!client.isConnected()) {
             try {
                 client.connect(options);
-                log.info("mqtt重新成功");
+                log.info("mqtt重新连接成功");
                 break;
             } catch (MqttException e) {
                 log.error("mqtt重新连接失败:", e);

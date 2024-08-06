@@ -1,5 +1,6 @@
 package com.it.mqtt.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @Configuration
 public class MqttConfig {
     @Resource
@@ -28,6 +30,7 @@ public class MqttConfig {
     public MqttClient mqttConsumerClient() throws MqttException {
         String clientId = mqttProp.getClientId() + "1"; // 避免重复
         MqttClient client = new MqttClient(mqttProp.getHost(), clientId, new MemoryPersistence());
+        // void subscribe(String[] topicFilters, int[] qos, IMqttMessageListener[] messageListeners) throws MqttException;
         MqttConnectOptions options = getMqttConnectOptions();
         client.setCallback(new ConsumerCallback(client, options));
         client.connect(options);
@@ -44,7 +47,7 @@ public class MqttConfig {
         options.setKeepAliveInterval(mqttProp.getKeepalive());
         // 是否清除session
         options.setCleanSession(mqttProp.isCleanSession());
-        System.out.println("--生成mqtt配置对象");
+        log.info("--生成mqtt配置对象");
         return options;
     }
 }

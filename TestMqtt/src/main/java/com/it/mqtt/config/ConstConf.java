@@ -8,5 +8,5 @@ public interface ConstConf {
     // String HH_MM_SS = "HH:mm:ss";
     // String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
-    String topic01="topic_01";
+    String topic01 = "topic_01";
 }

@@ -32,6 +32,6 @@ public class ProduceCallback implements MqttCallback {
      * 生产者没有订阅主题
      */
     public void messageArrived(String topic, MqttMessage message) {
-        log.info("接收消息主题");
+        log.info("生产者不会接收消息");
     }
 }
