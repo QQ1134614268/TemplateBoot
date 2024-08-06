@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class RpcServer implements ApplicationContextAware, InitializingBean {
     // RPC服务实现容器
-    private Map<String, Object> rpcServices = new HashMap<>();
+    private final Map<String, Object> rpcServices = new HashMap<>();
     @Value("${rpc.server.port}")
     private int port;
  

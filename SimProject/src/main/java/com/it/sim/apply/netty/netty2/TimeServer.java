@@ -22,14 +22,14 @@ public class TimeServer {
         ServerBootstrap sb = new ServerBootstrap();
         //主线程其实就是serverSocket，这里使用的是Nio，所以需要指定类型为NioServerSocketChannel
         //childHandler，其实自己定义如何处理，服务端这边的通道
-        sb.group(boss, work).option(ChannelOption.SO_BACKLOG, ConnectConfig.getSoBacklog())
+        sb.group(boss, work).option(ChannelOption.SO_BACKLOG, Conf.SO_BACKLOG)
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new TimeServerChannelHandler());
 
         ChannelFuture cf;
         try {
             //服务端绑定端口，直到绑定成功，会一直阻塞
-            cf = sb.bind(ConnectConfig.getPort()).sync();
+            cf = sb.bind(Conf.port).sync();
             //服务端的主通道，直到等到关闭，会一直阻塞
             cf.channel().closeFuture().sync();
         } catch (InterruptedException e) {

@@ -86,7 +86,7 @@ public class Client {
             try {
                 Thread.sleep(delaySeconds * 1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("异常", e);
             }
             workGroup.shutdownGracefully();
             // 参考: https://blog.csdn.net/m0_45406092/article/details/104634198

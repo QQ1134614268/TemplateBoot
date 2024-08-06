@@ -34,7 +34,7 @@ public class TimeClient {
         ChannelFuture cf;
         try {
             //一直阻塞，直到连接上服务端
-            cf = b.connect(ConnectConfig.getHost(), ConnectConfig.getPort()).sync();
+            cf = b.connect(Conf.host, Conf.port).sync();
             //一直阻塞，直到该通道关闭
             cf.channel().closeFuture().sync();
         } catch (InterruptedException e) {
