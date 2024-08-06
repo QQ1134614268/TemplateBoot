@@ -1,19 +1,21 @@
 package com.it.boot.config.enum1;
 
+import lombok.AllArgsConstructor;
+
 /**
  * @date 2022-12-15 14:44
  */
+@AllArgsConstructor
 public enum TestCityEnum {
 
-    shenzhen("shenzhen", "深圳", "city"),
-    guangzhou("guangzhou", "广州", "city");
+    SHENZHEN("SHENZHEN", "深圳", "city"),
+    GUANGZHOU("GUANGZHOU", "广州", "city");
 
-    // 使用id主键还是code?
-    private String groupCode; // UserStateEnum
-    private Integer code; // RES_SUCCESS
-    private String value; // 1
-    private String label; // 成功
-    private Integer sort; //
+    private final String groupCode;
+    private Integer code;
+    private final String value;
+    private final String label;
+    private Integer sort;
     private String note;
     private String status;
     private Long parentId;
@@ -23,5 +25,4 @@ public enum TestCityEnum {
         this.label = label;
         this.groupCode = groupCode;
     }
-
 }

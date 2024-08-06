@@ -1,10 +1,13 @@
 package com.it.boot.config.enum1;
 
+import lombok.AllArgsConstructor;
+
 /**
  * @date 2022-12-15 14:44
  */
+@AllArgsConstructor
 public enum TestCountryEnum {
-    China("China", "中国", "Country"),
+    CHINA("CHINA", "中国", "Country"),
     USA("USA", "美国", "Country");
 
     private final String groupCode;

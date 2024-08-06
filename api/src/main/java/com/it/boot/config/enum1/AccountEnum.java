@@ -7,10 +7,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(name = "账号状态")
 public enum AccountEnum implements IEnumDb {
-    normal("1", "正常"),
-    cancel("2", "注销"),
-    un_using("3", "停用"),
-    forbidden("4", "禁止");
+    NORMAL("1", "正常"),
+    CANCEL("2", "注销"),
+    UN_USING("3", "停用"),
+    FORBIDDEN("4", "禁止");
 
     public final String value;
     public final String label;

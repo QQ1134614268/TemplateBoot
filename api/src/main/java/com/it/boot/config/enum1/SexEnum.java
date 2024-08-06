@@ -5,9 +5,9 @@ package com.it.boot.config.enum1;
  */
 public enum SexEnum implements IEnumDb {
 
-    male("1", "男"),
-    female("2", "女"),
-    unknown("0", "未知");
+    MALE("1", "男"),
+    FEMALE("2", "女"),
+    UNKNOWN("0", "未知");
 
     final String value;
     final String label;
