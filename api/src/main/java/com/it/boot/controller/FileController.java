@@ -1,4 +1,4 @@
-package com.it.boot.config.file;
+package com.it.boot.controller;
 
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.Conf;

@@ -1,11 +1,11 @@
-package com.it.boot.config.file;
+package com.it.boot.config;
 
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 
 import javax.servlet.MultipartConfigElement;
 
-public class FileConfig {
+public class MultipartConfig {
     // 文件上传配置
     @Bean
     public MultipartConfigElement multipartConfigElement() {

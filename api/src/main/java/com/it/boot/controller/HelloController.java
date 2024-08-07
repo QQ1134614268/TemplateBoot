@@ -28,7 +28,6 @@ import java.util.Enumeration;
 @RequestMapping("/api/HelloController")
 public class HelloController {
 
-
     @Value("${templateBoot.testPort}")
     public Integer port;
 
@@ -186,6 +185,11 @@ public class HelloController {
     @Operation(summary = "testValidated")
     @GetMapping("/testValidated")
     public ApiResult<TimeRangeQo> testValidated(@Validated TimeRangeQo qo) {
+        return ApiResult.success(qo);
+    }
+    @Operation(summary = "testAsync")
+    @GetMapping("/testAsync")
+    public ApiResult<TimeRangeQo> testAsync(@Validated TimeRangeQo qo) {
         return ApiResult.success(qo);
     }
 }

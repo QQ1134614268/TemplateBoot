@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.boot.config.ApiResult;
 import com.it.boot.entity.CacheEntity;
 import com.it.boot.service.CacheService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <pre>
@@ -96,10 +97,11 @@ public class TestCacheController {
 
     @Operation(summary = "info")
     @GetMapping("/info")
-    public ApiResult<CacheEntity> info(CacheEntity cache) {
+    public ApiResult<CacheEntity> info(CacheEntity cache) throws ExecutionException, InterruptedException {
         log.info("info");
         return ApiResult.success(cacheService.info(cache));
     }
+
 
     @Operation(summary = "create")
     @PostMapping("/create")
@@ -120,5 +122,17 @@ public class TestCacheController {
     public ApiResult<Boolean> delete(Long id) {
         cacheService.delete(id);
         return ApiResult.success();
+    }
+
+    @Operation(summary = "testAsyncCache")
+    @GetMapping("/testAsyncCache")
+    public ApiResult<Integer> testAsyncCache() throws InterruptedException, ExecutionException {
+        return cacheService.testAsyncCache(cacheService).get();
+    }
+
+    @Operation(summary = "testAsyncCacheV2")
+    @GetMapping("/testAsyncCacheV2")
+    public ApiResult<Integer> testAsyncCacheV2() throws ExecutionException, InterruptedException {
+        return cacheService.testAsyncCacheV2(cacheService).get();
     }
 }

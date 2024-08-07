@@ -12,10 +12,26 @@ public class ScheduledConfig {
 
     @Bean
     public TaskScheduler taskScheduler() {
-        ThreadPoolTaskScheduler scheduling = new ThreadPoolTaskScheduler();
-        scheduling.setPoolSize(8);
-        scheduling.initialize();
-        return scheduling;
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(8);
+        scheduler.initialize();
+        scheduler.setThreadNamePrefix("TestScheduler0-");
+        return scheduler;
+    }
+
+    @Bean("taskScheduler1")
+    public TaskScheduler taskScheduler1() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(10);
+        scheduler.setThreadNamePrefix("TestScheduler1-");
+        return scheduler;
+    }
+
+    @Bean
+    public TaskScheduler taskScheduler2() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(10);
+        scheduler.setThreadNamePrefix("TestScheduler2-");
+        return scheduler;
     }
 }
-
