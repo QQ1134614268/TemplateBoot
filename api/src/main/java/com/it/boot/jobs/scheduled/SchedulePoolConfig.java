@@ -14,7 +14,7 @@ public class SchedulePoolConfig {
     public TaskScheduler taskScheduler1() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(10);
-        scheduler.setThreadNamePrefix("spring-task1-thread");
+        scheduler.setThreadNamePrefix("TestScheduler1");
         return scheduler;
     }
 
@@ -22,7 +22,7 @@ public class SchedulePoolConfig {
     public TaskScheduler taskScheduler2() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(10);
-        scheduler.setThreadNamePrefix("spring-task2-thread");
+        scheduler.setThreadNamePrefix("TestScheduler2");
         return scheduler;
     }
 }
