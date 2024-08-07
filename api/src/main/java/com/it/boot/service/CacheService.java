@@ -6,6 +6,7 @@ import com.it.boot.config.ApiResult;
 import com.it.boot.config.exception.BizException;
 import com.it.boot.entity.CacheEntity;
 import com.it.boot.mapper.CacheMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Service
 public class CacheService extends ServiceImpl<CacheMapper, CacheEntity> {
 
@@ -73,6 +75,7 @@ public class CacheService extends ServiceImpl<CacheMapper, CacheEntity> {
 
     @Cacheable(value = "CACHE_SUM", key = "#a + ',' + #b")
     public ApiResult<Integer> sum(int a, int b) throws InterruptedException {
+        log.info("线程名: {}", Thread.currentThread().getName());
         Thread.sleep(5000);
         return ApiResult.success(a + b);
     }
