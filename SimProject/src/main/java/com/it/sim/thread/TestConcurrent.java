@@ -147,6 +147,5 @@ public class TestConcurrent {
         HashMap hashMap;
         Hashtable hashtable;
         ConcurrentHashMap concurrentHashMap1;
-        // todo
     }
 }

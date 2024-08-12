@@ -1,10 +1,9 @@
 package com.it.sim.algorithm;
 
 /**
- * 爬楼梯问题其实质就是斐波那契数列！
+ * 爬楼梯问题其实质就是动态规划 f(n)= f(n-1) + f(n-2)
  */
 public class ClimbTheStairs {
-    // todo
     static int total;
 
     // 递归调用
