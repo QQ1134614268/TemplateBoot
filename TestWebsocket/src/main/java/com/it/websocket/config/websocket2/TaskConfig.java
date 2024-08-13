@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 @Component
 public class TaskConfig {
 
-    @Resource
-    WsSessionManager wsSessionManager;
-
     AtomicInteger atomicInteger = new AtomicInteger(1);
 
     @Scheduled(fixedDelay = 30000)
@@ -32,7 +29,7 @@ public class TaskConfig {
         sysAnno.setTitle(String.valueOf(andIncrement));
         sysAnno.setContent(String.valueOf(andIncrement));
         sysAnno.setAuth("wu");
-        wsSessionManager.sendAll(new WsDto("", WsCommand.getSysAnno, "1", sysAnno));
+        WsSessionManager.sendAll(new WsDto("", WsCommand.getSysAnno, "1", sysAnno));
     }
 
     AtomicInteger atomicInteger2 = new AtomicInteger(1);
@@ -54,6 +51,6 @@ public class TaskConfig {
         news.setTitle(String.valueOf(i));
         news.setContent(String.valueOf(i));
         news.setAuth("wu");
-        wsSessionManager.sendBatch(new ArrayList<>(sessionIds), new WsDto("", WsCommand.getNews, "1", news));
+        WsSessionManager.sendBatch(new ArrayList<>(sessionIds), new WsDto("", WsCommand.getNews, "1", news));
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
@@ -70,6 +71,7 @@ public class HelloController {
         log.info(JSON.toJSONString(vo));
         return ApiResult.success(vo);
     }
+
     /**
      * 接收数组:
      * 用 @RequestParam
@@ -187,9 +189,17 @@ public class HelloController {
     public ApiResult<TimeRangeQo> testValidated(@Validated TimeRangeQo qo) {
         return ApiResult.success(qo);
     }
+
     @Operation(summary = "testAsync")
     @GetMapping("/testAsync")
     public ApiResult<TimeRangeQo> testAsync(@Validated TimeRangeQo qo) {
         return ApiResult.success(qo);
+    }
+
+    @PostConstruct
+    public ApiResult<Boolean> testPostConstruct() {
+        log.info("PostConstruct - test");
+        new Thread(() -> log.info("测试----PostConstruct sub-thread over")).start();
+        return ApiResult.success();
     }
 }

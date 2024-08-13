@@ -21,6 +21,12 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setMaxPoolSize(10);
         executor.setQueueCapacity(25);
         executor.setThreadNamePrefix("TestAsync-");
+        // executor.setRejectedExecutionHandler(); // 默认: AbortPolicy;直接抛出 RejectedExecutionException 异常
+        // executor.setAllowCoreThreadTimeOut();// 核心线程也应该遵循 keepAliveTime 的规则
+        // executor.setThreadFactory();
+        // executor.setThreadGroup();
+        // executor.setThreadGroupName();
+        // executor.setWaitForTasksToCompleteOnShutdown();
         executor.initialize();
         return executor;
     }
