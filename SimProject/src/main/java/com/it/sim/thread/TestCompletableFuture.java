@@ -4,7 +4,10 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -39,58 +42,63 @@ public class TestCompletableFuture {
 
     @Test
     public void testSupplyAsync2() {
-        CompletableFuture<String> futureA = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
             c.accept(2);
             return "A完成了";
         });
 
+        // 创建
+        // CompletableFuture.runAsync()
+        // CompletableFuture.supplyAsync()
+
+        // 获取结果
+        // future.join();
+        // future.get();
+        // future.get(10, TimeUnit.SECONDS);
+        // future.getNow();
+
         // CompletableFuture.completedFuture();
+        // future.complete(); // 没有执行完时, 返回给定值
+
+        // future.obtrudeValue()
+        // future.obtrudeException(Throwable)
+        // 回调方法
+        // future.whenComplete(); // 正常,异常时调用
+        // future.thenApply(); // 正常完成时,返回一个新
+        // future.thenAccept();
+        // future.thenRun();
+
+        // future.thenApplyBoth();
+        // future.thenAcceptBoth();
+
+        // future.runAfterBoth(CompletionStage, Runnable);
+        // future.runAfterBothAsync(CompletionStage, Runnable);
+        // future.runAfterBothAsync(CompletionStage, Runnable, Executor);
+        // future.runAfterEither();
+        // future.runAfterEitherAsync();
+
+
+        // 组合异步任务
         // CompletableFuture.allOf();
         // CompletableFuture.anyOf();
+        // future.thenCombine(); // 组合两个结果,
+        // future.thenCompose()
+        // future.thenComposeAsync();
+        // future.applyToEither();
+        // future.acceptEither();
 
-        // futureA.join();
-        // futureA.get();
-        // futureA.get(10, TimeUnit.SECONDS);
-        // futureA.getNow();
+        // 异常处理
+        // future.exceptionally(); // 仅异常时调用
+        // future.handle()
+        // future.handleAsync();
+        // future.completeExceptionally(Throwable)
 
-        // futureA.complete(); // 没有执行完时, 返回给定值
-        // futureA.completeExceptionally(Throwable)
+        // 其他
+        // future.cancel();
+        // future.isDone();
+        // future.toCompletableFuture();
 
-        // futureA.obtrudeValue()
-        // futureA.obtrudeException(Throwable)
-
-        // futureA.thenApply(); // 正常完成时,返回一个新
-        // futureA.thenAccept();
-        // futureA.thenRun();
-
-        // futureA.thenApplyBoth();
-        // futureA.thenAcceptBoth();
-
-        // futureA.handle()
-        // futureA.handleAsync();
-
-        // futureA.thenCombine(); // 组合两个结果,
-        // futureA.thenComposeAsync();
-
-        // futureA.applyToEither();
-        // futureA.acceptEither();
-
-        // futureA.runAfterBoth(CompletionStage, Runnable);
-        // futureA.runAfterBothAsync(CompletionStage, Runnable);
-        // futureA.runAfterBothAsync(CompletionStage, Runnable, Executor);
-        // futureA.runAfterEither();
-        // futureA.runAfterEitherAsync();
-
-        // futureA.exceptionally(); // 仅异常时调用
-
-        // futureA.whenComplete(); // 正常,异常时调用
-
-        // futureA.cancel();
-        // futureA.isDone();
-        // futureA.toCompletableFuture();
-
-
-        String result = futureA.join();
+        String result = future.join();
         System.out.println(result);
     }
 
