@@ -71,8 +71,9 @@ public class SortsMethodTest {
      * 挖坑填数,递归 --分治法
      */
     public static void quickSort(int[] array, int start, int end) {
-        if (start >= end)
+        if (start >= end) {
             return;
+        }
         int left = start, right = end;
         int std = array[start];
         while (left != right) {
@@ -82,8 +83,9 @@ public class SortsMethodTest {
                 // 判断跳出循环原因
                 array[left] = array[right];
             }
-            while (left < right && array[left] < std)
+            while (left < right && array[left] < std) {
                 left++;
+            }
             if (left < right) {
                 array[right] = array[left];
             }
@@ -97,9 +99,9 @@ public class SortsMethodTest {
     public static void quickSort2(int[] array, int start, int end) {
         // 交换排序---快速排序
 
-//        快速排序是交互排序的一种，实质上是对冒泡排序的一种改进，快速排序的基本思想是，在n个记录中取某一个记录的键值为标准，
-//		通常取第一个记录键值为基准，通过一趟排序将待排的记录分为小于或等于这个键值的两个独立的部分，这是一部分的记录键值均比另一部分记录的键值小，
-//		然后，对这两部分记录继续分别进行快速排序，以达到整个序列有序
+        // 快速排序是交互排序的一种，实质上是对冒泡排序的一种改进，快速排序的基本思想是，在n个记录中取某一个记录的键值为标准，
+        // 通常取第一个记录键值为基准，通过一趟排序将待排的记录分为小于或等于这个键值的两个独立的部分，这是一部分的记录键值均比另一部分记录的键值小，
+        // 然后，对这两部分记录继续分别进行快速排序，以达到整个序列有序
     }
 
     /* 希尔排序 */// 找一个数列 插入排序,数列最终为1,插入排序...
@@ -261,8 +263,7 @@ public class SortsMethodTest {
             bucketSort(arr);
             for (int i = 0; i < arr.length - 1; i++) {
                 if (arr[i] > arr[i + 1]) {
-                    System.err.println(
-                            "排序错误:" + Arrays.toString(a) + System.getProperty("line.separator") + Arrays.toString(arr));
+                    System.err.println("排序错误:" + Arrays.toString(a) + System.getProperty("line.separator") + Arrays.toString(arr));
                     break;
                 }
             }
@@ -288,7 +289,7 @@ public class SortsMethodTest {
 
         // 以下是单线程算法，处理数组
 
-        //1.
+        // 1.
         // 查找数组中为 key 的 下标 ：binarySearch 二分法查找，数组必须有序，且存在此数组中，否则返回负数下标
         Integer[] arr = {1, 2, 3, 4, 5, 6};
         int binarySearch = Arrays.binarySearch(arr, 3);
@@ -297,7 +298,7 @@ public class SortsMethodTest {
         int binarySearch0 = Arrays.binarySearch(arr, 0, 3, 3);
         System.out.println(binarySearch0);
 
-        //2.
+        // 2.
         // 复制出新的数组，复制长度由 newLength 决定,长度可大于被复制数组的长度
         Integer[] copyArray1 = Arrays.copyOf(arrayTest, 5);
         arrayPrint(copyArray1);
@@ -305,7 +306,7 @@ public class SortsMethodTest {
         Integer[] copyArray2 = Arrays.copyOfRange(arrayTest, 2, 7);
         arrayPrint(copyArray2);
 
-        //3.
+        // 3.
         // 在指定下标内，对数组进制默认升序排序，这将改变原数组，下标含头不含尾
         Integer[] sortArray1 = Arrays.copyOf(arrayTest, arrayTest.length);
         Arrays.sort(sortArray1, 0, 5);
@@ -322,7 +323,7 @@ public class SortsMethodTest {
         Arrays.sort(sortArray2, Comparator.reverseOrder());
         arrayPrint(sortArray2);
 
-        //4.
+        // 4.
         // 数组toString
         System.out.println(Arrays.toString(arrayTest));
         Integer[][] stuGrades = {{1, 3, 5, 7, 9}, {2, 4, 6, 8}, {1, 5, 10}};
@@ -338,7 +339,7 @@ public class SortsMethodTest {
         // 比较二维数组内容是否相等
         System.out.println(Arrays.deepEquals(stuGrades, equals2));
 
-        //6.
+        // 6.
         Integer[] fillArr = new Integer[5];
         // 将一个数组置为 val(5)
         Arrays.fill(fillArr, 5);
@@ -353,9 +354,14 @@ public class SortsMethodTest {
         Arrays.setAll(setAllArr, a -> a * 3);
         System.out.println(Arrays.toString(setAllArr));
 
-        //8.
+        // 8.
         // Java8新特性，对array进行流式处理，可用一切流式处理的方法(将专门一篇来讲Lambda与Stream)
-        Arrays.stream(arrayTest).map(a -> a * 2).filter(a -> a > 10).sorted().distinct().limit(6)
+        Arrays.stream(arrayTest)
+                .map(a -> a * 2)
+                .filter(a -> a > 10)
+                .sorted()
+                .distinct()
+                .limit(6)
                 .forEach(a -> System.out.print(a + " "));
         System.out.println();
 
@@ -371,13 +377,13 @@ public class SortsMethodTest {
         Arrays.parallelPrefix(arrayPP2, 0, 5, (x, y) -> x * y);
         arrayPrint(arrayPP2);
 
-        //10.
+        // 10.
         Integer[] arrayPSA = Arrays.copyOf(arrayTest, arrayTest.length);
         // 对原有数组对每个元素重新赋值，下面例子是 下标*5 然后赋到数组对应元素
         Arrays.parallelSetAll(arrayPSA, a -> a * 5);
         arrayPrint(arrayPSA);
 
-        //11.
+        // 11.
         Integer[] arrayPS1 = Arrays.copyOf(arrayTest, arrayTest.length);
         // 对数组进行升序排序
         Arrays.parallelSort(arrayPS1);
@@ -386,7 +392,7 @@ public class SortsMethodTest {
         Arrays.parallelSort(arrayPS1, 0, 5, Comparator.reverseOrder());
         arrayPrint(arrayPS1);
 
-        //12.
+        // 12.
         // 返回一个Spliterator进行其它操作
         Spliterator<Integer> spliterator = Arrays.spliterator(arrayPS1);
         // 将原有Spliterator切出一部分为新的Spliterator，不可切时返回null

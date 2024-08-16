@@ -1,0 +1,17 @@
+Thread: # 执行 捕获异常
+Future: # 执行 捕获异常 返回值 取消,查询完成
+  RunnableFuture:
+    FutureTask:
+  ScheduledFuture:
+    RunnableScheduledFuture:
+  ForkJoinTask:
+    RecursiveAction:
+    RecursiveTask:
+  CompletableFuture: # 推荐使用, Api丰富, 流式编程
+Executor:
+  ExecutorService:
+    ThreadPoolExecutor:
+      ScheduledThreadPoolExecutor:
+CompletionService:
+  ExecutorCompletionService: # 依赖Executor
+ThreadPool: # 依赖Executor

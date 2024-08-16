@@ -4,23 +4,6 @@ package com.it.sim.thread;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
-/**
- * <pre>
- * Runnable 执行
- * Thread   执行 捕获异常
- * Callable 执行 捕获异常 返回值
- * Future   执行 捕获异常 返回值 取消,查询完成
- *      RunnableFuture -> FutureTask -> ScheduledFutureTask
- *      ScheduledFuture -> RunnableScheduledFuture
- *      ForkJoinFuture -> RecursiveTask; RecursiveAction ??
- *      CompletableFuture java8推荐
- * ThreadPool -> execute(无返回值) submit(取结果)
- * CompletionService -> 一组任务管理接口; submit() - 提交任务;take() - 获取任务结果;poll() - 获取任务结果; 实现类: ExecutorCompletionService
- * </pre>
- */
 @Slf4j
 public class TestThread {
 
@@ -33,44 +16,86 @@ public class TestThread {
             log.info("线程优先级:{}", Thread.currentThread().getPriority());
             log.info("是否守护线程:{}", Thread.currentThread().isDaemon());
             log.info("线程组:{}", Thread.currentThread().getThreadGroup());
-            Thread.currentThread().getThreadGroup().list();
-            log.info(String.valueOf(Thread.currentThread().getThreadGroup()));
-            // Thread.currentThread().join();
+            ThreadUtils.sleep(1);
+            throw new RuntimeException("测试抛出异常");
+        });
+        thread.setUncaughtExceptionHandler((originThread, throwable) -> {
+            log.error("线程ID:{},名称:{}", originThread.getId(), originThread.getName());
+            log.error("throwable.getMessage():{}", throwable.getMessage());
         });
         // 启动线程
         thread.start();
-        // ThreadUtils.sleep(1);// 等待线程执行完 差评
         thread.join(); // 等待线程执行完
         log.info("子线程执行完毕");
     }
 
     @Test
-    public void testThreadException() throws InterruptedException {
+    public void testThreadGroup() {
+        Runnable runnable = () -> {
+            String currentName = Thread.currentThread().getName();
+            String groupName = Thread.currentThread().getThreadGroup().getName();
+            log.info("线程名称: " + currentName + ", 所在线程组: " + groupName);
+        };
+        String currentName = Thread.currentThread().getName();
+        String groupName = Thread.currentThread().getThreadGroup().getName();
+        log.info("线程名称: " + currentName + ", 所在线程组: " + groupName);
+        // Thread.getAllStackTraces();
+        // Thread.activeCount(); // 等于 currentThread().getThreadGroup().activeCount();
+        // Thread.currentThread().getName(); .getStackTrace(); .getThreadGroup();
+
+        ThreadGroup threadGroup = new ThreadGroup("root线程组");
+        Thread t1 = new Thread(threadGroup, runnable, "线程-1");
+        Thread t2 = new Thread(threadGroup, runnable, "线程-2");
+        Thread.currentThread().getThreadGroup().list();
+        t1.start();
+        Thread.currentThread().getThreadGroup().list();
+        t2.start();
+    }
+
+    /**
+     * 单元测试,子线程没有执行完解析: 主线程结束后，jvm直接退出
+     * <br>
+     * 守护线程的存在是依赖于主线程的。当 JVM 中仅剩下守护线程时，JVM 会自动退出。无论守护线程是否执行完毕
+     */
+    @Test
+    public void threadDaemon() throws InterruptedException {
+        log.info("主线程名: {}, 守护线程: {}", Thread.currentThread().getName(), Thread.currentThread().isDaemon());
         Thread thread = new Thread(() -> {
-            throw new RuntimeException("测试抛出异常");
-        });
-        thread.setUncaughtExceptionHandler((originThread, throwable) -> {
-            log.error(String.format("线程ID:%s,线程名称:%s", originThread.getId(), originThread.getName()), throwable);
-        });
-        // 启动线程
+            ThreadUtils.sleep(3);
+            log.info("子线程名: {}, 守护线程: {}", Thread.currentThread().getName(), Thread.currentThread().isDaemon());
+        }, "thread-1");
+        thread.setDaemon(true);
         thread.start();
+        // thread.join();// 阻塞线程,直到子线程结束
+        log.info("结束");
+    }
+
+    @Test
+    public void testThreadInterruptedException() throws InterruptedException {
+        Thread thread = new Thread(() -> {
+            log.info("线程name: {}", Thread.currentThread().getName());
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                log.info("捕获异常, {}", e.getMessage());
+            }
+            log.info("线程name: {}", Thread.currentThread().getName());
+        }, "testThread-1");
+        thread.start();
+        thread.interrupt();
         thread.join();
+        System.out.println("测试结束");
     }
 
     @Test
     public void testSelfStart() {
         Thread thread = new Thread(() -> {
             ThreadUtils.sleep(2);
-            // Thread inner = new Thread(() -> {
-            //     throw new RuntimeException("测试抛出异常");
-            // },"inner-thread");
-            // inner.start();
             throw new RuntimeException("测试抛出异常");
-        }, "out-thread");
-
+        }, "testThread-1");
         thread.setUncaughtExceptionHandler((originThread, throwable) -> {
             ThreadUtils.sleep(1);
-            log.info("重启");
+            log.info("发生异常: {}; 开始重启", throwable.getMessage());
             new TestThread().testSelfStart();
         });
         // 启动线程
@@ -81,44 +106,27 @@ public class TestThread {
     }
 
     @Test
-    public void testThreadWhile() throws InterruptedException {
-        // 测试终止线程, 发送信号量, 或者 发送 interrupt
-        Thread thread = new Thread(() -> {
-            while (!Thread.interrupted()) {
-                log.info("在循环");
-            }
-            log.info("循环结束");
-
-        });
-        thread.start();
-        ThreadUtils.sleep(1);
-        thread.interrupt();
-        thread.join();
-        log.info("子线程执行完毕");
-    }
-
-
-    @Test
-    public void testInterruptThread() throws InterruptedException {
-        LocalDateTime endTime = LocalDateTime.now().plus(3, ChronoUnit.SECONDS);
+    public void testThreadLocal() throws InterruptedException {
+        ThreadLocal<String> threadLocal = ThreadLocal.withInitial(() -> "-1");
+        int i = 1;
+        threadLocal.set("789");
         Thread t1 = new Thread(() -> {
-            while (true) {
-                if (LocalDateTime.now().isAfter(endTime)) {
-                    ThreadUtils.sleep(5);
-                    log.info("睡眠");
-                    // break;
-                }
-                log.info("在循环");
-            }
-        });
+            log.info("i: " + i);
+            threadLocal.set("t1");
+            log.info("thread-1: " + threadLocal.get());
+            threadLocal.remove();
+            log.info("thread-1: " + threadLocal.get());
+        },"thread-1");
         Thread t2 = new Thread(() -> {
-            log.info("中止t1");
-            t1.interrupt();
-            // t1.stop();
-        });
+            threadLocal.set("t2");
+            log.info("thread-2: " + threadLocal.get());
+            threadLocal.remove();
+            log.info("thread-2: " + threadLocal.get());
+        },"thread-2");
         t1.start();
-        t2.start(); // 终止指令下发, 若t1在睡眠状态, t1抛出异常然后终止, 若t1不在睡眠状态,继续执行(可在循环中判断是否interrupt,然后终止)
         t1.join();
+        t2.start();
         t2.join();
+        log.info("main 线程: " + threadLocal.get());
     }
 }

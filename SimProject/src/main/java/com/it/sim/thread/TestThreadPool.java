@@ -54,7 +54,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class TestThreadPool {
 
-
     @Test
     public void test1() throws InterruptedException {
         ExecutorService fixedThreadPool = Executors.newFixedThreadPool(2);
