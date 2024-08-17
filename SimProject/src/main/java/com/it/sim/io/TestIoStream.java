@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused", "EmptyMethod"})
-public class TestIo1InputStream {
+public class TestIoStream {
     // https://blog.csdn.net/WeakFantasy/article/details/52691041
 
     InputStream inputStream = new ByteArrayInputStream("abc".getBytes(StandardCharsets.UTF_8));
