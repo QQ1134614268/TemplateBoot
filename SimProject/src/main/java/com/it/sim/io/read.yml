@@ -1,0 +1,103 @@
+IO与Nio对比:
+  IO:
+    面向流: 每次从流中读取一个或多个字节，不能缓存;
+    阻塞IO: read|write()方法 线程会被阻塞，直到被读取, 完全写入。
+    不支持选择器: 每个IO操作都需要一个独立的线程来处理，这在高并发场景下会消耗大量的系统资源。
+    场景: 适用于连接数不多，但每次连接需要传输大量数据的场景。例如，文件传输、数据库操作等。
+    缺点: 由于IO操作是阻塞的，且每个IO操作都需要一个独立的线程来处理，因此在高并发场景下性能较低。
+    组件和API: 主要使用InputStream、OutputStream等流类来进行数据读写。
+  NIO:
+    面向缓冲区: NIO将数据读取到一个缓冲区中，然后可以从缓冲区中前后移动数据，增加了处理的灵活性。
+    非阻塞IO: NIO允许一个线程从通道发送请求读取数据，但如果没有数据可用，该线程不会阻塞，而是可以继续执行其他任务。当数据到达时，线程可以通过其他方式（如选择器）被通知并处理数据。
+    支持选择器: 选择器允许一个单独的线程来监视多个输入通道（Channel），这使得一个线程可以管理多个网络连接或文件通道，大大提高了系统的并发处理能力。
+    场景: 适用于连接数众多，但每次连接只需要传输少量数据的场景。例如，聊天服务器、Web服务器等。
+    缺点: 通过面向缓冲区的非阻塞IO和选择器的支持，NIO可以显著提高系统的并发处理能力和性能。
+    组件和API: 引入了Channel（通道）、Buffer（缓冲区）和Selector（选择器）等新的组件和API，提供了更丰富的数据操作方式和更高的并发处理能力。
+
+IO常用类:
+  字节流: # 处理二进制数据; 如图片、视频文件等。
+    InputStream: #所有字节输入流的超类。
+      FileInputStream: #用于从文件读取数据的字节输入流。
+      BufferedInputStream: #带有缓冲区的字节输入流，可以提高读取性能。
+      ObjectInputStream: #用于从输入流中读取对象。
+    OutputStream: #所有字节输出流的超类。
+      FileOutputStream: #用于向文件写入数据的字节输出流。
+      BufferedOutputStream: #带有缓冲区的字节输出流，可以提高写入性能。
+      ObjectOutputStream: #用于将对象写入输出流。
+  字符流: # 处理文本数据; 如读取和写入文件内容。
+    Reader: #所有字符输入流的超类。
+      FileReader: #用于从文件读取文本数据的字符输入流。
+      BufferedReader: #带有缓冲区的字符输入流，可以提高读取性能，并支持按行读取。
+      InputStreamReader: #是字节流到字符流的桥梁，可以将字节输入流转换为字符输入流。
+    Writer: #所有字符输出流的超类。
+      FileWriter: #用于向文件写入文本数据的字符输出流。
+      BufferedWriter: #带有缓冲区的字符输出流，可以提高写入性能。
+      OutputStreamWriter: #是字符流到字节流的桥梁，可以将字符输出流转换为字节输出流。
+      PrintWriter: #提供了打印和写入字符串的便捷方法，并可以自动刷新输出缓冲区。
+  其他常用类:
+    File: #代表文件和目录路径名的抽象表示形式。它不是流，但可以用来创建输入/输出流。
+    RandomAccessFile: #允许对文件的随机访问，既可以读取文件内容，也可以向文件写入数据。
+    SequenceInputStream: #将多个输入流串联成一个输入流。
+    ByteArrayInputStream 和 ByteArrayOutputStream: #分别用于从字节数组读取数据和向字节数组写入数据。
+
+NIO:
+  1. 缓冲区（Buffer）:
+    定义: 缓冲区是一块连续的内存块，用于在读写过程中存储数据。它是NIO中数据读写操作的基础。
+    属性:
+      容量（Capacity）: 缓冲区能够容纳的最多数据量，一旦创建，容量不可更改。
+      限制（Limit）: 缓冲区中第一个不应该被读或写的元素的索引。写模式下，limit等于缓冲区的容量；读模式下，limit等于写入的数据量。
+      位置（Position）: 下一个要读取或写入的数据的索引。写数据时，position随写入数据的增加而增加；读数据时，position随读取数据的增加而增加。
+      标记（Mark）: 一个用于标记缓冲区中特定位置的索引，可以通过reset()方法将position重置到mark位置。
+    常用方法:
+      flip(): 将limit设置为当前position，然后将position设为0，用于准备从缓冲区读取数据。
+      clear(): 清空缓冲区，但不释放内存。position设为0，limit设为capacity，准备再次写入数据。
+      compact(): 只清除已读过的数据，未读数据被移到缓冲区起始处，准备再次写入数据。
+  2. 通道（Channel）:
+    定义: 通道是连接数据源（如文件、套接字）和缓冲区之间的桥梁，用于读写数据。
+    特点:
+      通道可以同时进行读写操作（与流不同，流通常只能读或写）。
+      通道是双向的，但某些类型的通道可能是单向的。
+      通道可以异步读写数据。
+    常用实现:
+      FileChannel: 用于文件数据的读写。
+      DatagramChannel: 用于UDP数据包的读写。
+      SocketChannel: 用于TCP网络连接的读写。
+      ServerSocketChannel: 用于监听TCP连接请求，并为每个连接创建一个SocketChannel。
+  3. 选择器（Selector）:
+    定义: 选择器允许单个线程处理多个通道（Channel）的IO事件（如连接请求、数据到达等），从而提高了资源利用率和系统的吞吐量。
+    工作原理:
+      将多个通道注册到选择器上，并指定感兴趣的事件。
+      调用选择器的select()方法，该方法会阻塞直到某个通道有事件发生。
+      当select()方法返回时，可以查询哪些通道的事件已经就绪，并据此进行相应的处理。
+# NIO的使用场景:
+#    高并发网络应用: 如在线游戏、实时通讯、高性能Web服务器等。
+#    文件处理: 特别是对于大文件或流式数据的处理，NIO提供了更高效的读写方式。
+#    分布式系统: 在分布式系统中，NIO可以用于实现远程过程调用（RPC）和消息传输等通信机制。
+
+Files: # 处理文件和目录，包括创建、复制、移动、删除、读取、写入等操作
+  1. 文件和目录的创建:
+    createFile(Path path, FileAttribute<?>... attrs): 创建一个新文件，返回表示该文件的Path对象。如果文件已存在，则抛出FileAlreadyExistsException异常。
+    createDirectory(Path dir, FileAttribute<?>... attrs)**: 创建一个新目录。如果目录的父目录不存在，则抛出`NoSuchFileException`异常。可以使用`createDirectories(Path dir, FileAttribute<?>... attrs)`来创建给定路径的所有未存在的父目录。
+  2. 文件和目录的复制与移动:
+    copy(Path source, Path target, CopyOption... options): 将文件从源路径复制到目标路径。可以指定复制选项，如REPLACE_EXISTING来替换已存在的目标文件。
+    move(Path source, Path target, CopyOption... options): 将文件从源路径移动到目标路径。与copy方法类似，也可以指定移动选项。
+  3. 文件和目录的删除:
+    delete(Path path): 删除文件或目录。如果目录非空，则抛出DirectoryNotEmptyException异常。对于文件，如果文件不存在，则可能抛出NoSuchFileException异常。
+  4. 文件内容的读写:
+    readAllBytes(Path path): 读取文件的所有字节到一个byte数组中。
+    readAllLines(Path path, Charset cs): 读取文件的所有行到一个字符串列表中，可以使用指定的字符集。
+    write(Path path, byte[] bytes, OpenOption... options): 将字节数组写入文件。可以指定写入选项，如CREATE、APPEND等。
+    write(Path path, Iterable<? extends CharSequence> lines, Charset cs, OpenOption... options): 将字符串列表写入文件，每个字符串作为文件的一行。
+  5. 文件属性的检查与获取:
+    exists(Path path, LinkOption... options): 判断文件或目录是否存在。
+    isDirectory(Path path, LinkOption... options): 判断路径是否为目录。
+    isRegularFile(Path path, LinkOption... options): 判断路径是否为普通文件。
+    isReadable(Path path): 判断文件是否可读。
+    isWritable(Path path): 判断文件是否可写。
+    isHidden(Path path): 判断文件是否为隐藏文件。 # 此方法可能不适用于所有文件系统
+    size(Path path, LinkOption... options): 获取文件的大小（以字节为单位）。
+    getLastModifiedTime(Path path, LinkOption... options): 获取文件的最后修改时间。
+    getAttribute(Path path, String attribute, LinkOption... options): 获取文件的指定属性。
+  6. 其他辅助方法:
+    walk(Path start, FileVisitOption... options): 从给定路径开始遍历文件和目录。
+    probeContentType(Path path): 探测文件的MIME类型。
