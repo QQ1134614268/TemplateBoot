@@ -72,7 +72,7 @@ public class TestIoJarFile {
 
     @Test
     public void testClass() throws IOException {
-        Class<?> clazz = TestIoFile.class;
+        Class<?> clazz = TestIoOthers.class;
         // 当前jar包下文件
         InputStream inputStream = clazz.getResourceAsStream("/" + TEST_TEST_TXT); // 本质时ClassLoader
         String data = readFromInputStream(inputStream);

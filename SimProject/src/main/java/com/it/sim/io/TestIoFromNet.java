@@ -30,7 +30,7 @@ public class TestIoFromNet {
             Files.write(Paths.get("a.jpg"), b, StandardOpenOption.CREATE);
 
             // 原始
-            byte[] originBytes = Files.readAllBytes(Paths.get("D:\\桌面文件夹\\aa.jpg"));
+            byte[] originBytes = Files.readAllBytes(Paths.get("/temp/aa.jpg"));
             Files.write(Paths.get("bb.jpg"), originBytes, StandardOpenOption.CREATE);
             System.out.println(Arrays.equals(b, originBytes));
 
