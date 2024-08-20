@@ -1,4 +1,4 @@
-package com.it.sim.io;
+package com.it.sim.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -25,14 +25,14 @@ import java.io.InputStreamReader;
  *          ClassLoader.getResource 使用父ClassLoader加载路径
  */
 @Slf4j
-public class TestIoJarFile {
+public class TestReadJarFile {
 
     public static final String TEST_TEST_TXT = "test/test.txt";
     public static final String DATA = "Hello,World!";
 
     @Test
     public void readClassResource() {
-        Class<?> clz = TestIoJarFile.class; // Test.class;
+        Class<?> clz = TestReadJarFile.class; // Test.class;
         String className = clz.getSimpleName() + ".class";
         // 1 返回 target/classes/package
         System.out.println(clz.getResource(""));
@@ -51,7 +51,7 @@ public class TestIoJarFile {
 
     @Test
     public void readClassLoaderResource() {
-        Class<?> clz = TestIoJarFile.class;// Test.class;
+        Class<?> clz = TestReadJarFile.class;// Test.class;
         String className = clz.getSimpleName() + ".class";
         ClassLoader classLoader = clz.getClassLoader();
         System.out.println(classLoader.getResource(""));
@@ -72,7 +72,7 @@ public class TestIoJarFile {
 
     @Test
     public void testClass() throws IOException {
-        Class<?> clazz = TestIoOthers.class;
+        Class<?> clazz = TestReadJarFile.class;
         // 当前jar包下文件
         InputStream inputStream = clazz.getResourceAsStream("/" + TEST_TEST_TXT); // 本质时ClassLoader
         String data = readFromInputStream(inputStream);
@@ -111,6 +111,4 @@ public class TestIoJarFile {
         }
         return resultStringBuilder.toString();
     }
-
-
 }

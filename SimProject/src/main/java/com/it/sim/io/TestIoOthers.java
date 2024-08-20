@@ -1,14 +1,16 @@
 package com.it.sim.io;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 @Slf4j
@@ -43,6 +45,24 @@ public class TestIoOthers {
             Assert.assertTrue(scanner.hasNext());
             Assert.assertEquals("Hello", scanner.next());
             Assert.assertEquals("World!", scanner.next());
+        }
+    }
+
+    @Test
+    public void testFromNet() throws IOException {
+        String url = "http://127.0.0.1:9009/api/img/getImg?id=1";
+        String name = "/tmp/aa.jpg";
+        try (CloseableHttpClient httpclient = HttpClients.createDefault();
+             CloseableHttpResponse pictureResponse = httpclient.execute(new HttpGet(url));
+             InputStream inputStream = pictureResponse.getEntity().getContent(); // 获取流
+             FileOutputStream fileOutputStream = new FileOutputStream(name);
+        ) {
+            // byte[] b = new byte[inputStream.available()]; // 数据模糊,长度异常
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                fileOutputStream.write(buffer, 0, len);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-# todo 阅读io nio socket uri url 整理
+# todo 阅读IO NIO AIO socket uri url 整理
 IO与Nio对比:
   IO:
     面向流: 每次从流中读取一个或多个字节，不能缓存;
@@ -44,7 +44,7 @@ IO常用类:
     ByteArrayInputStream 和 ByteArrayOutputStream: #分别用于从字节数组读取数据和向字节数组写入数据。
 
 NIO:
-  1. 缓冲区（Buffer）:
+  1. 缓冲区（Buffer）: # ByteBuffer DoubleBuffer ...
     定义: 缓冲区是一块连续的内存块，用于在读写过程中存储数据。它是NIO中数据读写操作的基础。
     属性:
       容量（Capacity）: 缓冲区能够容纳的最多数据量，一旦创建，容量不可更改。
@@ -64,8 +64,8 @@ NIO:
     常用实现:
       FileChannel: 用于文件数据的读写。
       DatagramChannel: 用于UDP数据包的读写。
-      SocketChannel: 用于TCP网络连接的读写。
-      ServerSocketChannel: 用于监听TCP连接请求，并为每个连接创建一个SocketChannel。
+      SocketChannel: 用于TCP客户端; 它类似于传统的Socket，但同样支持非阻塞模式，并提供了更多的灵活性和可扩展性。
+      ServerSocketChannel:  用于TCP服务端; 它类似于传统的ServerSocket，但增加了通道（Channel）的语义，因此支持非阻塞模式。
   3. 选择器（Selector）:
     定义: 选择器允许单个线程处理多个通道（Channel）的IO事件（如连接请求、数据到达等），从而提高了资源利用率和系统的吞吐量。
     工作原理:
