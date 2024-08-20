@@ -59,7 +59,8 @@ public class TestIoStreamByte {
         String FILE = "src/main/resources/test/test.txt";
         String FILE2 = "/tmp/test.txt";
         List<Byte> byteList = new ArrayList<>();
-        try (FileInputStream fileInputStream = new FileInputStream(FILE); BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);) {
+        try (FileInputStream fileInputStream = new FileInputStream(FILE);
+             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);) {
             int data;
             while ((data = bufferedInputStream.read()) != -1) {
                 byteList.add((byte) data);
@@ -77,14 +78,16 @@ public class TestIoStreamByte {
     @Test
     public void testDataOutputStream() throws IOException {
         String name = "/tmp/data.log";
-        try (FileOutputStream fileOut = new FileOutputStream(name); DataOutputStream out = new DataOutputStream(fileOut)) {
+        try (FileOutputStream fileOut = new FileOutputStream(name);
+             DataOutputStream out = new DataOutputStream(fileOut)) {
             // 写入数据
             out.writeBytes("tom");
             out.writeInt(30);
             out.writeBoolean(true);
         }
 
-        try (FileInputStream fileIn = new FileInputStream(name); DataInputStream in = new DataInputStream(fileIn)) {
+        try (FileInputStream fileIn = new FileInputStream(name);
+             DataInputStream in = new DataInputStream(fileIn)) {
             // 读取数据
             byte[] bytes = new byte[3];
             int i = in.read(bytes);
@@ -101,13 +104,15 @@ public class TestIoStreamByte {
     public void testObjectInputStream() throws IOException, ClassNotFoundException {
         // 序列化对象到文件
         String name = "/tmp/user.ser";
-        try (FileOutputStream fileOut = new FileOutputStream(name); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        try (FileOutputStream fileOut = new FileOutputStream(name);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             User emp = new User("Tom", 30);
             out.writeObject(emp);
         }
         // 从文件反序列化对象
         User user;
-        try (FileInputStream fileIn = new FileInputStream(name); ObjectInputStream in = new ObjectInputStream(fileIn)) {
+        try (FileInputStream fileIn = new FileInputStream(name);
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
             user = (User) in.readObject();
             log.info("{}", user);
         }
