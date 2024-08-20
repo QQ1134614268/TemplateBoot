@@ -11,7 +11,7 @@ import java.util.List;
 public class TestIoStreamByte {
 
     @Test
-    public void test0() throws IOException {
+    public void testFileInputStream() throws IOException {
         String FILE = "src/main/resources/test/test.txt";
         String FILE2 = "/tmp/test.txt";
         // File file = new File(FILE);
@@ -33,16 +33,15 @@ public class TestIoStreamByte {
         // 测试2 读取数据 read(bytes)
         try (FileInputStream fileInputStream = new FileInputStream(FILE2);) {
             byte[] bytes = new byte[10];
-            while (fileInputStream.read(bytes) != -1) {
+            int length;
+            while ((length = fileInputStream.read(bytes)) != -1) {// 批量读取的长度
                 List<Character> res = new ArrayList<>();
-                for (byte b : bytes) {
-                    res.add((char) b);
+                for (int i = 0; i < length; i++) {
+                    res.add((char) bytes[i]);
                 }
                 log.info("{}", res);
-                bytes = new byte[10];
             }
         }
-
     }
 
     /**
@@ -78,16 +77,14 @@ public class TestIoStreamByte {
     @Test
     public void testDataOutputStream() throws IOException {
         String name = "/tmp/data.log";
-        try (FileOutputStream fileOut = new FileOutputStream(name);
-             DataOutputStream out = new DataOutputStream(fileOut)) {
+        try (FileOutputStream fileOut = new FileOutputStream(name); DataOutputStream out = new DataOutputStream(fileOut)) {
             // 写入数据
             out.writeBytes("tom");
             out.writeInt(30);
             out.writeBoolean(true);
         }
 
-        try (FileInputStream fileIn = new FileInputStream(name);
-             DataInputStream in = new DataInputStream(fileIn)) {
+        try (FileInputStream fileIn = new FileInputStream(name); DataInputStream in = new DataInputStream(fileIn)) {
             // 读取数据
             byte[] bytes = new byte[3];
             int i = in.read(bytes);
@@ -104,15 +101,13 @@ public class TestIoStreamByte {
     public void testObjectInputStream() throws IOException, ClassNotFoundException {
         // 序列化对象到文件
         String name = "/tmp/user.ser";
-        try (FileOutputStream fileOut = new FileOutputStream(name);
-             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+        try (FileOutputStream fileOut = new FileOutputStream(name); ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             User emp = new User("Tom", 30);
             out.writeObject(emp);
         }
         // 从文件反序列化对象
         User user;
-        try (FileInputStream fileIn = new FileInputStream(name);
-             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+        try (FileInputStream fileIn = new FileInputStream(name); ObjectInputStream in = new ObjectInputStream(fileIn)) {
             user = (User) in.readObject();
             log.info("{}", user);
         }
