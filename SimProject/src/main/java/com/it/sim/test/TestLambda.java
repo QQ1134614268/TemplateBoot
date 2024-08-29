@@ -1,5 +1,6 @@
 package com.it.sim.test;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import javax.swing.*;
@@ -8,11 +9,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.IntStream;
 
 /**
  * @author zero DateTime 2018年5月30日 上午10:37:42
  */
-
+@Slf4j
 public class TestLambda {
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -64,5 +66,12 @@ public class TestLambda {
         BiFunction<Integer, Long, String> biFunction = (a, b) -> String.valueOf(a + b);
         String res = biFunction.apply(1, 2L);
         System.out.println(res);
+    }
+
+    @Test
+    public void testIntStream() {
+        IntStream.range(0, 100).forEach(i -> {
+            log.info("{}", i);
+        });
     }
 }

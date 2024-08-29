@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -72,7 +71,7 @@ public class TestConcurrent {
      * 测试ConcurrentHashMap 线程不安全此场景
      */
     @Test
-    public void testThreadPoolExecutor() {
+    public void testConcurrentHashMap() {
         ConcurrentHashMap<String, SimpleDateFormat> concurrentHashMap = new ConcurrentHashMap<>();
         concurrentHashMap.put(TimeConf.YMD_HMS, new SimpleDateFormat(TimeConf.YMD_HMS));
         concurrentHashMap.put(TimeConf.HMS, new SimpleDateFormat(TimeConf.HMS));
@@ -97,37 +96,42 @@ public class TestConcurrent {
     }
 
     /**
-     * 创建100个线程，每个线程向map中添加10000个元素: 线程太多,没有资源;
-     * 线程池: 避免同时创建线程太多,资源不够
-     * 并行流并发处理任务: 占用大量的CPU资源,
-     * 分治策略: 避免CPU资源的浪费
-     * 并发流和批量添加元素: 遍历数据仍然会消耗大量的时间和资源
-     * Spark框架进行并行计算: 解决数据量巨大问题
+     * 创建 100 个线程，每个线程添加 1000 个元素
+     * <br>
+     * 方法1. 使用线程池: 避免同时创建线程太多,资源不够; 避免线程太多,没有资源;
+     * 方法2: 并行流并发处理任务: 线程多,资源不够;线程少不能充分利用
      */
     @Test
-    public void test2() {
-        ConcurrentHashMap<String, Integer> map = new ConcurrentHashMap<>();
-        // 创建10个线程的线程池
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
-        // 将100000个元素划分成100个小批量，每个小批量包含1000个元素
-        int batchSize = 1000;
-        IntStream.range(0, 100).forEach(i -> {
-            int start = i * batchSize;
-            int end = Math.min((i + 1) * batchSize, 100000);
+    public void testBatch() throws InterruptedException {
+        // List<Integer> list = new ArrayList<>();
+        List<Integer> list = new CopyOnWriteArrayList<>();
+        ExecutorService executorService = Executors.newFixedThreadPool(10); // 创建10个线程的线程池
+        for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
-                ConcurrentHashMap<String, Integer> batchMap = new ConcurrentHashMap<>();
-                IntStream.range(start, end).forEach(j -> {
-                    String key = "key" + j;
-                    Integer value = j;
-                    batchMap.put(key, value);
-                });
-                map.putAll(batchMap);
+                for (int j = 0; j < 1000; j++) {
+                    // 多线程下: ArrayList 线程不安全, add会缺失数据, null; 可以使用 synchronized
+                    // CopyOnWriteArrayList 线程安全 不会丢失数据
+                    list.add(j);
+                    // 方法二:
+                    // synchronized (list){
+                    //     list.add(j);
+                    // }
+                }
             });
+        }
+        executorService.shutdown(); // 关闭线程池
+        boolean endFlag = executorService.awaitTermination(10, TimeUnit.SECONDS);// 关闭线程池后,等所有任务执行完;
+        log.info("size: {}, {}, {} ", endFlag, list.size(), list.stream().filter(Objects::isNull).count());
+
+        // 方法二:
+        List<Integer> list2 = new CopyOnWriteArrayList<>();
+        // List<Integer> list2 = new ArrayList<>(); // 报错
+        IntStream.range(0, 100).parallel().forEach((v) -> {
+            for (int i = 0; i < 1000; i++) {
+                list2.add(i);
+            }
         });
-        // 关闭线程池
-        executorService.shutdown();
-        // 输出map的大小
-        System.out.println("map size: " + map.size());
+        log.info("size2: {}", list2.size());
     }
 
     /**

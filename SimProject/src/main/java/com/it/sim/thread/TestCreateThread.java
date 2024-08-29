@@ -6,6 +6,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
+/**
+ * 创建线程5种方法: Thread,FutureTask,ExecutorService,CompletionService,CompletableFuture
+ */
 @Slf4j
 public class TestCreateThread {
 
@@ -45,8 +48,7 @@ public class TestCreateThread {
 
     @Test
     public void testCompletionService() throws InterruptedException, ExecutionException {
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
-        CompletionService<String> completionService = new ExecutorCompletionService<>(executorService);
+        CompletionService<String> completionService = new ExecutorCompletionService<>(Executors.newFixedThreadPool(2));
         Callable<String> callable = () -> {
             log.info("线程name:" + Thread.currentThread().getName());
             Thread.sleep(3000);

@@ -55,10 +55,12 @@ public class TestThread {
     /**
      * 单元测试,子线程没有执行完解析: 主线程结束后，jvm直接退出
      * <br>
-     * 守护线程的存在是依赖于主线程的。当 JVM 中仅剩下守护线程时，JVM 会自动退出。无论守护线程是否执行完毕
+     * 守护线程的存在是依赖于主线程的。当 JVM 中仅剩下守护线程时，JVM 会自动退出。无论守护线程是否执行完毕;
+     * <br>
+     * 解决办法: 阻塞主线程, 等子线程结束后 主线程再结束;
      */
     @Test
-    public void threadDaemon() throws InterruptedException {
+    public void testChildThread() throws InterruptedException {
         log.info("主线程名: {}, 守护线程: {}", Thread.currentThread().getName(), Thread.currentThread().isDaemon());
         Thread thread = new Thread(() -> {
             ThreadUtils.sleep(3);
