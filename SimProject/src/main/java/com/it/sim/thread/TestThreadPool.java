@@ -133,7 +133,7 @@ public class TestThreadPool {
      * shutdown: 关闭线程池，不再接受新任务，但会执行完已提交的任务
      * shutdownNow: 立刻强制结束
      * awaitTermination: 阻塞, 直到任务执行完(需要先调用 shutdown) | 超时, 执行完返回 true; 超时返回false;
-     * isTerminated
+     * isTerminated: 是否被终止
      */
     @Test
     public void testAwaitTermination() throws InterruptedException {
@@ -145,7 +145,8 @@ public class TestThreadPool {
             executor.submit(() -> {
                 for (int j = 0; j < 1000; j++) {
                     HashMap<String, String> e = new HashMap<>();
-                    list.add(e); // 高并发时,list添加会缺失,会添加null
+                    list.add(e); // ArrayList在多线程下,add会缺失,或会添加null;
+                    // 解决办法: 1. synchronized; 2.CopyOnWriteArrayList; 3. Collections.synchronizedList; 4. Vector
                     // synchronized (list){
                     // }
                 }
