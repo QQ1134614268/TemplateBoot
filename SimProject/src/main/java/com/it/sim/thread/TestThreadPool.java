@@ -137,15 +137,14 @@ public class TestThreadPool {
      */
     @Test
     public void testAwaitTermination() throws InterruptedException {
-        List<HashMap<String, String>> list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         ExecutorService executor = Executors.newFixedThreadPool(10); // 创建一个固定大小的线程池
 
         for (int i = 0; i < 10; i++) {
             int finalI = i;
             executor.submit(() -> {
                 for (int j = 0; j < 1000; j++) {
-                    HashMap<String, String> e = new HashMap<>();
-                    list.add(e); // ArrayList在多线程下,add会缺失,或会添加null;
+                    list.add(j); // ArrayList在多线程下,add会缺失,或会添加null;
                     // 解决办法: 1. synchronized; 2.CopyOnWriteArrayList; 3. Collections.synchronizedList; 4. Vector
                     // synchronized (list){
                     // }

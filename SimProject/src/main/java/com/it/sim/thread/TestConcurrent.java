@@ -109,9 +109,10 @@ public class TestConcurrent {
         for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
                 for (int j = 0; j < 1000; j++) {
-                    // 多线程下: ArrayList 线程不安全, add会缺失数据, null;
+                    list.add(j); // 多线程下: ArrayList 线程不安全, add会缺失数据, null;
                     // 解决办法: 1. synchronized; 2.CopyOnWriteArrayList; 3. Collections.synchronizedList; 4. Vector
-                    list.add(j);
+                    // synchronized (list){
+                    // }
                 }
             });
         }
