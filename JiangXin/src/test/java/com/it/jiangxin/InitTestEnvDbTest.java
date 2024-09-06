@@ -86,6 +86,8 @@ public class InitTestEnvDbTest {
                     ImgEntity imgEntity = new ImgEntity();
                     imgEntity.setImgUrl(util.getUploadUrl("house.法式.webp"));
                     imgEntity.setGroupUuid(uuid);
+                    imgEntity.setCreateBy(1);
+                    imgEntity.setUpdateBy(1);
                     imgEntity.setDescription("这套风格借鉴了" + e.getName() + "艺术......");
                     if (j == 1) { // 首页
                         imgEntity.setIsHomeImg(true);

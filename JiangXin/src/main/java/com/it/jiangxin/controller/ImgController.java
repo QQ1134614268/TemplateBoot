@@ -57,7 +57,7 @@ public class ImgController {
                 .eq(BoolUtils.toBool(imgEntity.getIsHomeImg()), ImgEntity::getIsHomeImg, imgEntity.getIsHomeImg())
                 .like(BoolUtils.toBool(imgEntity.getName()), ImgEntity::getName, imgEntity.getName());
         wrapper.selectAll(ImgEntity.class);
-        wrapper.leftJoin(UserEntity.class, UserEntity::getId, ImgEntity::getUserId);
+        wrapper.leftJoin(UserEntity.class, UserEntity::getId, ImgEntity::getCreateBy);
         wrapper.selectAs(UserEntity::getAvatar, ImgDto::getUserAvtar);
         wrapper.selectAs(UserEntity::getUserName, ImgDto::getUserName);
         wrapper.selectAs(UserEntity::getNickName, ImgDto::getNickName);
