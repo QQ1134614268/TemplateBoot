@@ -1,12 +1,15 @@
 package com.it.jiangxin.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.SysEnumEntity;
+import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
+import com.it.jiangxin.entity.vo.ImgDto;
 import com.it.jiangxin.entity.vo.ImgTreeDto;
 import com.it.jiangxin.service.ImgService;
 import com.it.jiangxin.service.SysEnumService;
@@ -47,14 +50,18 @@ public class ImgController {
 
     @Operation(summary = "首页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page<ImgEntity>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
-        Page<ImgEntity> list = imgService.lambdaQuery()
-                .eq(BoolUtils.toBool(imgEntity.getGroupUuid()), ImgEntity::getGroupUuid, imgEntity.getGroupUuid())
+    public ApiResult<IPage<ImgDto>> getPage(Page<ImgEntity> page, ImgEntity imgEntity) {
+        MPJLambdaWrapper<ImgEntity> wrapper = new MPJLambdaWrapper<>();
+        wrapper.eq(BoolUtils.toBool(imgEntity.getGroupUuid()), ImgEntity::getGroupUuid, imgEntity.getGroupUuid())
                 .eq(BoolUtils.toBool(imgEntity.getStyleId()), ImgEntity::getStyleId, imgEntity.getStyleId())
                 .eq(BoolUtils.toBool(imgEntity.getIsHomeImg()), ImgEntity::getIsHomeImg, imgEntity.getIsHomeImg())
-                .like(BoolUtils.toBool(imgEntity.getName()), ImgEntity::getName, imgEntity.getName())
-                .page(page);
-        return ApiResult.success(list);
+                .like(BoolUtils.toBool(imgEntity.getName()), ImgEntity::getName, imgEntity.getName());
+        wrapper.selectAll(ImgEntity.class);
+        wrapper.leftJoin(UserEntity.class, UserEntity::getId, ImgEntity::getUserId);
+        wrapper.selectAs(UserEntity::getAvatar, ImgDto::getUserAvtar);
+        wrapper.selectAs(UserEntity::getUserName, ImgDto::getUserName);
+        wrapper.selectAs(UserEntity::getNickName, ImgDto::getNickName);
+        return ApiResult.success(imgService.getBaseMapper().selectJoinPage(page, ImgDto.class, wrapper));
     }
 
     @Operation(summary = "获取详情")

@@ -37,5 +37,8 @@ mybatis-plus:
     db-config:
       table-underline: false
 secret: abc@123
-upload_path: /app/data/upload
-serverHost: ggok.top
+upload:
+  host: jiangxin.ggok.top
+  protocol: https
+  path: /app/data/upload
+  port: 443

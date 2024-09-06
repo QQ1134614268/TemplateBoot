@@ -1,6 +1,7 @@
 package com.it.jiangxin.controller;
 
 import com.it.jiangxin.config.ApiResult;
+import com.it.jiangxin.config.exception.BizException;
 import com.it.jiangxin.util.FileUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,8 +31,15 @@ public class FileController {
 
     @Resource
     public HttpServletResponse response;
-    @Value("${upload_path:}")
-    private String upload_path;
+
+    @Value("${upload.host:127.0.0.1}")
+    private String uploadHost;
+    @Value("${upload.port:}")
+    private Integer uploadPort;
+    @Value("${upload.protocol:http}")
+    private String uploadProtocol;
+    @Value("${upload.path:}")
+    private String uploadPath;
 
     @Operation(summary = "上传")
     @PostMapping("/upload")
@@ -42,7 +50,7 @@ public class FileController {
             return ApiResult.fail("上传文件太大");
         }
         // 启动时
-        Path uploadDir = Paths.get(upload_path);
+        Path uploadDir = Paths.get(uploadPath);
         if (!Files.isDirectory(uploadDir)) {
             Files.createDirectories(uploadDir);
         }
@@ -51,10 +59,10 @@ public class FileController {
         // https:
         // http:// 127.0.0.1/api/file/download/xxx.img
         // http:// 127.0.0.1/xxx.img
-        Path path = Paths.get(upload_path, newName);
+        Path path = Paths.get(uploadPath, newName);
 
         Files.write(path, file.getBytes());
-        return ApiResult.success(String.format("/api/file/download/%s", newName));
+        return ApiResult.success(String.format("%s://%s:%s/api/file/download/%s", uploadProtocol, uploadHost, uploadPort, newName));
     }
 
     @Operation(summary = "下载")
@@ -64,7 +72,7 @@ public class FileController {
             // throw new BizException("文件不存在!");// 抛出404
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Path filePath = Paths.get(upload_path, path);
+        Path filePath = Paths.get(uploadPath, path);
         if (!Files.exists(filePath)) {
             // throw new BizException("文件不存在!"); // 抛出404
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -79,6 +87,6 @@ public class FileController {
             // response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
             outputStream.write(bytes);
         }
-        return null;
+        throw new BizException("参数异常");
     }
 }

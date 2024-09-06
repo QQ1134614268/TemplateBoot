@@ -49,5 +49,5 @@ public class ImgEntity extends BaseEntity {
 
     @Schema(name = "用户id", example = "0")
     @Column(columnDefinition = "int(11) COMMENT '用户id'")
-    private String userId;
+    private Integer userId;
 }

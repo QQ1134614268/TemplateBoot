@@ -1,6 +1,7 @@
 package com.it.jiangxin;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.config.enum1.AccountEnum;
@@ -10,6 +11,7 @@ import com.it.jiangxin.entity.ImgEntity;
 import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.entity.vo.IdsPara;
+import com.it.jiangxin.entity.vo.ImgDto;
 import com.it.jiangxin.service.SysEnumService;
 import com.it.jiangxin.util.PasswordUtil;
 import org.junit.jupiter.api.Assertions;
@@ -108,7 +110,7 @@ public class InitTestEnvDbTest {
         if (!clearTestData) {
             return;
         }
-        ApiResult<Page<ImgEntity>> res = imgController.getPage(Page.of(1, -1), new ImgEntity());
+        ApiResult<IPage<ImgDto>> res = imgController.getPage(Page.of(1, -1), new ImgEntity());
         List<Integer> ids = res.getData().getRecords().stream().map(ImgEntity::getId).collect(Collectors.toList());
         imgController.deleteByIds(new IdsPara(ids));
     }

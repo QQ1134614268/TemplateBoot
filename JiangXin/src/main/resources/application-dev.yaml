@@ -37,5 +37,8 @@ mybatis-plus:
     db-config:
       table-underline: false
 secret: abc@123
-upload_path: D:\workspace\TemplateBoot\JiangXin\data\upload
-serverHost: 127.0.0.1
+upload:
+  host: 127.0.0.1
+  protocol: http
+  path: D:\workspace\TemplateBoot\JiangXin\data\upload
+  port: ${server.port}
