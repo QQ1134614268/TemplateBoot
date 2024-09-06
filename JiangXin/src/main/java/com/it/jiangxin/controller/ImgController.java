@@ -40,6 +40,7 @@ public class ImgController {
     @PostMapping("/create")
     @Transactional
     public ApiResult<Integer> create(@RequestBody ImgEntity imgEntity) {
+        imgEntity.setCreate();
         imgService.save(imgEntity);
         return ApiResult.success(imgEntity.getId());
     }
@@ -93,7 +94,7 @@ public class ImgController {
         return ApiResult.success(res);
     }
 
-    @Operation(summary = "admin/图片管理/新增")
+    @Operation(summary = "admin/图片管理/修改")
     @PostMapping("/updateAllDesign")
     @Transactional
     public ApiResult<Integer> updateAllDesign(@RequestBody List<ImgEntity> list) {
@@ -101,7 +102,10 @@ public class ImgController {
             return ApiResult.fail("参数不正确");
         }
         String uuid = list.stream().map(ImgEntity::getGroupUuid).findFirst().orElse(UUID.randomUUID().toString());
-        list.forEach(v -> v.setGroupUuid(uuid));
+        list.forEach(v -> {
+            v.setGroupUuid(uuid);
+            v.setUpdate();
+        });
         imgService.saveOrUpdateBatch(list);
         imgService.lambdaUpdate()
                 .eq(ImgEntity::getGroupUuid, uuid)

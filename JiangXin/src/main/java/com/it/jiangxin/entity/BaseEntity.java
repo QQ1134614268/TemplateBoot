@@ -41,8 +41,5 @@ public class BaseEntity implements Serializable {
         this.setUpdateBy(JwtUtil.getUserId());
     }
 
-    // private BaseEntity() {
-    //     setCreate(); //  undo
-    // }
 }
 
