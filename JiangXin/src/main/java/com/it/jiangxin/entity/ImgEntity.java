@@ -46,8 +46,4 @@ public class ImgEntity extends BaseEntity {
     @TableField(exist = false)
     @Schema(name = "分类名称", example = "test_1")
     private String styleName;
-
-    @Schema(name = "用户id", example = "0")
-    @Column(columnDefinition = "int(11) COMMENT '用户id'")
-    private Integer userId;
 }
