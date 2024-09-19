@@ -1,4 +1,4 @@
-package com.it.boot.config;
+package com.it.jiangxin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.it.boot.config.Conf.*;
+import static com.it.jiangxin.config.constant.ConstConf.*;
 
 @Configuration
 public class SerializerConvertConfig {

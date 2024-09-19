@@ -1,9 +1,13 @@
 package com.it.jiangxin.config.constant;
 
+import java.time.format.DateTimeFormatter;
+
 public interface ConstConf {
     String DATE_FORMAT = "yyyy-MM-dd";
     String TIME_FORMAT = "HH:mm:ss";
     String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    DateTimeFormatter FMT_DATE = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    DateTimeFormatter FMT_DATE_TIME = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
     String REDIS_PREFIX_VERIFICATION_CODE = "VERIFICATION_CODE-";
 

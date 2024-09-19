@@ -4,6 +4,7 @@ package com.it.jiangxin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.SysEnumEntity;
+import com.it.jiangxin.entity.vo.SysEnumQo;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
 import com.it.jiangxin.service.SysEnumService;
@@ -33,14 +34,17 @@ public class SysEnumController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
-    public ApiResult<Page<SysEnumEntity>> getPage(Page<SysEnumEntity> page, SysEnumEntity enumEntity) {
+    public ApiResult<Page<SysEnumEntity>> getPage(Page<SysEnumEntity> page, SysEnumQo qo) {
         Page<SysEnumEntity> enumPage = sysEnumService.lambdaQuery()
-                .eq(BoolUtils.toBool(enumEntity.getId()), SysEnumEntity::getId, enumEntity.getId())
-                .eq(BoolUtils.toBool(enumEntity.getParentId()), SysEnumEntity::getParentId, enumEntity.getParentId())
-                .eq(BoolUtils.toBool(enumEntity.getGroupCode()), SysEnumEntity::getGroupCode, enumEntity.getGroupCode())
-                .eq(BoolUtils.toBool(enumEntity.getUniCode()), SysEnumEntity::getUniCode, enumEntity.getUniCode())
-                .eq(BoolUtils.toBool(enumEntity.getStatus()), SysEnumEntity::getStatus, enumEntity.getStatus())
-                .like(BoolUtils.toBool(enumEntity.getName()), SysEnumEntity::getName, enumEntity.getName())
+                .eq(BoolUtils.toBool(qo.getId()), SysEnumEntity::getId, qo.getId())
+                .eq(BoolUtils.toBool(qo.getParentId()), SysEnumEntity::getParentId, qo.getParentId())
+                .eq(BoolUtils.toBool(qo.getGroupCode()), SysEnumEntity::getGroupCode, qo.getGroupCode())
+                .eq(BoolUtils.toBool(qo.getUniCode()), SysEnumEntity::getUniCode, qo.getUniCode())
+                .eq(BoolUtils.toBool(qo.getStatus()), SysEnumEntity::getStatus, qo.getStatus())
+                .like(BoolUtils.toBool(qo.getName()), SysEnumEntity::getName, qo.getName())
+                .like(BoolUtils.toBool(qo.getName()), SysEnumEntity::getName, qo.getName())
+                .ge(BoolUtils.toBool(qo.getStartTime()), SysEnumEntity::getCreateTime, qo.getStartTime())
+                .le(BoolUtils.toBool(qo.getEndTime()), SysEnumEntity::getCreateTime, qo.getEndTime())
                 .page(page);
         return ApiResult.success(enumPage);
     }
