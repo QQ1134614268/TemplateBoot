@@ -3,7 +3,7 @@ package com.it.jiangxin.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.it.jiangxin.config.constant.ConstConf;
+import com.it.jiangxin.config.Conf;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -77,7 +77,7 @@ public class JwtUtil {
     public static String getToken() {
         // 优化? 注入 HttpServletRequest
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
-        return request.getHeader(ConstConf.AUTHORIZATION);
+        return request.getHeader(Conf.AUTHORIZATION);
     }
 
     @Data

@@ -1,4 +1,4 @@
-package com.it.boot.config;
+package com.it.jiangxin.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 
-import static com.it.boot.config.Conf.*;
+import static com.it.jiangxin.config.Conf.*;
+
 
 @Configuration
 public class SerializerObjectMapperConfig {

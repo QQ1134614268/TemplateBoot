@@ -1,6 +1,6 @@
 package com.it.jiangxin.util;
 
-import com.it.jiangxin.config.constant.ConstConf;
+import com.it.jiangxin.config.Conf;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,14 +33,14 @@ public class DateUtil {
      * 生成当前年月日字符串
      */
     public static String getCurrentDateStr() {
-        return formatDate(new Date(), ConstConf.DATE_FORMAT);
+        return formatDate(new Date(), Conf.DATE_FORMAT);
     }
 
     /**
      * 生成当前年月日 时分秒字符串
      */
     public static String getCurrentDateTimeStr() {
-        return formatDate(new Date(), ConstConf.DATE_TIME_FORMAT);
+        return formatDate(new Date(), Conf.DATE_TIME_FORMAT);
     }
 
 }

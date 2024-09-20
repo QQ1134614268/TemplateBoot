@@ -10,6 +10,7 @@ public interface Conf {
 
 
     DateTimeFormatter FMT_DATE = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    DateTimeFormatter FMT_TIME = DateTimeFormatter.ofPattern(TIME_FORMAT);
     DateTimeFormatter FMT_DATE_TIME = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
     String AUTHORIZATION = "authorization";

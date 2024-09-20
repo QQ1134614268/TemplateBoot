@@ -1,6 +1,6 @@
 package com.it.jiangxin.controller;
 
-import com.it.jiangxin.config.constant.ConstConf;
+import com.it.jiangxin.config.Conf;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class TestController {
     @Operation(summary = "获取当前时间")
     public String getServerDateTime() {
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat(ConstConf.DATE_TIME_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Conf.DATE_TIME_FORMAT);
         return dateFormat.format(date.getTime());
     }
 

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.it.jiangxin.config.constant.ConstConf.*;
+import static com.it.jiangxin.config.Conf.*;
 
 @Configuration
 public class SerializerConvertConfig {
