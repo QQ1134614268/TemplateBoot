@@ -4,9 +4,9 @@ package com.it.jiangxin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
 import com.it.jiangxin.entity.SysEnumEntity;
-import com.it.jiangxin.entity.vo.SysEnumQo;
 import com.it.jiangxin.entity.vo.IdPara;
 import com.it.jiangxin.entity.vo.IdsPara;
+import com.it.jiangxin.entity.vo.SysEnumQo;
 import com.it.jiangxin.service.SysEnumService;
 import com.it.jiangxin.util.BoolUtils;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -47,6 +47,17 @@ public class SysEnumController {
                 .le(BoolUtils.toBool(qo.getEndTime()), SysEnumEntity::getCreateTime, qo.getEndTime())
                 .page(page);
         return ApiResult.success(enumPage);
+    }
+
+
+    @Deprecated// todo 前端通过list查询
+    @Operation(summary = "分页查询")
+    @GetMapping("/getById")
+    public ApiResult<SysEnumEntity> getById(Integer id) {
+        SysEnumQo qo = new SysEnumQo();
+        qo.setId(id);
+        SysEnumEntity res = getPage(Page.of(1, 1), qo).getData().getRecords().stream().findFirst().orElse(null);
+        return ApiResult.success(res);
     }
 
     @Operation(summary = "根据id修改")
