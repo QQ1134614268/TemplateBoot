@@ -58,9 +58,11 @@ public class ImgController {
                 .like(BoolUtils.toBool(imgEntity.getName()), ImgEntity::getName, imgEntity.getName());
         wrapper.selectAll(ImgEntity.class);
         wrapper.leftJoin(UserEntity.class, UserEntity::getId, ImgEntity::getCreateBy);
+        wrapper.leftJoin(SysEnumEntity.class, SysEnumEntity::getId, ImgEntity::getStyleId);
         wrapper.selectAs(UserEntity::getAvatar, ImgDto::getUserAvtar);
         wrapper.selectAs(UserEntity::getUserName, ImgDto::getUserName);
         wrapper.selectAs(UserEntity::getNickName, ImgDto::getNickName);
+        wrapper.selectAs(SysEnumEntity::getName, ImgDto::getStyleName);
         return ApiResult.success(imgService.getBaseMapper().selectJoinPage(page, ImgDto.class, wrapper));
     }
 
