@@ -79,6 +79,11 @@
             <artifactId>mybatis-plus-join</artifactId>
             <version>1.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
