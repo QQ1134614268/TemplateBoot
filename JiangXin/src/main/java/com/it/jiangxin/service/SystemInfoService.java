@@ -46,7 +46,7 @@ public class SystemInfoService {
         CpuDto cpuDto = new CpuDto();
         cpuDto.setSys(new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu));
         cpuDto.setUser(new DecimalFormat("#.##").format(user * 1.0 / totalCpu));
-        cpuDto.setIowait(new DecimalFormat("#.##").format(iowait * 1.0 / totalCpu));
+        cpuDto.setWait(new DecimalFormat("#.##").format(iowait * 1.0 / totalCpu));
         cpuDto.setIdle(new DecimalFormat("#.##").format(idle * 1.0 / totalCpu));
         //  user + system + nice + iowait + irq + softirq + steal
         long cpuUtilization = user + nice + cSys + iowait + irq + softirq + steal;
@@ -58,16 +58,13 @@ public class SystemInfoService {
     public ServeInfoDTO getSystemInfo() throws InterruptedException {
 
         SystemInfo si = new SystemInfo();
-        MemoryDTO memoryDTO = getMemoryDTO(si);
-        CpuDto cpu = getCpu(si);
-        List<SysFile> disk = getDisk(si);
 
         ServeInfoDTO dto = new ServeInfoDTO();
-        dto.setCpuDto(cpu);
-        dto.setMemoryDTO(memoryDTO);
-        dto.setSysFiles(disk);
-        dto.setJvmMemoryDTO(getJvm());
         dto.setSysInfoDTO(getSysInfo());
+        dto.setCpuDto(getCpu(si));
+        dto.setMemoryDTO(getMemoryDTO(si));
+        dto.setSysFiles(getDisk(si));
+        dto.setJvmMemoryDTO(getJvm());
         return dto;
     }
 
@@ -75,13 +72,13 @@ public class SystemInfoService {
      * 设置服务器信息
      */
     private SysInfoDTO getSysInfo() {
-        Properties props = System.getProperties();
         SysInfoDTO dto = new SysInfoDTO();
-        // dto.setComputerName(IpUtils.getHostName());
-        // dto.setComputerIp(IpUtils.getHostIp());
-        dto.setOsName(props.getProperty("os.name"));
-        dto.setOsArch(props.getProperty("os.arch"));
-        dto.setUserDir(props.getProperty("user.dir"));
+        // Properties props = System.getProperties();
+        // // dto.setComputerName(IpUtils.getHostName());
+        // // dto.setComputerIp(IpUtils.getHostIp());
+        // dto.setOsName(props.getProperty("os.name"));
+        // dto.setOsArch(props.getProperty("os.arch"));
+        // dto.setUserDir(props.getProperty("user.dir"));
         return dto;
     }
 
@@ -134,11 +131,11 @@ public class SystemInfoService {
     @AllArgsConstructor
     @Data
     public static class ServeInfoDTO {
-        MemoryDTO memoryDTO;
+        SysInfoDTO sysInfoDTO;
         CpuDto cpuDto;
+        MemoryDTO memoryDTO;
         List<SysFile> sysFiles;
         MemoryDTO jvmMemoryDTO;
-        SysInfoDTO sysInfoDTO;
     }
 
     @NoArgsConstructor
@@ -213,14 +210,12 @@ public class SystemInfoService {
         /**
          * CPU用户使用率
          */
-        private double used;
         String user;
 
         /**
          * CPU当前等待率
          */
-        private double wait;
-        String iowait;
+        String wait;
 
         /**
          * CPU当前空闲率
