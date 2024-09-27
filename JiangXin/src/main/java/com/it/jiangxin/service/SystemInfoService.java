@@ -1,0 +1,273 @@
+package com.it.jiangxin.service;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
+import oshi.hardware.GlobalMemory;
+import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.FileSystem;
+import oshi.software.os.OSFileStore;
+import oshi.software.os.OperatingSystem;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+@Service
+public class SystemInfoService {
+
+    /**
+     * 设置CPU信息
+     */
+
+
+    public static CpuDto getCpu(SystemInfo systemInfo) throws InterruptedException {
+
+        CentralProcessor processor = systemInfo.getHardware().getProcessor();
+        long[] prevTicks = processor.getSystemCpuLoadTicks();
+        // GlobalConfig.set(GlobalConfig.OSHI_OS_WINDOWS_CPU_UTILITY, Boolean.TRUE);
+        // 睡眠1s
+        TimeUnit.SECONDS.sleep(1);
+        long[] ticks = processor.getSystemCpuLoadTicks();
+        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
+        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
+        long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
+        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()] - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
+        long cSys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
+        long user = ticks[CentralProcessor.TickType.USER.getIndex()] - prevTicks[CentralProcessor.TickType.USER.getIndex()];
+        long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
+        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
+        long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
+        CpuDto cpuDto = new CpuDto();
+        cpuDto.setSys(new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu));
+        cpuDto.setUser(new DecimalFormat("#.##").format(user * 1.0 / totalCpu));
+        cpuDto.setIowait(new DecimalFormat("#.##").format(iowait * 1.0 / totalCpu));
+        cpuDto.setIdle(new DecimalFormat("#.##").format(idle * 1.0 / totalCpu));
+        //  user + system + nice + iowait + irq + softirq + steal
+        long cpuUtilization = user + nice + cSys + iowait + irq + softirq + steal;
+        cpuDto.setCombined(new DecimalFormat("#.##").format((cpuUtilization * 1.0 / totalCpu) * 100));
+        return cpuDto;
+    }
+
+
+    public ServeInfoDTO getSystemInfo() throws InterruptedException {
+
+        SystemInfo si = new SystemInfo();
+        MemoryDTO memoryDTO = getMemoryDTO(si);
+        CpuDto cpu = getCpu(si);
+        List<SysFile> disk = getDisk(si);
+
+        ServeInfoDTO dto = new ServeInfoDTO();
+        dto.setCpuDto(cpu);
+        dto.setMemoryDTO(memoryDTO);
+        dto.setSysFiles(disk);
+        dto.setJvmMemoryDTO(getJvm());
+        dto.setSysInfoDTO(getSysInfo());
+        return dto;
+    }
+
+    /**
+     * 设置服务器信息
+     */
+    private SysInfoDTO getSysInfo() {
+        Properties props = System.getProperties();
+        SysInfoDTO dto = new SysInfoDTO();
+        // dto.setComputerName(IpUtils.getHostName());
+        // dto.setComputerIp(IpUtils.getHostIp());
+        dto.setOsName(props.getProperty("os.name"));
+        dto.setOsArch(props.getProperty("os.arch"));
+        dto.setUserDir(props.getProperty("user.dir"));
+        return dto;
+    }
+
+    public MemoryDTO getJvm() {
+
+        Runtime runtime = Runtime.getRuntime();
+
+        long totalMemory = runtime.totalMemory(); // JVM尝试使用的总内存量
+        long freeMemory = runtime.freeMemory(); // JVM空闲内存量
+        long maxMemory = runtime.maxMemory(); // JVM能够使用的最大内存量
+        return new MemoryDTO(totalMemory, freeMemory, totalMemory - freeMemory);
+    }
+
+    private static MemoryDTO getMemoryDTO(SystemInfo si) {
+        HardwareAbstractionLayer hal = si.getHardware();
+
+        GlobalMemory memory = hal.getMemory();
+        long totalMemory = memory.getTotal();
+        long availableMemory = memory.getAvailable();
+        long usedMemory = totalMemory - availableMemory;
+        return new MemoryDTO(totalMemory, usedMemory, availableMemory);
+    }
+
+    private static List<SysFile> getDisk(SystemInfo si) {
+        // 获取磁盘信息
+        OperatingSystem os = si.getOperatingSystem();
+        // 根据 操作系统（OS） 获取 FileSystem
+        FileSystem fileSystem = os.getFileSystem();
+        // 根据 FileSystem 获取主机磁盘信息list集合
+        List<OSFileStore> fileStores = fileSystem.getFileStores();
+        List<SysFile> sysFiles = new ArrayList<>();
+        for (OSFileStore fs : fileStores) {
+            long free = fs.getUsableSpace();// 磁盘空闲容量
+            long total = fs.getTotalSpace();// 磁盘总容量
+            long used = total - free;// 磁盘已使用容量
+            SysFile sysFile = new SysFile();
+            sysFile.setDirName(fs.getMount());// 磁盘符号 C:\
+            sysFile.setSysTypeName(fs.getType());// 磁盘类型 NTFS
+            sysFile.setTypeName(fs.getName());// 磁盘名称 本地固定磁盘 (C:)
+            sysFile.setTotal(String.valueOf(total));// 磁盘总容量
+            sysFile.setFree(String.valueOf(free));// 磁盘空闲容量
+            sysFile.setUsed(String.valueOf(used));// 磁盘已使用容量
+            sysFile.setUsage(used * 1.0 / total);// 磁盘资源的使用率
+            sysFiles.add(sysFile);
+        }
+        return sysFiles;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class ServeInfoDTO {
+        MemoryDTO memoryDTO;
+        CpuDto cpuDto;
+        List<SysFile> sysFiles;
+        MemoryDTO jvmMemoryDTO;
+        SysInfoDTO sysInfoDTO;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class MemoryDTO {
+        /**
+         * 内存总量
+         */
+        private double total;
+
+        /**
+         * 已用内存
+         */
+        private double used;
+
+        /**
+         * 剩余内存
+         */
+        private double free;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    public static class SysInfoDTO {
+        /**
+         * 服务器名称
+         */
+        private String computerName;
+
+        /**
+         * 服务器Ip
+         */
+        private String computerIp;
+
+        /**
+         * 项目路径
+         */
+        private String userDir;
+
+        /**
+         * 操作系统
+         */
+        private String osName;
+
+        /**
+         * 系统架构
+         */
+        private String osArch;
+
+    }
+
+
+    @Data
+    public static class CpuDto {
+        /**
+         * 核心数
+         */
+        private int cpuNum;
+
+        /**
+         * CPU总的使用率
+         */
+        private double total;
+
+        /**
+         * CPU系统使用率
+         */
+        private String sys;
+
+        /**
+         * CPU用户使用率
+         */
+        private double used;
+        String user;
+
+        /**
+         * CPU当前等待率
+         */
+        private double wait;
+        String iowait;
+
+        /**
+         * CPU当前空闲率
+         */
+        private double free;
+        String idle;
+
+
+        String combined;
+    }
+
+    @Data
+    static class SysFile {
+        /**
+         * 盘符路径
+         */
+        private String dirName;
+
+        /**
+         * 盘符类型
+         */
+        private String sysTypeName;
+
+        /**
+         * 文件类型
+         */
+        private String typeName;
+
+        /**
+         * 总大小
+         */
+        private String total;
+
+        /**
+         * 剩余大小
+         */
+        private String free;
+
+        /**
+         * 已经使用量
+         */
+        private String used;
+
+        /**
+         * 资源的使用率
+         */
+        private double usage;
+    }
+
+}
