@@ -12,11 +12,17 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import static com.it.jiangxin.config.Conf.FMT_DATE_TIME;
 
 @Service
 public class SystemInfoService {
@@ -24,8 +30,6 @@ public class SystemInfoService {
     /**
      * 设置CPU信息
      */
-
-
     public static CpuDto getCpu(SystemInfo systemInfo) throws InterruptedException {
 
         CentralProcessor processor = systemInfo.getHardware().getProcessor();
@@ -73,23 +77,51 @@ public class SystemInfoService {
      */
     private SysInfoDTO getSysInfo() {
         SysInfoDTO dto = new SysInfoDTO();
-        // Properties props = System.getProperties();
-        // // dto.setComputerName(IpUtils.getHostName());
-        // // dto.setComputerIp(IpUtils.getHostIp());
-        // dto.setOsName(props.getProperty("os.name"));
-        // dto.setOsArch(props.getProperty("os.arch"));
-        // dto.setUserDir(props.getProperty("user.dir"));
+        Properties props = System.getProperties();
+        dto.setComputerName(getHostName());
+        dto.setComputerIp(getHostIp());
+        dto.setOsName(props.getProperty("os.name"));
+        dto.setOsArch(props.getProperty("os.arch"));
+        dto.setUserDir(props.getProperty("user.dir"));
         return dto;
     }
 
-    public MemoryDTO getJvm() {
+    /**
+     * 获取IP地址
+     *
+     * @return 本地IP地址
+     */
+    public static String getHostIp() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ignored) {
+        }
+        return "127.0.0.1";
+    }
 
-        Runtime runtime = Runtime.getRuntime();
+    /**
+     * 获取主机名
+     *
+     * @return 本地主机名
+     */
+    public static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ignored) {
+        }
+        return "未知";
+    }
 
-        long totalMemory = runtime.totalMemory(); // JVM尝试使用的总内存量
-        long freeMemory = runtime.freeMemory(); // JVM空闲内存量
-        long maxMemory = runtime.maxMemory(); // JVM能够使用的最大内存量
-        return new MemoryDTO(totalMemory, freeMemory, totalMemory - freeMemory);
+    public JvmMemoryDTO getJvm() {
+
+        Properties props = System.getProperties();
+        JvmMemoryDTO jvm = new JvmMemoryDTO();
+        jvm.setTotal(Runtime.getRuntime().totalMemory());
+        jvm.setMax(Runtime.getRuntime().maxMemory());
+        jvm.setFree(Runtime.getRuntime().freeMemory());
+        jvm.setVersion(props.getProperty("java.version"));
+        jvm.setHome(props.getProperty("java.home"));
+        return jvm;
     }
 
     private static MemoryDTO getMemoryDTO(SystemInfo si) {
@@ -127,15 +159,13 @@ public class SystemInfoService {
         return sysFiles;
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Data
     public static class ServeInfoDTO {
-        SysInfoDTO sysInfoDTO;
-        CpuDto cpuDto;
-        MemoryDTO memoryDTO;
-        List<SysFile> sysFiles;
-        MemoryDTO jvmMemoryDTO;
+        private SysInfoDTO sysInfoDTO;
+        private CpuDto cpuDto;
+        private MemoryDTO memoryDTO;
+        private List<SysFile> sysFiles;
+        private JvmMemoryDTO jvmMemoryDTO;
     }
 
     @NoArgsConstructor
@@ -158,8 +188,6 @@ public class SystemInfoService {
         private double free;
     }
 
-    @NoArgsConstructor
-    @AllArgsConstructor
     @Data
     public static class SysInfoDTO {
         /**
@@ -263,6 +291,49 @@ public class SystemInfoService {
          * 资源的使用率
          */
         private double usage;
+    }
+
+    @Data
+    public static class JvmMemoryDTO {
+        /**
+         * 当前JVM占用的内存总数(M)
+         */
+        private double total;
+
+        /**
+         * JVM最大可用内存总数(M)
+         */
+        private double max;
+
+        /**
+         * JVM空闲内存(M)
+         */
+        private double free;
+
+        /**
+         * JDK版本
+         */
+        private String version;
+
+        /**
+         * JDK路径
+         */
+        private String home;
+
+        /**
+         * JDK启动时间
+         */
+        private String startTime = LocalDateTime.now().format(FMT_DATE_TIME);
+
+        /**
+         * 获取JDK名称
+         */
+        private String name = ManagementFactory.getRuntimeMXBean().getVmName();
+
+        /**
+         * 运行参数
+         */
+        private String inputArgs = ManagementFactory.getRuntimeMXBean().getInputArguments().toString();
     }
 
 }
