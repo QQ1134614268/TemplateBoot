@@ -3,6 +3,7 @@ package com.it.jiangxin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.jiangxin.config.ApiResult;
+import com.it.jiangxin.config.Log;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.service.UserService;
 import com.it.jiangxin.util.BoolUtils;
@@ -24,6 +25,7 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Log(title = "新增用户", type = "201")
     @Operation(summary = "新增")
     @PostMapping("/create")
     public ApiResult<Integer> create(@RequestBody UserEntity userEntity) {
@@ -41,24 +43,25 @@ public class UserController {
         return ApiResult.success(page);
     }
 
+    @Log(title = "编辑用户", type = "202")
     @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Boolean> updateById(@RequestBody UserEntity userEntity) {
         return ApiResult.success(userService.updateById(userEntity));
     }
 
+    @Log(title = "删除用户", type = "203")
     @Operation(summary = "根据删除修改")
     @GetMapping("/deleteById")
     public ApiResult<Boolean> deleteById(Integer id) {
         return ApiResult.success(userService.removeById(id));
     }
 
+    @Log(title = "登录", type = "101")
     @Operation(summary = "login")
     @PostMapping("/login")
     public ApiResult<String> login(@RequestBody UserEntity user) {
-        UserEntity old = userService.lambdaQuery()
-                .eq(UserEntity::getUserName, user.getUserName())
-                .one();
+        UserEntity old = userService.lambdaQuery().eq(UserEntity::getUserName, user.getUserName()).one();
         if (old == null) {
             return ApiResult.fail("用户或者密码不存在");
         }
@@ -68,6 +71,7 @@ public class UserController {
         return ApiResult.fail("用户或者密码不存在");
     }
 
+    @Log(title = "退出登录", type = "102")
     @Operation(summary = "logout")
     @PostMapping("/logout")
     public ApiResult<Boolean> logout() {

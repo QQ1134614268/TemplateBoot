@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.extension.conditions.update.ChainUpdate;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
+import com.it.boot.config.Log;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.dto.UserDto;
@@ -59,6 +60,7 @@ public class UserBatisController {
         return ApiResult.success(userBatisService.page(page, new QueryWrapper<>(userEntity)));
     }
 
+    @Log(title = "编辑用户", type = "102")
     @Operation(summary = "根据id修改")
     @PostMapping("/updateById")
     public ApiResult<Boolean> updateById(@RequestBody UserEntity userEntity) {
