@@ -8,6 +8,7 @@ import com.it.jiangxin.config.enum1.AccountEnum;
 import com.it.jiangxin.controller.ImgController;
 import com.it.jiangxin.controller.UserController;
 import com.it.jiangxin.entity.ImgEntity;
+import com.it.jiangxin.entity.ImgInfoEntity;
 import com.it.jiangxin.entity.SysEnumEntity;
 import com.it.jiangxin.entity.UserEntity;
 import com.it.jiangxin.entity.vo.IdsPara;
@@ -21,7 +22,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.it.jiangxin.config.enum1.GroupCodeEnum.ImgType;
@@ -64,7 +68,6 @@ public class InitTestEnvDbTest {
         for (String v : list) {
             SysEnumEntity enumEntity = new SysEnumEntity();
             enumEntity.setGroupCode(ImgType.getUniCode());
-            // enumEntity.setUniCode(UUID.randomUUID().toString());
             enumEntity.setName(v);
             SysEnumEntity old = sysEnumService.getOne(new QueryWrapper<>(enumEntity));
             if (old == null) {
@@ -80,23 +83,24 @@ public class InitTestEnvDbTest {
                 .list();
         for (SysEnumEntity e : types) {
             for (int i = 1; i < 4; i++) {
-                String uuid = UUID.randomUUID().toString();
-                ArrayList<ImgEntity> list = new ArrayList<>();
+                ImgEntity imgEntity = new ImgEntity();
+                imgEntity.setImgUrl(util.getUploadUrl("house.法式.webp"));
+                imgEntity.setCreateBy(1);
+                imgEntity.setUpdateBy(1);
+                imgEntity.setName(String.format("%s-%s", e.getName(), i));
+                imgEntity.setStyleId(e.getId());
+
+                ArrayList<ImgInfoEntity> list = new ArrayList<>();
                 for (int j = 1; j < 6; j++) {
-                    ImgEntity imgEntity = new ImgEntity();
-                    imgEntity.setImgUrl(util.getUploadUrl("house.法式.webp"));
-                    imgEntity.setGroupUuid(uuid);
-                    imgEntity.setCreateBy(1);
-                    imgEntity.setUpdateBy(1);
-                    imgEntity.setDescription("这套风格借鉴了" + e.getName() + "艺术......");
-                    if (j == 1) { // 首页
-                        imgEntity.setIsHomeImg(true);
-                        imgEntity.setName(String.format("%s-%s", e.getName(), i));
-                        imgEntity.setStyleId(e.getId());
-                    }
-                    list.add(imgEntity);
+                    ImgInfoEntity info = new ImgInfoEntity();
+                    info.setImgUrl(util.getUploadUrl("house.法式.webp"));
+                    info.setCreateBy(1);
+                    info.setUpdateBy(1);
+                    info.setDescription("这套风格借鉴了" + e.getName() + "艺术......");
+                    list.add(info);
                 }
-                imgController.updateAllDesign(list);
+                imgEntity.setChildren(list);
+                imgController.create(imgEntity);
             }
         }
     }

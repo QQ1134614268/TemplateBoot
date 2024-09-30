@@ -25,6 +25,12 @@ public class LogController {
     @Resource
     private LogService logService;
 
+    @Operation(summary = "新增")
+    @GetMapping("/create")
+    public ApiResult<Boolean> create(LogEntity entity) {
+        return ApiResult.success(logService.save(entity));
+    }
+
     @Operation(summary = "分页查询")
     @GetMapping("/getPage")
     public ApiResult<Page<LogEntity>> getPage(Page<LogEntity> page, LogQo qo) {
@@ -35,4 +41,5 @@ public class LogController {
                 .page(page);
         return ApiResult.success(page);
     }
+
 }
