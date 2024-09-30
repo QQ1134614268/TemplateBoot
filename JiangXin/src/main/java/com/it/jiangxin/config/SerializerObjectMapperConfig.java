@@ -1,6 +1,7 @@
 package com.it.jiangxin.config;
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
@@ -29,7 +30,9 @@ public class SerializerObjectMapperConfig {
      */
     @Bean
     public ObjectMapper getObjectMapper() {
-        ObjectMapper om = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         JavaTimeModule module = new JavaTimeModule();
 
         module.addSerializer(new DateSerializer());// false, new SimpleDateFormat(DATE_TIME_FORMAT)
@@ -44,7 +47,7 @@ public class SerializerObjectMapperConfig {
         module.addSerializer(new LocalDateTimeSerializer(FMT_DATE_TIME));
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(FMT_DATE_TIME));
 
-        om.registerModule(module);
-        return om;
+        objectMapper.registerModule(module);
+        return objectMapper;
     }
 }
