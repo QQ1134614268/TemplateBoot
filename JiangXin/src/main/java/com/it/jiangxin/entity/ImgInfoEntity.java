@@ -1,6 +1,5 @@
 package com.it.jiangxin.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -9,14 +8,13 @@ import org.hibernate.annotations.Table;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
 
 @Schema(name = "分组设置")
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName(value = "imgInfo")
-@Entity(name = "imgInfo")
-@Table(appliesTo = "imgInfo", comment = "图片详情")
+@TableName(value = "img_info")
+@Entity(name = "img_info")
+@Table(appliesTo = "img_info", comment = "图片详情")
 public class ImgInfoEntity extends BaseEntity {
 
     @Schema(name = "关联imgId", example = "test_1")
