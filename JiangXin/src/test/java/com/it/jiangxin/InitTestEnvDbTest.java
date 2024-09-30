@@ -85,8 +85,6 @@ public class InitTestEnvDbTest {
             for (int i = 1; i < 4; i++) {
                 ImgEntity imgEntity = new ImgEntity();
                 imgEntity.setImgUrl(util.getUploadUrl("house.法式.webp"));
-                imgEntity.setCreateBy(1);
-                imgEntity.setUpdateBy(1);
                 imgEntity.setName(String.format("%s-%s", e.getName(), i));
                 imgEntity.setStyleId(e.getId());
 
@@ -94,8 +92,6 @@ public class InitTestEnvDbTest {
                 for (int j = 1; j < 6; j++) {
                     ImgInfoEntity info = new ImgInfoEntity();
                     info.setImgUrl(util.getUploadUrl("house.法式.webp"));
-                    info.setCreateBy(1);
-                    info.setUpdateBy(1);
                     info.setDescription("这套风格借鉴了" + e.getName() + "艺术......");
                     list.add(info);
                 }
