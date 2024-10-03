@@ -11,9 +11,7 @@ COPY src ./src
 RUN mvn package -DskipTests -s /app/docker.maven.settings.xml
 
 # 使用一个轻量级的 JDK 镜像作为基础镜像
-FROM openjdk:8-jre-alpine
-# 安装libudev oshi/jna-platform需要
-RUN apk add --no-cache libudev
+FROM openjdk:8-jre
 # 设置工作目录
 WORKDIR /app
 # 将 Maven 容器中的 target/*.jar 复制到 Docker 容器的 /app 目录下
