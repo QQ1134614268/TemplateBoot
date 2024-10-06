@@ -41,8 +41,12 @@ public class ImgController {
     @Transactional
     public ApiResult<Integer> create(@RequestBody ImgEntity imgEntity) {
         imgEntity.setCreate();
+        imgEntity.setImgUrl(imgEntity.getChildren().stream().map(ImgInfoEntity::getImgUrl).findFirst().orElse(null));
         imgService.save(imgEntity);
-        imgEntity.getChildren().forEach(v -> v.setImgId(imgEntity.getId()));
+        imgEntity.getChildren().forEach(v -> {
+            v.setImgId(imgEntity.getId());
+            v.setCreate();
+        });
         imgInfoService.saveBatch(imgEntity.getChildren());
         return ApiResult.success(imgEntity.getId());
     }
