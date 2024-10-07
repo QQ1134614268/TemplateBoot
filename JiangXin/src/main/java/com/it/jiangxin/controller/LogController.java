@@ -36,7 +36,7 @@ public class LogController {
                 .like(BoolUtils.toBool(qo.getUserName()), LogEntity::getUserName, qo.getUserName())
                 .ge(BoolUtils.toBool(qo.getStartTime()), LogEntity::getUserName, qo.getStartTime())
                 .le(BoolUtils.toBool(qo.getEndTime()), LogEntity::getUserName, qo.getEndTime())
-                .orderBy(true, true, LogEntity::getCreateTime)
+                .orderBy(true, false, LogEntity::getCreateTime)
                 .page(page);
         return ApiResult.success(page);
     }
