@@ -48,6 +48,7 @@ public class SystemInfoService {
         long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
         long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
         CpuDto cpuDto = new CpuDto();
+        cpuDto.setCpuNum(processor.getPhysicalProcessorCount());
         cpuDto.setSys(new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu));
         cpuDto.setUser(new DecimalFormat("#.##").format(user * 1.0 / totalCpu));
         cpuDto.setWait(new DecimalFormat("#.##").format(iowait * 1.0 / totalCpu));
