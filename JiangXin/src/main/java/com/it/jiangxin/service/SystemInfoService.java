@@ -34,7 +34,6 @@ public class SystemInfoService {
 
         CentralProcessor processor = systemInfo.getHardware().getProcessor();
         long[] prevTicks = processor.getSystemCpuLoadTicks();
-        // GlobalConfig.set(GlobalConfig.OSHI_OS_WINDOWS_CPU_UTILITY, Boolean.TRUE);
         // 睡眠1s
         TimeUnit.SECONDS.sleep(1);
         long[] ticks = processor.getSystemCpuLoadTicks();
@@ -42,20 +41,17 @@ public class SystemInfoService {
         long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
         long softirq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
         long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()] - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
-        long cSys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
+        long sys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
         long user = ticks[CentralProcessor.TickType.USER.getIndex()] - prevTicks[CentralProcessor.TickType.USER.getIndex()];
         long iowait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
         long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
-        long totalCpu = user + nice + cSys + idle + iowait + irq + softirq + steal;
+        long totalCpu = user + nice + sys + idle + iowait + irq + softirq + steal;
         CpuDto cpuDto = new CpuDto();
         cpuDto.setCpuNum(processor.getPhysicalProcessorCount());
-        cpuDto.setSys(new DecimalFormat("#.##").format(cSys * 1.0 / totalCpu));
-        cpuDto.setUser(new DecimalFormat("#.##").format(user * 1.0 / totalCpu));
-        cpuDto.setWait(new DecimalFormat("#.##").format(iowait * 1.0 / totalCpu));
-        cpuDto.setIdle(new DecimalFormat("#.##").format(idle * 1.0 / totalCpu));
-        //  user + system + nice + iowait + irq + softirq + steal
-        long cpuUtilization = user + nice + cSys + iowait + irq + softirq + steal;
-        cpuDto.setCombined(new DecimalFormat("#.##").format((cpuUtilization * 1.0 / totalCpu) * 100));
+        cpuDto.setSys(sys);
+        cpuDto.setUser(user);
+        cpuDto.setWait(iowait);
+        cpuDto.setTotal(totalCpu);
         return cpuDto;
     }
 
@@ -234,26 +230,22 @@ public class SystemInfoService {
         /**
          * CPU系统使用率
          */
-        private String sys;
+        private double sys;
 
         /**
          * CPU用户使用率
          */
-        String user;
+        private double user;
 
         /**
          * CPU当前等待率
          */
-        String wait;
+        private double wait;
 
         /**
          * CPU当前空闲率
          */
         private double free;
-        String idle;
-
-
-        String combined;
     }
 
     @Data
