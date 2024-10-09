@@ -15,7 +15,6 @@ import oshi.software.os.OperatingSystem;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +47,11 @@ public class SystemInfoService {
         long totalCpu = user + nice + sys + idle + iowait + irq + softirq + steal;
         CpuDto cpuDto = new CpuDto();
         cpuDto.setCpuNum(processor.getPhysicalProcessorCount());
-        cpuDto.setSys(sys);
-        cpuDto.setUser(user);
-        cpuDto.setWait(iowait);
-        cpuDto.setTotal(totalCpu);
+        cpuDto.setSys(sys * 1.0 / totalCpu);
+        cpuDto.setUser(user * 1.0 / totalCpu);
+        cpuDto.setWait(iowait * 1.0 / totalCpu);
+        cpuDto.setFree(idle * 1.0 / totalCpu);
+        cpuDto.setTotal(1 - cpuDto.getFree());
         return cpuDto;
     }
 
