@@ -55,12 +55,7 @@ public class FileController {
             Files.createDirectories(uploadDir);
         }
         String newName = FileUtil.getFileName(file.getOriginalFilename());
-        // http://127.0.0.1:18080/api/file/download/xxx.img
-        // https:
-        // http:// 127.0.0.1/api/file/download/xxx.img
-        // http:// 127.0.0.1/xxx.img
         Path path = Paths.get(uploadPath, newName);
-
         Files.write(path, file.getBytes());
         return ApiResult.success(String.format("%s://%s:%s/api/file/download/%s", uploadProtocol, uploadHost, uploadPort, newName));
     }
