@@ -27,9 +27,12 @@ public class CustomerEntity extends BaseEntity {
     @Schema(name = "手机号码", example = "test_1")
     @Column(columnDefinition = "varchar(255) COMMENT '手机号码'")
     private String phone;
-    @Schema(name = "风格id", example = "1")
-    @Column(columnDefinition = "int(11) COMMENT '风格id'")
-    private Integer styleId;
+    @Schema(name = "风格", example = "中式")
+    @Column(columnDefinition = "varchar(255) COMMENT '风格'")
+    private String style;
+    @Schema(name = "装修类型", example = "毛坯新房")
+    @Column(columnDefinition = "varchar(255) COMMENT '装修类型'")
+    private String house;
     @Transient
     @TableField(exist = false)
     @Schema(name = "分类名称", example = "test_1")
