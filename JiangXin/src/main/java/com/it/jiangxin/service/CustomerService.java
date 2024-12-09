@@ -18,20 +18,7 @@ import java.util.Objects;
  */
 @Service
 public class CustomerService extends ServiceImpl<CustomerMapper, CustomerEntity> {
-    @Resource
-    private SysEnumService sysEnumService;
-
     public Page<CustomerEntity> getPage(Page<CustomerEntity> page, CustomerEntity entity) {
-        Page<CustomerEntity> page1 = page(page, new QueryWrapper<>(entity));
-        List<SysEnumEntity> enums = sysEnumService.lambdaQuery()
-                .eq(SysEnumEntity::getGroupCode, GroupCodeEnum.ImgType.getUniCode())
-                .list();
-        for (CustomerEntity entity1 : page1.getRecords()) {
-            enums.stream()
-                    .filter(v -> Objects.equals(v.getId(), entity1.getStyleId()))
-                    .findFirst()
-                    .ifPresent(v -> entity1.setStyleName(v.getName()));
-        }
-        return page1;
+        return page(page, new QueryWrapper<>(entity));
     }
 }
