@@ -2,6 +2,7 @@ package com.it.jiangxin.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.it.jiangxin.config.TreeNode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +11,7 @@ import org.hibernate.annotations.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.it.jiangxin.entity.YmlEntity.tableName;
@@ -22,7 +23,7 @@ import static com.it.jiangxin.entity.YmlEntity.tableNameDesc;
 @TableName(value = tableName)
 @Entity(name = tableName)
 @Table(appliesTo = tableName, comment = tableNameDesc)
-public class YmlEntity extends BaseEntity {
+public class YmlEntity extends BaseEntity implements TreeNode {
 
     public static final String tableName = "tree_yml_t";
     public static final String tableNameDesc = "yml内容";
@@ -62,6 +63,5 @@ public class YmlEntity extends BaseEntity {
     @Transient
     @TableField(exist = false)
     @Schema(name = "验证过程", example = "test_1")
-    private List<YmlEntity> children;
-
+    private List<YmlEntity> children = new ArrayList<>();
 }
