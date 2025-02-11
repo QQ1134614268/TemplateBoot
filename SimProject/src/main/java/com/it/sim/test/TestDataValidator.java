@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  *      validateValue
  * </pre>
  */
-public class TestValidator {
+public class TestDataValidator {
     @Test
     public void test1() {
         Model model = new Model();
