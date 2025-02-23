@@ -1,20 +1,26 @@
 package com.cloud.order.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.cloud.order.service.OrderService;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 @RestController
 public class OrderController {
-	@Autowired
-	OrderService orderService;
+	@Resource
+	private OrderService orderService;
 
-	@RequestMapping("/order")
+	@GetMapping("/order")
 	public String addOrder(String name) {
 		// 调用用户，查询用户信息，
 		String result = orderService.getUser(1);
 		return "商品: " + name + ",生成订单：" + result;
+	}
+
+	@PostMapping("/create")
+	public String createOrder(@RequestParam String productId, @RequestParam Integer count, @RequestParam BigDecimal amount) {
+		orderService.createOrder(productId, count, amount);
+		return "Order created successfully!";
 	}
 }

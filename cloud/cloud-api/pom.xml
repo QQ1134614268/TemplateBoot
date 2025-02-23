@@ -3,22 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.it</groupId>
         <artifactId>cloud</artifactId>
+        <groupId>com.it</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>cloud-order</artifactId>
+    <artifactId>cloud-api</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.it</groupId>
-            <artifactId>cloud-api</artifactId>
+            <artifactId>cloud-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <!--分布式事务 seata -->
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring-boot-starter</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

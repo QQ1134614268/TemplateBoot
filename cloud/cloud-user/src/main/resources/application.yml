@@ -5,6 +5,19 @@ server:
 spring:
   application:
      name: cloud-user
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      #      naming:
+      #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update # none: 禁用; create: 启动时重建; create-drop: 启动时重建, 退出时删除;update 首次初始化schema, 之后更新schema, 已经不存在字段对应的数据不会被删除;validate 执行验证, 不创建新表, 可以加新值
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 ###服务注册到eureka地址
 eureka:
   # instance:
@@ -18,3 +31,11 @@ eureka:
     register-with-eureka: true
 ###是否需要从eureka上获取注册信息
     fetch-registry: true
+
+seata:
+  tx-service-group: my_test_tx_group
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091

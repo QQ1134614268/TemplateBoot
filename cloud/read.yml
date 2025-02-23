@@ -1,0 +1,26 @@
+# todo
+#application 优先级
+
+cloud:
+  eureka
+  config
+  网关gateway
+  负载均衡 loadbalancer
+  降级 Hystrix
+  工作流
+  
+  schedule
+  
+  kafka
+  websocket
+  spark
+  
+  redis
+  mysql
+  es
+  doris
+
+业务:
+  用户
+  订单
+  商品
