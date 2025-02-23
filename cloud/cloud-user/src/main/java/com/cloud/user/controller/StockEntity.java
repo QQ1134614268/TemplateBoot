@@ -2,14 +2,12 @@ package com.cloud.user.controller;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Table(name = "stock")
 @Data
 @Entity
-public class Stock {
+public class StockEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

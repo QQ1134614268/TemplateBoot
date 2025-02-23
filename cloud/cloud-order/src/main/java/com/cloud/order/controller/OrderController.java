@@ -1,10 +1,13 @@
 package com.cloud.order.controller;
 
+import com.cloud.order.service.OrderEntity;
 import com.cloud.order.service.OrderService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 
 @RestController
 public class OrderController {
@@ -19,8 +22,8 @@ public class OrderController {
 	}
 
 	@PostMapping("/create")
-	public String createOrder(@RequestParam String productId, @RequestParam Integer count, @RequestParam BigDecimal amount) {
-		orderService.createOrder(productId, count, amount);
+	public String createOrder(@RequestBody OrderEntity entity) {
+		orderService.createOrder(entity);
 		return "Order created successfully!";
 	}
 }

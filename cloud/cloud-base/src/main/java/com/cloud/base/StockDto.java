@@ -1,9 +1,9 @@
-package com.cloud.user.controller;
+package com.cloud.base;
 
 import lombok.Data;
 
 @Data
-public class StockRequest {
+public class StockDto {
     private String productId;
     private Integer count;
 }

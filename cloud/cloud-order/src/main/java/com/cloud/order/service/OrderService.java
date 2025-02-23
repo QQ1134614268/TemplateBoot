@@ -1,12 +1,12 @@
 package com.cloud.order.service;
 
 import com.cloud.api.RemoteApiService;
+import com.cloud.base.StockDto;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 
 @Service
 public class OrderService {
@@ -27,13 +27,12 @@ public class OrderService {
 	}
 
 	@GlobalTransactional
-	public void createOrder(String productId, Integer count, BigDecimal amount) {
-		OrderEntity orderEntity = new OrderEntity();
-		orderEntity.setProductId(productId);
-		orderEntity.setCount(count);
-		orderEntity.setAmount(amount);
-		orderRepository.save(orderEntity);
+	public void createOrder(OrderEntity entity) {
+		orderRepository.save(entity);
 
-		remoteApiService.decrease(productId, count);
+		StockDto dto = new StockDto();
+		dto.setProductId(entity.getProductId());
+		dto.setCount(entity.getCount());
+		remoteApiService.decrease(dto);
 	}
 }

@@ -15,5 +15,11 @@
             <groupId>io.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.it</groupId>
+            <artifactId>cloud-base</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

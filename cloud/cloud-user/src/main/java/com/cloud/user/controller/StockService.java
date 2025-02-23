@@ -1,23 +1,23 @@
 package com.cloud.user.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 @Service
 public class StockService {
 
-    @Autowired
+    @Resource
     private StockRepository stockRepository;
 
     @Transactional
-    public void decreaseStock(String productId, Integer count) {
-        Stock stock = stockRepository.findByProductId(productId);
-        if (stock == null || stock.getCount() < count) {
-            throw new RuntimeException("Insufficient stock");
+    public void decreaseStock(StockEntity entity) {
+        StockEntity stockEntity = stockRepository.findByProductId(entity.getProductId());
+        if (stockEntity == null || stockEntity.getCount() < entity.getCount()) {
+            throw new RuntimeException("找不到商品");
         }
-        stock.setCount(stock.getCount() - count);
-        stockRepository.save(stock);
+        stockEntity.setCount(stockEntity.getCount() - entity.getCount());
+        stockRepository.save(stockEntity);
     }
 }

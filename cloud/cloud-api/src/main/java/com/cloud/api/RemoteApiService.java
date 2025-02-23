@@ -1,13 +1,15 @@
 package com.cloud.api;
 
+import com.cloud.base.ApiResult;
+import com.cloud.base.StockDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Component
-@FeignClient(name = "user-service") // 使用服务名称, fallbackFactory = RemoteApiServiceFallbackFactory.class
+@FeignClient(name = "cloud-user", fallbackFactory = RemoteApiServiceFallbackFactory.class) // 使用服务名称
 public interface RemoteApiService {
-    @GetMapping(value = "/stock/decrease")
-    ApiResult<String> decrease(@RequestParam(name = "productId") String productId, @RequestParam(name = "count") Integer count);
+    @PostMapping(value = "/stock/decrease")
+    ApiResult<String> decrease(@RequestBody StockDto dto);
 }

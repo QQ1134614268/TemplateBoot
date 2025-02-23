@@ -1,4 +1,4 @@
-package com.cloud.api;
+package com.cloud.base;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
