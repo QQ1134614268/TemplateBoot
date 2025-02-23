@@ -7,13 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 	@RequestMapping("/user/{id}")
-	public String getUser(@PathVariable("id") int id) {
-		if (id == 1) {
-			return "cloud";
-		} else if (id == 2) {
-			return "程老师";
-		} else {
-			return "多岸教育";
-		}
+	public String getUser(@PathVariable("id") Integer id) {
+		return String.valueOf(id);
 	}
 }
