@@ -4,11 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
-/**
- * 文件服务降级处理
- *
- * @author ruoyi
- */
 @Slf4j
 @Component
 public class RemoteApiServiceFallbackFactory implements FallbackFactory<RemoteApiService> {
