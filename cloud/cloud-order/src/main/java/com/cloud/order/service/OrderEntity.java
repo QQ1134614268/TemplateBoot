@@ -13,6 +13,8 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String productId;
+    private String userId;
+    private String userName;
     private Integer count;
     private BigDecimal amount;
 }
