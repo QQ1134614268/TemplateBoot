@@ -4,13 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Table(name = "stock")
+@Table(name = "user")
 @Data
 @Entity
-public class StockEntity {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String productId;
-    private Integer count;
+    private String username;
 }
