@@ -18,6 +18,7 @@
         <module>cloud-eureka</module>
         <module>cloud-user</module>
         <module>cloud-order</module>
+        <module>cloud-global-transactional</module>
         <module>cloud-gateway</module>
         <module>cloud-api</module>
         <module>cloud-base</module>
@@ -38,6 +39,11 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -86,11 +92,6 @@
                 <version>2.7.5</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.seata</groupId>
-                <artifactId>seata-spring-boot-starter</artifactId>
-                <version>1.4.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

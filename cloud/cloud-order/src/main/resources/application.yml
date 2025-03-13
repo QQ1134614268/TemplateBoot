@@ -14,7 +14,7 @@ spring:
     hibernate:
       #      naming:
       #        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: update # none: 禁用; create: 启动时重建; create-drop: 启动时重建, 退出时删除;update 首次初始化schema, 之后更新schema, 已经不存在字段对应的数据不会被删除;validate 执行验证, 不创建新表, 可以加新值
+      ddl-auto: create # none: 禁用; create: 启动时重建; create-drop: 启动时重建, 退出时删除;update 首次初始化schema, 之后更新schema, 已经不存在字段对应的数据不会被删除;validate 执行验证, 不创建新表, 可以加新值
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -27,10 +27,3 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:8888/eureka
-seata:
-  tx-service-group: my_test_tx_group
-  service:
-    vgroup-mapping:
-      my_test_tx_group: default
-    grouplist:
-      default: 127.0.0.1:8091

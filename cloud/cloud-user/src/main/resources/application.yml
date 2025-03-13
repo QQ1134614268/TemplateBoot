@@ -31,11 +31,3 @@ eureka:
     register-with-eureka: true
 ###是否需要从eureka上获取注册信息
     fetch-registry: true
-
-seata:
-  tx-service-group: my_test_tx_group
-  service:
-    vgroup-mapping:
-      my_test_tx_group: default
-    grouplist:
-      default: 127.0.0.1:8091
