@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class TestBean {
     @Bean
     public Long getLong() {
-        log.error("test ----------bean");
+        log.warn("test ---------- 测试加载bean");
         return 0L;
     }
 }
