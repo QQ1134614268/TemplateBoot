@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class RemoteApiServiceFallbackFactory implements FallbackFactory<RemoteApiService> {
+public class RemoteApiServiceFallbackFactory implements FallbackFactory<RemoteUserService> {
     @Override
-    public RemoteApiService create(Throwable throwable) {
+    public RemoteUserService create(Throwable throwable) {
         log.error("接口调用失败", throwable);
-        return new RemoteApiService() {
+        return new RemoteUserService() {
             @Override
             public ApiResult<String> decrease(StockDto dto) {
                 return ApiResult.fail(throwable.getMessage());

@@ -1,5 +1,7 @@
 # todo
 #application 优先级
+seata部署: # seata2.2.0版本后使用yml配置, 默认单机启动,文file件做数据库
+  执行 seata-server/bin/seata-server.bat 就可以运行
 
 cloud:
   eureka
