@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.extension.conditions.update.ChainUpdate;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.it.boot.config.ApiResult;
-import com.it.boot.config.Log;
+import com.it.boot.config.log.Log;
 import com.it.boot.entity.UserEntity;
 import com.it.boot.entity.dto.IdVo;
 import com.it.boot.entity.dto.UserDto;

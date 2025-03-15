@@ -1,6 +1,8 @@
 package com.it.boot.config.log;
 
 import com.it.boot.config.jwt.JwtUtil;
+import com.it.boot.entity.LogEntity;
+import com.it.boot.service.LogService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Date;
 
 @Aspect
 @Component
@@ -18,32 +19,30 @@ public class SysLogAspect {
     @Resource
     private HttpServletRequest httpServletRequest;
     @Resource
-    private OperationLogService operationLogService;
+    private LogService logService;
 
-    @Around("@annotation(com.it.boot.config.log.SysLog)")
+    @Around("@annotation(com.it.boot.config.log.Log)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         // 执行方法
         Object result = joinPoint.proceed();
 
-        OperationLogEntity vo = new OperationLogEntity();
+        LogEntity vo = new LogEntity();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        SysLog sysLogAnnotation = method.getAnnotation(SysLog.class);
+        Log logAnnotation = method.getAnnotation(Log.class);
 
-        if (sysLogAnnotation != null) {
+        if (logAnnotation != null) {
             // 注解上的描述
-            vo.setAction(sysLogAnnotation.value());
+            vo.setTitle(logAnnotation.title());
+            vo.setType(logAnnotation.type());
         }
         vo.setUrlLink(httpServletRequest.getRequestURI());
         vo.setIp(httpServletRequest.getRemoteHost());
 
-        JwtUtil.Token obj = JwtUtil.decode();
-        vo.setLoginTerminal(obj.getLoginTerminal());
-        vo.setUserName(obj.getUserName());
-        vo.setUserId(obj.getUserId());
-        vo.setOperationTime(new Date());
+        vo.setUserName(JwtUtil.getUserName());
+        vo.setCreateBy(JwtUtil.getUserId());
 
-        operationLogService.save(vo);
+        logService.save(vo);
         return result;
     }
 }
