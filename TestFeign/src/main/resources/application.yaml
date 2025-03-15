@@ -13,3 +13,17 @@ TestFeign:
   sumService:
     url: http://127.0.0.1:8080
     sumPath: /api/mock/sum
+feign:
+  circuitbreaker:
+    enabled: true # 启用 Resilience4j 断路器
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      example-service:
+        register-health-indicator: true
+        failure-rate-threshold: 50 # 失败率阈值
+        minimum-number-of-calls: 10 # 最小调用次数
+        sliding-window-size: 10 # 滑动窗口大小
+        sliding-window-type: COUNT_BASED # 滑动窗口类型
+        wait-duration-in-open-state: 10s # 断路器打开后的等待时间

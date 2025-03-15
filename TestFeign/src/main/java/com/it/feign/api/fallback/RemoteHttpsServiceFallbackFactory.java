@@ -1,5 +1,7 @@
-package com.it.feign.config;
+package com.it.feign.api.fallback;
 
+import com.it.feign.config.ApiResult;
+import com.it.feign.api.RemoteHttpsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;

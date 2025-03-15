@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -15,6 +16,9 @@ public class MockApi {
 
     @GetMapping("/sum")
     public ApiResult<Integer> sum(int num1, int num2) {
+        if (num1 < 0) {
+            throw new RuntimeException();
+        }
         log.info("开始计算");
         return ApiResult.success(num1 + num2);
     }

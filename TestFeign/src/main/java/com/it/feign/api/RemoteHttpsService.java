@@ -1,5 +1,8 @@
-package com.it.feign.config;
+package com.it.feign.api;
 
+import com.it.feign.config.ApiResult;
+import com.it.feign.config.FeignIgnoreHttpsConf;
+import com.it.feign.api.fallback.RemoteHttpsServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
