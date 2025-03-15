@@ -29,14 +29,11 @@ public class AttMockTest {
     public void testFallbackWithMock() {
         int arg = 1;
         UserEntity entity = new UserEntity();
-        // 模拟服务调用
-        // when(userService.getUserById(arg)).thenThrow(new RuntimeException("Service unavailable"));
+        // 模拟调用
         when(userService.getUserById(arg)).thenReturn(entity);
 
-        // 调用 Fallback 方法
         ApiResult<UserEntity> response = userBatisController.testSelect(arg);
 
-        // 验证 Fallback 是否被执行
         // assertEquals(ApiResult.success(new Object()), response);
         assertEquals(ApiResult.success(new UserEntity()), response);
     }
