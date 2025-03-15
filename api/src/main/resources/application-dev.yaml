@@ -29,12 +29,9 @@ templateBoot:
 logging:
   file:
     path: data/log/api
-#  level:
-#    com.it: debug
+  level:
+    root: info
 #    com.alibaba: warn
-#  pattern:
-#    console: %d{yyyy-MM-dd hh:mm:ss} [%thread] %-5level %logger{50} - %msg%n
-#    file: %d{yyyy-MM-dd} === [%thread] === %-5level === %logger{50} === - %msg%n
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
