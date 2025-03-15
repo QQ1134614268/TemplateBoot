@@ -1,3 +1,4 @@
 com.cloud.api.TestBean
 com.cloud.api.conf.FeignLogConf
-com.cloud.api.RemoteUserFallbackFactory
+com.cloud.api.fallback.RemoteUserFallbackFactory
+com.cloud.api.fallback.RemoteTrxLogFallbackFactory
