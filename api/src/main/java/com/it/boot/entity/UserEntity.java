@@ -20,7 +20,12 @@ import java.util.List;
 @TableName(value = "user")
 @Entity(name = "user")
 @org.hibernate.annotations.Table(appliesTo = "user", comment = "用户")
-@Table(name = "user", indexes = {@Index(columnList = "userName", unique = true), @Index(columnList = "phone", unique = true), @Index(columnList = "email", unique = true), @Index(columnList = "nickName")})
+@Table(name = "user", indexes = {
+                @Index(columnList = "userName", unique = true),
+                @Index(columnList = "phone", unique = true),
+                @Index(columnList = "email", unique = true),
+                @Index(columnList = "nickName")}
+)
 public class UserEntity extends BaseEntity {
     @Schema(name = "用户名", example = "test_1", required = true)
     @Column(unique = true, nullable = false, columnDefinition = "varchar(255) COMMENT '用户名'")
