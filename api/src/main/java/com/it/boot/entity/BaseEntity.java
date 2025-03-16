@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@MappedSuperclass
+@MappedSuperclass // jpa 本类字段被继承
 public class BaseEntity implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   // 主键生成策略,自增
-    @TableId(type = IdType.AUTO)
-    @Column(columnDefinition = "int(11) COMMENT '主键'")
-    @Schema(name = "对象id", example = "1")
+    @Id //
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   // JPA主键生成策略,自增
+    @TableId(type = IdType.AUTO) // Mybatis主键生成策略,自增
+    @Column(columnDefinition = "int(11) COMMENT '主键'") // Jpa 表字段定义
+    @Schema(name = "对象id", example = "1") // swagger 注释
     private Long id;
 
     @Column(columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
