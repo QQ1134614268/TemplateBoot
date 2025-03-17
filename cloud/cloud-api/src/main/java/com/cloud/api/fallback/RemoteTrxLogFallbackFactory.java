@@ -15,22 +15,12 @@ public class RemoteTrxLogFallbackFactory implements FallbackFactory<RemoteTrxLog
         return new RemoteTrxLogService() {
             @Override
             public ApiResult<Boolean> part2(String uid) {
-                return ApiResult.fail("接口调用失败");
+                return ApiResult.fail(throwable.getMessage());
             }
 
             @Override
             public ApiResult<Boolean> part3(String uid) {
-                return ApiResult.fail("接口调用失败");
-            }
-
-            @Override
-            public ApiResult<Boolean> part2_with_transactional(String uid) {
-                return ApiResult.fail("接口调用失败");
-            }
-
-            @Override
-            public ApiResult<Boolean> part3_with_transactional(String uid) {
-                return ApiResult.fail("接口调用失败");
+                return ApiResult.fail(throwable.getMessage());
             }
         };
     }

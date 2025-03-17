@@ -19,18 +19,10 @@ class TrxTests {
 	@Resource
 	TrxLogController trxLogController;
 
-	@Resource
-	private TrxLogService trxLogService;
-
 	@Test
 	void test01() {
 		List<TrxLogEntity> res = trxLogController.testGlobalTransactional();
 		assertEquals(0, res.size());
 	}
 
-	@Test
-	void test02() {
-		List<TrxLogEntity> res = trxLogController.testTransactional();
-		assertEquals(2, res.size());
-	}
 }
