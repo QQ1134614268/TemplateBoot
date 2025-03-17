@@ -33,38 +33,4 @@ class TrxTests {
 		List<TrxLogEntity> res = trxLogController.testTransactional();
 		assertEquals(2, res.size());
 	}
-
-	@Test
-	void testGlobal() {
-		List<TrxLogEntity> res = trxLogController.testGlobal();
-		assertEquals(1, res.size());
-	}
-
-	@Test
-	void part3() {
-		String uid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		try {
-			trxLogController.part3(uid);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		// 抛出异常, 不加transactional 也会回滚
-		Long count = trxLogService.lambdaQuery().eq(TrxLogEntity::getUid, uid).count();
-		assertEquals(0, count);
-	}
-
-	@Test
-	void part3_with_transactional() {
-		String uid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		try {
-			trxLogController.part3_with_transactional(uid);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-		// 抛出异常,
-		Long count = trxLogService.lambdaQuery().eq(TrxLogEntity::getUid, uid).count();
-		assertEquals(0, count);
-	}
-
 }

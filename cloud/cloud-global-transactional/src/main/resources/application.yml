@@ -1,15 +1,14 @@
-###服务启动端口号
 server:
-  port: 8804
-###服务名称(服务注册到eureka名称)
+  port: 8804 #服务启动端口号
 spring:
   application:
-     name: cloud-global-transactional
+    name: cloud-global-transactional #服务名称(服务注册到eureka名称)
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+    type: com.zaxxer.hikari.HikariDataSource # 必须配置
   jpa:
     hibernate:
       #      naming:
@@ -31,13 +30,6 @@ eureka:
     register-with-eureka: true
 ###是否需要从eureka上获取注册信息
     fetch-registry: true
-seata:
-  tx-service-group: my_test_tx_group
-  service:
-    vgroup-mapping:
-      my_test_tx_group: default
-    grouplist:
-      default: 127.0.0.1:8091
 
 feign:
   circuitbreaker:
@@ -53,3 +45,21 @@ resilience4j:
         sliding-window-size: 10 # 滑动窗口大小
         sliding-window-type: COUNT_BASED # 滑动窗口类型
         wait-duration-in-open-state: 10s # 断路器打开后的等待时间
+logging:
+  level:
+#    com.cloud: debug
+     com.cloud.api: debug
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    grouplist:
+      default: 127.0.0.1:8091
+  registry:
+    type: file
+  config:
+    type: file
