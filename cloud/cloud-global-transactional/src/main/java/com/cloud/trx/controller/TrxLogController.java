@@ -26,20 +26,16 @@ public class TrxLogController {
 	private TrxLogService trxLogService;
 
 
-	@GlobalTransactional
 	@PostMapping("/testGlobalTransactional")
 	public List<TrxLogEntity> testGlobalTransactional() {
 		// a->b->c: c执行失败, abc一起回滚; 插入0条
 		String uid = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-		TrxLogEntity entity = new TrxLogEntity();
-		entity.setUid(uid);
-		trxLogService.save(entity);
-		ApiResult<Boolean> res1 = remoteTrxLogService.part2(uid);
-		log.info(JSON.toJSONString(res1));
-		ApiResult<Boolean> res2 = remoteTrxLogService.part3(uid);
-		if (res2.isError()) {
-			throw new RuntimeException(res2.getMessage());
+		try {
+			trxLogService.testGlobalTransactional(uid); // 如果不是public; 异常
+			// testGlobalTransactional(uid); // 如果直接调用(非bean调用), 异常
+		} catch (Exception ignored) {
+
 		}
 		return trxLogService.lambdaQuery().eq(TrxLogEntity::getUid, uid).list();
 	}
