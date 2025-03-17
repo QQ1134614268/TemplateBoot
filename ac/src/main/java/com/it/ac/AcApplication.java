@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan({"com.gitee.sunchenbin.mybatis.actable.dao.*"})
+@MapperScan({"com.gitee.sunchenbin.mybatis.actable.dao.*", "com.it.ac.mapper"})
 @ComponentScan(basePackages = {"com.gitee.sunchenbin.mybatis.actable.manager.*"}, basePackageClasses = AcApplication.class)
 public class AcApplication {
 

@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>com.github.yulichang</groupId>
 			<artifactId>mybatis-plus-join</artifactId>
-			<version>1.2.2</version>
+			<version>1.4.13</version>
 		</dependency>
 		<dependency>
 			<groupId>com.gitee.sunchenbin.mybatis.actable</groupId>

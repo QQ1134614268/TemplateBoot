@@ -1,16 +1,16 @@
 package com.it.boot.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.boot.config.ApiResult;
 import com.it.boot.config.SerializerConvertConfig;
 import com.it.boot.config.SerializerObjectMapperConfig;
 import com.it.boot.entity.TestDateEntity;
 import com.it.boot.entity.qo.TestDateQo;
-import com.it.boot.repository.TestDateRepository;
+import com.it.boot.service.TestDateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,26 +35,26 @@ import static com.it.boot.config.Conf.DATE_TIME_FORMAT;
 public class TestDateController {
 
     @Resource
-    private TestDateRepository testDateRepository;
+    private TestDateService testDateService;
 
     @Operation(summary = "getPage")
     @GetMapping("/getPage")
-    public ApiResult<Page<TestDateEntity>> getPage(Pageable page) {
-        Page<TestDateEntity> ret = testDateRepository.findAll(page);
+    public ApiResult<IPage<TestDateEntity>> getPage(Page<TestDateEntity> page) {
+        IPage<TestDateEntity> ret = testDateService.lambdaQuery().page(page);
         return ApiResult.success(ret);
     }
 
     @Operation(summary = "create")
     @PostMapping("/create")
     public ApiResult<TestDateEntity> create(@RequestBody TestDateEntity entity) {
-        testDateRepository.save(entity);
+        testDateService.save(entity);
         return ApiResult.success(entity);
     }
 
     @Operation(summary = "initDate")
     @GetMapping("/initDate")
     public ApiResult<TestDateEntity> initDate() throws ParseException {
-        Optional<TestDateEntity> vo = testDateRepository.findById(1);
+        Optional<TestDateEntity> vo = testDateService.getOptById(1);
         if (!vo.isPresent()) {
             String date_time_str = "2000-01-01 10:10:10";
             String date_str = "2000-01-01";
@@ -71,8 +71,8 @@ public class TestDateController {
             entity.setDateTimeStr(date_time_str);
             entity.setLocalDate(LocalDate.parse(date_str, DateTimeFormatter.ofPattern(DATE_FORMAT)));
             entity.setLocalDateTime(LocalDateTime.parse(date_time_str, DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)));
-            testDateRepository.save(entity);
-            vo = testDateRepository.findById(1);
+            testDateService.save(entity);
+            vo = testDateService.getOptById(1);
         }
         System.out.println(vo.orElse(null));
 

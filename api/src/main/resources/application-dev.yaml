@@ -11,10 +11,6 @@ spring:
     database: mysql
     hibernate:
       ddl-auto: update # none 禁用; create 启动时重建 schema; create-drop 启动时重建 schema, 退出时删除 schema;update 首次初始化schema, 之后更新schema, 已经不存在字段对应的数据不会被删除;validate 执行验证, 不创建新表, 可以加新值
-  mail:
-    host: xxx@qq.com
-    username: xxx
-    password: xxx
   redis:
     host: 127.0.0.1
     port: 6379

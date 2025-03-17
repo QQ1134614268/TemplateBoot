@@ -1,8 +1,7 @@
-package com.it.boot.service;
+package com.it.jpa.controller;
 
-import com.it.boot.entity.DeptEntity;
-import com.it.boot.entity.UserEntity;
-import com.it.boot.repository.UserJpaRepository;
+import com.it.jpa.entity.DeptEntity;
+import com.it.jpa.entity.UserEntity;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +11,11 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -21,6 +25,20 @@ public class UserJpaService {
     @Resource
     private UserJpaRepository userJpaRepository;
 
+    @Resource
+    private DataSource dataSource;
+
+    public void queryUser() {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM user");
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("username"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public Long create(UserEntity userEntity) {
         userJpaRepository.save(userEntity);
         return userEntity.getId();

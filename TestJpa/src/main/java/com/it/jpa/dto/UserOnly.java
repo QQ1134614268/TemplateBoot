@@ -1,4 +1,4 @@
-package com.it.boot.entity.dto;
+package com.it.jpa.dto;
 
 import lombok.Data;
 

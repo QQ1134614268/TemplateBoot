@@ -1,4 +1,4 @@
-package com.it.boot.projection;
+package com.it.jpa.dto;
 
 import org.springframework.beans.factory.annotation.Value;
 
