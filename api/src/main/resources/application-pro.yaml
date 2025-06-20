@@ -1,0 +1,34 @@
+server:
+  port: 9091
+spring:
+  datasource:
+    url: jdbc:mysql://ggok.top:3306/template_boot?serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: none
+  redis:
+    host: ggok.top
+    port: 6379
+    password: 1234567890
+    database: 0
+  cache:
+    redis:
+      time-to-live: -1
+    type: redis
+templateBoot:
+  testPort: 3666
+logging:
+  file:
+    path: data/log/api
+  level:
+    root: info
+#    com.alibaba: warn
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+secret: abc@123
