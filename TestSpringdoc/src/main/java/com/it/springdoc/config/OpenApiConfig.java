@@ -13,7 +13,7 @@ public class OpenApiConfig {
         return new OpenAPI()
             .info(new Info()
                 .title("TestSpringDoc--title")
-                .description("TestSpringDoc--description ")
+                .description("TestSpringDoc--description")
                 .version("1.0.0")
             );
     }
