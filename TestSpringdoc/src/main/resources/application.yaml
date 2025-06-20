@@ -1,5 +1,5 @@
 server:
-  port: 29091
+  port: 20620
 spring:
   application:
     name:
@@ -12,12 +12,9 @@ spring:
 
 springdoc:
   api-docs:
-    path: /v3/api-docs
-    groups:
-      default:
-        paths-to-match: /api/**
+    path: /v3/api-docs # 自动生成的 OpenAPI 3.0 规范的 JSON 文件访问路径（默认值，可省略）
   swagger-ui:
-    path: /index.html
-    title: My API Documentation
-    description: API documentation for My Service
-    tags-sorter: alpha
+    path: /swagger-ui.html # Swagger UI 的访问路径（默认是 /swagger-ui.html）
+    tags-sorter: alpha  # 按字母顺序排序接口标签
+    filter: true                # 启用搜索框过滤
+  show-actuator: true           # 包含 Actuator 端点的文档

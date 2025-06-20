@@ -1,4 +1,4 @@
-package com.it.springdoc;
+package com.it.springdoc.controller;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
