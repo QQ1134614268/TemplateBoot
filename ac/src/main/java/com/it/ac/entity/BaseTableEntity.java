@@ -3,12 +3,12 @@ package com.it.ac.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class BaseTableEntity implements Serializable {
@@ -19,7 +19,7 @@ public class BaseTableEntity implements Serializable {
     /**
      * 创建者
      */
-    @ApiModelProperty(value = "创建者")
+    @Schema(description = "创建者")
     @Column(comment = "创建者")
     private Long createBy;
 
@@ -27,14 +27,14 @@ public class BaseTableEntity implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "创建时间")
+    @Schema(description = "创建时间")
     @Column(type = MySqlTypeConstant.DATETIME, comment = "创建时间", defaultValue = "CURRENT_TIMESTAMP")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新者
      */
-    @ApiModelProperty(value = "更新者")
+    @Schema(description = "更新者")
     @Column(comment = "更新者")
     private Long updateBy;
 
@@ -42,8 +42,8 @@ public class BaseTableEntity implements Serializable {
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "更新时间")
+    @Schema(description = "更新时间")
     @Column(type = MySqlTypeConstant.DATETIME, comment = "更新时间", defaultValue = "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 }
