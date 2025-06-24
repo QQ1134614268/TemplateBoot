@@ -13,13 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 全局配置: 使用 @Configuration
  * 类配置: 添加到 @FeignClient(configuration = {FeignTextPlainConf.class})
  */
-@Configuration
+// @Configuration // 全局配置, 所有feign
 public class FeignTextPlainConf {
 
-    @Bean
+    @Bean //  feign.codec.Decoder 仅涉及feign模块
     public Decoder textPlainDecoder() {
         return new SpringDecoder(() -> new HttpMessageConverters(new CustomMappingJackson2HttpMessageConverter()));
     }

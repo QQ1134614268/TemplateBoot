@@ -11,10 +11,10 @@ import java.util.List;
 /**
  * 使用@Configuration: 全局配置; 影响普通的接口 contentType为 text/plain; 不建议使用
  */
-// @Configuration
+// @Configuration // 全局配置
 public class FeignTextPlainConf2 {
 
-    @Bean
+    @Bean // HttpMessageConverter: 影响整个项目; 普通的接口 contentType为 text/plain; 不建议使用
     public MappingJackson2HttpMessageConverter customMappingJackson2HttpMessageConverter() {
         return new CustomMappingJackson2HttpMessageConverter();
     }
