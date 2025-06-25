@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Data
 public class BaseEntity implements Serializable {
-    @Schema(defaultValue = "id")
+    @Schema(description = "id标识,主键")
     private Long id;
 }
 
