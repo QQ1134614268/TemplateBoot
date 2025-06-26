@@ -13,11 +13,11 @@ import java.util.Date;
 @Data
 public class TimeRangeQo {
 
-    @Schema(name = "起始时间", example = "2022-11-29 00:00:00")
+    @Schema(title = "起始时间", example = "2022-11-29 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date startTime;
 
-    @Schema(name = "结束时间", example = "2022-11-30 00:00:00")
+    @Schema(title = "结束时间", example = "2022-11-30 00:00:00")
     @DateTimeFormat(pattern = Conf.DATE_TIME_FORMAT)
     private Date endTime;
 }

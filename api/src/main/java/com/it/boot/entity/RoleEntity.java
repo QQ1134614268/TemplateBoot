@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@Schema(name = "角色")
+@Schema(title = "角色")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "role")
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 )
 public class RoleEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '角色名称'")
-    @Schema(name = "角色名称")
+    @Schema(title = "角色名称")
     private String name;
 }
 

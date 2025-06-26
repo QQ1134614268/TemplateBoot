@@ -13,9 +13,9 @@ import java.util.List;
 @Data
 public class AddressDtoJson {
 
-    @Schema(name = "名称", example = "1")
+    @Schema(title = "名称", example = "1")
     private String name;
 
-    @Schema(name = "省市县名", example = "1")
+    @Schema(title = "省市县名", example = "1")
     private List<String> names;
 }

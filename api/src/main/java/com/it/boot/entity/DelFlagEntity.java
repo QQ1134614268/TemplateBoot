@@ -12,7 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
-@Schema(name = "测试逻辑删除")
+@Schema(title = "测试逻辑删除")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "del_t")
@@ -22,10 +22,10 @@ public class DelFlagEntity extends BaseEntity {
 
     @Pattern(regexp = "^.{1,20}$", message = "字符长度为1-20个")
     @Column(columnDefinition = "varchar(255) COMMENT 'value'")
-    @Schema(name = "value", example = "123")
+    @Schema(title = "value", example = "123")
     private String value;
 
     @TableLogic(value = "0", delval = "1")
-    @Schema(name = "逻辑删除标记(0:未删除; 1:已删除)")
+    @Schema(title = "逻辑删除标记(0:未删除; 1:已删除)")
     private Integer delFlag;
 }

@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Schema(name = "${tableComment}")
+@Schema(title = "${tableComment}")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "${tableName}")
@@ -22,7 +22,7 @@ public class ${tableUpperCamel}Entity extends BaseEntity {
     #set($list=["id","createBy","createTime", "updateBy", "updateTime", "deleteFlag"])
     #foreach ($column in $tableFields)
         #if($list.contains($column.javaColumnName)) #else
-            @Schema(name = "${column.column_comment}", example = "${column.javaColumnExample}", required = ${column.required})
+            @Schema(title = "${column.column_comment}", example = "${column.javaColumnExample}", required = ${column.required})
             @Column(unique = ${column.unique}, nullable = ${column.nullable}, columnDefinition = "${column.column_type} COMMENT '${column.column_comment}'")
             private ${column.javaType} ${column.javaColumnName};
         #end

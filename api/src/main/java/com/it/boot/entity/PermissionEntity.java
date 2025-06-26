@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@Schema(name = "权限")
+@Schema(title = "权限")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "permission")
@@ -25,7 +25,7 @@ import javax.persistence.Table;
 )
 public class PermissionEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "varchar(64) COMMENT '权限名称'")
-    @Schema(name = "权限名称")
+    @Schema(title = "权限名称")
     private String name;
 }
 

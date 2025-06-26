@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-@Schema(name = "用户")
+@Schema(title = "用户")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "address")
@@ -25,7 +25,7 @@ public class AddressEntity extends BaseEntity {
 
     @Transient
     @TableField(exist = false)
-    @Schema(name = "用户名")
+    @Schema(title = "用户名")
     private String userName;
 
     @Transient

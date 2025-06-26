@@ -4,17 +4,17 @@ import com.it.boot.config.enum1.ResCodeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-@Schema(name = "api返回对象")
+@Schema(title = "api返回对象")
 @Data
 public class ApiResult<T> {
     /**
      * @see ResCodeEnum
      */
-    @Schema(name = "请求结果状态码", example = "1")
+    @Schema(title = "请求结果状态码", example = "1")
     private int code;
-    @Schema(name = "返回数据")
+    @Schema(title = "返回数据")
     private T data;
-    @Schema(name = "请求异常时信息")
+    @Schema(title = "请求异常时信息")
     private String message;
 
     public static <T> ApiResult<T> success(T data) {

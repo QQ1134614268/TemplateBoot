@@ -21,22 +21,22 @@ import static com.it.boot.config.Conf.DATE_FORMAT;
 @NoArgsConstructor
 public class StudentVO extends BaseVO implements Serializable {
 
-  @Schema(name = "名称", example = "名称1")
+  @Schema(title = "名称", example = "名称1")
   private String name;
 
   @JsonFormat(pattern = DATE_FORMAT)
-  @Schema(name = "生日", example = "2000-01-01")
+  @Schema(title = "生日", example = "2000-01-01")
   private Date birthday;
 
-  @Schema(name = "test数组", example = "[1,2]")
+  @Schema(title = "test数组", example = "[1,2]")
   private int[] score;
 
-  @Schema(name = "list", example = "[\"a1\",\"a2\"]")
+  @Schema(title = "list", example = "[\"a1\",\"a2\"]")
   private List<String> nameList;
 
-  @Schema(name = "枚举", example = "RES_SUCCESS")
+  @Schema(title = "枚举", example = "RES_SUCCESS")
   private ResCodeEnum resCodeEnum;
 
-  @Schema(name = "地址")
+  @Schema(title = "地址")
   private Address address;
 }

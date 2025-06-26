@@ -34,7 +34,7 @@ import lombok.Setter;
 @TableName("${schemaName}${table.name}")
 #end
 #if(${swagger})
-@Schema(name = "${entity}对象", description = "$!{table.comment}")
+@Schema(title = "${entity}对象", description = "$!{table.comment}")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {

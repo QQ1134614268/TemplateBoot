@@ -12,6 +12,6 @@ import java.util.List;
 @Schema
 @Data
 public class IdsVo {
-    @Schema(name = "对象id集合", example = "[1,2]")
+    @Schema(title = "对象id集合", example = "[1,2]")
     private List<Long> ids;
 }

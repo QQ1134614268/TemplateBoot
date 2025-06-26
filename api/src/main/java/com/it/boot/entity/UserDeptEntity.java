@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.UniqueConstraint;
 
 
-@Schema(name = "用户部门关系")
+@Schema(title = "用户部门关系")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "user_dept_relation")

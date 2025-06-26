@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
-@Schema(name = "用户角色关系")
+@Schema(title = "用户角色关系")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "user_role")

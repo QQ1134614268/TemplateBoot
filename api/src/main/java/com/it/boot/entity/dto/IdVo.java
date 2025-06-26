@@ -9,6 +9,6 @@ import lombok.Data;
 @Schema
 @Data
 public class IdVo {
-    @Schema(name = "对象id", example = "1")
+    @Schema(title = "对象id", example = "1")
     private Integer id;
 }

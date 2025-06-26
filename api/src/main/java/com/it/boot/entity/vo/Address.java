@@ -12,10 +12,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Address implements Serializable {
 
-    @Schema(name = "国家编码", example = "ZH")
+    @Schema(title = "国家编码", example = "ZH")
     private String countryCode;
 
-    @Schema(name = "城市id", example = "1")
+    @Schema(title = "城市id", example = "1")
     private int cityId;
 
 }

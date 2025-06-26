@@ -11,7 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Pattern;
 
-@Schema(name = "测试缓存")
+@Schema(title = "测试缓存")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "cache")
@@ -21,6 +21,6 @@ public class CacheEntity extends BaseEntity {
 
     @Pattern(regexp = "^.{1,20}$", message = "字符长度为1-20个")
     @Column(columnDefinition = "varchar(255) COMMENT 'value'")
-    @Schema(name = "value", example = "123")
+    @Schema(title = "value", example = "123")
     private String value;
 }
