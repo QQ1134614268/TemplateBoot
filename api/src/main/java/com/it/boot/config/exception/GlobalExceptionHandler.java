@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BizException.class)
-    public ApiResult<String> handle404Exception(BizException e) {
+    public ApiResult<String> handleBizException(BizException e) {
         log.error("全局异常", e);
         return ApiResult.fail("服务器发生异常: " + e.getMessage());
     }
