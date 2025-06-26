@@ -19,7 +19,7 @@ public class BaseTableEntity implements Serializable {
     /**
      * 创建者
      */
-    @Schema(description = "创建者")
+    @Schema(title = "创建者")
     @Column(comment = "创建者")
     private Long createBy;
 
@@ -27,14 +27,14 @@ public class BaseTableEntity implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Schema(description = "创建时间")
+    @Schema(title = "创建时间")
     @Column(type = MySqlTypeConstant.DATETIME, comment = "创建时间", defaultValue = "CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     /**
      * 更新者
      */
-    @Schema(description = "更新者")
+    @Schema(title = "更新者")
     @Column(comment = "更新者")
     private Long updateBy;
 
@@ -42,7 +42,7 @@ public class BaseTableEntity implements Serializable {
      * 更新时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Schema(description = "更新时间")
+    @Schema(title = "更新时间")
     @Column(type = MySqlTypeConstant.DATETIME, comment = "更新时间", defaultValue = "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private LocalDateTime updateTime;
 
