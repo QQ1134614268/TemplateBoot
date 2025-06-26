@@ -6,14 +6,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Schema(defaultValue = "用户")
+@Schema(title = "用户")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserEntity extends BaseEntity {
-    @Schema(description = "用户名")
+    @Schema(title = "用户名", example = "example1")
     private String userName;
-    @Schema(description = "密码")
+    @Schema(title = "密码")
     private String password;
-    @Schema(description = "状态", implementation = StatusEnum.class)
+    @Schema(title = "状态", implementation = StatusEnum.class)
     private StatusEnum statusEnum;
 }
