@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 /**
  * @date 2023-02-01 09:34
  */
-@Schema(name = "账号状态")
+@Schema(title = "账号状态")
 public enum AccountEnum implements IEnumDb {
     normal("normal", "1", "正常"),
     cancel("cancel", "2", "注销"),

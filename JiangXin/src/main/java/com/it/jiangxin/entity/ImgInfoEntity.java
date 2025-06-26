@@ -9,7 +9,7 @@ import org.hibernate.annotations.Table;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-@Schema(name = "分组设置")
+@Schema(title = "分组设置")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "img_info")
@@ -17,15 +17,15 @@ import javax.persistence.Entity;
 @Table(appliesTo = "img_info", comment = "图片详情")
 public class ImgInfoEntity extends BaseEntity {
 
-    @Schema(name = "关联imgId", example = "test_1")
+    @Schema(title = "关联imgId", example = "test_1")
     @Column(columnDefinition = "int COMMENT '关联imgId'")
     private Integer imgId;
 
-    @Schema(name = "图片地址", example = "test_1")
+    @Schema(title = "图片地址", example = "test_1")
     @Column(columnDefinition = "varchar(128) COMMENT '图片地址'")
     private String imgUrl;
 
-    @Schema(name = "描述", example = "test_1")
+    @Schema(title = "描述", example = "test_1")
     @Column(columnDefinition = "varchar(64) COMMENT '描述'")
     private String description;
 }

@@ -9,6 +9,6 @@ import lombok.EqualsAndHashCode;
 @Data
 public class YmlQo extends YmlEntity {
 
-    @Schema(name = "level", example = "3")
+    @Schema(title = "level", example = "3")
     private Integer level = 3;
 }

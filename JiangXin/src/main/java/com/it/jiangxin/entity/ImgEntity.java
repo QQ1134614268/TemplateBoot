@@ -12,33 +12,33 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.List;
 
-@Schema(name = "分组设置")
+@Schema(title = "分组设置")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "img")
 @Entity(name = "img")
 @Table(appliesTo = "img", comment = "图片")
 public class ImgEntity extends BaseEntity {
-    @Schema(name = "首页名", example = "test_1")
+    @Schema(title = "首页名", example = "test_1")
     @Column(columnDefinition = "varchar(64) COMMENT '首页名'")
     private String name;
 
-    @Schema(name = "图片地址", example = "test_1")
+    @Schema(title = "图片地址", example = "test_1")
     @Column(columnDefinition = "varchar(128) COMMENT '首页图片地址'")
     private String imgUrl;
 
-    @Schema(name = "风格id", example = "1")
+    @Schema(title = "风格id", example = "1")
     @Column(columnDefinition = "int(11) COMMENT '分类id'")
     private Integer styleId;
 
     @Transient
     @TableField(exist = false)
-    @Schema(name = "分类名称", example = "test_1")
+    @Schema(title = "分类名称", example = "test_1")
     private String styleName;
 
     @Transient
     @TableField(exist = false)
-    @Schema(name = "分类名称", example = "test_1")
+    @Schema(title = "分类名称", example = "test_1")
     private List<ImgInfoEntity> children;
 
 }
