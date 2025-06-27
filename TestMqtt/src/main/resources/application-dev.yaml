@@ -1,9 +1,11 @@
 #MQTT-服务端地址
+server:
+  port: 20627
 publish:
   mqtt:
-    host: tcp://ggok.top:1883
+    host: tcp://127.0.0.1:1883
     username: admin
-    password: xc123456
+    password: wg@123456
     cleanSession: false #MQTT-是否清理session
     clientId: mqtt_publish #MQTT-当前客户端的唯一标识
     defaultTopic: 测试 #当前客户端的默认主题(大多数时候没什么用)

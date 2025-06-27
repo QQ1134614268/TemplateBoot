@@ -6,7 +6,7 @@
         <groupId>com.it</groupId>
         <artifactId>cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <artifactId>cloud-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
